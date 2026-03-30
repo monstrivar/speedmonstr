@@ -1,0 +1,2 @@
+- [Project overview](project_overview.md) — Monstr: speed-to-lead service for Norwegian SMBs, React/Vite landing page
+- [CRM decision](project_crm_decision.md) — Using Airtable as lead management backend, not custom-built

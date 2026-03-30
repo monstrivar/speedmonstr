@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.05;
+    filter: url(#noiseFilter);
+    background: transparent;
+  }
+}
+
+@layer components {
+  /* Magnetic Button Reset */
+  .btn-magnetic {
+    @apply relative overflow-hidden inline-flex items-center justify-center font-heading font-medium transition-all duration-300 ease-out;
+  }
+
+  /* 
+    "magnetic" feel: subtle scale(1.03) on hover with cubic-bezier(0.25, 0.46, 0.45, 0.94).
+    Button sliding background layer
+  */
+  .btn-magnetic:hover {
+    transform: scale(1.03);
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .btn-layer {
+    @apply absolute inset-0 bg-dark w-full h-full transform translate-y-full transition-transform duration-300 ease-out z-[0];
+  }
+
+  .btn-magnetic:hover .btn-layer {
+    @apply translate-y-0;
+  }
+  
+  .btn-text {
+    @apply relative z-10;
+  }
+
+  /* Links hover */
+  .link-hover {
+    @apply transition-transform duration-300 hover:-translate-y-[1px];
+  }
+
+  .card-brutalist {
+    @apply bg-background border border-dark rounded-[2rem] shadow-[4px_4px_0px_#111111] overflow-hidden;
+  }
+  
+  .card-brutalist-dark {
+    @apply bg-dark text-background border border-primary/20 rounded-[2rem] shadow-[4px_4px_0px_#E63B2E] overflow-hidden;
+  }
+}
