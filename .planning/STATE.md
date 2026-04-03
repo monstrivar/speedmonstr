@@ -4,15 +4,15 @@
 Phase 02: Lead Management and Call Tracking
 
 ## Status
-Phase 02 in progress — 02-03 complete, proceeding to 02-04
+Phase 02 tasks complete — awaiting human verification checkpoint for 02-04
 
 ## Current Position
 Phase: 02 of 2 (Lead Management and Call Tracking)
-Plan: 03 of N — complete
-Last activity: 2026-04-03 - Completed 02-03-PLAN.md (LeadDetailSheet, FollowUpPrompt, shadcn Sheet)
+Plan: 04 of 4 — tasks complete, checkpoint pending
+Last activity: 2026-04-03 - Completed 02-04 tasks 1+2 (LeadCard wired, useResponseTime, stat card)
 
 Progress (phase 01): █████ 100% (all 5 plans complete)
-Progress (phase 02): ███░░ in progress (02-01 complete, 02-02 complete, 02-03 complete)
+Progress (phase 02): ████░ tasks complete, verification pending (02-01, 02-02, 02-03, 02-04 tasks done)
 
 ## Decisions Made
 - TypeScript for companion app, JSX stays for landing page
@@ -55,7 +55,11 @@ Progress (phase 02): ███░░ in progress (02-01 complete, 02-02 complete
 - shadcn Sheet uses @base-ui/react/dialog (base-nova style) — onOpenChange is (open, eventDetails) not just (open); wrap in arrow fn to match (open: boolean) => void
 - FollowUpPrompt uses disablePointerDismissal + onOpenChange → onOutcome("cancelled") to prevent accidental dismiss while ensuring state cleanup
 - LeadDetailSheet renders FollowUpPrompt as Fragment sibling (not nested inside SheetContent) — avoids Dialog-inside-Dialog nesting issues
-- Bottom sheet pattern: h-[85dvh], rounded-t-2xl, style paddingBottom env(safe-area-inset-bottom), Button asChild with a[href=tel:]
+- Bottom sheet pattern: h-[85dvh], rounded-t-2xl, style paddingBottom env(safe-area-inset-bottom), <a> with buttonVariants (base-nova has no asChild)
+- LeadDetailSheet mounted outside ScrollArea at DashboardPage root — always in DOM, pendingCall state persists across open/close
+- Supabase Database type requires Relationships arrays on all tables — postgrest-js GenericTable constraint; tsc -b fails without them
+- buttonVariants() on native <a href=tel:> in LeadDetailSheet — base-nova (base-ui/react) Button has no asChild prop
+- Stat card shows nothing (not 0) when no call_events — avoids misleading zero for new users
 
 ## Concerns / Watch For
 - schema.sql must be executed manually in Supabase dashboard before any auth or realtime features work
@@ -65,9 +69,10 @@ Progress (phase 02): ███░░ in progress (02-01 complete, 02-02 complete
 - Capacitor 8 iOS project uses SPM: open App.xcodeproj (not App.xcworkspace) in Xcode
 - Push notifications require physical iPhone (Simulator cannot receive APNs)
 - Xcode: must manually add Push Notifications + Background Modes capabilities, and select development team
+- schema.sql must be executed in Supabase before call_events data can populate the response time stat card
 
 ## Session Continuity
-Last session: 2026-04-03T18:19:43Z
-Stopped at: Completed 02-03-PLAN.md (LeadDetailSheet, FollowUpPrompt, tsc passes)
+Last session: 2026-04-03T20:17:13Z
+Stopped at: 02-04 checkpoint — awaiting user verification of full Phase 02 flow on device
 Resume file: None
-Next plan: 02-04 (wire LeadDetailSheet into DashboardPage/LeadsPage)
+Next: After user types "approved", Phase 02 is complete
