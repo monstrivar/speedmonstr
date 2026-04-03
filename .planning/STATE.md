@@ -1,17 +1,18 @@
 # Project State
 
 ## Current Phase
-Phase 01: Foundation + Push Notifications
+Phase 02: Lead Management and Call Tracking
 
 ## Status
-Phase 01 complete
+Phase 02 in progress — awaiting checkpoint (Task 3: run migration in Supabase dashboard)
 
 ## Current Position
-Phase: 01 of 1 (Foundation + Push Notifications)
-Plan: 05 of 5 - COMPLETE
-Last activity: 2026-04-03 - Completed 01-05-PLAN.md; checkpoint approved by user
+Phase: 02 of 2 (Lead Management and Call Tracking)
+Plan: 01 of N — Tasks 1-2 complete, paused at checkpoint Task 3
+Last activity: 2026-04-03 - Completed 02-01 Tasks 1-2; paused at Task 3 checkpoint
 
 Progress (phase 01): █████ 100% (all 5 plans complete)
+Progress (phase 02): ░░░░░ in progress (02-01 tasks 1-2 done, migration checkpoint pending)
 
 ## Decisions Made
 - TypeScript for companion app, JSX stays for landing page
@@ -44,6 +45,10 @@ Progress (phase 01): █████ 100% (all 5 plans complete)
 - Capacitor 8 SPM: open app/ios/App/App.xcodeproj in Xcode (no standalone App.xcworkspace with SPM)
 - usePushNotifications placed in Layout.tsx (not DashboardPage) — fires once per session on all routes
 - supabase.ts exports supabaseConfigured boolean — consumers guard Supabase calls behind this flag during local dev without .env.local
+- call_events.user_id references auth.users (not public.users) — matches push_tokens pattern
+- call_events outcome uses CHECK constraint inline, not PostgreSQL ENUM — easier to extend
+- duration_sec on call_events measures time user was away from app, NOT actual call duration
+- Root tsconfig.json requires ignoreDeprecations:"6.0" (same as tsconfig.app.json) — both needed for clean tsc --noEmit
 
 ## Concerns / Watch For
 - schema.sql must be executed manually in Supabase dashboard before any auth or realtime features work
@@ -55,7 +60,7 @@ Progress (phase 01): █████ 100% (all 5 plans complete)
 - Xcode: must manually add Push Notifications + Background Modes capabilities, and select development team
 
 ## Session Continuity
-Last session: 2026-04-03T10:00:00Z
-Stopped at: Phase 01 complete — all 5 plans executed, Xcode checkpoint approved
-Resume file: None — phase complete, ready for Phase 02 planning
-Next plan: Phase 02 — Supabase setup, schema execution, APNs key config, device testing
+Last session: 2026-04-03T00:10:00Z
+Stopped at: 02-01 Task 3 checkpoint — user must run migration SQL in Supabase dashboard
+Resume file: None — resume after user types "migrated"
+Next plan: Continue 02-01 Task 3 (verify migration ran), then proceed to 02-02
