@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "@/hooks/useAuth"
 import { useLeads } from "@/hooks/useLeads"
+import { useResponseTime } from "@/hooks/useResponseTime"
 import { LeadCard } from "@/components/LeadCard"
 import { LeadDetailSheet } from "@/components/LeadDetailSheet"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -20,11 +21,22 @@ export function DashboardPage() {
   const { user } = useAuth()
   const organizationId = useOrganizationId()
   const { data: leads, isLoading } = useLeads(organizationId)
+  const responseTime = useResponseTime(organizationId)
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
 
   return (
     <div className="space-y-4">
       <h1 className="text-xl font-semibold">{t("dashboard.title")}</h1>
+
+      {responseTime.data && (
+        <div className="rounded-xl border bg-card p-4 text-card-foreground">
+          <p className="text-xs text-muted-foreground">{t("dashboard.avgResponseTime")}</p>
+          <p className="text-2xl font-bold">
+            {responseTime.data}{" "}
+            <span className="text-sm font-normal text-muted-foreground">{t("dashboard.minutes")}</span>
+          </p>
+        </div>
+      )}
 
       {isLoading && (
         <p className="text-muted-foreground text-sm">{t("common.loading")}</p>

@@ -33,7 +33,9 @@
     "conversionRate": "Konverteringsrate",
     "recentLeads": "Siste henvendelser",
     "noLeads": "Ingen henvendelser ennå",
-    "noLeadsSubtitle": "Leads vil vises her når de kommer inn"
+    "noLeadsSubtitle": "Leads vil vises her når de kommer inn",
+    "avgResponseTime": "Snitt responstid (30 dager)",
+    "minutes": "min"
   },
   "followUp": {
     "title": "Ringte du dem?",

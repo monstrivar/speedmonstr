@@ -31,6 +31,7 @@ export type Database = {
           plan?: string
           created_at?: string
         }
+        Relationships: []
       }
       users: {
         Row: {
@@ -60,6 +61,22 @@ export type Database = {
           department_id?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "users_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "users_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       departments: {
         Row: {
@@ -83,6 +100,15 @@ export type Database = {
           keywords?: string[]
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "departments_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       leads: {
         Row: {
@@ -127,6 +153,22 @@ export type Database = {
           status?: "ny" | "sms_sendt" | "venter" | "fulgt_opp" | "booket" | "ikke_relevant"
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "leads_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       push_tokens: {
         Row: {
@@ -150,6 +192,15 @@ export type Database = {
           platform?: "ios" | "android" | "web"
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "push_tokens_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       call_events: {
         Row: {
@@ -185,6 +236,22 @@ export type Database = {
           note?: string | null
           created_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "call_events_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "call_events_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: Record<string, never>

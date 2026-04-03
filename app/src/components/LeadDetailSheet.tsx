@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next"
 import { Phone, Mail, Building2 } from "lucide-react"
 import { Haptics, ImpactStyle } from "@capacitor/haptics"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 import {
   Sheet,
@@ -106,15 +107,14 @@ export function LeadDetailSheet({
 
             {/* Ring button */}
             {lead?.phone && (
-              <Button asChild size="lg" className="w-full gap-2 mt-2">
-                <a
-                  href={`tel:${lead.phone}`}
-                  onClick={handleCallPressWithHaptics}
-                >
-                  <Phone className="size-5" />
-                  {t("lead.callNow")}
-                </a>
-              </Button>
+              <a
+                href={`tel:${lead.phone}`}
+                onClick={handleCallPressWithHaptics}
+                className={cn(buttonVariants({ size: "lg" }), "w-full gap-2 mt-2")}
+              >
+                <Phone className="size-5" />
+                {t("lead.callNow")}
+              </a>
             )}
 
             <Separator className="my-1" />

@@ -33,7 +33,9 @@
     "conversionRate": "Conversion rate",
     "recentLeads": "Recent leads",
     "noLeads": "No leads yet",
-    "noLeadsSubtitle": "Leads will appear here as they come in"
+    "noLeadsSubtitle": "Leads will appear here as they come in",
+    "avgResponseTime": "Avg response time (30 days)",
+    "minutes": "min"
   },
   "followUp": {
     "title": "Did you reach them?",
