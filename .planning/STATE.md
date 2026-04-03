@@ -4,15 +4,15 @@
 Phase 02: Lead Management and Call Tracking
 
 ## Status
-Phase 02 in progress — awaiting checkpoint (Task 3: run migration in Supabase dashboard)
+Phase 02 in progress — 02-02 complete, proceeding to 02-03
 
 ## Current Position
 Phase: 02 of 2 (Lead Management and Call Tracking)
-Plan: 01 of N — Tasks 1-2 complete, paused at checkpoint Task 3
-Last activity: 2026-04-03 - Completed 02-01 Tasks 1-2; paused at Task 3 checkpoint
+Plan: 02 of N — complete
+Last activity: 2026-04-03 - Completed 02-02-PLAN.md (useLeadMutations, useAppResume, useCallTracking)
 
 Progress (phase 01): █████ 100% (all 5 plans complete)
-Progress (phase 02): ░░░░░ in progress (02-01 tasks 1-2 done, migration checkpoint pending)
+Progress (phase 02): ██░░░ in progress (02-01 complete, 02-02 complete)
 
 ## Decisions Made
 - TypeScript for companion app, JSX stays for landing page
@@ -49,6 +49,9 @@ Progress (phase 02): ░░░░░ in progress (02-01 tasks 1-2 done, migratio
 - call_events outcome uses CHECK constraint inline, not PostgreSQL ENUM — easier to extend
 - duration_sec on call_events measures time user was away from app, NOT actual call duration
 - Root tsconfig.json requires ignoreDeprecations:"6.0" (same as tsconfig.app.json) — both needed for clean tsc --noEmit
+- pendingCallRef pattern: sync useRef to state each render so Capacitor listeners avoid stale closures without re-registering
+- handleCallPress logs call event fire-and-forget (no await) — tel: anchor handles OS-level call initiation
+- outcome stored as null (not omitted) in call_events when user cancels follow-up — event row still written
 
 ## Concerns / Watch For
 - schema.sql must be executed manually in Supabase dashboard before any auth or realtime features work
@@ -60,7 +63,7 @@ Progress (phase 02): ░░░░░ in progress (02-01 tasks 1-2 done, migratio
 - Xcode: must manually add Push Notifications + Background Modes capabilities, and select development team
 
 ## Session Continuity
-Last session: 2026-04-03T00:10:00Z
-Stopped at: 02-01 Task 3 checkpoint — user must run migration SQL in Supabase dashboard
-Resume file: None — resume after user types "migrated"
-Next plan: Continue 02-01 Task 3 (verify migration ran), then proceed to 02-02
+Last session: 2026-04-03T18:15:22Z
+Stopped at: Completed 02-02-PLAN.md (all tasks done, tsc passes)
+Resume file: None
+Next plan: 02-03 (LeadDetailSheet UI component)
