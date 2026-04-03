@@ -15,11 +15,13 @@ Plans:
 
 ### Phase 02: Lead Management + Call Tracking
 **Goal:** Team members can manage leads and we track their response times.
-- Lead detail view with full timeline
-- Click-to-call with automatic call tracking
-- "Did you follow up?" prompt on app resume
-- Follow-up actions (mark as followed up, add note, not relevant)
-- Response time analytics (time from notification to call)
+**Plans:** 4 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — call_events DB migration + TypeScript types
+- [ ] 02-02-PLAN.md — useLeadMutations + useAppResume + useCallTracking hooks
+- [ ] 02-03-PLAN.md — LeadDetailSheet + FollowUpPrompt components
+- [ ] 02-04-PLAN.md — Wire dashboard: LeadCard → sheet, response time stat card, human verify
 
 ### Phase 03: SMS Log + Escalation System
 **Goal:** Full visibility into SMS activity and automatic escalation when leads are ignored.
