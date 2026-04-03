@@ -210,7 +210,7 @@ serve(async (req: Request): Promise<Response> => {
         : "https://api.sandbox.push.apple.com"
 
     // Build notification body
-    const leadName = (lead.name as string) ?? "New lead"
+    const leadName = [lead.first_name, lead.last_name].filter(Boolean).join(" ") || "Ny henvendelse"
     const leadDescription = (lead.description as string) ?? ""
     const leadPhone = (lead.phone as string) ?? ""
     const leadId = (lead.id as string) ?? ""
