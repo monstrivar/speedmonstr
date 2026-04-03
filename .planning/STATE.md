@@ -4,14 +4,14 @@
 Phase 01: Foundation + Push Notifications
 
 ## Status
-In progress
+Phase 01 complete
 
 ## Current Position
 Phase: 01 of 1 (Foundation + Push Notifications)
-Plan: 05 of 5 - awaiting checkpoint (Xcode verification)
-Last activity: 2026-04-03 - Task 1 of 01-05-PLAN.md complete; checkpoint returned for user
+Plan: 05 of 5 - COMPLETE
+Last activity: 2026-04-03 - Completed 01-05-PLAN.md; checkpoint approved by user
 
-Progress (phase 01): ████░ 95% (task 1 done, checkpoint pending)
+Progress (phase 01): █████ 100% (all 5 plans complete)
 
 ## Decisions Made
 - TypeScript for companion app, JSX stays for landing page
@@ -43,18 +43,19 @@ Progress (phase 01): ████░ 95% (task 1 done, checkpoint pending)
 - @capacitor/ios was missing from package.json; installed as Rule 3 blocking fix in 01-05
 - Capacitor 8 SPM: open app/ios/App/App.xcodeproj in Xcode (no standalone App.xcworkspace with SPM)
 - usePushNotifications placed in Layout.tsx (not DashboardPage) — fires once per session on all routes
+- supabase.ts exports supabaseConfigured boolean — consumers guard Supabase calls behind this flag during local dev without .env.local
 
 ## Concerns / Watch For
 - schema.sql must be executed manually in Supabase dashboard before any auth or realtime features work
 - VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY must be set in app/.env.local
 - APNs env vars (APNS_TEAM_ID, APNS_KEY_ID, APNS_PRIVATE_KEY, APNS_ENVIRONMENT) must be set in Supabase Edge Function settings before push works
 - Supabase webhook must be created manually: Database → Webhooks → INSERT on leads → push-notification function URL
-- usePushNotifications wired into Layout.tsx (user?.id ?? null) — resolved in 01-05
-- @capacitor/ios was missing from package.json — installed and committed in 01-05
 - Capacitor 8 iOS project uses SPM: open App.xcodeproj (not App.xcworkspace) in Xcode
+- Push notifications require physical iPhone (Simulator cannot receive APNs)
+- Xcode: must manually add Push Notifications + Background Modes capabilities, and select development team
 
 ## Session Continuity
-Last session: 2026-04-03T09:48:00Z
-Stopped at: 01-05 Task 1 complete — checkpoint returned for Xcode verification
-Resume file: .planning/phases/01-foundation-and-push/01-05-PLAN.md (checkpoint:human-verify)
-Next plan: 01-05 checkpoint approval — then phase 01 complete
+Last session: 2026-04-03T10:00:00Z
+Stopped at: Phase 01 complete — all 5 plans executed, Xcode checkpoint approved
+Resume file: None — phase complete, ready for Phase 02 planning
+Next plan: Phase 02 — Supabase setup, schema execution, APNs key config, device testing
