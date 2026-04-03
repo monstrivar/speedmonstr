@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { useAuth } from "@/hooks/useAuth"
+import { usePushNotifications } from "@/hooks/usePushNotifications"
 import { Button } from "@/components/ui/button"
 
 interface LayoutProps {
@@ -8,7 +9,10 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const { t } = useTranslation()
-  const { signOut } = useAuth()
+  const { user, signOut } = useAuth()
+
+  // Register for push notifications after user is authenticated
+  usePushNotifications(user?.id ?? null)
 
   return (
     <div className="min-h-screen flex flex-col">
