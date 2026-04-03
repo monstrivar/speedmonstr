@@ -8,10 +8,10 @@ In progress
 
 ## Current Position
 Phase: 01 of 1 (Foundation + Push Notifications)
-Plan: 01 of 5 complete
-Last activity: 2026-04-03 - Completed 01-01-PLAN.md (Foundation Scaffold)
+Plan: 02 of 5 complete
+Last activity: 2026-04-03 - Completed 01-02-PLAN.md (Infrastructure Layers)
 
-Progress (phase 01): █░░░░ 20% (1/5 plans complete)
+Progress (phase 01): ██░░░ 40% (2/5 plans complete)
 
 ## Decisions Made
 - TypeScript for companion app, JSX stays for landing page
@@ -27,9 +27,18 @@ Progress (phase 01): █░░░░ 20% (1/5 plans complete)
 - @capacitor/badge does not exist on npm; badge counts via APNs aps.badge payload instead
 - shadcn/ui auto-selected base-nova style (Tailwind v4 native) — no manual override needed
 - Tailwind v4 CSS-first: no tailwind.config.js, theme via CSS variables in index.css
+- Departments table defined before users in schema.sql (FK ordering: users.department_id -> departments.id)
+- ON DELETE CASCADE on org-level FKs; ON DELETE SET NULL on department_id in users/leads
+- TanStack Query: refetchOnWindowFocus disabled, retry 1 — suits long-lived mobile sessions
+- i18n escapeValue: false — React handles XSS, double-escaping breaks JSX interpolation
+- schema.sql includes indexes on leads(organization_id, status, created_at DESC) proactively
+
+## Concerns / Watch For
+- schema.sql must be executed manually in Supabase dashboard before any auth or realtime features work
+- VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY must be set in app/.env.local
 
 ## Session Continuity
-Last session: 2026-04-03T09:24:35Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-04-03T09:29:31Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
-Next plan: .planning/phases/01-foundation-and-push/01-02-PLAN.md
+Next plan: .planning/phases/01-foundation-and-push/01-03-PLAN.md
