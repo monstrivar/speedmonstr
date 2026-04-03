@@ -32,6 +32,9 @@ Progress (phase 01): ████░ 80% (4/5 plans complete)
 - TanStack Query: refetchOnWindowFocus disabled, retry 1 — suits long-lived mobile sessions
 - i18n escapeValue: false — React handles XSS, double-escaping breaks JSX interpolation
 - schema.sql includes indexes on leads(organization_id, status, created_at DESC) proactively
+- useQuery<Lead[]> explicit type annotation required — Supabase chain infers never[] when query disabled (enabled: false)
+- organization_id for DashboardPage derived from user_metadata for MVP; full user profile lookup deferred to later plan
+- Supabase Realtime + TanStack Query pattern: postgres_changes INSERT channel calls invalidateQueries on same queryKey
 - push_tokens upsert uses onConflict: user_id,platform — one token per user per platform, idempotent on every launch
 - APNs JWT signed with Web Crypto (Deno ECDSA ES256, IEEE P1363 format) — no DER conversion needed unlike Node.js
 - Edge Function defaults APNS_ENVIRONMENT to sandbox for safety — must explicitly set production
