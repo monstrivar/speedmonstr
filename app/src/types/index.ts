@@ -9,3 +9,7 @@ export type PushToken = Database["public"]["Tables"]["push_tokens"]["Row"]
 export type LeadStatus = Lead["status"]
 export type UserRole = AppUser["role"]
 export type Platform = PushToken["platform"]
+
+export type CallEvent = Database["public"]["Tables"]["call_events"]["Row"]
+export type CallEventInsert = Database["public"]["Tables"]["call_events"]["Insert"]
+export type CallOutcome = NonNullable<CallEvent["outcome"]>
