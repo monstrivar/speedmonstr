@@ -35,6 +35,13 @@
     "noLeads": "Ingen henvendelser ennå",
     "noLeadsSubtitle": "Leads vil vises her når de kommer inn"
   },
+  "followUp": {
+    "title": "Ringte du dem?",
+    "answered": "Fikk svar",
+    "noAnswer": "Ikke svar",
+    "voicemail": "Telefonsvar",
+    "cancel": "Avbryt"
+  },
   "lead": {
     "status": {
       "ny": "Ny",
@@ -50,6 +57,7 @@
     "email": "E-post",
     "description": "Beskrivelse",
     "receivedAt": "Mottatt",
+    "receivedLabel": "Mottatt",
     "callNow": "Ring nå",
     "markAsFollowedUp": "Merk som fulgt opp",
     "notRelevant": "Ikke relevant"

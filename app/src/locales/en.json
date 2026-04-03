@@ -35,6 +35,13 @@
     "noLeads": "No leads yet",
     "noLeadsSubtitle": "Leads will appear here as they come in"
   },
+  "followUp": {
+    "title": "Did you reach them?",
+    "answered": "Got through",
+    "noAnswer": "No answer",
+    "voicemail": "Left voicemail",
+    "cancel": "Cancel"
+  },
   "lead": {
     "status": {
       "ny": "New",
@@ -50,6 +57,7 @@
     "email": "Email",
     "description": "Description",
     "receivedAt": "Received",
+    "receivedLabel": "Received",
     "callNow": "Call now",
     "markAsFollowedUp": "Mark as followed up",
     "notRelevant": "Not relevant"
