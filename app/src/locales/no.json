@@ -1,0 +1,68 @@
+{
+  "common": {
+    "loading": "Laster...",
+    "error": "Noe gikk galt",
+    "retry": "Prøv igjen",
+    "save": "Lagre",
+    "cancel": "Avbryt",
+    "confirm": "Bekreft",
+    "delete": "Slett",
+    "edit": "Rediger",
+    "back": "Tilbake",
+    "search": "Søk",
+    "noResults": "Ingen resultater"
+  },
+  "auth": {
+    "title": "Logg inn på Monstr",
+    "subtitle": "Skriv inn e-postadressen din for å motta en innloggingslenke",
+    "emailLabel": "E-postadresse",
+    "emailPlaceholder": "din@epost.no",
+    "submitButton": "Send innloggingslenke",
+    "submitting": "Sender...",
+    "successTitle": "Sjekk innboksen din",
+    "successMessage": "Vi har sendt en innloggingslenke til {{email}}",
+    "errorMessage": "Kunne ikke sende innloggingslenke. Prøv igjen.",
+    "signOut": "Logg ut"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Hei, {{name}}",
+    "newLeads": "Nye henvendelser",
+    "totalLeads": "Totalt henvendelser",
+    "followedUp": "Fulgt opp",
+    "conversionRate": "Konverteringsrate",
+    "recentLeads": "Siste henvendelser",
+    "noLeads": "Ingen henvendelser ennå",
+    "noLeadsSubtitle": "Leads vil vises her når de kommer inn"
+  },
+  "lead": {
+    "status": {
+      "ny": "Ny",
+      "sms_sendt": "SMS sendt",
+      "venter": "Venter",
+      "fulgt_opp": "Fulgt opp",
+      "booket": "Booket",
+      "ikke_relevant": "Ikke relevant"
+    },
+    "source": "Kilde",
+    "company": "Bedrift",
+    "phone": "Telefon",
+    "email": "E-post",
+    "description": "Beskrivelse",
+    "receivedAt": "Mottatt",
+    "callNow": "Ring nå",
+    "markAsFollowedUp": "Merk som fulgt opp",
+    "notRelevant": "Ikke relevant"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "leads": "Henvendelser",
+    "settings": "Innstillinger"
+  },
+  "push": {
+    "permissionTitle": "Tillat varsler",
+    "permissionMessage": "Monstr trenger tilgang til å sende deg varsler om nye henvendelser",
+    "newLeadTitle": "Ny henvendelse",
+    "newLeadBody": "{{name}} har sendt en henvendelse"
+  }
+}
