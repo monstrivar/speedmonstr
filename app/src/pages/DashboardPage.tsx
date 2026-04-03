@@ -1,8 +1,11 @@
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "@/hooks/useAuth"
 import { useLeads } from "@/hooks/useLeads"
 import { LeadCard } from "@/components/LeadCard"
+import { LeadDetailSheet } from "@/components/LeadDetailSheet"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import type { Lead } from "@/types"
 
 // TODO: organization_id will come from user profile lookup (Phase 01-04+)
 // For MVP, we derive it from user metadata or fall back to empty string (query disabled)
@@ -14,8 +17,10 @@ function useOrganizationId(): string {
 
 export function DashboardPage() {
   const { t } = useTranslation()
+  const { user } = useAuth()
   const organizationId = useOrganizationId()
   const { data: leads, isLoading } = useLeads(organizationId)
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
 
   return (
     <div className="space-y-4">
@@ -36,11 +41,23 @@ export function DashboardPage() {
         <ScrollArea className="h-[calc(100vh-8rem)]">
           <div className="space-y-3 pr-2">
             {leads.map((lead) => (
-              <LeadCard key={lead.id} lead={lead} />
+              <LeadCard
+                key={lead.id}
+                lead={lead}
+                onPress={(lead) => setSelectedLead(lead)}
+              />
             ))}
           </div>
         </ScrollArea>
       )}
+
+      <LeadDetailSheet
+        lead={selectedLead}
+        open={selectedLead !== null}
+        onOpenChange={(open) => { if (!open) setSelectedLead(null) }}
+        userId={user?.id ?? ""}
+        organizationId={organizationId}
+      />
     </div>
   )
 }
