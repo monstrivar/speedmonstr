@@ -8,10 +8,10 @@ In progress
 
 ## Current Position
 Phase: 01 of 1 (Foundation + Push Notifications)
-Plan: 02 of 5 complete
-Last activity: 2026-04-03 - Completed 01-02-PLAN.md (Infrastructure Layers)
+Plan: 04 of 5 complete
+Last activity: 2026-04-03 - Completed 01-04-PLAN.md (Push Notification Pipeline)
 
-Progress (phase 01): ██░░░ 40% (2/5 plans complete)
+Progress (phase 01): ████░ 80% (4/5 plans complete)
 
 ## Decisions Made
 - TypeScript for companion app, JSX stays for landing page
@@ -32,13 +32,21 @@ Progress (phase 01): ██░░░ 40% (2/5 plans complete)
 - TanStack Query: refetchOnWindowFocus disabled, retry 1 — suits long-lived mobile sessions
 - i18n escapeValue: false — React handles XSS, double-escaping breaks JSX interpolation
 - schema.sql includes indexes on leads(organization_id, status, created_at DESC) proactively
+- push_tokens upsert uses onConflict: user_id,platform — one token per user per platform, idempotent on every launch
+- APNs JWT signed with Web Crypto (Deno ECDSA ES256, IEEE P1363 format) — no DER conversion needed unlike Node.js
+- Edge Function defaults APNS_ENVIRONMENT to sandbox for safety — must explicitly set production
+- apns-topic set to no.monstr.app — must match iOS app bundle ID exactly
+- supabase.from('push_tokens') cast to any pending schema execution — types regenerate after schema.sql is applied
 
 ## Concerns / Watch For
 - schema.sql must be executed manually in Supabase dashboard before any auth or realtime features work
 - VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY must be set in app/.env.local
+- APNs env vars (APNS_TEAM_ID, APNS_KEY_ID, APNS_PRIVATE_KEY, APNS_ENVIRONMENT) must be set in Supabase Edge Function settings before push works
+- Supabase webhook must be created manually: Database → Webhooks → INSERT on leads → push-notification function URL
+- usePushNotifications hook must be added to authenticated Layout or DashboardPage (not yet wired up)
 
 ## Session Continuity
-Last session: 2026-04-03T09:29:31Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-04-03T09:34:20Z
+Stopped at: Completed 01-04-PLAN.md
 Resume file: None
-Next plan: .planning/phases/01-foundation-and-push/01-03-PLAN.md
+Next plan: .planning/phases/01-foundation-and-push/01-05-PLAN.md
