@@ -4,15 +4,15 @@
 Phase 02: Lead Management and Call Tracking
 
 ## Status
-Phase 02 in progress — 02-02 complete, proceeding to 02-03
+Phase 02 in progress — 02-03 complete, proceeding to 02-04
 
 ## Current Position
 Phase: 02 of 2 (Lead Management and Call Tracking)
-Plan: 02 of N — complete
-Last activity: 2026-04-03 - Completed 02-02-PLAN.md (useLeadMutations, useAppResume, useCallTracking)
+Plan: 03 of N — complete
+Last activity: 2026-04-03 - Completed 02-03-PLAN.md (LeadDetailSheet, FollowUpPrompt, shadcn Sheet)
 
 Progress (phase 01): █████ 100% (all 5 plans complete)
-Progress (phase 02): ██░░░ in progress (02-01 complete, 02-02 complete)
+Progress (phase 02): ███░░ in progress (02-01 complete, 02-02 complete, 02-03 complete)
 
 ## Decisions Made
 - TypeScript for companion app, JSX stays for landing page
@@ -52,6 +52,10 @@ Progress (phase 02): ██░░░ in progress (02-01 complete, 02-02 complete
 - pendingCallRef pattern: sync useRef to state each render so Capacitor listeners avoid stale closures without re-registering
 - handleCallPress logs call event fire-and-forget (no await) — tel: anchor handles OS-level call initiation
 - outcome stored as null (not omitted) in call_events when user cancels follow-up — event row still written
+- shadcn Sheet uses @base-ui/react/dialog (base-nova style) — onOpenChange is (open, eventDetails) not just (open); wrap in arrow fn to match (open: boolean) => void
+- FollowUpPrompt uses disablePointerDismissal + onOpenChange → onOutcome("cancelled") to prevent accidental dismiss while ensuring state cleanup
+- LeadDetailSheet renders FollowUpPrompt as Fragment sibling (not nested inside SheetContent) — avoids Dialog-inside-Dialog nesting issues
+- Bottom sheet pattern: h-[85dvh], rounded-t-2xl, style paddingBottom env(safe-area-inset-bottom), Button asChild with a[href=tel:]
 
 ## Concerns / Watch For
 - schema.sql must be executed manually in Supabase dashboard before any auth or realtime features work
@@ -63,7 +67,7 @@ Progress (phase 02): ██░░░ in progress (02-01 complete, 02-02 complete
 - Xcode: must manually add Push Notifications + Background Modes capabilities, and select development team
 
 ## Session Continuity
-Last session: 2026-04-03T18:15:22Z
-Stopped at: Completed 02-02-PLAN.md (all tasks done, tsc passes)
+Last session: 2026-04-03T18:19:43Z
+Stopped at: Completed 02-03-PLAN.md (LeadDetailSheet, FollowUpPrompt, tsc passes)
 Resume file: None
-Next plan: 02-03 (LeadDetailSheet UI component)
+Next plan: 02-04 (wire LeadDetailSheet into DashboardPage/LeadsPage)
