@@ -42,9 +42,13 @@ const Navbar = () => {
         ${scrolled ? 'bg-background/80 backdrop-blur-xl border border-dark/10' : 'bg-transparent text-background'}
       `}
     >
-      <div className={`font-heading font-bold text-xl tracking-tight ${scrolled ? 'text-dark' : 'text-primary'}`}>
-        Monstr
-      </div>
+      <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+        <img
+          src="/monstr-logo.png"
+          alt="Monstr AI"
+          className={`h-10 w-auto transition-all duration-500 ${scrolled ? '' : 'brightness-0 invert'}`}
+        />
+      </a>
 
       <div className={`hidden md:flex items-center gap-8 text-sm font-medium tracking-tight ${scrolled ? 'text-dark' : 'text-primary/90'}`}>
         <a href="#features" className="link-hover">Hvordan det fungerer</a>
@@ -305,52 +309,26 @@ const Features = () => {
 // VSL Section
 const VSL = () => {
   const iframeRef = useRef(null);
-  const sectionRef = useRef(null);
-  const hasPlayed = useRef(false);
-  const [state, setState] = useState('muted'); // 'muted' | 'playing' | 'paused'
+  const [playing, setPlaying] = useState(false);
 
-  const postVimeo = (method) => {
-    iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({ method }), '*'
-    );
+  const postVimeo = (method, value) => {
+    const msg = value !== undefined ? { method, value } : { method };
+    iframeRef.current?.contentWindow?.postMessage(JSON.stringify(msg), '*');
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasPlayed.current && iframeRef.current) {
-          hasPlayed.current = true;
-          postVimeo('play');
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   const handleClick = () => {
-    if (state === 'muted') {
-      postVimeo('setVolume', 1);
-      postVimeo('setVolume');
-      // background=1 mutes by default, unmute it
-      iframeRef.current?.contentWindow?.postMessage(
-        JSON.stringify({ method: 'setVolume', value: 1 }), '*'
-      );
-      setState('playing');
-    } else if (state === 'playing') {
+    if (playing) {
       postVimeo('pause');
-      setState('paused');
+      setPlaying(false);
     } else {
       postVimeo('play');
-      setState('playing');
+      postVimeo('setVolume', 1);
+      setPlaying(true);
     }
   };
 
-  const label = state === 'muted' ? 'Slå på lyd' : state === 'playing' ? 'Pause' : 'Spill av';
-
   return (
-    <section ref={sectionRef} className="relative bg-dark py-20 px-6 md:px-16">
+    <section className="relative bg-dark py-20 px-6 md:px-16">
       <div className="max-w-4xl mx-auto">
         <p className="font-heading font-bold text-primary/60 text-sm tracking-widest uppercase mb-4 text-center">
           Se hvordan det fungerer
@@ -362,15 +340,16 @@ const VSL = () => {
         >
           <iframe
             ref={iframeRef}
-            src="https://player.vimeo.com/video/1180465943?badge=0&autopause=0&player_id=0&app_id=58479&dnt=1&title=0&byline=0&portrait=0&controls=0&background=1"
-            className="absolute inset-0 w-full h-full pointer-events-none"
+            src="https://player.vimeo.com/video/1180465943?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&controls=0"
             frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            title="Monstr — Speed-to-Lead"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            title="VSLferdig"
           />
           <div className="absolute inset-0 z-10 flex items-center justify-center">
-            <span className={`font-heading font-bold text-primary/70 text-lg tracking-tight px-6 py-3 rounded-full bg-dark/40 backdrop-blur-sm transition-opacity duration-300 ${state === 'playing' ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
-              {label}
+            <span className={`font-heading font-bold text-primary/70 text-lg tracking-tight px-6 py-3 rounded-full bg-dark/40 backdrop-blur-sm transition-opacity duration-300 ${playing ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+              {playing ? 'Pause' : 'Spill av'}
             </span>
           </div>
         </div>
