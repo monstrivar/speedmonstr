@@ -18,22 +18,29 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server configuration error: missing AIRTABLE_TOKEN' });
   }
 
-  const body = req.body || {};
+  // Normalize all body keys to lowercase for case-insensitive field matching
+  const rawBody = req.body || {};
+  const body = {};
+  for (const [key, value] of Object.entries(rawBody)) {
+    body[key.toLowerCase()] = value;
+  }
   const clientId = req.query.client || body.client || '';
   const webhookKey = req.headers['x-api-key'] || req.query.key;
 
+  // Legacy support: requests without client ID use the shared WEBHOOK_API_KEY
+  const { WEBHOOK_API_KEY } = process.env;
   if (!clientId) {
-    return res.status(400).json({ error: 'Missing client parameter' });
-  }
-
-  if (!webhookKey) {
+    if (!webhookKey || webhookKey !== WEBHOOK_API_KEY) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  } else if (!webhookKey) {
     return res.status(401).json({ error: 'Missing API key — use ?key= parameter or x-api-key header' });
   }
 
-  // Known field names to extract — everything else goes to "extra data"
+  // Known field names (lowercase) — everything else goes to "extra data"
   const knownFields = new Set([
-    'firstName', 'first_name', 'name', 'fornavn',
-    'lastName', 'last_name', 'etternavn',
+    'firstname', 'first_name', 'name', 'fornavn',
+    'lastname', 'last_name', 'etternavn',
     'company', 'company_name', 'firma', 'selskap', 'bedrift',
     'email', 'e-post', 'epost',
     'phone', 'telefon', 'phone_number', 'mobil', 'telefonnummer',
@@ -42,9 +49,9 @@ export default async function handler(req, res) {
     'client', 'address', 'adresse', 'service_type',
   ]);
 
-  // Flexible field mapping - support common variations
-  const firstName = body.firstName || body.first_name || body.name || body.fornavn || '';
-  const lastName = body.lastName || body.last_name || body.etternavn || '';
+  // Flexible field mapping - support common variations (all keys are lowercase)
+  const firstName = body.firstname || body.first_name || body.name || body.fornavn || '';
+  const lastName = body.lastname || body.last_name || body.etternavn || '';
   const company = body.company || body.company_name || body.firma || body.selskap || body.bedrift || '';
   const email = body.email || body['e-post'] || body.epost || '';
   const phone = body.phone || body.telefon || body.phone_number || body.mobil || body.telefonnummer || '';
@@ -129,14 +136,14 @@ export default async function handler(req, res) {
     }
   }
 
-  // If client not found, reject
-  if (!clientConfig) {
-    return res.status(404).json({ error: `Client "${clientId}" not found. Webhook is inactive.` });
-  }
-
-  // Validate per-client webhook key
-  if (!clientConfig.webhookKey || webhookKey !== clientConfig.webhookKey) {
-    return res.status(401).json({ error: 'Unauthorized: invalid API key for this client' });
+  // For client-specific webhooks: validate client exists and key matches
+  if (clientId) {
+    if (!clientConfig) {
+      return res.status(404).json({ error: `Client "${clientId}" not found. Webhook is inactive.` });
+    }
+    if (!clientConfig.webhookKey || webhookKey !== clientConfig.webhookKey) {
+      return res.status(401).json({ error: 'Unauthorized: invalid API key for this client' });
+    }
   }
 
   // Determine SMS sender and content
