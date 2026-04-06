@@ -60,15 +60,15 @@ export default async function handler(req, res) {
     }
   }
 
-  // Validation
-  if (!firstName || !email || !company) {
+  // Validation — only first name is truly required; other fields vary per client
+  if (!firstName) {
     return res.status(400).json({
-      error: 'Missing required fields. Need at least: name/firstName, email, and company.',
+      error: 'Missing required field: name/firstName/fornavn.',
       received_fields: Object.keys(body),
     });
   }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ error: 'Invalid email address.' });
   }
 
