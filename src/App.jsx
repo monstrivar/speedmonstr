@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Menu, X, ArrowRight, Zap, CheckCircle } from 'lucide-react';
@@ -46,13 +47,13 @@ const Navbar = () => {
       </div>
 
       <div className={`hidden md:flex items-center gap-8 text-sm font-medium tracking-tight ${scrolled ? 'text-dark' : 'text-primary/90'}`}>
-        <a href="#features" className="link-hover">Funksjoner</a>
-        <a href="#philosophy" className="link-hover">Filosofi</a>
-        <a href="#protocol" className="link-hover">Protokoll</a>
+        <a href="#features" className="link-hover">Hvordan det fungerer</a>
+        <a href="#philosophy" className="link-hover">Hvorfor</a>
+        <a href="#protocol" className="link-hover">Steg for steg</a>
       </div>
 
       <div>
-        <MagneticButton onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>Book Samtale</MagneticButton>
+        <MagneticButton onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>Prøv 14 dager gratis</MagneticButton>
       </div>
     </nav>
   );
@@ -80,7 +81,7 @@ const Hero = () => {
     <section ref={heroRef} className="relative h-[100dvh] w-full overflow-hidden bg-dark">
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=2670&auto=format&fit=crop"
+          src="/hero-bg.jpg"
           alt="Concrete structure"
           className="w-full h-full object-cover opacity-60 mix-blend-luminosity"
         />
@@ -98,16 +99,16 @@ const Hero = () => {
             </span>
           </h1>
           <p className="hero-elem font-sans text-primary/80 text-lg md:text-xl max-w-lg mb-6 leading-relaxed tracking-tight">
-            Monstr installerer et fiks-ferdig speed-to-lead-system som svarer umiddelbart på nye henvendelser og følger opp helt til leadet er lukket. Slutt å tape innkommende henvendelser på grunn av treg responstid.
+            Monstr sørger for at kundene dine får et personlig svar innen sekunder — automatisk, med firmanavnet ditt som avsender. Slutt å tape kunder fordi konkurrenten din svarte først.
           </p>
           <div className="hero-elem bg-dark/50 border border-primary/20 p-4 md:p-5 rounded-2xl mb-10 max-w-lg backdrop-blur-md">
             <p className="font-sans text-primary/90 leading-snug text-sm md:text-base">
-              Bedrifter som svarer innen 5 minutter er <strong className="text-accent font-bold">21x mer sannsynlige</strong> å kvalifisere et lead enn de som venter en time – vi sørger for at du ligger i den første gruppen.
+              Bedrifter som svarer innen 5 minutter er <strong className="text-accent font-bold">21x mer sannsynlige</strong> å lande kunden enn de som venter en time – vi sørger for at du er førstemann.
             </p>
           </div>
           <div className="hero-elem">
             <MagneticButton className="px-8 py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>
-              Book en demonstrasjon <ArrowRight size={18} />
+              Prøv 14 dager gratis <ArrowRight size={18} />
             </MagneticButton>
           </div>
         </div>
@@ -139,8 +140,8 @@ const FeatureShuffler = () => {
   return (
     <div className="card-brutalist p-8 h-full flex flex-col relative min-h-[400px]">
       <div className="mb-auto z-10 relative">
-        <h3 className="font-heading font-bold text-2xl text-dark tracking-tight mb-2">Umiddelbar Respons</h3>
-        <p className="font-sans text-dark/70 text-sm leading-relaxed">Vi kobler oss på dine lead-kilder og svarer på alle nye henvendelser umiddelbart mens interessen er på topp. <span className="text-dark font-medium block mt-2">I stedet for å la leads vente minutter eller timer, svarer systemet i løpet av sekunder. Det er her 21x-effekten skjer.</span></p>
+        <p className="font-heading font-bold text-2xl text-dark tracking-tight mb-2">Svar innen sekunder</p>
+        <p className="font-sans text-dark/70 text-sm leading-relaxed">Når noen sender inn et skjema på nettsiden din, får de et personlig svar med en gang — mens de fortsatt sitter med telefonen i hånda. <span className="text-dark font-medium block mt-2">Ikke etter en time. Ikke etter lunsj. Innen sekunder. Før konkurrenten har åpnet innboksen.</span></p>
       </div>
 
       <div className="relative h-48 mt-8 flex justify-center items-end">
@@ -176,9 +177,9 @@ const FeatureShuffler = () => {
 // Feature 2: Telemetry Typewriter
 const FeatureTypewriter = () => {
   const messages = [
-    "Sjekker bare inn i tilfelle dette fortsatt er aktuelt for deg.",
-    "Ønsker du at vi ringer deg i dag?",
-    "Vi har en ledig tid kl. 14:00, passer det for deg?"
+    "Hei Ola! Vi ser på saken din om varmtvannsberederen.",
+    "Hei Kari! Vi har mottatt henvendelsen din om nytt bad.",
+    "Hei Per! En av våre folk tar kontakt om terrasseprosjektet."
   ];
 
   const [text, setText] = useState('');
@@ -208,14 +209,14 @@ const FeatureTypewriter = () => {
   return (
     <div className="card-brutalist p-8 h-full flex flex-col relative min-h-[400px]">
       <div className="mb-auto z-10 relative">
-        <h3 className="font-heading font-bold text-2xl text-dark tracking-tight mb-2">Utholdende Oppfølging</h3>
-        <p className="font-sans text-dark/70 text-sm leading-relaxed">Hvis leadet ikke svarer, følger systemet opp automatisk inntil de engasjerer seg eller booker. <span className="text-dark font-medium block mt-2">Dette alene redder ofte leads som ellers ville dødd stille etter første kontakt.</span></p>
+        <p className="font-heading font-bold text-2xl text-dark tracking-tight mb-2">Personlig, ikke generisk</p>
+        <p className="font-sans text-dark/70 text-sm leading-relaxed">SMS-en er ikke en kjedelig "vi har mottatt henvendelsen din". Den nevner hva kunden faktisk trenger hjelp med — med firmanavnet ditt som avsender. <span className="text-dark font-medium block mt-2">Kunden føler seg sett, ikke prosessert.</span></p>
       </div>
 
       <div className="mt-8 bg-dark rounded-xl p-5 border border-dark flex-grow relative overflow-hidden">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-          <span className="font-data text-[10px] uppercase text-primary/50 tracking-widest">Aktiv Sekvens</span>
+          <span className="font-data text-[10px] uppercase text-primary/50 tracking-widest">SMS Sendt</span>
         </div>
         <div className="font-data text-primary text-sm leading-loose">
           <span className="text-accent">{'> '}</span>
@@ -227,56 +228,32 @@ const FeatureTypewriter = () => {
   );
 }
 
-// Feature 3: Cursor Protocol Scheduler
+// Feature 3: Internal Notification
 const FeatureScheduler = () => {
-  const cursorRef = useRef(null);
   const containerRef = useRef(null);
-  const days = ['S', 'M', 'T', 'O', 'T', 'F', 'L'];
-  const [activeDay, setActiveDay] = useState(3); // Wednesday/Onsdag
-
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
-
-      tl.to(cursorRef.current, { x: 120, y: 40, duration: 1, ease: "power2.inOut" })
-        .to(cursorRef.current, { scale: 0.8, duration: 0.1, onComplete: () => setActiveDay(4) }) // Click
-        .to(cursorRef.current, { scale: 1, duration: 0.1 })
-        .to(cursorRef.current, { x: 200, y: 100, duration: 1, ease: "power2.inOut", delay: 0.5 })
-        .to(cursorRef.current, { scale: 0.8, duration: 0.1 })
-        .to(cursorRef.current, { scale: 1, duration: 0.1 })
-        .to(cursorRef.current, { opacity: 0, duration: 0.3 })
-        .set(cursorRef.current, { x: 0, y: 0, opacity: 1 });
-
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
 
   return (
     <div className="card-brutalist p-8 h-full flex flex-col relative min-h-[400px]">
       <div className="mb-auto z-10 relative">
-        <h3 className="font-heading font-bold text-2xl text-dark tracking-tight mb-2">Full Synlighet</h3>
-        <p className="font-sans text-dark/70 text-sm leading-relaxed">Spor nøyaktig hva som skjer med hvert lead i et dashbord. Få oversikt over hvem som svarte, booket, eller ble kalde. <span className="text-dark font-medium block mt-2">Så dere ser tydelig om problemet er leadkvalitet, responstid eller closing – ikke bare "følelsen" i teamet.</span></p>
+        <p className="font-heading font-bold text-2xl text-dark tracking-tight mb-2">Du får beskjed med en gang</p>
+        <p className="font-sans text-dark/70 text-sm leading-relaxed">Samtidig som kunden får SMS, får du et varsel med all info — hvem det er og hva de trenger. <span className="text-dark font-medium block mt-2">Ring dem opp med full kontekst mens de fortsatt er varme. Ingen kald åpning.</span></p>
       </div>
 
-      <div ref={containerRef} className="mt-8 bg-primary border border-dark/20 rounded-xl p-6 relative flex-grow overflow-hidden">
-        <div className="grid grid-cols-7 gap-1 mb-6">
-          {days.map((d, i) => (
-            <div key={i} className={`h-8 rounded-md flex items-center justify-center font-data text-xs font-bold transition-colors duration-300
-              ${i === activeDay ? 'bg-accent text-background border border-dark' : 'bg-transparent text-dark/40 border border-dark/10'}
-            `}>
-              {d}
-            </div>
-          ))}
+      <div ref={containerRef} className="mt-8 bg-dark rounded-xl p-5 border border-dark flex-grow relative overflow-hidden">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+          <span className="font-data text-[10px] uppercase text-primary/50 tracking-widest">Internt varsel</span>
         </div>
-        <div className="absolute right-6 bottom-6 px-4 py-2 bg-dark text-primary rounded-lg font-data text-xs border border-dark">
-          LAGRE STATUS
-        </div>
-
-        {/* Animated Custom Cursor */}
-        <div ref={cursorRef} className="absolute top-4 left-4 z-20 pointer-events-none">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4.64645 2.14645C4.28825 1.78825 3.66667 2.04212 3.66667 2.54881V21.4512C3.66667 21.9579 4.28825 22.2117 4.64645 21.8536L10.027 16.473L15.4262 21.8722C15.6565 22.1025 16.0351 22.062 16.2163 21.7877L18.7303 17.9866C18.8879 17.7483 18.8519 17.4363 18.6416 17.2372L13.7937 12.6517L21.0537 10.3235C21.5369 10.1685 21.597 9.50853 21.1593 9.25595L4.64645 2.14645Z" fill="#111111" stroke="#E63B2E" strokeWidth="1.5" />
-          </svg>
+        <div className="space-y-3">
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 animate-[fadeIn_0.5s_ease-in-out]">
+            <p className="font-data text-[10px] text-accent uppercase tracking-wider mb-1">Ny henvendelse</p>
+            <p className="font-sans text-primary text-sm font-medium">Ola Nordmann — Rørlegger</p>
+            <p className="font-sans text-primary/60 text-xs mt-1">Trenger hjelp med vannlekkasje</p>
+          </div>
+          <div className="bg-accent/20 border border-accent/30 rounded-lg p-3">
+            <p className="font-data text-[10px] text-accent uppercase tracking-wider mb-1">SMS sendt automatisk</p>
+            <p className="font-sans text-primary/80 text-xs">"Hei Ola! Vi har mottatt henvendelsen din om vannlekkasjen..."</p>
+          </div>
         </div>
       </div>
     </div>
@@ -307,12 +284,12 @@ const Features = () => {
   return (
     <section id="features" ref={sectionRef} className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
       <div className="mb-16 max-w-2xl">
-        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-4">Funksjonelle Systemer.</h2>
+        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-4">Hvordan det fungerer.</h2>
         <p className="font-sans text-dark/80 text-lg mb-2">
-          De fleste mister pengene i mellomrommet mellom "lead sendt" og "første svar", ikke i fancy AI-prosesser.
+          Kunden sender inn et skjema. Hvem svarer først — du eller konkurrenten? Det er hele forskjellen.
         </p>
         <p className="font-sans text-dark/70 text-lg">
-          Vi selger ikke abstrakte AI-transformasjoner. Vi ruller ut verktøy designet for én eneste metrikk: umiddelbar inntjening.
+          Vi sørger for at svaret ditt alltid er først — automatisk, personlig, og uten at du trenger å løfte en finger.
         </p>
       </div>
 
@@ -320,6 +297,88 @@ const Features = () => {
         <div className="feature-card"><FeatureShuffler /></div>
         <div className="feature-card"><FeatureTypewriter /></div>
         <div className="feature-card"><FeatureScheduler /></div>
+      </div>
+    </section>
+  );
+};
+
+// VSL Section
+const VSL = () => {
+  const iframeRef = useRef(null);
+  const sectionRef = useRef(null);
+  const hasPlayed = useRef(false);
+  const [state, setState] = useState('muted'); // 'muted' | 'playing' | 'paused'
+
+  const postVimeo = (method) => {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ method }), '*'
+    );
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasPlayed.current && iframeRef.current) {
+          hasPlayed.current = true;
+          postVimeo('play');
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const handleClick = () => {
+    if (state === 'muted') {
+      postVimeo('setVolume', 1);
+      postVimeo('setVolume');
+      // background=1 mutes by default, unmute it
+      iframeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ method: 'setVolume', value: 1 }), '*'
+      );
+      setState('playing');
+    } else if (state === 'playing') {
+      postVimeo('pause');
+      setState('paused');
+    } else {
+      postVimeo('play');
+      setState('playing');
+    }
+  };
+
+  const label = state === 'muted' ? 'Slå på lyd' : state === 'playing' ? 'Pause' : 'Spill av';
+
+  return (
+    <section ref={sectionRef} className="relative bg-dark py-20 px-6 md:px-16">
+      <div className="max-w-4xl mx-auto">
+        <p className="font-heading font-bold text-primary/60 text-sm tracking-widest uppercase mb-4 text-center">
+          Se hvordan det fungerer
+        </p>
+        <div
+          className="relative w-full rounded-2xl overflow-hidden border border-primary/10 shadow-2xl cursor-pointer group"
+          style={{ aspectRatio: '16/9' }}
+          onClick={handleClick}
+        >
+          <iframe
+            ref={iframeRef}
+            src="https://player.vimeo.com/video/1180465943?badge=0&autopause=0&player_id=0&app_id=58479&dnt=1&title=0&byline=0&portrait=0&controls=0&background=1"
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            title="Monstr — Speed-to-Lead"
+          />
+          <div className="absolute inset-0 z-10 flex items-center justify-center">
+            <span className={`font-heading font-bold text-primary/70 text-lg tracking-tight px-6 py-3 rounded-full bg-dark/40 backdrop-blur-sm transition-opacity duration-300 ${state === 'playing' ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+              {label}
+            </span>
+          </div>
+        </div>
+        <div className="mt-8 text-center">
+          <MagneticButton className="px-8 py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>
+            Prøv det risikofritt <ArrowRight size={18} />
+          </MagneticButton>
+        </div>
       </div>
     </section>
   );
@@ -364,19 +423,20 @@ const Philosophy = () => {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-dark z-10 opacity-60"></div>
         <img
-          src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=2670&auto=format&fit=crop"
+          src="/hero-bg.jpg"
           alt="Concrete texture bg"
+          loading="lazy"
           className="phil-bg w-full h-[120%] object-cover opacity-30 select-none scale-105"
         />
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto flex flex-col justify-center min-h-[50vh]">
         <h2 className="phil-line font-heading font-bold text-xl md:text-2xl text-primary/60 tracking-tight mb-6">
-          De fleste byråer fokuserer på: <span className="text-primary/90">Abstrakte AI-transformasjoner</span>.
+          Folk finner deg på nett og sender en henvendelse. <span className="text-primary/90">Men hva skjer etterpå?</span>
         </h2>
         <div className="phil-line font-drama italic text-5xl md:text-7xl lg:text-8xl text-primary leading-[1.1] max-w-4xl">
-          Vi fokuserer på øyeblikket der pengene avgjøres: <br />
-          <span className="text-accent underline decoration-4 underline-offset-[12px]">De første minuttene.</span>
+          De fleste kundene du mister, mister du ikke på pris. De glipper fordi <br />
+          <span className="text-accent underline decoration-4 underline-offset-[12px]">noen andre svarte først.</span>
         </div>
       </div>
     </section>
@@ -434,7 +494,7 @@ const Protocol = () => {
       <ProtocolStep
         num="01"
         title="Henvendelsen mottas"
-        desc="Nye leads kommer inn via dine eksisterende kanaler (nettside, skjemaer eller annonser). I stedet for å la timer gå, fanger vi opp signalet umiddelbart mens kunden fremdeles har dere friskt i minnet – det er her 21x-effekten oppstår."
+        desc="Noen sender inn et skjema på nettsiden din — kanskje en lekkasje, kanskje et nytt bad. De sender til deg og to konkurrenter samtidig. I stedet for at henvendelsen ligger og venter, fanger vi den opp umiddelbart."
         icon={
           <div className="relative w-full h-full flex justify-center items-center">
             <div className="absolute w-40 h-40 border-2 border-dark rounded-full animate-[spin_10s_linear_infinite]"></div>
@@ -446,7 +506,7 @@ const Protocol = () => {
       <ProtocolStep
         num="02"
         title="Umiddelbart svar"
-        desc="Sekunder senere sender systemet ut et naturlig og skreddersydd svar på SMS eller e-post. På denne måten tar dere personlig kontakt før konkurrentene i det hele tatt har registrert henvendelsen."
+        desc="Sekunder senere får kunden en personlig SMS med firmanavnet ditt som avsender. De vet at dere er på saken — før konkurrenten har sjekket innboksen sin."
         icon={
           <div className="relative w-full h-full flex justify-center items-center p-12">
             <div className="w-full h-full overflow-hidden relative border border-dark bg-primary flex flex-col gap-2 p-4">
@@ -460,8 +520,8 @@ const Protocol = () => {
       />
       <ProtocolStep
         num="03"
-        title="Gjentagende oppfølging"
-        desc="De færreste svarer på første melding. Hvis leadet forblir stille, fortsetter systemet å purre på en høflig måte over de neste dagene, inntil de enten svarer, booker et møte, eller sier nei."
+        title="Du får beskjed"
+        desc="Samtidig som kunden får SMS, får du og teamet ditt et varsel med all info — hvem det er, hva de trenger, og at de allerede har fått svar. Du kan ringe dem opp med full kontekst, mens de fortsatt er varme."
         icon={
           <div className="relative w-full h-full flex justify-center items-center">
             <svg viewBox="0 0 200 100" className="w-full h-32 px-12">
@@ -493,47 +553,34 @@ const Pricing = () => {
   return (
     <section className="py-32 px-6 md:px-16 max-w-7xl mx-auto bg-background">
       <div className="text-center mb-16 max-w-3xl mx-auto">
-        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Start Sekvens.</h2>
-        <p className="font-sans text-dark/70 text-lg md:text-xl">Slutt å tape innkommende leads på grunn av treg oppfølging. Book en demo for å se om speed-to-lead er verdt å implementere for din bedrift.</p>
+        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Hva du får.</h2>
+        <p className="font-sans text-dark/70 text-lg md:text-xl">Slutt å tape kunder på grunn av treg oppfølging. Book en samtale for å se om dette er verdt å sette opp for din bedrift.</p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-        {/* Tier 1: Standardpakke */}
+      <div className="max-w-2xl mx-auto">
         <div className="card-brutalist p-8 md:p-12 flex flex-col justify-between">
           <div>
-            <div className="inline-block px-3 py-1 bg-accent/10 text-accent font-data text-xs font-bold rounded-full mb-4">MEST VALGT</div>
-            <h3 className="font-data text-dark/50 font-bold mb-2 uppercase tracking-widest text-xs">Standard System</h3>
-            <div className="font-heading font-bold text-4xl text-dark mb-4">3 000,- <span className="font-sans text-lg text-dark/50 font-normal">/mnd</span></div>
+            <div className="inline-block px-3 py-1 bg-accent/10 text-accent font-data text-xs font-bold rounded-full mb-4">ALT INKLUDERT</div>
+            <div className="flex items-center gap-3 mb-3">
+              <span className="font-data text-xs font-bold text-dark/40 uppercase tracking-wider">Setup fee:</span>
+              <span className="font-heading font-bold text-lg text-dark/40 line-through">14 000,-</span>
+              <span className="font-heading font-bold text-lg text-accent">0,-</span>
+              <span className="inline-block px-2 py-0.5 bg-accent/10 text-accent font-data text-[10px] font-bold rounded-full uppercase">Tidsbegrenset</span>
+            </div>
+            <h3 className="font-data text-dark/50 font-bold mb-2 uppercase tracking-widest text-xs">Monstr Speed-to-Lead</h3>
+            <div className="font-heading font-bold text-4xl text-dark mb-4">5 000,- <span className="font-sans text-lg text-dark/50 font-normal">/mnd</span></div>
             <p className="font-sans text-dark/70 mb-8 leading-relaxed">
-              Et fiks-ferdig system som tar unna alle innkommende henvendelser og varmer dem opp for salgsteamet. Ingen kompliserte CRM-integrasjoner er nødvendig for å komme i gang.
+              Kundene dine får et personlig svar innen sekunder, og du får et varsel med full kontekst. Vi setter opp alt — ingen teknisk arbeid fra din side.
             </p>
             <ul className="space-y-4 font-sans text-dark/80 mb-10">
               <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Umiddelbar respons (SMS / E-post) innen sekunder</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Utholdende oppfølgingssekvens for leads som ikke svarer</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Naturlig AI-tilpasning for menneskelige svar</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Enkelt rapporterings-dashboard og internvarsling</span></li>
+              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Personlig SMS med firmanavnet ditt som avsender</span></li>
+              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Kobles til systemene du allerede bruker</span></li>
+              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Varsel til deg og teamet med full kontekst</span></li>
+              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Fungerer med skjemaer, annonser og nettsiden din</span></li>
             </ul>
           </div>
-          <MagneticButton variant="accent" className="w-full py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>Start med Standard</MagneticButton>
-        </div>
-
-        {/* Tier 2: Enterprise */}
-        <div className="card-brutalist-dark p-8 md:p-12 flex flex-col justify-between">
-          <div>
-            <div className="inline-block px-3 py-1 bg-white/5 text-primary/50 font-data text-xs font-bold rounded-full mb-4">SKREDDERSYDD</div>
-            <h3 className="font-data text-primary/40 font-bold mb-2 uppercase tracking-widest text-xs">Enterprise</h3>
-            <div className="font-heading font-bold text-4xl text-primary mb-4">6 000,- <span className="font-sans text-lg text-primary/40 font-normal">/mnd</span></div>
-            <p className="font-sans text-primary/70 mb-8 leading-relaxed">
-              For kunder med svært spesifikke, tekniske leads-flyter som krever dyp integrasjon. Toveis synkronisering inn i store IT- og CRM-systemer.
-            </p>
-            <ul className="space-y-4 font-sans text-primary/90 mb-10">
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Alt inkludert i Standard-systemet</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Kompleks to-veis CRM-integrasjon (HubSpot, etc.)</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Avansert lead-ruting på tvers av selgere</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Dedikert teknisk support og driftsansvar (SLA)</span></li>
-            </ul>
-          </div>
-          <MagneticButton variant="dark" className="w-full py-4 text-base border border-primary/20 hover:border-accent flex items-center justify-center" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>Be om Enterprise-tilbud</MagneticButton>
+          <MagneticButton variant="accent" className="w-full py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>Kom i gang</MagneticButton>
         </div>
       </div>
 
@@ -541,18 +588,18 @@ const Pricing = () => {
       <div className="mt-16 bg-dark rounded-[2rem] p-8 md:p-12 border border-primary/20 flex flex-col md:flex-row items-center gap-10">
         <div className="flex-1 space-y-4">
           <div className="inline-block px-3 py-1 bg-accent/20 text-accent font-data text-xs font-bold rounded-full mb-2">UTEN RISIKO</div>
-          <h3 className="font-heading font-bold text-2xl md:text-3xl text-primary">14-dagers pilot</h3>
+          <h3 className="font-heading font-bold text-2xl md:text-3xl text-primary">Prøv 14 dager gratis</h3>
           <p className="font-sans text-primary/70 text-lg leading-relaxed">
-            For utvalgte bedrifter setter vi opp en enkel speed-to-lead-flyt på én lead-kilde i 14 dager. Hvis dere ikke ser verdi, skrur vi den av. Hvis dere ser resultater, fortsetter vi på en av planene over.
+            Du skal se at det fungerer før du betaler en krone. Vi setter opp hele speed-to-lead-systemet, og du kjører det gratis i 14 dager. Får du ikke mer igjen enn det koster, avslutter du uten spørsmål. En investering, ikke en utgift.
           </p>
         </div>
         <div className="w-full md:w-px h-px md:h-32 bg-primary/20"></div>
         <div className="flex-1 space-y-4">
-          <h3 className="font-heading font-bold text-xl text-primary">391 % høyere sjanse for salg</h3>
+          <h3 className="font-heading font-bold text-xl text-primary">21x høyere sjanse for salg</h3>
           <p className="font-sans text-primary/70 text-base leading-relaxed">
-            Å flytte responstiden ned fra timer til under ett minutt er den mest lønnsomme investeringen du kan gjøre. Det er bevist at respons innen 1 minutt kan gi opptil 391 % høyere konverteringsrate på innkommende leads.
+            Bedrifter som svarer innen 5 minutter er 21 ganger mer sannsynlig å lande kunden enn de som venter en halvtime. Etter det faller sjansen dramatisk.
             <br /><br />
-            Vi bygger oppsettet som får dette til å skje automatisk, hver gang.
+            Vi sørger for at du alltid svarer innen sekunder — automatisk, hver gang.
           </p>
         </div>
       </div>
@@ -567,7 +614,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 border-b border-primary/10 pb-16">
         <div>
           <div className="font-heading font-bold text-3xl text-primary mb-4">Monstr</div>
-          <p className="font-sans text-primary/60 max-w-sm">Et fiks-ferdig speed-to-lead og oppfølgingssystem for bedrifter som ønsker å fange momentum.</p>
+          <p className="font-sans text-primary/60 max-w-sm">Den som svarer først, får jobben. Vi sørger for at det alltid er deg.</p>
         </div>
 
         <div className="grid grid-cols-2 gap-8 font-sans">
@@ -576,21 +623,22 @@ const Footer = () => {
             <ul className="space-y-3 text-primary/60 text-sm">
               <li><a href="#features" className="hover:text-primary transition-colors">Funksjoner</a></li>
               <li><a href="#protocol" className="hover:text-primary transition-colors">Protokoll</a></li>
+              <li><a href="/blogg" className="hover:text-primary transition-colors">Ressurser</a></li>
               <li><a href="#" className="hover:text-primary transition-colors">Priser</a></li>
             </ul>
           </div>
           <div>
             <h4 className="font-heading font-bold text-primary mb-4 tracking-tight">Juridisk</h4>
             <ul className="space-y-3 text-primary/60 text-sm">
-              <li><a href="#" className="hover:text-primary transition-colors">Personvernerklæring</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Brukervilkår</a></li>
+              <li><a href="/personvern" className="hover:text-primary transition-colors">Personvernerklæring</a></li>
+              <li><a href="/vilkar" className="hover:text-primary transition-colors">Brukervilkår</a></li>
             </ul>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        <p className="font-sans text-primary/40 text-xs">© {new Date().getFullYear()} Monstr. Alle systemer er operative.</p>
+        <p className="font-sans text-primary/40 text-xs">© {new Date().getFullYear()} Monstr. Org.nr: 933 378 179 · Skien, Norge</p>
 
         <div className="font-data text-primary text-xs flex items-center gap-3 border border-primary/20 rounded-full px-4 py-2 bg-background/5">
           <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
@@ -606,12 +654,12 @@ const FitCheck = () => {
   return (
     <section className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
       <div className="max-w-4xl mx-auto">
-        <h2 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight mb-6">Er Monstr Speed-to-Lead en god match for din bedrift?</h2>
+        <h2 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight mb-6">Er dette noe for deg?</h2>
         <p className="font-sans text-dark/80 text-lg md:text-xl mb-4 leading-relaxed">
-          Vi implementerer kun speed-to-lead-systemer der de realistisk sett kan skape økt inntjening. Hvis du allerede mottar innkommende leads via skjemaer og ønsker å konvertere flere av dem gjennom raskere respons og oppfølging, er du sannsynligvis en god match.
+          Vi setter kun opp dette der det realistisk sett kan skape økt inntjening. Hvis du allerede får henvendelser via skjemaer og vil gjøre flere av dem til betalende kunder, er du sannsynligvis en god match.
         </p>
         <p className="font-sans text-accent font-medium text-lg mb-16">
-          Hvis hovedproblemet ditt i dag er at du ikke får nok leads, vil vi fortelle deg det direkte i stedet for å selge deg feil tjeneste.
+          Hvis hovedproblemet ditt i dag er at du ikke får nok henvendelser, vil vi fortelle deg det direkte i stedet for å selge deg feil tjeneste.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-16">
@@ -621,11 +669,11 @@ const FitCheck = () => {
               Dette passer for deg hvis:
             </h3>
             <ul className="space-y-4 font-sans text-dark/80">
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du allerede mottar innkommende leads via skjemaer, landingssider, bookingforespørsler eller annonsekampanjer.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du allerede mottar henvendelser via skjemaer, nettsiden, bookingforespørsler eller annonser.</li>
               <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> En ny kunde er verdt ekte penger for din bedrift.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Teamet ditt er ofte for trege eller inkonsekvente til å svare på nye henvendelser.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du ønsker et fiks-ferdig system som kjører i bakgrunnen.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du er åpen for å beholde det over lengre tid hvis det åpenbart fungerer.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du vet at dere av og til bruker for lang tid på å svare.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du vil ha noe som bare fungerer — uten at du trenger å tenke på det.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Én ekstra kunde i måneden er allerede verdt mer enn det koster.</li>
             </ul>
           </div>
 
@@ -635,11 +683,11 @@ const FitCheck = () => {
               Sannsynligvis ikke match hvis:
             </h3>
             <ul className="space-y-4 font-sans text-primary/80">
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du får veldig få innkommende leads per i dag.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Mesteparten av etterspørselen din kun kommer via telefonsamtaler som vi ikke kan koble til et skjema.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du enda ikke har en pålitelig kilde til leads eller markedsføring.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du hovedsakelig trenger mer trafikk eller markedsføring, ikke raskere oppfølging.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du er bare nysgjerrig på AI og ikke aktivt prøver å forbedre konverteringer.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du får veldig få henvendelser per i dag.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Alle kundene dine ringer — ingen bruker skjema eller nett.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du enda ikke har en pålitelig kilde til henvendelser eller markedsføring.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Problemet er at du ikke får nok henvendelser i det hele tatt.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du er bare nysgjerrig — ikke klar til å faktisk gjøre noe med det.</li>
             </ul>
           </div>
         </div>
@@ -652,163 +700,276 @@ const FitCheck = () => {
   );
 };
 
-// Booking Form Component
+// Booking Form Component — Two-step: contact info first, qualifying questions after
 const BookingForm = () => {
+  const [formData, setFormData] = useState({
+    firstName: '', lastName: '', company: '', email: '', phone: '', website: '',
+    leadsPerMonth: '', leadSources: [], followUpProcess: '',
+    customerValue: '', intent: '', decisionMaker: '',
+  });
+  const [step, setStep] = useState(1); // 1 = contact info, 2 = qualifying questions
+  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const updateField = (field, value) => setFormData(prev => ({ ...prev, [field]: value }));
+
+  const toggleSource = (source) => {
+    setFormData(prev => ({
+      ...prev,
+      leadSources: prev.leadSources.includes(source)
+        ? prev.leadSources.filter(s => s !== source)
+        : [...prev.leadSources, source],
+    }));
+  };
+
+  const handleStep1 = (e) => {
+    e.preventDefault();
+    if (!formData.firstName || !formData.phone || !formData.company) {
+      setErrorMsg('Vennligst fyll inn fornavn, telefonnummer og bedrift.');
+      setStatus('error');
+      return;
+    }
+    setErrorMsg('');
+    setStatus('idle');
+    setStep(2);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('submitting');
+    setErrorMsg('');
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      const res = await fetch('/api/submit-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Noe gikk galt.');
+      }
+      setStatus('success');
+    } catch (err) {
+      setErrorMsg(err.message);
+      setStatus('error');
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <section id="book" className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+        <div className="max-w-3xl mx-auto card-brutalist bg-primary p-8 md:p-12 text-center">
+          <div className="w-16 h-16 rounded-full bg-dark text-accent flex items-center justify-center text-3xl mx-auto mb-6">
+            <CheckCircle size={32} />
+          </div>
+          <h2 className="font-heading font-bold text-3xl md:text-4xl text-dark tracking-tight mb-4">Forespørsel mottatt</h2>
+          <p className="font-sans text-dark/80 text-lg leading-relaxed max-w-lg mx-auto">
+            Vi går gjennom detaljene dine og tar kontakt innen 24 timer. Hvis det er en god match, inviterer vi deg til en kort samtale.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  const inputClass = "w-full bg-background border border-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors shadow-[2px_2px_0px_#111111]";
+  const selectClass = "w-full bg-background border border-dark text-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors appearance-none shadow-[2px_2px_0px_#111111]";
+  const leadSourceOptions = ['Kontaktskjema på nettsiden', 'Landingssider', 'Google Ads', 'Meta Ads', 'Organisk søk / SEO', 'Henvisningssider / markedsplasser', 'Bookingskjema', 'Annet'];
+
   return (
     <section id="book" className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
       <div className="max-w-3xl mx-auto card-brutalist bg-primary p-8 md:p-12 relative overflow-hidden">
-        {/* Subtle background element */}
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
-        <div className="relative z-10 mb-12">
-          <h2 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight mb-4">Før du booker en samtale</h2>
-          <p className="font-sans text-dark/80 text-lg leading-relaxed mb-4">
-            For å holde møtene fokuserte og nyttige, snakker vi kun med bedrifter der speed-to-lead realistisk sett kan lønne seg.
-          </p>
-          <p className="font-sans text-dark/70 text-base leading-relaxed">
-            Hvis du allerede får innkommende leads og vil konvertere flere av dem med raskere respons og bedre oppfølging, fyll inn detaljene nedenfor. Hvis vi ser at lead-volumet ikke er der enda, vil vi rett og slett fortelle deg det i stedet for å prøve å selge deg noe for tidlig.
-          </p>
-        </div>
-
-        <form className="relative z-10 space-y-8" onSubmit={(e) => e.preventDefault()}>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-2 translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Navn</label>
-              <input type="text" className="w-full bg-background border border-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors shadow-[2px_2px_0px_#111111]" placeholder="Fornavn Etternavn" />
+        {step === 1 ? (
+          <>
+            <div className="relative z-10 mb-12">
+              <h2 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight mb-4">Prøv 14 dager gratis</h2>
+              <p className="font-sans text-dark/80 text-lg leading-relaxed">
+                Fyll inn detaljene dine, så tar vi kontakt for å sette opp alt. Du skal se at det fungerer før du betaler noe.
+              </p>
             </div>
-            <div className="space-y-2 translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Selskap</label>
-              <input type="text" className="w-full bg-background border border-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors shadow-[2px_2px_0px_#111111]" placeholder="Ditt Selskap AS" />
-            </div>
-          </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-2 translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">E-post</label>
-              <input type="email" className="w-full bg-background border border-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors shadow-[2px_2px_0px_#111111]" placeholder="navn@selskap.no" />
-            </div>
-            <div className="space-y-2 translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Telefonnummer</label>
-              <input type="tel" className="w-full bg-background border border-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors shadow-[2px_2px_0px_#111111]" placeholder="+47 000 00 000" />
-            </div>
-          </div>
-
-          <div className="space-y-2 translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-            <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Nettside</label>
-            <input type="url" className="w-full bg-background border border-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors shadow-[2px_2px_0px_#111111]" placeholder="https://www.dinsite.no" />
-          </div>
-
-          <div className="w-full h-px bg-dark/10 my-8"></div>
-
-          <div className="space-y-10">
-            <div className="space-y-3">
-              <label className="font-heading font-medium text-dark text-lg">1. Omtrent hvor mange innkommende leads får du i måneden?</label>
-              <div className="relative translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-                <select className="w-full bg-background border border-dark text-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors appearance-none shadow-[2px_2px_0px_#111111]" defaultValue="">
-                  <option value="" disabled>Velg et alternativ</option>
-                  <option>0–10</option>
-                  <option>10–30</option>
-                  <option>30–75</option>
-                  <option>75+</option>
-                </select>
-                <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                  <span className="text-dark/50">▼</span>
+            <form className="relative z-10 space-y-6" onSubmit={handleStep1}>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Fornavn *</label>
+                  <input type="text" className={inputClass} placeholder="Fornavn" value={formData.firstName} onChange={e => updateField('firstName', e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Etternavn</label>
+                  <input type="text" className={inputClass} placeholder="Etternavn" value={formData.lastName} onChange={e => updateField('lastName', e.target.value)} />
                 </div>
               </div>
-            </div>
 
-            <div className="space-y-4">
-              <label className="font-heading font-medium text-dark text-lg">2. Hvor kommer de fleste av dine leads fra i dag?</label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-sans text-dark/90 text-sm">
-                <label className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors"><input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" /> Kontaktskjema på nettsiden</label>
-                <label className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors"><input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" /> Landingssider</label>
-                <label className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors"><input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" /> Google Ads</label>
-                <label className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors"><input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" /> Meta Ads</label>
-                <label className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors"><input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" /> Organisk søk / SEO</label>
-                <label className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors"><input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" /> Henvisningssider / markedsplasser</label>
-                <label className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors"><input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" /> Bookingskjema</label>
-                <label className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors"><input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" /> Annet</label>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <label className="font-heading font-medium text-dark text-lg">3. Hva skjer vanligvis etter at et nytt lead kommer inn?</label>
-              <div className="relative translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-                <select className="w-full bg-background border border-dark text-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent shadow-[2px_2px_0px_#111111] transition-colors appearance-none" defaultValue="">
-                  <option value="" disabled>Velg et alternativ</option>
-                  <option>Vi svarer raskt mesteparten av tiden</option>
-                  <option>Vi svarer, men det er inkonsekvent</option>
-                  <option>Vi er ofte for trege med å svare</option>
-                  <option>Vi har ikke en tydelig prosess</option>
-                </select>
-                <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                  <span className="text-dark/50">▼</span>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Bedrift *</label>
+                  <input type="text" className={inputClass} placeholder="Ditt Selskap AS" value={formData.company} onChange={e => updateField('company', e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Telefonnummer *</label>
+                  <input type="tel" className={inputClass} placeholder="+47 000 00 000" value={formData.phone} onChange={e => updateField('phone', e.target.value)} />
                 </div>
               </div>
-            </div>
 
-            <div className="space-y-3">
-              <label className="font-heading font-medium text-dark text-lg">4. Omtrent hva er én ny kunde verdt for deg?</label>
-              <div className="relative translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-                <select className="w-full bg-background border border-dark text-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent shadow-[2px_2px_0px_#111111] transition-colors appearance-none" defaultValue="">
-                  <option value="" disabled>Velg et alternativ</option>
-                  <option>Under 5 000 NOK</option>
-                  <option>5 000–15 000 NOK</option>
-                  <option>15 000–50 000 NOK</option>
-                  <option>50 000+ NOK</option>
-                </select>
-                <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                  <span className="text-dark/50">▼</span>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">E-post</label>
+                  <input type="email" className={inputClass} placeholder="navn@selskap.no" value={formData.email} onChange={e => updateField('email', e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Nettside</label>
+                  <input type="text" className={inputClass} placeholder="dinside.no" value={formData.website} onChange={e => updateField('website', e.target.value)} />
                 </div>
               </div>
+
+              {status === 'error' && (
+                <div className="bg-accent/10 border border-accent rounded-xl p-4 font-sans text-accent text-sm">
+                  {errorMsg}
+                </div>
+              )}
+
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  className="w-full text-lg py-5 font-heading font-bold rounded-2xl border-2 border-dark shadow-[4px_4px_0px_#111111] bg-accent text-background hover:scale-[1.02] active:scale-[0.98] active:shadow-[2px_2px_0px_#111111] transition-all duration-200 flex items-center justify-center"
+                >
+                  Neste steg <ArrowRight className="ml-2" size={20} />
+                </button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <>
+            <div className="relative z-10 mb-8">
+              <h2 className="font-heading font-bold text-2xl md:text-4xl text-dark tracking-tight mb-3">Bare noen kjappe spørsmål til</h2>
+              <p className="font-sans text-dark/70 text-base leading-relaxed">
+                Så vi kan forberede oss og gi deg mest mulig verdi fra dag én. Du kan hoppe over disse om du vil.
+              </p>
             </div>
 
-            <div className="space-y-3">
-              <label className="font-heading font-medium text-dark text-lg">5. Er du ute etter en test, eller en langsiktig løsning?</label>
-              <div className="relative translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-                <select className="w-full bg-background border border-dark text-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent shadow-[2px_2px_0px_#111111] transition-colors appearance-none" defaultValue="">
-                  <option value="" disabled>Velg et alternativ</option>
-                  <option>Gjør bare undersøkelser</option>
-                  <option>Åpen for en pilot / test</option>
-                  <option>Ute etter en langsiktig løsning</option>
-                </select>
-                <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                  <span className="text-dark/50">▼</span>
+            <form className="relative z-10 space-y-8" onSubmit={handleSubmit}>
+              <div className="space-y-8">
+                <div className="space-y-3">
+                  <label className="font-heading font-medium text-dark text-lg">1. Omtrent hvor mange henvendelser får du i måneden?</label>
+                  <div className="relative">
+                    <select className={selectClass} value={formData.leadsPerMonth} onChange={e => updateField('leadsPerMonth', e.target.value)}>
+                      <option value="" disabled>Velg et alternativ</option>
+                      <option>0–10</option>
+                      <option>10–30</option>
+                      <option>30–75</option>
+                      <option>75+</option>
+                    </select>
+                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                      <span className="text-dark/50">▼</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <label className="font-heading font-medium text-dark text-lg">2. Hvor kommer de fleste henvendelsene fra?</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-sans text-dark/90 text-sm">
+                    {leadSourceOptions.map(source => (
+                      <label key={source} className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors">
+                        <input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" checked={formData.leadSources.includes(source)} onChange={() => toggleSource(source)} /> {source}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="font-heading font-medium text-dark text-lg">3. Hva skjer vanligvis etter at en ny henvendelse kommer inn?</label>
+                  <div className="relative">
+                    <select className={selectClass} value={formData.followUpProcess} onChange={e => updateField('followUpProcess', e.target.value)}>
+                      <option value="" disabled>Velg et alternativ</option>
+                      <option>Vi svarer raskt mesteparten av tiden</option>
+                      <option>Vi svarer, men det er inkonsekvent</option>
+                      <option>Vi er ofte for trege med å svare</option>
+                      <option>Vi har ikke en tydelig prosess</option>
+                    </select>
+                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                      <span className="text-dark/50">▼</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="font-heading font-medium text-dark text-lg">4. Omtrent hva er én ny kunde verdt for deg?</label>
+                  <div className="relative">
+                    <select className={selectClass} value={formData.customerValue} onChange={e => updateField('customerValue', e.target.value)}>
+                      <option value="" disabled>Velg et alternativ</option>
+                      <option>Under 5 000 NOK</option>
+                      <option>5 000–15 000 NOK</option>
+                      <option>15 000–50 000 NOK</option>
+                      <option>50 000+ NOK</option>
+                    </select>
+                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                      <span className="text-dark/50">▼</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="space-y-3">
-              <label className="font-heading font-medium text-dark text-lg">6. Hvem vil være involvert i beslutningen?</label>
-              <div className="relative translate-y-0 hover:-translate-y-1 transition-transform duration-300">
-                <select className="w-full bg-background border border-dark text-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent shadow-[2px_2px_0px_#111111] transition-colors appearance-none" defaultValue="">
-                  <option value="" disabled>Velg et alternativ</option>
-                  <option>Eier / gründer</option>
-                  <option>Salgssjef</option>
-                  <option>Markedsføringssjef</option>
-                  <option>Annet</option>
-                </select>
-                <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                  <span className="text-dark/50">▼</span>
+              {status === 'error' && (
+                <div className="bg-accent/10 border border-accent rounded-xl p-4 font-sans text-accent text-sm">
+                  {errorMsg}
                 </div>
-              </div>
-            </div>
-          </div>
+              )}
 
-          <div className="pt-8">
-            <MagneticButton className="w-full text-lg py-5">
-              Send Inn Forespørsel <ArrowRight className="ml-2" size={20} />
-            </MagneticButton>
-            <p className="font-sans text-dark/60 text-xs text-center mt-6 max-w-xl mx-auto leading-relaxed border border-dark/10 p-4 rounded-xl">
-              Vi går gjennom hver henvendelse for å sjekke om speed-to-lead realistisk sett kan skape verdi. Hvis vi tror at lead-volumet er det egentlige problemet, vil vi fortelle deg det i stedet for å gå videre. Hvis det ser ut som en god match, vil vi invitere deg til en kort samtale for å gjennomgå din nåværende lead-flyt.
-            </p>
-          </div>
-        </form>
-        {/* Stats FAQ */}
-        <div className="mt-12 bg-background border border-dark p-8 rounded-[2rem] shadow-[4px_4px_0px_#111111]">
+              <div className="pt-4 space-y-3">
+                <button
+                  type="submit"
+                  disabled={status === 'submitting'}
+                  className={`w-full text-lg py-5 font-heading font-bold rounded-2xl border-2 border-dark shadow-[4px_4px_0px_#111111] transition-all duration-200 flex items-center justify-center ${
+                    status === 'submitting'
+                      ? 'bg-dark/50 text-background cursor-not-allowed'
+                      : 'bg-accent text-background hover:scale-[1.02] active:scale-[0.98] active:shadow-[2px_2px_0px_#111111]'
+                  }`}
+                >
+                  {status === 'submitting' ? 'Sender...' : <>Send inn <ArrowRight className="ml-2" size={20} /></>}
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    setStatus('submitting');
+                    setErrorMsg('');
+                    try {
+                      const controller = new AbortController();
+                      const timeoutId = setTimeout(() => controller.abort(), 15000);
+                      const res = await fetch('/api/submit-lead', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData),
+                        signal: controller.signal,
+                      });
+                      clearTimeout(timeoutId);
+                      if (!res.ok) {
+                        const data = await res.json();
+                        throw new Error(data.error || 'Noe gikk galt.');
+                      }
+                      setStatus('success');
+                    } catch (err) {
+                      setErrorMsg(err.message);
+                      setStatus('error');
+                    }
+                  }}
+                  className="w-full text-sm py-3 font-sans text-dark/50 hover:text-dark/70 transition-colors"
+                >
+                  Hopp over — send inn uten ekstra info
+                </button>
+              </div>
+            </form>
+          </>
+        )}
+
+        <div className="relative z-10 mt-12 bg-background border border-dark p-8 rounded-[2rem] shadow-[4px_4px_0px_#111111]">
           <h3 className="font-heading font-bold text-xl text-dark mb-3">Hvorfor er responstid så avgjørende?</h3>
           <p className="font-sans text-dark/80 leading-relaxed text-sm md:text-base">
-            Studier viser at bedrifter som responderer innen 5 minutter er <strong className="text-accent underline decoration-2 underline-offset-4">21x mer sannsynlig</strong> å kvalifisere et lead enn de som venter i 30–60 minutter. Hvert minutt som går reduserer kundens intensjon. Første svar vinner ofte konverteringen.
+            Bedrifter som svarer innen 5 minutter er <strong className="text-accent underline decoration-2 underline-offset-4">21x mer sannsynlig</strong> å lande kunden enn de som venter i 30–60 minutter. Hvert minutt som går reduserer kundens interesse. Den som svarer først, får som regel jobben.
           </p>
         </div>
       </div>
@@ -816,15 +977,95 @@ const BookingForm = () => {
   );
 };
 
+// Social Proof — Real test data
+const SocialProof = () => {
+  return (
+    <section className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+      <div className="max-w-4xl mx-auto">
+        <div className="card-brutalist-dark p-8 md:p-12 border-primary/20">
+          <div className="inline-block px-3 py-1 bg-accent/20 text-accent font-data text-xs font-bold rounded-full mb-6">EKTE DATA</div>
+          <h2 className="font-heading font-bold text-3xl md:text-4xl text-primary tracking-tight mb-6">
+            Vi testet 50+ håndverkerbedrifter i Norge.
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 text-center">
+              <div className="font-heading font-bold text-4xl text-accent mb-2">1,5 t</div>
+              <p className="font-sans text-primary/70 text-sm">Raskeste svar</p>
+            </div>
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 text-center">
+              <div className="font-heading font-bold text-4xl text-accent mb-2">7+ d</div>
+              <p className="font-sans text-primary/70 text-sm">Tregest — fortsatt ingen svar</p>
+            </div>
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 text-center">
+              <div className="font-heading font-bold text-4xl text-accent mb-2">0</div>
+              <p className="font-sans text-primary/70 text-sm">Svarte innen 5 minutter</p>
+            </div>
+          </div>
+          <p className="font-sans text-primary/80 text-lg leading-relaxed">
+            Ikke én eneste bedrift svarte innen 5 minutter. De raskeste brukte halvannen time. Mange har fortsatt ikke svart etter over en uke. Her ligger det et stort konkurransefortrinn for de som svarer raskest.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ROI Section
+const ROI = () => {
+  return (
+    <section className="py-16 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="font-heading font-bold text-3xl md:text-4xl text-dark tracking-tight mb-4">Hva er én jobb verdt for deg?</h2>
+        <p className="font-sans text-dark/70 text-lg mb-8">Et nytt bad? En varmtvannsbereder? En terrasse? Du vet selv hva én ekstra kunde betyr for bunnlinjen.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div className="card-brutalist p-6">
+            <p className="font-sans text-dark/60 text-sm mb-2">Monstr koster</p>
+            <p className="font-heading font-bold text-3xl text-dark">5 000 kr/mnd</p>
+          </div>
+          <div className="card-brutalist p-6">
+            <p className="font-sans text-dark/60 text-sm mb-2">Det er</p>
+            <p className="font-heading font-bold text-3xl text-dark">60 000 kr/år</p>
+          </div>
+          <div className="card-brutalist p-6 border-accent/50">
+            <p className="font-sans text-dark/60 text-sm mb-2">Du trenger bare</p>
+            <p className="font-heading font-bold text-3xl text-accent">1 ekstra kunde</p>
+            <p className="font-sans text-dark/60 text-sm mt-1">for å betale for hele året</p>
+          </div>
+        </div>
+
+        <p className="max-w-2xl mx-auto font-sans text-dark/70 text-base md:text-lg leading-relaxed mt-2">
+          Forskning viser at bedrifter som svarer innen 5 minutter er <strong className="text-dark">21x mer sannsynlig</strong> å lande kunden. Når konkurrentene dine bruker timer på å svare og du svarer innen sekunder, er spørsmålet ikke <em>om</em> du får en ekstra kunde — det er hvor mange.
+        </p>
+      </div>
+    </section>
+  );
+};
+
 // Main App component
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Monstr',
+  url: 'https://monstr.no',
+  description: 'Automatisk oppfølging for norske bedrifter. Svar på henvendelser innen sekunder og gjør flere av dem til betalende kunder.',
+  areaServed: { '@type': 'Country', name: 'Norway' },
+  serviceType: 'Speed-to-lead automatisering',
+};
+
 function App() {
   return (
     <div className="min-h-screen bg-background relative w-full selection:bg-accent selection:text-background">
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
+      </Helmet>
       <Navbar />
       <Hero />
-      <Features />
+      <VSL />
       <Philosophy />
+      <SocialProof />
+      <Features />
       <Protocol />
+      <ROI />
       <Pricing />
       <FitCheck />
       <BookingForm />
