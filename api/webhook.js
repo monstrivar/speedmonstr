@@ -289,8 +289,8 @@ export default async function handler(req, res) {
       .catch(err => console.error('SMS Logg error:', err))
   );
 
-  // Telegram notification
-  if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+  // Telegram notification — only for monstr.no leads (no client ID), not for client webhooks
+  if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID && !clientId) {
     const telegramMsg = [
       `📩 Nytt lead${clientConfig ? ` — ${businessName}` : ''}!`,
       '',
