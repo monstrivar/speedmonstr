@@ -7,22 +7,33 @@ import { useAuth } from "@/hooks/useAuth"
 
 export function LoginPage() {
   const { t } = useTranslation()
-  const { signIn } = useAuth()
+  const { signIn, signInWithPassword } = useAuth()
   const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [usePassword, setUsePassword] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    const { error: signInError } = await signIn(email)
-    setLoading(false)
-    if (signInError) {
-      setError(t("auth.errorMessage"))
+
+    if (usePassword && password) {
+      const { error: signInError } = await signInWithPassword(email, password)
+      setLoading(false)
+      if (signInError) {
+        setError(signInError.message)
+      }
     } else {
-      setSent(true)
+      const { error: signInError } = await signIn(email)
+      setLoading(false)
+      if (signInError) {
+        setError(t("auth.errorMessage"))
+      } else {
+        setSent(true)
+      }
     }
   }
 
@@ -61,9 +72,29 @@ export function LoginPage() {
               {error && (
                 <p className="text-sm text-destructive">{error}</p>
               )}
+              {usePassword && (
+                <div className="space-y-2">
+                  <label htmlFor="password" className="text-sm font-medium">
+                    {t("auth.passwordLabel")}
+                  </label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              )}
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? t("auth.submitting") : t("auth.submitButton")}
+                {loading ? t("auth.submitting") : usePassword ? t("auth.signInButton") : t("auth.submitButton")}
               </Button>
+              <button
+                type="button"
+                className="w-full text-xs text-muted-foreground underline"
+                onClick={() => setUsePassword(!usePassword)}
+              >
+                {usePassword ? t("auth.useMagicLink") : t("auth.usePassword")}
+              </button>
             </form>
           )}
         </CardContent>

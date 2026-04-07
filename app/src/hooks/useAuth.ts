@@ -30,9 +30,13 @@ export function useAuth() {
     return supabase.auth.signInWithOtp({ email })
   }
 
+  const signInWithPassword = async (email: string, password: string) => {
+    return supabase.auth.signInWithPassword({ email, password })
+  }
+
   const signOut = async () => {
     return supabase.auth.signOut()
   }
 
-  return { user, loading, signIn, signOut }
+  return { user, loading, signIn, signInWithPassword, signOut }
 }

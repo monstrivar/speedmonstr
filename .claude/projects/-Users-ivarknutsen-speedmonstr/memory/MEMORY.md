@@ -1,2 +1,10 @@
 - [Project overview](project_overview.md) — Monstr: speed-to-lead service for Norwegian SMBs, React/Vite landing page
 - [CRM decision](project_crm_decision.md) — Using Airtable as lead management backend, not custom-built
+- [No premature automation](feedback_no_premature_automation.md) — Prove workflows manually before automating
+- [Outreach preference](user_outreach_preference.md) — Prefers form-first warm outreach over cold calling
+- [Company roadmap](project_roadmap_2026.md) — 6-month milestones: presentation Apr 17, AS at 30K, full-time at 80K MRR, Bali
+- [User goals](user_goals.md) — Building toward full-time entrepreneurship, Bali relocation
+- [Client onboarding workflow](feedback_client_onboarding.md) — "New client" triggers structured onboarding: ask questions, create config, provision Airtable
+- [AskUserQuestion scope](feedback_askuserquestion_scope.md) — Use AskUserQuestion for structured choices only, not variable free-text fields
+- [Vercel account](feedback_vercel_account.md) — Always use monstrivar Vercel account, never any other
+- [Sales phase Apr 2026](project_sales_phase.md) — Ulle cold-calling, Apr 17 is Claude workshop not Monstr, May 9 Monstr demo

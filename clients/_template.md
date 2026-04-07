@@ -26,7 +26,8 @@
 | Aktive Bedrifter table ID | tblfjGVLv2krsNwQk |
 | SMS Logg table ID | tblKQIg7SIGS91HAV |
 | SMS base record ID | _{Aktive Bedrifter record ID from SMS base}_ |
-| Plan | Vekst / Bedrift |
+| Kohort | _{1–6}_ |
+| Pris/mnd | _{cohort price}_ |
 | Onboarded | YYYY-MM-DD |
 
 ## SMS template

@@ -547,7 +547,7 @@ const Pricing = () => {
               <span className="inline-block px-2 py-0.5 bg-accent/10 text-accent font-data text-[10px] font-bold rounded-full uppercase">Tidsbegrenset</span>
             </div>
             <h3 className="font-data text-dark/50 font-bold mb-2 uppercase tracking-widest text-xs">Monstr Speed-to-Lead</h3>
-            <div className="font-heading font-bold text-4xl text-dark mb-4">5 000,- <span className="font-sans text-lg text-dark/50 font-normal">/mnd</span></div>
+            <div className="font-heading font-bold text-4xl text-dark mb-4">Fra 2 999,- <span className="font-sans text-lg text-dark/50 font-normal">/mnd</span></div>
             <p className="font-sans text-dark/70 mb-8 leading-relaxed">
               Kundene dine får et personlig svar innen sekunder, og du får et varsel med full kontekst. Vi setter opp alt — ingen teknisk arbeid fra din side.
             </p>
@@ -999,11 +999,11 @@ const ROI = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <div className="card-brutalist p-6">
             <p className="font-sans text-dark/60 text-sm mb-2">Monstr koster</p>
-            <p className="font-heading font-bold text-3xl text-dark">5 000 kr/mnd</p>
+            <p className="font-heading font-bold text-3xl text-dark">Fra 2 999 kr/mnd</p>
           </div>
           <div className="card-brutalist p-6">
             <p className="font-sans text-dark/60 text-sm mb-2">Det er</p>
-            <p className="font-heading font-bold text-3xl text-dark">60 000 kr/år</p>
+            <p className="font-heading font-bold text-3xl text-dark">35 988 kr/år</p>
           </div>
           <div className="card-brutalist p-6 border-accent/50">
             <p className="font-sans text-dark/60 text-sm mb-2">Du trenger bare</p>

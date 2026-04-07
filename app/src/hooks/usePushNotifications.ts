@@ -30,11 +30,15 @@ export function usePushNotifications(userId: string | null): void {
     const registrationListener = PushNotifications.addListener(
       "registration",
       async (token) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { error } = await (supabase.from("push_tokens") as any).upsert(
+        if (!token.value?.trim()) {
+          console.warn("[Push] Token is empty, skipping storage")
+          return
+        }
+
+        const { error } = await supabase.from("push_tokens").upsert(
           {
             user_id: userId,
-            token: token.value,
+            token: token.value.trim(),
             platform: "ios",
             updated_at: new Date().toISOString(),
           },
@@ -71,13 +75,16 @@ export function usePushNotifications(userId: string | null): void {
           | Record<string, string>
           | undefined
 
-        if (data?.phone) {
-          // Open phone dialer for the lead's phone number
-          window.location.href = `tel:${data.phone}`
+        // Deep link to specific lead if lead_id present
+        if (data?.lead_id) {
+          window.location.hash = `lead=${data.lead_id}`
           return
         }
 
-        // Default: app opens to dashboard (no-op — Capacitor handles foreground)
+        if (data?.phone) {
+          window.location.href = `tel:${encodeURIComponent(data.phone)}`
+          return
+        }
       }
     )
 

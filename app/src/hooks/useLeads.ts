@@ -25,11 +25,11 @@ export function useLeads(organizationId: string) {
     if (!organizationId) return
 
     const channel = supabase
-      .channel("leads-realtime")
+      .channel(`leads-realtime-${organizationId}`)
       .on(
         "postgres_changes",
         {
-          event: "INSERT",
+          event: "*",
           schema: "public",
           table: "leads",
           filter: `organization_id=eq.${organizationId}`,
@@ -38,7 +38,11 @@ export function useLeads(organizationId: string) {
           queryClient.invalidateQueries({ queryKey: ["leads", organizationId] })
         }
       )
-      .subscribe()
+      .subscribe((status) => {
+        if (status === "CHANNEL_ERROR") {
+          console.warn("[Realtime] Channel error, will attempt reconnect")
+        }
+      })
 
     return () => {
       supabase.removeChannel(channel)

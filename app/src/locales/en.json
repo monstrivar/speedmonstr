@@ -22,12 +22,17 @@
     "successTitle": "Check your inbox",
     "successMessage": "We sent a sign-in link to {{email}}",
     "errorMessage": "Could not send sign-in link. Please try again.",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "passwordLabel": "Password",
+    "signInButton": "Sign in",
+    "useMagicLink": "Use magic link",
+    "usePassword": "Sign in with password"
   },
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Hello, {{name}}",
     "newLeads": "New leads",
+    "leads": "leads",
     "totalLeads": "Total leads",
     "followedUp": "Followed up",
     "conversionRate": "Conversion rate",
@@ -42,6 +47,9 @@
     "answered": "Got through",
     "noAnswer": "No answer",
     "voicemail": "Left voicemail",
+    "addNote": "Add note",
+    "notePlaceholder": "E.g. Scheduled inspection Thursday 10:00",
+    "saveNote": "Save note",
     "cancel": "Cancel"
   },
   "lead": {
@@ -66,8 +74,25 @@
   },
   "navigation": {
     "dashboard": "Dashboard",
-    "leads": "Leads",
+    "archive": "Archive",
+    "activity": "Activity",
     "settings": "Settings"
+  },
+  "archive": {
+    "title": "Archive",
+    "noLeads": "No archived leads",
+    "emptyDescription": "Completed leads will appear here"
+  },
+  "activity": {
+    "title": "Activity",
+    "emptyDescription": "SMS log and call history coming soon"
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "notifications": "Notifications",
+    "team": "Team",
+    "comingSoon": "Coming soon"
   },
   "push": {
     "permissionTitle": "Allow notifications",

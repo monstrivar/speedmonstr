@@ -38,7 +38,7 @@ export function useCallTracking({ leadId, userId }: UseCallTrackingProps) {
     }
   })
 
-  function handleFollowUpOutcome(outcome: CallOutcome | "cancelled") {
+  function handleFollowUpOutcome(outcome: CallOutcome | "cancelled", note?: string) {
     if (!pendingCall) return
 
     const returnedAt = new Date().toISOString()
@@ -53,6 +53,7 @@ export function useCallTracking({ leadId, userId }: UseCallTrackingProps) {
       returned_at: returnedAt,
       outcome: outcome === "cancelled" ? null : outcome,
       duration_sec: durationSec,
+      ...(note ? { note } : {}),
     })
 
     setPendingCall(null)

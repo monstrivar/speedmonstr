@@ -22,12 +22,17 @@
     "successTitle": "Sjekk innboksen din",
     "successMessage": "Vi har sendt en innloggingslenke til {{email}}",
     "errorMessage": "Kunne ikke sende innloggingslenke. Prøv igjen.",
-    "signOut": "Logg ut"
+    "signOut": "Logg ut",
+    "passwordLabel": "Passord",
+    "signInButton": "Logg inn",
+    "useMagicLink": "Bruk magic link",
+    "usePassword": "Logg inn med passord"
   },
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Hei, {{name}}",
     "newLeads": "Nye henvendelser",
+    "leads": "henvendelser",
     "totalLeads": "Totalt henvendelser",
     "followedUp": "Fulgt opp",
     "conversionRate": "Konverteringsrate",
@@ -42,6 +47,9 @@
     "answered": "Fikk svar",
     "noAnswer": "Ikke svar",
     "voicemail": "Telefonsvar",
+    "addNote": "Legg til notat",
+    "notePlaceholder": "F.eks. Avtalt befaring torsdag 10:00",
+    "saveNote": "Lagre notat",
     "cancel": "Avbryt"
   },
   "lead": {
@@ -66,8 +74,25 @@
   },
   "navigation": {
     "dashboard": "Dashboard",
-    "leads": "Henvendelser",
+    "archive": "Arkiv",
+    "activity": "Aktivitet",
     "settings": "Innstillinger"
+  },
+  "archive": {
+    "title": "Arkiv",
+    "noLeads": "Ingen arkiverte henvendelser",
+    "emptyDescription": "Ferdigbehandlede henvendelser vises her"
+  },
+  "activity": {
+    "title": "Aktivitet",
+    "emptyDescription": "SMS-logg og samtalehistorikk kommer snart"
+  },
+  "settings": {
+    "title": "Innstillinger",
+    "account": "Konto",
+    "notifications": "Varsler",
+    "team": "Team",
+    "comingSoon": "Kommer snart"
   },
   "push": {
     "permissionTitle": "Tillat varsler",

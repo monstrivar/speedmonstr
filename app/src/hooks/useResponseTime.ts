@@ -19,7 +19,8 @@ export function useResponseTime(organizationId: string) {
       // Average minutes from lead created_at to first call initiated_at
       const minutes = data
         .map((row) => {
-          const lead = row.leads as unknown as { created_at: string }
+          // Supabase !inner join returns a single object, typed as array
+          const lead = row.leads as { created_at: string }
           return (
             (new Date(row.initiated_at).getTime() - new Date(lead.created_at).getTime()) /
             1000 /

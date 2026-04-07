@@ -10,4 +10,4 @@ Monstr is a productized speed-to-lead service (not a SaaS) for Norwegian small-t
 
 **How to apply:** This is a service business, not a software product. Internal tooling decisions should optimize for operator efficiency, not end-user features. Clients don't log into anything — Monstr manages everything for them.
 
-Current state: Single-page React/Vite landing site with booking/qualification form (not yet wired to any backend). Norwegian language. Brutalist design system. Pricing: 3,000 NOK/mo standard, 6,000 NOK/mo enterprise.
+Current state: Landing page (monstr.no) + companion app (app.monstr.no), both React/Vite. Norwegian language. Brutalist design system. Pricing: graduated cohort model starting at 2,999 kr/mnd, increasing 20% per 5 clients (see docs/salg/PRISMODELL.md). One product tier — all clients get same features.
