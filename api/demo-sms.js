@@ -33,9 +33,9 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'SMS not configured' });
   }
 
-  const { fornavn, telefon, bedriftsnavn, samtykke } = req.body || {};
+  const { fornavn, telefon, bedriftsnavn, avsender, samtykke } = req.body || {};
 
-  if (!fornavn || !telefon || !bedriftsnavn) {
+  if (!fornavn || !telefon || !bedriftsnavn || !avsender) {
     return res.status(400).json({ error: 'Alle felt er påkrevd' });
   }
 
@@ -43,8 +43,14 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Du må godta at vi kan kontakte deg' });
   }
 
-  if (fornavn.length > 50 || bedriftsnavn.length > 80 || telefon.length > 20) {
+  if (fornavn.length > 50 || bedriftsnavn.length > 80 || telefon.length > 20 || avsender.length > 11) {
     return res.status(400).json({ error: 'Feltene er for lange' });
+  }
+
+  // Sanitize alphanumeric sender ID: letters, numbers, spaces only, max 11 chars
+  const sanitizedSender = avsender.replace(/[^a-zA-Z0-9 ]/g, '').substring(0, 11).trim();
+  if (!sanitizedSender || sanitizedSender.length < 2) {
+    return res.status(400).json({ error: 'Avsender-ID må ha minst 2 tegn (kun bokstaver, tall og mellomrom)' });
   }
 
   // Normalize Norwegian phone number
@@ -83,7 +89,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        From: 'Monstr',
+        From: sanitizedSender,
         To: normalizedPhone,
         Body: smsBody,
       }),

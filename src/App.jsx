@@ -1026,8 +1026,16 @@ const LiveDemo = () => {
   const sectionRef = useRef(null);
   const [fornavn, setFornavn] = useState('');
   const [bedriftsnavn, setBedriftsnavn] = useState('');
+  const [avsender, setAvsender] = useState('');
   const [telefon, setTelefon] = useState('');
   const [samtykke, setSamtykke] = useState(false);
+
+  // Auto-generate sender ID from business name (strip non-alphanumeric, max 11 chars)
+  const handleBedriftChange = (val) => {
+    setBedriftsnavn(val);
+    const auto = val.replace(/[^a-zA-Z0-9 ]/g, '').substring(0, 11).trim();
+    setAvsender(auto);
+  };
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
   const [errorMsg, setErrorMsg] = useState('');
   const [timer, setTimer] = useState(null);
@@ -1061,7 +1069,7 @@ const LiveDemo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!fornavn || !telefon || !bedriftsnavn) {
+    if (!fornavn || !telefon || !bedriftsnavn || !avsender) {
       setErrorMsg('Fyll inn alle feltene.');
       setStatus('error');
       return;
@@ -1077,7 +1085,7 @@ const LiveDemo = () => {
       const res = await fetch('/api/demo-sms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fornavn, telefon, bedriftsnavn, samtykke }),
+        body: JSON.stringify({ fornavn, telefon, bedriftsnavn, avsender, samtykke }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Noe gikk galt.');
@@ -1149,9 +1157,21 @@ const LiveDemo = () => {
                 className={inputClass}
                 placeholder="F.eks. Bergens Rør AS"
                 value={bedriftsnavn}
-                onChange={e => setBedriftsnavn(e.target.value)}
+                onChange={e => handleBedriftChange(e.target.value)}
                 maxLength={80}
               />
+            </div>
+            <div className="space-y-2">
+              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Avsender-ID på SMSen</label>
+              <input
+                type="text"
+                className={inputClass}
+                placeholder="F.eks. BergensRor"
+                value={avsender}
+                onChange={e => setAvsender(e.target.value.replace(/[^a-zA-Z0-9 ]/g, '').substring(0, 11))}
+                maxLength={11}
+              />
+              <p className="font-sans text-dark/40 text-xs pl-1">Maks 11 tegn, kun bokstaver, tall og mellomrom</p>
             </div>
             <div className="space-y-2">
               <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Ditt mobilnummer</label>
@@ -1208,7 +1228,7 @@ const LiveDemo = () => {
                 <Zap size={20} className="text-accent" />
               </div>
               <div>
-                <p className="font-heading font-bold text-primary text-sm">{bedriftsnavn || 'Bedriftsnavn'}</p>
+                <p className="font-heading font-bold text-primary text-sm">{avsender || 'Avsender'}</p>
                 <p className="font-data text-primary/40 text-xs uppercase tracking-wider">SMS</p>
               </div>
             </div>
