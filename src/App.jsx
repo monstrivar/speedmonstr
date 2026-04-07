@@ -1030,11 +1030,17 @@ const LiveDemo = () => {
   const [telefon, setTelefon] = useState('');
   const [samtykke, setSamtykke] = useState(false);
 
-  // Auto-generate sender ID from business name (strip non-alphanumeric, max 11 chars)
+  // Auto-generate sender ID from business name (transliterate Nordic chars, max 11 chars)
   const handleBedriftChange = (val) => {
     setBedriftsnavn(val);
-    const auto = val.replace(/[^a-zA-Z0-9 ]/g, '').substring(0, 11).trim();
-    setAvsender(auto);
+    const transliterated = val
+      .replace(/[æÆ]/g, m => m === 'æ' ? 'ae' : 'Ae')
+      .replace(/[øØ]/g, m => m === 'ø' ? 'o' : 'O')
+      .replace(/[åÅ]/g, m => m === 'å' ? 'aa' : 'Aa')
+      .replace(/[^a-zA-Z0-9 ]/g, '')
+      .substring(0, 11)
+      .trim();
+    setAvsender(transliterated);
   };
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
   const [errorMsg, setErrorMsg] = useState('');
@@ -1168,7 +1174,7 @@ const LiveDemo = () => {
                 className={inputClass}
                 placeholder="F.eks. BergensRor"
                 value={avsender}
-                onChange={e => setAvsender(e.target.value.replace(/[^a-zA-Z0-9 ]/g, '').substring(0, 11))}
+                onChange={e => setAvsender(e.target.value.replace(/[æÆ]/g, m => m === 'æ' ? 'ae' : 'Ae').replace(/[øØ]/g, m => m === 'ø' ? 'o' : 'O').replace(/[åÅ]/g, m => m === 'å' ? 'aa' : 'Aa').replace(/[^a-zA-Z0-9 ]/g, '').substring(0, 11))}
                 maxLength={11}
               />
               <p className="font-sans text-dark/40 text-xs pl-1">Maks 11 tegn, kun bokstaver, tall og mellomrom</p>
