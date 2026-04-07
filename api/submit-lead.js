@@ -31,6 +31,10 @@ export default async function handler(req, res) {
   const COMPANIES_TABLE_ID = 'tblfjGVLv2krsNwQk';
   const SMS_LOG_TABLE_ID = 'tblKQIg7SIGS91HAV';
 
+  // Leads table in Monstr base
+  const LEADS_BASE_ID = 'appM5wdT9AbJ1YRCy';
+  const LEADS_TABLE_ID = 'tblbt7GwhHHAY25dm';
+
   if (!AIRTABLE_TOKEN) {
     return res.status(500).json({ error: 'Server configuration error' });
   }
@@ -195,7 +199,48 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Noe gikk galt. Prøv igjen.' });
   }
 
-  // 2. Send SMS + Push notification in parallel, BEFORE responding
+  // 2. Save to Leads table (lead capture / CRM)
+  try {
+    const qualifyingData = [
+      leadsPerMonth ? `Leads/mnd: ${leadsPerMonth}` : '',
+      Array.isArray(leadSources) && leadSources.length ? `Leadkilder: ${leadSources.join(', ')}` : '',
+      followUpProcess ? `Oppfølging: ${followUpProcess}` : '',
+      customerValue ? `Kundeverdi: ${customerValue}` : '',
+      intent ? `Intensjon: ${intent}` : '',
+      decisionMaker ? `Rolle: ${decisionMaker}` : '',
+    ].filter(Boolean).join('\n');
+
+    await fetch(
+      `https://api.airtable.com/v0/${LEADS_BASE_ID}/${LEADS_TABLE_ID}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fields: {
+            Navn: `${firstName} ${lastName || ''}`.trim(),
+            Bedriftsnavn: company,
+            Telefon: normalizedPhone,
+            'E-post': email || '',
+            Nettside: normalizedWebsite || '',
+            Kilde: 'Skjema (nettside)',
+            'Samtykke oppfølging': true,
+            Prioritet: score >= 12 ? 'Hot' : score >= 8 ? 'Warm' : 'Cold',
+            'Lead score': score,
+            Kvalifisering: qualifyingData,
+            Opprettet: new Date().toISOString(),
+            Status: 'Ny',
+          },
+        }),
+      }
+    );
+  } catch (err) {
+    console.error('Leads table error:', err);
+  }
+
+  // 3. Send SMS + Push notification in parallel, BEFORE responding
   const promises = [];
 
   if (TWILIO_ACCOUNT_SID && TWILIO_AUTH_TOKEN && normalizedPhone) {

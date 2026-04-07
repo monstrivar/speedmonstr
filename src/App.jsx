@@ -52,6 +52,7 @@ const Navbar = () => {
 
       <div className={`hidden md:flex items-center gap-8 text-sm font-medium tracking-tight ${scrolled ? 'text-dark' : 'text-primary/90'}`}>
         <a href="#features" className="link-hover">Hvordan det fungerer</a>
+        <a href="#demo" className="link-hover">Prøv selv</a>
         <a href="#philosophy" className="link-hover">Hvorfor</a>
         <a href="#protocol" className="link-hover">Steg for steg</a>
       </div>
@@ -1020,6 +1021,214 @@ const ROI = () => {
   );
 };
 
+// Live Demo Section — "Prøv selv"
+const LiveDemo = () => {
+  const sectionRef = useRef(null);
+  const [fornavn, setFornavn] = useState('');
+  const [bedriftsnavn, setBedriftsnavn] = useState('');
+  const [telefon, setTelefon] = useState('');
+  const [samtykke, setSamtykke] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [errorMsg, setErrorMsg] = useState('');
+  const [timer, setTimer] = useState(null);
+
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.demo-elem', {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 70%',
+        },
+        y: 50,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 1,
+        ease: 'power3.out'
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  // Timer that counts up after sending
+  useEffect(() => {
+    if (status !== 'sending') return;
+    const start = Date.now();
+    const interval = setInterval(() => {
+      setTimer(((Date.now() - start) / 1000).toFixed(1));
+    }, 100);
+    return () => clearInterval(interval);
+  }, [status]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!fornavn || !telefon || !bedriftsnavn) {
+      setErrorMsg('Fyll inn alle feltene.');
+      setStatus('error');
+      return;
+    }
+    setStatus('sending');
+    setErrorMsg('');
+    try {
+      const res = await fetch('/api/demo-sms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fornavn, telefon, bedriftsnavn, samtykke }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Noe gikk galt.');
+      setStatus('success');
+    } catch (err) {
+      setErrorMsg(err.message);
+      setStatus('error');
+    }
+  };
+
+  const inputClass = "w-full bg-background border border-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors shadow-[2px_2px_0px_#111111]";
+
+  if (status === 'success') {
+    return (
+      <section ref={sectionRef} className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+        <div className="max-w-3xl mx-auto card-brutalist bg-primary p-8 md:p-12 text-center">
+          <div className="w-16 h-16 rounded-full bg-dark text-accent flex items-center justify-center text-3xl mx-auto mb-6">
+            <Zap size={32} />
+          </div>
+          <h2 className="font-heading font-bold text-3xl md:text-4xl text-dark tracking-tight mb-4">
+            Fikk du den, {fornavn}?
+          </h2>
+          <p className="font-sans text-dark/80 text-lg leading-relaxed max-w-lg mx-auto mb-8">
+            Tenk om kundene til <span className="font-bold text-dark">{bedriftsnavn}</span> opplevde det samme — innen et minutt, hver gang. La oss sette det opp for deg, prøv det gratis.
+          </p>
+          <MagneticButton
+            variant="accent"
+            className="px-10 py-4 text-base"
+            onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Fyll ut skjema <ArrowRight size={18} />
+          </MagneticButton>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section id="demo" ref={sectionRef} className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+      <div className="max-w-4xl mx-auto">
+        <div className="demo-elem mb-12 text-center">
+          <div className="inline-block px-3 py-1 bg-accent/10 text-accent font-data text-xs font-bold rounded-full mb-4 uppercase tracking-wider">Prøv selv</div>
+          <h2 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight mb-4">
+            Opplev det kundene dine vil oppleve
+          </h2>
+          <p className="font-sans text-dark/70 text-lg max-w-2xl mx-auto">
+            Fyll inn et navn, et bedriftsnavn, og ditt eget nummer. Trykk send — og kjenn på telefonen din hva speed-to-lead betyr i praksis.
+          </p>
+        </div>
+
+        <div className="demo-elem grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="card-brutalist bg-primary p-8 md:p-10 space-y-5">
+            <div className="space-y-2">
+              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Kundens fornavn</label>
+              <input
+                type="text"
+                className={inputClass}
+                placeholder="F.eks. Ola"
+                value={fornavn}
+                onChange={e => setFornavn(e.target.value)}
+                maxLength={50}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Ditt bedriftsnavn</label>
+              <input
+                type="text"
+                className={inputClass}
+                placeholder="F.eks. Bergens Rør AS"
+                value={bedriftsnavn}
+                onChange={e => setBedriftsnavn(e.target.value)}
+                maxLength={80}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Ditt mobilnummer</label>
+              <input
+                type="tel"
+                className={inputClass}
+                placeholder="F.eks. 400 50 600"
+                value={telefon}
+                onChange={e => setTelefon(e.target.value)}
+                maxLength={20}
+              />
+            </div>
+
+            <label className="flex items-start gap-3 cursor-pointer pt-1">
+              <input
+                type="checkbox"
+                checked={samtykke}
+                onChange={e => setSamtykke(e.target.checked)}
+                className="mt-1 w-4 h-4 accent-accent"
+              />
+              <span className="font-sans text-dark/60 text-sm leading-snug">
+                Vi kan kontakte deg for å vise hvordan dette fungerer for din bedrift
+              </span>
+            </label>
+
+            {status === 'error' && (
+              <div className="bg-accent/10 border border-accent rounded-xl px-4 py-3 font-sans text-accent text-sm">
+                {errorMsg}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={status === 'sending'}
+              className="w-full bg-accent text-background font-heading font-bold text-base py-4 rounded-xl shadow-[4px_4px_0px_#111111] hover:scale-[1.02] active:scale-[0.98] transition-transform disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {status === 'sending' ? (
+                <span className="flex items-center justify-center gap-3">
+                  <span className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin"></span>
+                  Sender... {timer && <span className="font-data text-sm">{timer}s</span>}
+                </span>
+              ) : (
+                <span className="flex items-center justify-center gap-2">
+                  Send SMS <Zap size={18} />
+                </span>
+              )}
+            </button>
+          </form>
+
+          {/* SMS Preview */}
+          <div className="demo-elem card-brutalist-dark p-8 md:p-10 flex flex-col">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
+                <Zap size={20} className="text-accent" />
+              </div>
+              <div>
+                <p className="font-heading font-bold text-primary text-sm">{bedriftsnavn || 'Bedriftsnavn'}</p>
+                <p className="font-data text-primary/40 text-xs uppercase tracking-wider">SMS</p>
+              </div>
+            </div>
+            <div className="bg-background/10 rounded-2xl rounded-tl-sm p-5 flex-grow">
+              <p className="font-sans text-primary/90 text-sm leading-relaxed whitespace-pre-line">
+                Heisann {fornavn || '{kundenavn}'},
+{'\n'}Takk for at du tok kontakt med oss!
+{'\n\n'}Vi tar straks opp tråden, og ser frem til å hjelpe deg.
+{'\n\n'}Med vennlig hilsen,
+{'\n'}{bedriftsnavn || '{bedriftsnavn}'}
+              </p>
+            </div>
+            <div className="mt-4 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
+              <span className="font-data text-primary/40 text-[10px] uppercase tracking-widest">
+                {status === 'sending' ? 'Sender nå...' : status === 'success' ? 'Sendt!' : 'Forhåndsvisning'}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // Main App component
 const orgSchema = {
   '@context': 'https://schema.org',
@@ -1043,6 +1252,7 @@ function App() {
       <Philosophy />
       <SocialProof />
       <Features />
+      <LiveDemo />
       <Protocol />
       <ROI />
       <Pricing />
