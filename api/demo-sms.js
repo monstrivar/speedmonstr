@@ -39,6 +39,10 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Alle felt er påkrevd' });
   }
 
+  if (!samtykke) {
+    return res.status(400).json({ error: 'Du må godta at vi kan kontakte deg' });
+  }
+
   if (fornavn.length > 50 || bedriftsnavn.length > 80 || telefon.length > 20) {
     return res.status(400).json({ error: 'Feltene er for lange' });
   }
@@ -79,7 +83,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        From: bedriftsnavn.substring(0, 11),
+        From: 'Monstr',
         To: normalizedPhone,
         Body: smsBody,
       }),

@@ -1066,6 +1066,11 @@ const LiveDemo = () => {
       setStatus('error');
       return;
     }
+    if (!samtykke) {
+      setErrorMsg('Du må godta at vi kan kontakte deg.');
+      setStatus('error');
+      return;
+    }
     setStatus('sending');
     setErrorMsg('');
     try {
