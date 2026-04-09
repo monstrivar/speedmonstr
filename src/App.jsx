@@ -122,6 +122,27 @@ const Hero = () => {
   );
 };
 
+// Press Bar — "Som omtalt i" social proof
+const PressBar = () => (
+  <section className="bg-dark py-6 border-t border-primary/10">
+    <div className="max-w-7xl mx-auto px-6 md:px-16 flex flex-col items-center gap-3">
+      <span className="font-sans text-primary/40 text-xs uppercase tracking-[0.2em]">Som omtalt i</span>
+      <a
+        href="https://vvsaktuelt.no/den-som-svarer-forst-far-jobben/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block opacity-50 hover:opacity-80 transition-opacity"
+      >
+        <img
+          src="/press/vvs-aktuelt.png"
+          alt="VVS-Aktuelt"
+          className="h-8 md:h-10 w-auto brightness-0 invert"
+        />
+      </a>
+    </div>
+  </section>
+);
+
 // Feature 1: Diagnostic Shuffler
 const FeatureShuffler = () => {
   const [cards, setCards] = useState([
@@ -1279,6 +1300,7 @@ function App() {
       </Helmet>
       <Navbar />
       <Hero />
+      <PressBar />
       <VSL />
       <Philosophy />
       <SocialProof />
