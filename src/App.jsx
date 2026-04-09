@@ -553,45 +553,23 @@ const Protocol = () => {
 const Pricing = () => {
   return (
     <section className="py-32 px-6 md:px-16 max-w-7xl mx-auto bg-background">
-      <div className="text-center mb-16 max-w-3xl mx-auto">
-        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Hva du får.</h2>
-        <p className="font-sans text-dark/70 text-lg md:text-xl">Slutt å tape kunder på grunn av treg oppfølging. Book en samtale for å se om dette er verdt å sette opp for din bedrift.</p>
+      <div className="max-w-3xl mx-auto text-center">
+        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Se hvordan det fungerer.</h2>
+        <p className="font-sans text-dark/70 text-lg md:text-xl mb-10 leading-relaxed">
+          Vi tilpasser oppsettet til din bedrift — antall henvendelser, systemer du bruker, og hva som gir mest verdi for deg. Book en kort samtale, så viser vi deg nøyaktig hvordan det vil fungere for ditt firma.
+        </p>
+        <MagneticButton variant="accent" className="px-10 py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>
+          Book en demo <ArrowRight size={18} />
+        </MagneticButton>
       </div>
 
-      <div className="max-w-2xl mx-auto">
-        <div className="card-brutalist p-8 md:p-12 flex flex-col justify-between">
-          <div>
-            <div className="inline-block px-3 py-1 bg-accent/10 text-accent font-data text-xs font-bold rounded-full mb-4">ALT INKLUDERT</div>
-            <div className="flex items-center gap-3 mb-3">
-              <span className="font-data text-xs font-bold text-dark/40 uppercase tracking-wider">Setup fee:</span>
-              <span className="font-heading font-bold text-lg text-dark/40 line-through">14 000,-</span>
-              <span className="font-heading font-bold text-lg text-accent">0,-</span>
-              <span className="inline-block px-2 py-0.5 bg-accent/10 text-accent font-data text-[10px] font-bold rounded-full uppercase">Tidsbegrenset</span>
-            </div>
-            <h3 className="font-data text-dark/50 font-bold mb-2 uppercase tracking-widest text-xs">Monstr Speed-to-Lead</h3>
-            <div className="font-heading font-bold text-4xl text-dark mb-4">Fra 2 999,- <span className="font-sans text-lg text-dark/50 font-normal">/mnd</span></div>
-            <p className="font-sans text-dark/70 mb-8 leading-relaxed">
-              Kundene dine får et personlig svar innen sekunder, og du får et varsel med full kontekst. Vi setter opp alt — ingen teknisk arbeid fra din side.
-            </p>
-            <ul className="space-y-4 font-sans text-dark/80 mb-10">
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Umiddelbar respons (SMS / E-post) innen sekunder</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Personlig SMS med firmanavnet ditt som avsender</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Kobles til systemene du allerede bruker</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Varsel til deg og teamet med full kontekst</span></li>
-              <li className="flex gap-4 items-start"><CheckCircle size={22} className="text-accent shrink-0" /> <span className="pt-0.5">Fungerer med skjemaer, annonser og nettsiden din</span></li>
-            </ul>
-          </div>
-          <MagneticButton variant="accent" className="w-full py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>Kom i gang</MagneticButton>
-        </div>
-      </div>
-
-      {/* Risk Reversal & Money Translation */}
-      <div className="mt-16 bg-dark rounded-[2rem] p-8 md:p-12 border border-primary/20 flex flex-col md:flex-row items-center gap-10">
+      {/* Risk Reversal */}
+      <div className="mt-16 bg-dark rounded-[2rem] p-8 md:p-12 border border-primary/20 flex flex-col md:flex-row items-center gap-10 max-w-4xl mx-auto">
         <div className="flex-1 space-y-4">
           <div className="inline-block px-3 py-1 bg-accent/20 text-accent font-data text-xs font-bold rounded-full mb-2">UTEN RISIKO</div>
           <h3 className="font-heading font-bold text-2xl md:text-3xl text-primary">Prøv 14 dager gratis</h3>
           <p className="font-sans text-primary/70 text-lg leading-relaxed">
-            Du skal se at det fungerer før du betaler en krone. Vi setter opp hele speed-to-lead-systemet, og du kjører det gratis i 14 dager. Får du ikke mer igjen enn det koster, avslutter du uten spørsmål. En investering, ikke en utgift.
+            Du skal se at det fungerer før du betaler en krone. Vi setter opp hele speed-to-lead-systemet, og du kjører det gratis i 14 dager. Får du ikke mer igjen enn det koster, avslutter du uten spørsmål.
           </p>
         </div>
         <div className="w-full md:w-px h-px md:h-32 bg-primary/20"></div>
@@ -625,7 +603,7 @@ const Footer = () => {
               <li><a href="#features" className="hover:text-primary transition-colors">Funksjoner</a></li>
               <li><a href="#protocol" className="hover:text-primary transition-colors">Protokoll</a></li>
               <li><a href="/blogg" className="hover:text-primary transition-colors">Ressurser</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Priser</a></li>
+              <li><a href="#book" className="hover:text-primary transition-colors">Book demo</a></li>
             </ul>
           </div>
           <div>
@@ -1018,19 +996,11 @@ const ROI = () => {
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="font-heading font-bold text-3xl md:text-4xl text-dark tracking-tight mb-4">Hva er én jobb verdt for deg?</h2>
         <p className="font-sans text-dark/70 text-lg mb-8">Et nytt bad? En varmtvannsbereder? En terrasse? Du vet selv hva én ekstra kunde betyr for bunnlinjen.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div className="card-brutalist p-6">
-            <p className="font-sans text-dark/60 text-sm mb-2">Monstr koster</p>
-            <p className="font-heading font-bold text-3xl text-dark">Fra 2 999 kr/mnd</p>
-          </div>
-          <div className="card-brutalist p-6">
-            <p className="font-sans text-dark/60 text-sm mb-2">Det er</p>
-            <p className="font-heading font-bold text-3xl text-dark">35 988 kr/år</p>
-          </div>
-          <div className="card-brutalist p-6 border-accent/50">
+        <div className="max-w-md mx-auto mb-10">
+          <div className="card-brutalist p-6 border-accent/50 text-center">
             <p className="font-sans text-dark/60 text-sm mb-2">Du trenger bare</p>
             <p className="font-heading font-bold text-3xl text-accent">1 ekstra kunde</p>
-            <p className="font-sans text-dark/60 text-sm mt-1">for å betale for hele året</p>
+            <p className="font-sans text-dark/60 text-sm mt-1">for å tjene inn hele investeringen</p>
           </div>
         </div>
 
