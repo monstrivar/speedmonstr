@@ -58,7 +58,7 @@ const Navbar = () => {
       </div>
 
       <div>
-        <MagneticButton onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>Prøv 14 dager gratis</MagneticButton>
+        <MagneticButton onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>Book en gratis demo</MagneticButton>
       </div>
     </nav>
   );
@@ -96,24 +96,22 @@ const Hero = () => {
       <div className="relative z-10 w-full h-full flex flex-col justify-end pb-24 px-6 md:px-16 max-w-7xl mx-auto">
         <div className="max-w-3xl">
           <h1 className="flex flex-col mb-6">
-            <span className="hero-elem font-heading font-bold text-4xl md:text-6xl text-primary tracking-tight uppercase leading-none">
-              Svar På
+            <span className="hero-elem font-heading font-bold text-3xl md:text-5xl text-primary tracking-tight uppercase leading-none">
+              Slutt å miste
             </span>
             <span className="hero-elem font-drama italic text-6xl md:text-9xl text-accent leading-[0.85] mt-2">
-              Sekunder.
+              jobber.
             </span>
           </h1>
-          <p className="hero-elem font-sans text-primary/80 text-lg md:text-xl max-w-lg mb-6 leading-relaxed tracking-tight">
-            Monstr sørger for at kundene dine får et personlig svar innen sekunder — automatisk, med firmanavnet ditt som avsender. Slutt å tape kunder fordi konkurrenten din svarte først.
+          <p className="hero-elem font-heading font-bold text-xl md:text-2xl text-primary/80 tracking-tight mb-6">
+            Svar på sekunder — automatisk, før konkurrenten rekker å reagere.
           </p>
-          <div className="hero-elem bg-dark/50 border border-primary/20 p-4 md:p-5 rounded-2xl mb-10 max-w-lg backdrop-blur-md">
-            <p className="font-sans text-primary/90 leading-snug text-sm md:text-base">
-              Bedrifter som svarer innen 5 minutter er <strong className="text-accent font-bold">21x mer sannsynlige</strong> å lande kunden enn de som venter en time – vi sørger for at du er førstemann.
-            </p>
-          </div>
+          <p className="hero-elem font-sans text-primary/60 text-base md:text-lg max-w-lg mb-10 leading-relaxed tracking-tight">
+            Monstr sørger for at hver kundehenvendelse på nettsiden din får et umiddelbart, personlig svar. De som svarer først får jobben. Vi sørger for at du alltid er først.
+          </p>
           <div className="hero-elem">
             <MagneticButton className="px-8 py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>
-              Prøv 14 dager gratis <ArrowRight size={18} />
+              Book en gratis demo <ArrowRight size={18} />
             </MagneticButton>
           </div>
         </div>
@@ -310,13 +308,12 @@ const Features = () => {
   return (
     <section id="features" ref={sectionRef} className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
       <div className="mb-16 max-w-2xl">
-        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-4">Hvordan det fungerer.</h2>
-        <p className="font-sans text-dark/80 text-lg mb-2">
-          Kunden sender inn et skjema. Hvem svarer først — du eller konkurrenten? Det er hele forskjellen.
-        </p>
-        <p className="font-sans text-dark/70 text-lg">
-          Vi sørger for at svaret ditt alltid er først — automatisk, personlig, og uten at du trenger å løfte en finger.
-        </p>
+        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Hvordan det fungerer.</h2>
+        <ol className="font-sans text-dark/80 text-lg space-y-2">
+          <li className="flex gap-3"><span className="font-heading font-bold text-accent shrink-0">1.</span> Kunde sender inn skjema på nettsiden din</li>
+          <li className="flex gap-3"><span className="font-heading font-bold text-accent shrink-0">2.</span> De får umiddelbar SMS fra bedriften din</li>
+          <li className="flex gap-3"><span className="font-heading font-bold text-accent shrink-0">3.</span> Du får beskjed og følger opp mens kunden fortsatt er varm</li>
+        </ol>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -495,7 +492,7 @@ const Protocol = () => {
       <ProtocolStep
         num="01"
         title="Henvendelsen mottas"
-        desc="Noen sender inn et skjema på nettsiden din — kanskje en lekkasje, kanskje et nytt bad. De sender til deg og to konkurrenter samtidig. I stedet for at henvendelsen ligger og venter, fanger vi den opp umiddelbart."
+        desc="Noen sender inn et skjema på nettsiden din. De har sannsynligvis sendt til deg og to konkurrenter samtidig. I stedet for at henvendelsen ligger og venter — fanger Monstr den opp umiddelbart."
         icon={
           <div className="relative w-full h-full flex justify-center items-center">
             <div className="absolute w-40 h-40 border-2 border-dark rounded-full animate-[spin_10s_linear_infinite]"></div>
@@ -507,7 +504,7 @@ const Protocol = () => {
       <ProtocolStep
         num="02"
         title="Umiddelbart svar"
-        desc="Sekunder senere får kunden en personlig SMS med firmanavnet ditt som avsender. De vet at dere er på saken — før konkurrenten har sjekket innboksen sin."
+        desc="Sekunder senere får kunden en personlig SMS med firmanavnet ditt som avsender — før konkurrenten har sjekket innboksen sin."
         icon={
           <div className="relative w-full h-full flex justify-center items-center p-12">
             <div className="w-full h-full overflow-hidden relative border border-dark bg-primary flex flex-col gap-2 p-4">
@@ -522,7 +519,7 @@ const Protocol = () => {
       <ProtocolStep
         num="03"
         title="Du får beskjed"
-        desc="Samtidig som kunden får SMS, får du og teamet ditt et varsel med all info — hvem det er, hva de trenger, og at de allerede har fått svar. Du kan ringe dem opp med full kontekst, mens de fortsatt er varme."
+        desc="Samtidig får du varsel med all info — hvem det er, hva de trenger, og at de allerede har fått svar. Du følger opp mens kunden fortsatt er varm."
         icon={
           <div className="relative w-full h-full flex justify-center items-center">
             <svg viewBox="0 0 200 100" className="w-full h-32 px-12">
@@ -554,12 +551,12 @@ const Pricing = () => {
   return (
     <section className="py-32 px-6 md:px-16 max-w-7xl mx-auto bg-background">
       <div className="max-w-3xl mx-auto text-center">
-        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Se hvordan det fungerer.</h2>
+        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Klar til å svare først?</h2>
         <p className="font-sans text-dark/70 text-lg md:text-xl mb-10 leading-relaxed">
-          Vi tilpasser oppsettet til din bedrift — antall henvendelser, systemer du bruker, og hva som gir mest verdi for deg. Book en kort samtale, så viser vi deg nøyaktig hvordan det vil fungere for ditt firma.
+          Vi setter opp alt. Du ser effekten før du betaler noe.
         </p>
         <MagneticButton variant="accent" className="px-10 py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>
-          Book en demo <ArrowRight size={18} />
+          Book en gratis demo <ArrowRight size={18} />
         </MagneticButton>
       </div>
 
@@ -568,17 +565,19 @@ const Pricing = () => {
         <div className="flex-1 space-y-4">
           <div className="inline-block px-3 py-1 bg-accent/20 text-accent font-data text-xs font-bold rounded-full mb-2">UTEN RISIKO</div>
           <h3 className="font-heading font-bold text-2xl md:text-3xl text-primary">Prøv 14 dager gratis</h3>
-          <p className="font-sans text-primary/70 text-lg leading-relaxed">
-            Du skal se at det fungerer før du betaler en krone. Vi setter opp hele speed-to-lead-systemet, og du kjører det gratis i 14 dager. Får du ikke mer igjen enn det koster, avslutter du uten spørsmål.
-          </p>
+          <ul className="font-sans text-primary/70 text-lg leading-relaxed space-y-2 mt-2">
+            <li className="flex items-center gap-2"><span className="text-accent">●</span> 14 dager gratis</li>
+            <li className="flex items-center gap-2"><span className="text-accent">●</span> Vi setter opp alt</li>
+            <li className="flex items-center gap-2"><span className="text-accent">●</span> Du ser effekten før du betaler noe</li>
+          </ul>
         </div>
         <div className="w-full md:w-px h-px md:h-32 bg-primary/20"></div>
         <div className="flex-1 space-y-4">
-          <h3 className="font-heading font-bold text-xl text-primary">21x høyere sjanse for salg</h3>
+          <h3 className="font-heading font-bold text-xl text-primary">De som svarer først får jobben</h3>
           <p className="font-sans text-primary/70 text-base leading-relaxed">
-            Bedrifter som svarer innen 5 minutter er 21 ganger mer sannsynlig å lande kunden enn de som venter en halvtime. Etter det faller sjansen dramatisk.
+            Vi sørger for at du alltid er først. Automatisk, hver gang, innen sekunder.
             <br /><br />
-            Vi sørger for at du alltid svarer innen sekunder — automatisk, hver gang.
+            Slutt å miste jobber fordi du svarer for sent.
           </p>
         </div>
       </div>
@@ -603,7 +602,7 @@ const Footer = () => {
               <li><a href="#features" className="hover:text-primary transition-colors">Funksjoner</a></li>
               <li><a href="#protocol" className="hover:text-primary transition-colors">Protokoll</a></li>
               <li><a href="/blogg" className="hover:text-primary transition-colors">Ressurser</a></li>
-              <li><a href="#book" className="hover:text-primary transition-colors">Book demo</a></li>
+              <li><a href="#book" className="hover:text-primary transition-colors">Book en gratis demo</a></li>
             </ul>
           </div>
           <div>
@@ -946,9 +945,9 @@ const BookingForm = () => {
         )}
 
         <div className="relative z-10 mt-12 bg-background border border-dark p-8 rounded-[2rem] shadow-[4px_4px_0px_#111111]">
-          <h3 className="font-heading font-bold text-xl text-dark mb-3">Hvorfor er responstid så avgjørende?</h3>
+          <h3 className="font-heading font-bold text-xl text-dark mb-3">Den som svarer først, får jobben.</h3>
           <p className="font-sans text-dark/80 leading-relaxed text-sm md:text-base">
-            Bedrifter som svarer innen 5 minutter er <strong className="text-accent underline decoration-2 underline-offset-4">21x mer sannsynlig</strong> å lande kunden enn de som venter i 30–60 minutter. Hvert minutt som går reduserer kundens interesse. Den som svarer først, får som regel jobben.
+            Hvert minutt som går etter en henvendelse reduserer sjansen for at kunden velger deg. Svarer du innen sekunder, er du nesten alltid den de ringer tilbake. <strong className="text-accent">Slutt å miste jobber fordi du svarer for sent.</strong>
           </p>
         </div>
       </div>
@@ -1005,7 +1004,7 @@ const ROI = () => {
         </div>
 
         <p className="max-w-2xl mx-auto font-sans text-dark/70 text-base md:text-lg leading-relaxed mt-2">
-          Forskning viser at bedrifter som svarer innen 5 minutter er <strong className="text-dark">21x mer sannsynlig</strong> å lande kunden. Når konkurrentene dine bruker timer på å svare og du svarer innen sekunder, er spørsmålet ikke <em>om</em> du får en ekstra kunde — det er hvor mange.
+          De som svarer først får jobben. Når konkurrentene dine bruker timer på å svare og du svarer innen sekunder, er spørsmålet ikke <em>om</em> du får flere kunder — det er hvor mange.
         </p>
       </div>
     </section>
