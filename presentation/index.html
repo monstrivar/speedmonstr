@@ -928,6 +928,22 @@ body.notes-view { overflow: auto; }
 .slide-accent .t-sub { color: rgba(255,255,255,0.7); }
 .slide-accent .t-drama { color: white; }
 
+/* ─── Persistent logo ─── */
+.deck-logo {
+  position: fixed;
+  top: 1.5rem;
+  left: 2rem;
+  z-index: 50;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.deck-logo img {
+  height: 1.4rem;
+  width: auto;
+  display: block;
+}
+
 /* ─── Footer ─── */
 .slide-footer {
   position: absolute;
@@ -1021,7 +1037,7 @@ body.notes-view { overflow: auto; }
 <!-- ═══════════════════════════════════════════════ -->
 <section class="slide" id="s1" style="background:#000;">
   <div class="stack stack-lg t-center" style="max-width:1100px;">
-    <p class="t-label anim-in" style="margin-bottom:0;">April 2026</p>
+    <img src="logos/monstr-white.png" alt="Monstr AI" class="anim-in" style="height:3rem; width:auto; margin-bottom:0.5rem;">
     <h1 class="t-hero opener">
       <span class="anim-reveal anim-d1">Det du lekte med i fjor.</span>
       <br>
@@ -1031,7 +1047,6 @@ body.notes-view { overflow: auto; }
   </div>
   <div class="slide-footer anim-in anim-d5">
     <span style="font-size:1rem; color:var(--muted);">Ivar André Knutsen</span>
-    <img src="logos/monstr-white.png" alt="Monstr AI" style="height:1.6rem; width:auto; opacity:0.9;">
   </div>
   <aside class="notes">
     <p><em>[Etter svart skjerm — klikk. La teksten bygge seg ferdig i stillhet.]</em></p>
@@ -1485,6 +1500,11 @@ body.notes-view { overflow: auto; }
 </section>
 
 </div><!-- .deck -->
+
+<!-- Persistent logo -->
+<div class="deck-logo">
+  <img src="logos/monstr-white.png" alt="Monstr AI">
+</div>
 
 <!-- ─── Progress bar ─── -->
 <div class="progress" id="progress"></div>
