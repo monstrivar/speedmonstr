@@ -103,12 +103,6 @@ body::after {
   display: block;
 }
 
-.vsl-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  cursor: pointer;
-}
 
 .vsl-placeholder {
   position: absolute;
@@ -497,7 +491,6 @@ body::after {
   <div class="vsl-section">
     <div class="vsl-wrapper" id="vsl-wrapper">
       <div id="yt-player"></div>
-      <div class="vsl-overlay" id="vsl-overlay"></div>
       <div class="vsl-placeholder" id="vsl-placeholder" onclick="startVSL()">
         <div class="play-btn">
           <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
@@ -624,15 +617,6 @@ function startVSL() {
   ytPlayer.playVideo();
 }
 
-document.getElementById('vsl-overlay').addEventListener('click', function() {
-  if (!ytReady) return;
-  var state = ytPlayer.getPlayerState();
-  if (state === YT.PlayerState.PLAYING) {
-    ytPlayer.pauseVideo();
-  } else if (state === YT.PlayerState.PAUSED) {
-    ytPlayer.playVideo();
-  }
-});
 
 async function handleSubmit(e) {
   e.preventDefault();
