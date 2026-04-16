@@ -36,7 +36,7 @@ export default async function handler(req, res) {
             'E-post': email,
             Rolle: role || '',
             ...(Array.isArray(interests) && interests.length > 0
-              ? { Interesser: interests.map(i => ({ name: i })) }
+              ? { Interesser: interests }
               : {}),
             Kilde: source || 'aiarendal-april-2026',
             Opprettet: new Date().toISOString(),
