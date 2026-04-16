@@ -7,6 +7,8 @@ export default async function handler(req, res) {
     AIRTABLE_TOKEN,
     TWILIO_ACCOUNT_SID,
     TWILIO_AUTH_TOKEN,
+    TELEGRAM_BOT_TOKEN,
+    TELEGRAM_CHAT_ID,
   } = process.env;
 
   if (!AIRTABLE_TOKEN) {
@@ -94,6 +96,32 @@ export default async function handler(req, res) {
       });
     } catch (err) {
       console.error('Twilio error:', err);
+    }
+  }
+
+  // 3. Telegram notification
+  if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+    const items = Array.isArray(interests) && interests.length > 0
+      ? interests.join(', ')
+      : 'Ingen';
+
+    const msg = [
+      `📥 Ny påmelding fra AIArendal!`,
+      ``,
+      `Navn: ${firstName}`,
+      `E-post: ${email}`,
+      `Telefon: ${normalizedPhone || 'Ikke oppgitt'}`,
+      `Interesser: ${items}`,
+    ].join('\n');
+
+    try {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg }),
+      });
+    } catch (err) {
+      console.error('Telegram error:', err);
     }
   }
 
