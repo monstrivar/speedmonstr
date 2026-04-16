@@ -13,10 +13,10 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server configuration error' });
   }
 
-  const { firstName, lastName, email, phone, role, interests, source } = req.body;
+  const { firstName, email, phone, interests, source } = req.body;
 
-  if (!firstName || !lastName || !email) {
-    return res.status(400).json({ error: 'Fornavn, etternavn og e-post er påkrevd.' });
+  if (!firstName || !email) {
+    return res.status(400).json({ error: 'Fornavn og e-post er påkrevd.' });
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -51,10 +51,8 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           fields: {
             Fornavn: firstName,
-            Etternavn: lastName,
             'E-post': email,
             Telefon: normalizedPhone || '',
-            Rolle: role || '',
             ...(Array.isArray(interests) && interests.length > 0
               ? { Interesser: interests }
               : {}),
