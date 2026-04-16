@@ -105,24 +105,32 @@ body::after {
 
 .vsl-unmute {
   position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 0.8rem;
+  right: 0.8rem;
   z-index: 3;
-  padding: 0.5rem 1.2rem;
-  border-radius: 2rem;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(0,0,0,0.7);
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.5);
   backdrop-filter: blur(8px);
   color: #fff;
-  font-size: 0.8rem;
-  font-family: var(--sans);
   cursor: pointer;
-  transition: opacity 0.3s ease, background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  padding: 0;
 }
 
 .vsl-unmute:hover {
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.7);
+}
+
+.vsl-unmute svg {
+  width: 1rem;
+  height: 1rem;
+  fill: white;
 }
 
 
@@ -556,7 +564,7 @@ body::after {
   <div class="vsl-section">
     <div class="vsl-wrapper" id="vsl-wrapper">
       <iframe id="vimeo-player" src="https://player.vimeo.com/video/1183824226?autoplay=1&amp;muted=1&amp;loop=1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;title=0&amp;byline=0&amp;portrait=0&amp;controls=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="VSL"></iframe>
-      <button class="vsl-unmute" id="vsl-unmute" onclick="toggleMute()">Trykk for lyd</button>
+      <button class="vsl-unmute" id="vsl-unmute" onclick="toggleMute()"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15" stroke="white" stroke-width="2"/><line x1="17" y1="9" x2="23" y2="15" stroke="white" stroke-width="2"/></svg></button>
     </div>
   </div>
 
@@ -663,7 +671,7 @@ function toggleMute() {
       return vimeoPlayer.play();
     }).then(function() {
       vslUnmuted = true;
-      btn.textContent = 'Trykk for å pause';
+      btn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
       btn.onclick = togglePlayback;
     });
   }
@@ -674,10 +682,10 @@ function togglePlayback() {
   vimeoPlayer.getPaused().then(function(paused) {
     if (paused) {
       vimeoPlayer.play();
-      btn.textContent = 'Trykk for å pause';
+      btn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
     } else {
       vimeoPlayer.pause();
-      btn.textContent = 'Trykk for å spille av';
+      btn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>';
     }
   });
 }
