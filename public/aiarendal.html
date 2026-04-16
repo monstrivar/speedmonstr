@@ -599,8 +599,11 @@ body::after {
   <!-- Form -->
   <div class="form-section">
     <form class="form-card" id="signup-form" onsubmit="handleSubmit(event)">
-      <label for="name">Navn</label>
-      <input type="text" id="name" name="name" placeholder="Fornavn og etternavn" required>
+      <label for="firstName">Fornavn</label>
+      <input type="text" id="firstName" name="firstName" placeholder="Fornavn" required>
+
+      <label for="lastName">Etternavn</label>
+      <input type="text" id="lastName" name="lastName" placeholder="Etternavn" required>
 
       <label for="email">E-post</label>
       <input type="email" id="email" name="email" placeholder="din@epost.no" required>
@@ -726,7 +729,8 @@ async function handleSubmit(e) {
 
   const interests = Array.from(document.querySelectorAll('.interest-btn.active')).map(b => b.dataset.interest);
   const data = {
-    name: document.getElementById('name').value,
+    firstName: document.getElementById('firstName').value,
+    lastName: document.getElementById('lastName').value,
     email: document.getElementById('email').value,
     phone: document.getElementById('phone').value,
     role: document.getElementById('role').value,
