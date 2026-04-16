@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server configuration error' });
   }
 
-  const { name, email, role, interests, source } = req.body;
+  const { name, email, phone, role, interests, source } = req.body;
 
   if (!name || !email) {
     return res.status(400).json({ error: 'Navn og e-post er påkrevd.' });
@@ -34,6 +34,7 @@ export default async function handler(req, res) {
           fields: {
             Navn: name,
             'E-post': email,
+            Telefon: phone || '',
             Rolle: role || '',
             ...(Array.isArray(interests) && interests.length > 0
               ? { Interesser: interests }
