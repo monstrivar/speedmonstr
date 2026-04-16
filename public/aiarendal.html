@@ -96,11 +96,18 @@ body::after {
   cursor: pointer;
 }
 
-.vsl-wrapper video {
+.vsl-wrapper iframe {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  border: 0;
   display: block;
+}
+
+.vsl-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: pointer;
 }
 
 .vsl-placeholder {
@@ -488,16 +495,14 @@ body::after {
 
   <!-- VSL -->
   <div class="vsl-section">
-    <div class="vsl-wrapper" id="vsl-wrapper" onclick="playVSL()">
-      <video id="vsl-video" playsinline preload="metadata">
-        <!-- Bytt src til din innspilte VSL -->
-        <source src="" type="video/mp4">
-      </video>
-      <div class="vsl-placeholder" id="vsl-placeholder">
+    <div class="vsl-wrapper" id="vsl-wrapper">
+      <div id="yt-player"></div>
+      <div class="vsl-overlay" id="vsl-overlay"></div>
+      <div class="vsl-placeholder" id="vsl-placeholder" onclick="startVSL()">
         <div class="play-btn">
           <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
         </div>
-        <span class="vsl-label">Se videoen — 30 sekunder</span>
+        <span class="vsl-label">Se videoen — 40 sekunder</span>
       </div>
     </div>
   </div>
@@ -581,15 +586,53 @@ body::after {
   </div>
 </div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-function playVSL() {
-  const video = document.getElementById('vsl-video');
-  const wrapper = document.getElementById('vsl-wrapper');
-  if (video.src || video.querySelector('source').src) {
-    wrapper.classList.add('playing');
-    video.play().catch(() => {});
-  }
+var ytPlayer;
+var ytReady = false;
+
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('yt-player', {
+    videoId: 'iODAa38VfzQ',
+    playerVars: {
+      autoplay: 0,
+      controls: 0,
+      modestbranding: 1,
+      rel: 0,
+      showinfo: 0,
+      fs: 0,
+      iv_load_policy: 3,
+      disablekb: 1,
+      playsinline: 1
+    },
+    events: {
+      onReady: function() { ytReady = true; },
+      onStateChange: function(e) {
+        if (e.data === YT.PlayerState.ENDED) {
+          document.getElementById('vsl-wrapper').classList.remove('playing');
+          document.getElementById('vsl-placeholder').style.display = '';
+        }
+      }
+    }
+  });
 }
+
+function startVSL() {
+  if (!ytReady) return;
+  var wrapper = document.getElementById('vsl-wrapper');
+  wrapper.classList.add('playing');
+  ytPlayer.playVideo();
+}
+
+document.getElementById('vsl-overlay').addEventListener('click', function() {
+  if (!ytReady) return;
+  var state = ytPlayer.getPlayerState();
+  if (state === YT.PlayerState.PLAYING) {
+    ytPlayer.pauseVideo();
+  } else if (state === YT.PlayerState.PAUSED) {
+    ytPlayer.playVideo();
+  }
+});
 
 async function handleSubmit(e) {
   e.preventDefault();
