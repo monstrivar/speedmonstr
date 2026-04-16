@@ -103,6 +103,21 @@ body::after {
   display: block;
 }
 
+.vsl-tap-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
 .vsl-unmute {
   position: absolute;
   bottom: 0.8rem;
@@ -564,7 +579,8 @@ body::after {
   <div class="vsl-section">
     <div class="vsl-wrapper" id="vsl-wrapper">
       <iframe id="vimeo-player" src="https://player.vimeo.com/video/1183824226?autoplay=1&amp;muted=1&amp;loop=1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;title=0&amp;byline=0&amp;portrait=0&amp;controls=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="VSL"></iframe>
-      <button class="vsl-unmute" id="vsl-unmute" onclick="toggleMute()"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15" stroke="white" stroke-width="2"/><line x1="17" y1="9" x2="23" y2="15" stroke="white" stroke-width="2"/></svg></button>
+      <div class="vsl-tap-overlay" id="vsl-tap-overlay" onclick="toggleMute()">Trykk for lyd</div>
+      <button class="vsl-unmute" id="vsl-unmute" style="display:none;" onclick="togglePlayback()"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></button>
     </div>
   </div>
 
@@ -663,18 +679,16 @@ var vimeoPlayer = new Vimeo.Player(document.getElementById('vimeo-player'));
 var vslUnmuted = false;
 
 function toggleMute() {
-  var btn = document.getElementById('vsl-unmute');
-  if (!vslUnmuted) {
-    vimeoPlayer.setMuted(false).then(function() {
-      return vimeoPlayer.setVolume(1);
-    }).then(function() {
-      return vimeoPlayer.play();
-    }).then(function() {
-      vslUnmuted = true;
-      btn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-      btn.onclick = togglePlayback;
-    });
-  }
+  if (vslUnmuted) return;
+  vimeoPlayer.setMuted(false).then(function() {
+    return vimeoPlayer.setVolume(1);
+  }).then(function() {
+    return vimeoPlayer.play();
+  }).then(function() {
+    vslUnmuted = true;
+    document.getElementById('vsl-tap-overlay').style.display = 'none';
+    document.getElementById('vsl-unmute').style.display = 'flex';
+  });
 }
 
 function togglePlayback() {
