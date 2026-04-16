@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude-verktøykassen — Monstr AI</title>
+<meta name="description" content="Fem ferdige Claude Skills for ledere. Gratis fra Monstr AI.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --border: #222;
+  --border-hover: #333;
+  --text: #f0ece6;
+  --text-muted: #888;
+  --accent: #E63B2E;
+  --accent-glow: rgba(230, 59, 46, 0.12);
+  --accent-soft: rgba(230, 59, 46, 0.08);
+  --sans: 'Space Grotesk', system-ui, sans-serif;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --mono: 'Space Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--sans);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── Grain overlay ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ─── Layout ─── */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ─── Logo bar ─── */
+.logo-bar {
+  padding: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.logo-bar img {
+  height: 1.4rem;
+  width: auto;
+  opacity: 0.7;
+}
+
+/* ─── VSL Section ─── */
+.vsl-section {
+  padding: 1rem 0 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.vsl-wrapper {
+  position: relative;
+  aspect-ratio: 16/9;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, #111 0%, #1a1015 50%, #111 100%);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 0 0 1px rgba(230, 59, 46, 0.06),
+    0 20px 60px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.vsl-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.vsl-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  background: linear-gradient(135deg, rgba(10,10,10,0.95) 0%, rgba(26,10,15,0.9) 50%, rgba(10,10,10,0.95) 100%);
+  transition: opacity 0.4s ease;
+}
+
+.vsl-wrapper.playing .vsl-placeholder { opacity: 0; pointer-events: none; }
+
+.play-btn {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px var(--accent-glow), 0 4px 20px rgba(0,0,0,0.4);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 60px rgba(230, 59, 46, 0.25), 0 6px 30px rgba(0,0,0,0.5);
+}
+
+.play-btn svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  fill: white;
+  margin-left: 4px;
+}
+
+.vsl-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Hero text ─── */
+.hero {
+  text-align: center;
+  padding: 2rem 0 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.hero h1 em {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ─── Form ─── */
+.form-section {
+  padding: 0 0 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.form-card label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+}
+
+.form-card input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.form-card input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.form-card input::placeholder {
+  color: #555;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  box-shadow: 0 4px 15px rgba(230, 59, 46, 0.25);
+  margin-top: 0.5rem;
+}
+
+.submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(230, 59, 46, 0.35);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-note {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #555;
+  margin-top: 1rem;
+}
+
+/* ─── Success state ─── */
+.success-state {
+  display: none;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.success-state.show { display: block; }
+.form-card.hide { display: none; }
+
+.success-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 0 40px var(--accent-glow);
+}
+
+.success-icon svg {
+  width: 2rem;
+  height: 2rem;
+  stroke: white;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.success-state h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.success-state p {
+  color: var(--text-muted);
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.download-btn {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 15px rgba(230, 59, 46, 0.25);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.download-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(230, 59, 46, 0.35);
+}
+
+/* ─── Skills preview ─── */
+.skills-section {
+  padding: 0 0 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards;
+}
+
+.skills-label {
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.skill-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  transition: border-color 0.2s ease;
+}
+
+.skill-row:hover {
+  border-color: var(--border-hover);
+}
+
+.skill-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  min-width: 1.5rem;
+  font-weight: 700;
+}
+
+.skill-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.skill-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-left: auto;
+  text-align: right;
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .skill-desc { display: block; }
+}
+
+/* ─── Bonus ─── */
+.bonus-section {
+  padding: 0 0 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+}
+
+.bonus-link {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.4rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.bonus-link:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* ─── Meta footer ─── */
+.meta-footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+}
+
+.meta-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #444;
+  padding: 0.5rem 1rem;
+  border: 1px solid #222;
+  border-radius: 2rem;
+  margin-bottom: 1rem;
+}
+
+.meta-footer p {
+  font-size: 0.8rem;
+  color: #555;
+  line-height: 1.5;
+  max-width: 400px;
+  margin: 0 auto 1.5rem;
+}
+
+.meta-contact {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.meta-contact a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.meta-logo {
+  display: block;
+  margin: 1.5rem auto 0;
+  height: 1.2rem;
+  opacity: 0.4;
+}
+
+/* ─── Animations ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Logo -->
+  <div class="logo-bar">
+    <img src="/monstr-logo-white.png" alt="Monstr AI">
+  </div>
+
+  <!-- VSL -->
+  <div class="vsl-section">
+    <div class="vsl-wrapper" id="vsl-wrapper" onclick="playVSL()">
+      <video id="vsl-video" playsinline preload="metadata">
+        <!-- Bytt src til din innspilte VSL -->
+        <source src="" type="video/mp4">
+      </video>
+      <div class="vsl-placeholder" id="vsl-placeholder">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
+        </div>
+        <span class="vsl-label">Se videoen — 30 sekunder</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero text -->
+  <div class="hero">
+    <div class="hero-eyebrow">Claude-verktøykassen</div>
+    <h1>Takk for at du<br>var <em>her.</em></h1>
+    <p class="hero-sub">Tre ferdige Claude Skills — møtereferat, frontend-design og dokumentknuseren. Bygget av oss, klare til å lime inn i Claude.ai i kveld. Gratis.</p>
+  </div>
+
+  <!-- Form -->
+  <div class="form-section">
+    <form class="form-card" id="signup-form" onsubmit="handleSubmit(event)">
+      <label for="name">Navn</label>
+      <input type="text" id="name" name="name" placeholder="Fornavn og etternavn" required>
+
+      <label for="email">E-post</label>
+      <input type="email" id="email" name="email" placeholder="din@epost.no" required>
+
+      <label for="role">Rolle <span style="color:#555;">(valgfritt)</span></label>
+      <input type="text" id="role" name="role" placeholder="F.eks. daglig leder, prosjektleder, rådgiver">
+
+      <button type="submit" class="submit-btn" id="submit-btn">Send meg verktøykassen</button>
+      <p class="form-note">Ingen spam. Kun verktøykassen + én oppfølgingsmail.</p>
+    </form>
+
+    <div class="success-state" id="success-state">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>Nedlastingen starter.</h2>
+      <p style="margin-bottom:1.5rem;">Hvis den ikke starter automatisk:</p>
+      <a href="/claude-verktoykassen.zip" download class="download-btn" id="download-btn">Last ned verktøykassen</a>
+      <p style="margin-top:1.5rem; font-size:0.8rem; color:#555;">Vi har lagret kontaktinfoen din — du hører fra oss én gang med oppfølging.</p>
+    </div>
+  </div>
+
+  <!-- Skills preview -->
+  <div class="skills-section">
+    <p class="skills-label">Hva du får</p>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <span class="skill-num">01</span>
+        <span class="skill-name">Møtereferat → beslutninger</span>
+        <span class="skill-desc">Notater → eierskap, frister, neste steg</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-num">02</span>
+        <span class="skill-name">Frontend-design</span>
+        <span class="skill-desc">Beskriv det → Claude bygger det</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-num">03</span>
+        <span class="skill-name">Dokumentknuseren</span>
+        <span class="skill-desc">Lim inn hva som helst → nøkkelpunkter, handlinger, risikoer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bonus -->
+  <div class="bonus-section">
+    <div class="skill-row" style="border-color:var(--border-hover); justify-content:center; gap:1.2rem; text-align:center; padding:1.2rem 1.5rem;">
+      <span style="font-size:1.2rem;">🎁</span>
+      <div>
+        <span class="skill-name">1 måned gratis med Wisprflow</span>
+        <div style="font-size:0.85rem; color:var(--text-muted); margin-top:0.2rem;">Snakk i stedet for å skrive — alt du sier blir tekst. Verktøyet jeg bruker selv daglig.</div>
+      </div>
+      <a href="https://wisprflow.ai/r?IVAR16" target="_blank" rel="noopener" class="bonus-link">Hent her →</a>
+    </div>
+  </div>
+
+  <!-- Meta footer -->
+  <div class="meta-footer">
+    <div class="meta-tag">Bygget med Claude Code — på minutter</div>
+    <p>Denne landingssiden ble laget med Claude Code rett før foredraget. Null design-byrå. Null mal. Bare en idé og et verktøy.</p>
+    <div class="meta-contact">
+      Ivar André Knutsen &nbsp;·&nbsp; 907 07 902 &nbsp;·&nbsp; <a href="mailto:ivar@monstr.no">ivar@monstr.no</a>
+    </div>
+    <img src="/monstr-logo-white.png" alt="Monstr" class="meta-logo">
+  </div>
+</div>
+
+<script>
+function playVSL() {
+  const video = document.getElementById('vsl-video');
+  const wrapper = document.getElementById('vsl-wrapper');
+  if (video.src || video.querySelector('source').src) {
+    wrapper.classList.add('playing');
+    video.play().catch(() => {});
+  }
+}
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  const form = document.getElementById('signup-form');
+  const success = document.getElementById('success-state');
+
+  btn.disabled = true;
+  btn.textContent = 'Sender...';
+
+  const data = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    role: document.getElementById('role').value,
+    source: 'aiarendal-april-2026'
+  };
+
+  try {
+    // ────────────────────────────────────────
+    // KOBLE TIL BACKEND HER
+    // Alternativ 1: Vercel serverless → Airtable
+    //   await fetch('/api/kickstart', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    //
+    // Alternativ 2: Make.com webhook
+    //   await fetch('https://hook.eu2.make.com/DIN_WEBHOOK_ID', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    //
+    // Alternativ 3: Formspree
+    //   await fetch('https://formspree.io/f/DIN_FORM_ID', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    // ────────────────────────────────────────
+
+    // For nå: simuler suksess (fjern denne linjen når backend er koblet)
+    await new Promise(r => setTimeout(r, 600));
+
+    form.classList.add('hide');
+    success.classList.add('show');
+
+    // Auto-trigger download
+    const dl = document.createElement('a');
+    dl.href = '/claude-verktoykassen.zip';
+    dl.download = 'claude-verktoykassen.zip';
+    document.body.appendChild(dl);
+    dl.click();
+    dl.remove();
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Prøv igjen';
+  }
+}
+</script>
+</body>
+</html>

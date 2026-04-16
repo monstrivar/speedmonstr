@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fra leke til arbeidskraft — Monstr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark: #0d0d0d;
+  --dark-card: #161616;
+  --dark-border: #2a2a2a;
+  --light: #f0ece6;
+  --paper: #E8E4DD;
+  --accent: #E63B2E;
+  --accent-glow: rgba(230, 59, 46, 0.15);
+  --muted: #777;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--light);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.blackout::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* ─── Noise overlay ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── Slide container ─── */
+.deck {
+  position: relative;
+  width: 100%; height: 100%;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5vh 8vw;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(12px);
+  background: var(--dark);
+  overflow: hidden;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  z-index: 10;
+}
+
+/* ─── Typography ─── */
+.t-hero {
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.t-drama {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+}
+
+.t-section {
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.t-sub {
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.t-body {
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.3vw, 1.1rem);
+}
+
+.t-label {
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.t-accent { color: var(--accent); }
+.t-center { text-align: center; }
+.t-left { text-align: left; }
+
+.logo-text {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+/* ─── Layout helpers ─── */
+.stack { display: flex; flex-direction: column; gap: 1.5rem; align-items: center; width: 100%; }
+.stack-lg { gap: 2.5rem; }
+.stack-sm { gap: 0.8rem; }
+.row { display: flex; gap: 2rem; align-items: flex-start; }
+.full-w { width: 100%; max-width: 1200px; }
+.spacer { flex: 1; }
+
+/* ─── Cards ─── */
+.card {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.card-grid {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.card-grid-2 { grid-template-columns: 1fr 1fr; }
+.card-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+.card-grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+.card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.card .card-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* ─── Timeline ─── */
+.timeline {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--dark-border);
+}
+
+.timeline-item {
+  position: relative;
+  padding: 0.6rem 0 0.6rem 2rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.4s ease;
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -0.35rem;
+  top: 1rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--dark);
+}
+
+.timeline-item:last-child::before {
+  box-shadow: 0 0 0 4px var(--accent-glow), 0 0 12px var(--accent);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 4px var(--accent-glow), 0 0 12px rgba(230,59,46,0.3); }
+  50% { box-shadow: 0 0 0 8px var(--accent-glow), 0 0 20px rgba(230,59,46,0.5); }
+}
+
+.timeline-date {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 0.15rem;
+}
+
+.timeline-text {
+  font-size: 1.05rem;
+  color: var(--light);
+}
+
+/* ─── Launch grid ─── */
+.launch-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  font-size: 0.95rem;
+}
+
+.launch-grid .lg-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  white-space: nowrap;
+  padding: 0.25rem 0;
+}
+
+.launch-grid .lg-text {
+  color: var(--light);
+  padding: 0.25rem 0;
+  border-bottom: 1px solid var(--dark-border);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.25s ease;
+}
+
+.launch-grid .lg-text.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── Three columns ─── */
+.cols-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.col-card {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.col-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.col-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.col-card li {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.4;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.col-card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ─── Three faces boxes ─── */
+.faces-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.face-box {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: 1.2rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.5s ease;
+}
+
+.face-box.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.face-box .face-num {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.face-box h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.face-box p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ─── Code block ─── */
+.code-block {
+  background: #0a0a0a;
+  border: 1px solid var(--dark-border);
+  border-radius: 0.8rem;
+  padding: 1.8rem 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--muted);
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.code-block .code-folder { color: var(--accent); }
+.code-block .code-file { color: var(--light); }
+.code-block .code-comment { color: #555; }
+
+/* ─── Video panels ─── */
+.video-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.video-panel {
+  aspect-ratio: 16/10;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--dark-border);
+}
+
+.video-panel.vp-glitch {
+  background: linear-gradient(135deg, #1a0a0a, #0a1a0a, #0a0a1a);
+  animation: glitch-bg 3s linear infinite;
+}
+
+@keyframes glitch-bg {
+  0%, 100% { filter: none; }
+  30% { filter: hue-rotate(90deg) saturate(2); }
+  31% { filter: none; }
+  60% { filter: hue-rotate(-90deg) brightness(1.5); }
+  61% { filter: none; }
+}
+
+.video-panel.vp-good {
+  background: linear-gradient(135deg, #1a1520, #151a20);
+}
+
+.video-panel.vp-great {
+  background: linear-gradient(135deg, #1a1015, #10151a, #151a10);
+  border-color: var(--accent);
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+
+.video-panel .vp-year {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  font-weight: 700;
+  opacity: 0.2;
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+}
+
+.video-panel .vp-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.video-panel .vp-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.video-panel .vp-source {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #555;
+  position: absolute;
+  bottom: 0.8rem;
+}
+
+/* ─── Icons row ─── */
+.icons-row {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.4s ease;
+}
+
+.icon-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.icon-item .ii-icon {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1rem;
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+.icon-item .ii-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ─── Demo slide ─── */
+.demo-badge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-glow);
+  padding: 0.4rem 1.2rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(230, 59, 46, 0.3);
+}
+
+/* ─── Quote ─── */
+.quote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.5rem;
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--muted);
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* ─── Pill ─── */
+.pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 1rem;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border: 1px solid rgba(230,59,46,0.25);
+}
+
+/* ─── Separator ─── */
+.sep {
+  width: 3rem;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ─── Start table ─── */
+.start-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.start-card {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: 1.2rem;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.start-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.start-card .start-price {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+.start-card p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.start-card .start-result {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--dark-border);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+/* ─── Contact slide ─── */
+.contact-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.contact-block .sep { margin-bottom: 0.3rem; }
+
+.contact-block .contact-name {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.contact-block .contact-detail {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  color: var(--muted);
+}
+
+/* ─── Progress bar ─── */
+.progress {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  transition: width 0.4s ease;
+  z-index: 100;
+}
+
+/* ─── Slide counter ─── */
+.counter {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #444;
+  z-index: 100;
+}
+
+/* ─── Speaker notes ─── */
+.notes {
+  display: none;
+}
+
+.notes-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 30vh;
+  background: rgba(0, 0, 0, 0.95);
+  border-top: 2px solid var(--accent);
+  padding: 1.5rem 3rem;
+  overflow-y: auto;
+  z-index: 200;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted);
+  display: none;
+}
+
+.notes-panel.show { display: block; }
+
+.notes-panel p {
+  margin-bottom: 0.5rem;
+}
+
+.notes-panel em {
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* ─── Speaker view ─── */
+.notes-stage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #0a0a0a;
+  color: var(--light);
+  padding: 2rem 2.5rem;
+  flex-direction: column;
+  z-index: 500;
+}
+
+body.notes-view .deck,
+body.notes-view .progress,
+body.notes-view .counter,
+body.notes-view .hint,
+body.notes-view .notes-panel { display: none !important; }
+
+body.notes-view .notes-stage { display: flex; }
+
+body.notes-view { overflow: auto; }
+
+.ns-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--dark-border);
+  margin-bottom: 1.5rem;
+}
+
+.ns-counter {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+.ns-timer {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  color: var(--accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.ns-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 2rem;
+  min-height: 0;
+}
+
+.ns-current {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ns-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  color: var(--accent);
+  font-family: var(--font-sans);
+}
+
+.ns-notes {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--light);
+  font-family: var(--font-sans);
+}
+
+.ns-notes p { margin-bottom: 0.9rem; }
+.ns-notes em {
+  color: var(--accent);
+  font-style: italic;
+  display: block;
+  font-size: 1.1rem;
+  margin: 0.8rem 0;
+  opacity: 0.85;
+}
+.ns-notes strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.ns-next {
+  background: #141414;
+  border: 1px solid var(--dark-border);
+  border-radius: 0.6rem;
+  padding: 1.2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.ns-next-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.ns-next-preview {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+.ns-next-preview h3 {
+  font-size: 1.2rem;
+  color: var(--light);
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+}
+
+.ns-footer {
+  padding-top: 1rem;
+  border-top: 1px solid var(--dark-border);
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #444;
+  text-align: center;
+}
+
+/* ─── Keyboard hint ─── */
+.hint {
+  position: fixed;
+  bottom: 1rem;
+  left: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #333;
+  z-index: 100;
+}
+
+/* ─── Animations ─── */
+.anim-in {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(6px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.slide.active .anim-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Variant: pop — subtle scale for hero headings / numbers */
+.anim-pop {
+  opacity: 0;
+  transform: translateY(12px) scale(0.94);
+  filter: blur(4px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.slide.active .anim-pop {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Variant: slide-in from sides */
+.anim-left { transform: translateX(-32px); }
+.anim-right { transform: translateX(32px); }
+.slide.active .anim-left,
+.slide.active .anim-right { transform: translateX(0); }
+
+.slide.active .anim-d1 { transition-delay: 0.12s; }
+.slide.active .anim-d2 { transition-delay: 0.24s; }
+.slide.active .anim-d3 { transition-delay: 0.38s; }
+.slide.active .anim-d4 { transition-delay: 0.52s; }
+.slide.active .anim-d5 { transition-delay: 0.66s; }
+.slide.active .anim-d6 { transition-delay: 0.80s; }
+
+/* Dramatic reveal for opener: words ride in with scale + blur, held longer */
+.anim-reveal {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(32px) scale(0.92);
+  filter: blur(14px);
+  transition:
+    opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.slide.active .anim-reveal {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Opener gets larger hero + letter-spacing breath */
+.opener { font-size: clamp(3rem, 7vw, 6rem); line-height: 1.05; letter-spacing: -0.03em; }
+.opener .t-drama { letter-spacing: -0.02em; }
+
+/* t-drama reveal: underline sweep on active slide */
+.slide .t-drama {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+}
+.slide.active .t-drama {
+  background-size: 100% 2px;
+}
+.slide-accent .t-drama {
+  background-image: linear-gradient(#fff, #fff);
+}
+
+/* ─── Accent slide variant ─── */
+.slide-accent {
+  background: var(--accent) !important;
+  color: white !important;
+}
+
+.slide-accent .t-sub { color: rgba(255,255,255,0.7); }
+.slide-accent .t-drama { color: white; }
+
+/* ─── Footer ─── */
+.slide-footer {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4rem;
+}
+
+/* ─── Close slide three panels ─── */
+.close-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
+  align-items: center;
+}
+
+.close-panel-mini {
+  aspect-ratio: 16/10;
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--dark-border);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.close-thumb {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.close-year-label {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: rgba(0,0,0,0.6);
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.25rem;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.close-question {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 5rem;
+  color: var(--accent);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .card-grid-3, .card-grid-4, .cols-3, .faces-grid, .video-panels, .start-grid, .close-panels {
+    grid-template-columns: 1fr;
+  }
+  .card-grid-2 { grid-template-columns: 1fr; }
+  .icons-row { gap: 1.5rem; }
+  .slide { padding: 4vh 5vw; }
+  .launch-grid { font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 0 — Black opening (click to reveal)      -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s0" style="background:#000;">
+  <aside class="notes">
+    <p><em>[Helt svart skjerm. Ikke si noe. La publikum finne roen. 5-10 sekunder i stillhet.]</em></p>
+    <p><em>[Klikk videre når du er klar. Når du klikker — stå i stillhet til teksten har bygget seg ferdig.]</em></p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 1 — Opening reveal                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s1" style="background:#000;">
+  <div class="stack stack-lg t-center" style="max-width:1100px;">
+    <p class="t-label anim-in" style="margin-bottom:0;">April 2026</p>
+    <h1 class="t-hero opener">
+      <span class="anim-reveal anim-d1">Det du lekte med i fjor.</span>
+      <br>
+      <span class="t-drama anim-reveal anim-d3" style="display:inline-block;">Jobber for deg i år.</span>
+    </h1>
+    <p class="t-sub anim-in anim-d5" style="opacity:0.7;">Hva AI faktisk kan gjøre for norske bedrifter i dag</p>
+  </div>
+  <div class="slide-footer anim-in anim-d5">
+    <span style="font-size:1rem; color:var(--muted);">Ivar André Knutsen</span>
+    <img src="logos/monstr-white.png" alt="Monstr AI" style="height:1.6rem; width:auto; opacity:0.9;">
+  </div>
+  <aside class="notes">
+    <p><em>[Etter svart skjerm — klikk. La teksten bygge seg ferdig i stillhet.]</em></p>
+    <p>Jeg heter Ivar, og jeg driver Monstr — et AI-byrå som hjelper norske bedrifter ta i bruk kunstig intelligens.</p>
+    <p>Det jeg skal vise dere i dag — det er ikke fremtiden. Det er nå. Og de fleste bedrifter vet det ikke ennå.</p>
+    <p>Vi har 30 minutter. Stopp meg underveis. Dette er en samtale, ikke en forelesning.</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 2 — Who we've worked with (ambient)      -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="stack stack-lg t-center" style="max-width:1300px;">
+    <p class="t-label anim-in">Vi har vært involvert med blant annet</p>
+    <div class="anim-in anim-d1" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:2rem 3rem; padding:1rem 2rem; width:100%;">
+      <img src="logos/droptech.png" alt="DropTech" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+      <img src="logos/imitch.png" alt="Imitch" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+      <img src="logos/chargo.png" alt="Chargo" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+      <img src="logos/synnove.png" alt="Synnøve" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+      <img src="logos/Dødsdivingleague.webp" alt="Dødsdiving League" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+      <img src="logos/NBS.png" alt="NBS" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+      <img src="logos/Countryfestivalen.png" alt="Countryfestivalen" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+      <img src="logos/USNhvit.png" alt="USN" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; opacity:0.8;">
+      <img src="logos/nes.png" alt="Nes Næringsforening" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+      <img src="logos/arendalnaringsforening-ung-sort-logo.png" alt="Arendal Næringsforening Ung" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+      <img src="logos/vvsaktuelt.png" alt="VVS-Aktuelt" style="max-height:3.5rem; max-width:10rem; width:auto; height:auto; filter: brightness(0) invert(1); opacity:0.75;">
+    </div>
+  </div>
+  <aside class="notes">
+    <p><em>[10–15 sekunder, ambient. Ikke les opp navnene.]</em></p>
+    <p>Kort om oss: Vi har jobbet med AI siden ChatGPT ble lansert i 2022. Dette er noen av dem vi har vært involvert med — kunder, partnere, medieomtale.</p>
+    <p>Poenget er ikke å skryte. Det er at det jeg viser dere i dag er ikke teori — det er ting vi bruker hver dag.</p>
+    <p><em>[Transition:]</em> Så la meg vise dere hvor raskt dette feltet beveger seg.</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 5 — Will Smith 2023 vs 2025              -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s5" style="padding: 3vh 4vw;">
+  <div style="width:100%; max-width:1400px; max-height:90vh; display:flex; align-items:center; justify-content:center;">
+    <div class="anim-in" style="width:100%; border-radius:1rem; border:1px solid var(--dark-border); overflow:hidden; background:#000; box-shadow: 0 20px 60px rgba(0,0,0,0.6);">
+      <video id="ws-video" style="width:100%; display:block;" muted playsinline loop>
+        <source src="will-smith-comparison.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <aside class="notes">
+    <p><em>[Videoen starter automatisk. Ikke si noe. La folk le av 2023-versjonen, og la dem bli stille når 2025-versjonen vises.]</em></p>
+    <p><em>[Når videoen har gått gjennom én gang, pause. Se på publikum.]</em></p>
+    <p>Will Smith spiser spaghetti. Samme prompt. Venstre: 2023. Høyre: 2025.</p>
+    <p>Det dere lo av — til noe som er nesten umulig å skille fra ekte video. To år mellom.</p>
+    <p><em>[Transition:]</em> Men legg merke til én ting: Will Smith-videoene er ganske statiske. Samme vinkel, én handling, lite bevegelse. La meg vise dere hva som kom for seks uker siden.</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE — Seedance 2.0 (2026)                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s6" style="padding: 3vh 4vw;">
+  <div style="width:100%; max-width:1400px; max-height:90vh; display:flex; align-items:center; justify-content:center;">
+    <div class="anim-in" style="width:100%; border-radius:1rem; border:1px solid var(--accent); box-shadow: 0 0 60px var(--accent-glow), 0 20px 60px rgba(0,0,0,0.6); overflow:hidden; background:#000;">
+      <video id="sd-video" style="width:100%; display:block;" muted playsinline loop>
+        <source src="seedance-2.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <aside class="notes">
+    <p><em>[Videoen starter automatisk. La den gå ferdig i stillhet.]</em></p>
+    <p><em>[Pause. La det lande.]</em></p>
+    <p>Seks uker gammelt. Seedance 2.0, fra ByteDance — selskapet bak TikTok. Allerede innebygd i CapCut.</p>
+    <p>Legg merke til hva Will Smith-videoen <em>ikke</em> hadde: flere vinkler, rask bevegelse, en hel scene som bygger seg. Dette er ikke en forbedring av forrige generasjon — det er en ny liga.</p>
+    <p>Disney saksøkte AI-selskaper i 2024 for å kunne produsere filmer av deres kvalitet. Det vi nettopp så? Det er nivået de var redde for.</p>
+    <p><em>[Transition:]</em> Og for å vise dere akkurat hvor tett dette har blitt...</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE — Launch tempo                           -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div class="stack stack-lg full-w" style="max-width:1000px;">
+    <div>
+      <h2 class="t-section anim-in">Bare de siste <span class="t-drama">10 ukene.</span></h2>
+      <p class="t-sub anim-in anim-d1" style="margin-top:0.5rem;">Februar — April 2026. Kun Claude.</p>
+    </div>
+    <div class="launch-grid anim-in anim-d2" id="launch-grid">
+      <span class="lg-date">5. feb</span><span class="lg-text">Opus 4.6 — ny toppmodell med 1M ord kontekst</span>
+      <span class="lg-date">7. feb</span><span class="lg-text">Fast Mode — 2.5x raskere svar</span>
+      <span class="lg-date">10. feb</span><span class="lg-text">Cowork lansert på Windows</span>
+      <span class="lg-date">11. feb</span><span class="lg-text">Gratis-plan utvidet med Skills og koblinger</span>
+      <span class="lg-date">12. feb</span><span class="lg-text">Anthropic henter $30 mrd — verdsatt til $380 mrd</span>
+      <span class="lg-date">17. feb</span><span class="lg-text">Sonnet 4.6 — ny mellommodell</span>
+      <span class="lg-date">20. feb</span><span class="lg-text">Automatisk sikkerhetsskanning av kode</span>
+      <span class="lg-date">25. feb</span><span class="lg-text">Kjøper AI-oppstarten Vercept</span>
+      <span class="lg-date">2. mar</span><span class="lg-text">Memory til alle gratisbrukere</span>
+      <span class="lg-date">7. mar</span><span class="lg-text">/loop — oppgaver som gjentar seg i opptil 7 dager</span>
+      <span class="lg-date">12. mar</span><span class="lg-text">Interaktive grafer + stemme på desktop</span>
+      <span class="lg-date">13. mar</span><span class="lg-text">1M kontekst tilgjengelig for alle betalende</span>
+      <span class="lg-date">17. mar</span><span class="lg-text">Dispatch — send oppgaver fra mobilen</span>
+      <span class="lg-date">19. mar</span><span class="lg-text">Claude.ai 65% raskere</span>
+      <span class="lg-date">23. mar</span><span class="lg-text">Computer Use — Claude styrer skrivebordet ditt</span>
+      <span class="lg-date">3. apr</span><span class="lg-text">Computer Use på Windows</span>
+      <span class="lg-date">7. apr</span><span class="lg-text">Mythos — ny sikkerhetsmodell</span>
+      <span class="lg-date">8. apr</span><span class="lg-text">Managed Agents — autonome agenter i produksjon</span>
+      <span class="lg-date">9. apr</span><span class="lg-text">Cowork generelt tilgjengelig for alle</span>
+    </div>
+  </div>
+  <aside class="notes">
+    <p><em>[La sliden synke inn 3-4 sekunder i stillhet. Ikke si noe.]</em></p>
+    <p>Dette er ikke to år. Dette er ti uker.</p>
+    <p>To nye toppmodeller. Et oppkjøp. Tretti milliarder i ny finansiering. Computer Use. Cowork. Dispatch. Managed Agents.</p>
+    <p>Det er nesten en ny lansering <em>hver eneste dag</em>. Og dette er bare Claude.</p>
+    <p><em>[Transition:]</em> Så — hvorfor Claude? Dere har kanskje hørt om ChatGPT. Kanskje Gemini. La meg forklare hvorfor jeg snakker om Claude.</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE — Three faces (absorbs Why Claude)       -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s10">
+  <div class="stack stack-lg t-center full-w">
+    <p class="t-label anim-in">ChatGPT er en assistent dere prater med. Claude er noen dere gir et mål til.</p>
+    <h2 class="t-section anim-in anim-d1">Tre skikkelser.<br><span class="t-drama">Samme hjerne.</span></h2>
+    <div class="faces-grid" id="faces">
+      <div class="face-box">
+        <span class="face-num">1</span>
+        <h3>Claude.ai</h3>
+        <p>Tenkepartner i nettleseren</p>
+      </div>
+      <div class="face-box">
+        <span class="face-num">2</span>
+        <h3>Claude Cowork</h3>
+        <p>Autonom arbeider på maskinen</p>
+      </div>
+      <div class="face-box" style="opacity:0.55;">
+        <span class="face-num">3</span>
+        <h3>Claude Code</h3>
+        <p>For de som bygger — eget spor</p>
+      </div>
+    </div>
+    <p class="t-sub anim-in anim-d3">
+      I dag fokuserer vi på de to første.
+    </p>
+  </div>
+  <aside class="notes">
+    <p>Alle kjenner ChatGPT. Men det er én viktig forskjell: ChatGPT er en assistent dere <em>prater med</em>. Claude er noen dere <em>gir en oppgave til</em>. Det er det hele foredraget handler om.</p>
+    <p>Claude har tre skikkelser. Samme hjerne, tre ulike kropper. Vi fokuserer på de to første i dag — Claude.ai og Cowork. Den tredje, Claude Code, er for dere som vil bygge selv. Det er en egen samtale.</p>
+    <p><em>[Transition:]</em> Starter med den enkleste.</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 10 — Claude.ai features                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s11">
+  <div class="stack stack-lg full-w t-center">
+    <div>
+      <span class="pill anim-in">Skikkelse 1</span>
+      <h2 class="t-section anim-in anim-d1" style="margin-top:1rem;">Claude.ai — tenkepartneren <span class="t-drama">som leverer</span></h2>
+    </div>
+    <div class="card-grid card-grid-3 anim-in anim-d2" style="max-width:1000px; margin:0 auto;">
+      <div class="card">
+        <span class="card-icon">📁</span>
+        <h3>Projects</h3>
+        <p>Eget arbeidsrom med filene dine. Claude husker alt som ligger der.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <h3>Artifacts</h3>
+        <p>Levende dokumenter, finansmodeller, interaktive oversikter — bygget i samtalen.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔗</span>
+        <h3>Connectors</h3>
+        <p>Kobles direkte til Gmail, Drive, Notion, Slack — 50+ verktøy.</p>
+      </div>
+    </div>
+    <p class="t-sub anim-in anim-d3">~200 kr/mnd for Pro. Gratis-versjon finnes.</p>
+  </div>
+  <aside class="notes">
+    <p>Den første skikkelsen er Claude.ai — det dere finner på claude.ai. Gratis-versjon finnes, Pro er cirka 200 kroner i måneden.</p>
+    <p>Tre ting som skiller den fra ChatGPT:</p>
+    <p><strong>Projects</strong> — et arbeidsrom der Claude vet alt om ett bestemt prosjekt. Dere laster opp filer, og Claude husker alt. Neste gang dere åpner det, vet Claude nøyaktig hvor dere er. Og i 2026 har den også fått hukommelse på tvers av samtaler — dere trenger aldri gjenta dere.</p>
+    <p><strong>Artifacts</strong> — her overrasker de fleste seg. Claude lager ikke bare tekst. Be om en finansmodell, og den bygger en som faktisk regner. Be om en interaktiv én-siders, og du kan klikke deg rundt i den. Levende, ikke statisk.</p>
+    <p><strong>Connectors</strong> — kobles direkte til Gmail, Drive, Notion, Slack — over 50 verktøy. Ingen koding. Velg, logg inn, ferdig.</p>
+    <p><em>[Kort forward-referanse:]</em> Og så er det en fjerde ting — Skills — som er en huskelapp du lærer Claude én gang. Vi kommer tilbake til det om to minutter.</p>
+    <p><em>[Transition:]</em> La meg vise dere.</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 11 — DEMO 1                              -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s12">
+  <div class="stack stack-lg t-center">
+    <span class="demo-badge anim-in">Live demo</span>
+    <h2 class="t-hero anim-in anim-d1" style="margin-top:1rem;">La oss <span class="t-drama">prøve det.</span></h2>
+    <p class="t-sub anim-in anim-d2" style="max-width:600px;">Bytt til Claude.ai — Project "Monstr Energy"</p>
+  </div>
+  <aside class="notes">
+    <p><em>[Bytt til Claude.ai. Åpne Project "Monstr Energy". Si det med glimt i øyet:]</em></p>
+    <p>"Jeg har et Project her som heter Monstr Energy. Ja — jeg har adoptert dem. Det føles som de kopierer navnet vårt, så jeg tar det igjen."</p>
+    <p><em>[La dem le. Deretter:]</em></p>
+    <p>Inne i Project-et ligger Monstr-logoen, en brandguide, og noen salgstall. Det kule er at Claude kjenner alt om Monstr Energy i dette rommet — fargene, stemmen, produktlinjen. Alt.</p>
+    <p><em>[Pek på brandguide-fila, 2 sekunder:]</em> Og denne filen her — den er egentlig en Skill. Jeg kommer tilbake til hva det er om et minutt.</p>
+    <p><strong>Demo 1 — interaktiv graf (Artifact):</strong></p>
+    <p><em>[Skriv prompt:]</em> "Lag en interaktiv graf over salget vårt siste kvartal der jeg kan hovre over hver søyle og se detaljer."</p>
+    <p><em>[Vent. Pek på den levende Artifacten:]</em> Der. Det er ikke en PDF. Det er en ekte app Claude bygger akkurat nå. Prøv å hovre — jeg kan sende denne videre og hele teamet kan bruke den.</p>
+    <p><strong>Demo 2 — visuell instruks:</strong></p>
+    <p><em>[Skriv prompt:]</em> "Lag en interaktiv steg-for-steg-guide for hvordan jeg flater ut en Monstr-boks, med illustrasjoner."</p>
+    <p><em>[Vent. Vis:]</em> Åpenbart tullete — men poenget er stort. Claude kan bygge hva som helst visuelt, on the fly, ut fra konteksten dere har gitt den. Tenk hva dere kan gjøre med ekte prosesser fra deres bedrift — onboarding-guider, prosedyre-flows, interaktive rapporter.</p>
+    <p><em>[Pek på Connectors-knappen 2 sek:]</em> Og merk — jeg trenger ikke engang laste opp filer. Claude kan koble seg rett til Gmail, Drive, Notion. For demoens skyld bruker jeg opplastede filer i dag, men i hverdagen henter den det selv.</p>
+    <p><em>[Bytt tilbake til presentasjonen.]</em></p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 12 — Skills                              -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s13">
+  <div class="stack stack-lg full-w">
+    <div class="t-center">
+      <span class="pill anim-in">Superkraft</span>
+      <h2 class="t-section anim-in anim-d1" style="margin-top:1rem;">Lær Claude én gang. Bruk <span class="t-drama">for alltid.</span></h2>
+    </div>
+    <div style="display:grid; grid-template-columns: 1.1fr 1fr; gap:3rem; max-width:1100px; margin:0 auto; align-items:center;" class="anim-in anim-d2">
+      <div style="background:#111; border:1px solid var(--dark-border); border-radius:0.8rem; padding:1.8rem 2rem; font-family:var(--font-mono); font-size:0.95rem; line-height:1.7; color:var(--light);">
+        <div style="color:var(--muted); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1rem;">Skill: kunde-epost</div>
+        Alltid på fornavn, aldri med utropstegn.<br>
+        Tonefall: kollega, ikke leverandør.<br>
+        Signatur: "Ivar, Monstr".<br>
+        Hvis jobb &gt; 50 000 kr: legg ved<br>
+        standard forbehold (se vedlegg).<br>
+        Aldri love tidsrammer uten å<br>
+        sjekke kalenderen min først.
+      </div>
+      <div class="stack stack-sm">
+        <h3 style="font-size:1.3rem;">Skriv det én gang. Bruk det for alltid.</h3>
+        <p class="t-body" style="color:var(--muted); line-height:1.7;">En Skill er en tekstfil — som en huskelapp. Claude leser den automatisk hver gang den er relevant.</p>
+        <div class="sep"></div>
+        <p class="t-body" style="color:var(--muted); line-height:1.7;">Det er som å ansette noen og gi dem en håndbok. Bare at denne håndboken leses <em>hver eneste gang</em>, uten unntak.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Her er noe som gjør Claude helt unikt — og det tok meg lang tid å skjønne hvorfor det er så kraftig.</p>
+    <p>Se på denne lille tekstboksen. Det er en Skill. En huskelapp til Claude. Den står "alltid på fornavn, aldri utropstegn, signér som Ivar" — og Claude følger det. Hver gang. Uten at jeg må gjenta det.</p>
+    <p><em>[Pek på tekstboksen.]</em> Det er ikke kode. Det er en liten tekstfil jeg har skrevet én gang. Nå kjenner Claude tonefallet mitt like godt som en kollega som har jobbet med meg i ett år.</p>
+    <p>Dette er kraftig for team: tenk på de småtingene som gjør at <em>deres</em> bedrift skriver epost akkurat sånn. Det kan dere skrive ned én gang — og hele teamet bruker samme standard, uten opplæring.</p>
+    <p><em>[Landing-setning — si langsomt:]</em> Projects gir Claude <em>minnet deres</em>. Skills gir Claude <em>måten deres</em>. Connectors gir Claude <em>verktøyene deres</em>. Det er kombinasjonen som gjør at Claude slutter å være et generisk verktøy — og blir deres.</p>
+    <p><em>[Transition:]</em> OK — det var det første skikkelse. Nå kommer det som virkelig skiller Claude fra alt annet.</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 13 — Claude Cowork                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s14">
+  <div class="stack stack-lg full-w t-center">
+    <div>
+      <span class="pill anim-in">Skikkelse 2</span>
+      <h2 class="t-section anim-in anim-d1" style="margin-top:1rem;">Claude Cowork — gi den et mål, <span class="t-drama">få et resultat.</span></h2>
+      <p class="t-sub anim-in anim-d2">Lansert for alle 9. april 2026.</p>
+    </div>
+    <div class="anim-in anim-d3" style="max-width:900px; margin:0 auto;">
+      <div class="card" style="border-color:var(--accent); padding:2rem 2.5rem; text-align:left;">
+        <span class="t-label" style="color:var(--accent);">Fra chatt til arbeid</span>
+        <h3 style="margin-top:0.5rem; font-size:1.5rem;">Claude styrer maskinen din. På ekte.</h3>
+        <p style="color:var(--muted); line-height:1.7; margin-top:1rem;">
+          Åpner filer. Leser PDFer. Sorterer mapper. Går inn i Gmail. Lager dokumenter. Som en kollega som har satt seg ved tastaturet ditt — bare at du har gitt den rammene.
+        </p>
+        <p style="color:var(--light); margin-top:1rem;">
+          <span style="color:var(--muted);">Sikkerhet:</span> Bare mappene du velger. Sandkasse på OS-nivå. Ingenting utenfor det du har godkjent.
+        </p>
+        <p style="color:var(--accent); margin-top:1rem; font-style:italic;">
+          La oss se det i praksis.
+        </p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Her kommer det som skiller Claude fra nesten alt annet.</p>
+    <p>Claude Cowork er en app dere installerer på Mac eller Windows. Den gjør én ting: den styrer datamaskinen deres. Ikke i en chat. På ekte. Den åpner Finder. Den leser PDFer. Den sorterer mapper. Den går i Gmail. Den lager og flytter filer.</p>
+    <p><strong>Sikkerhet:</strong> Det første folk spør om er: "leser den alt?" Nei. Sandkasse. Avgrenset tilgang. Den ser bare mappene dere gir den. Kan bare snakke med godkjente nettsteder. Alt annet er blokkert på OS-nivå.</p>
+    <p><em>[Transition:]</em> La meg vise dere det mest enkle, men mest overførbare eksempelet jeg har.</p>
+    <p><strong>Live demo — mappesortering:</strong></p>
+    <p><em>[Bytt til Claude Cowork. Åpne "demo-bilder" mappen som har katter, hunder, og en flodhest.]</em></p>
+    <p>Jeg har en mappe her med ti bilder — katter, hunder, og en flodhest. Helt usortert. Jeg ber Claude:</p>
+    <p><em>[Skriv:]</em> "Sorter alle bildene i denne mappen etter dyreart, og innenfor hver art etter rase. Lag undermapper."</p>
+    <p><em>[La Cowork gjøre jobben foran publikum. Ikke snakk for mye — la dem se filene flytte seg.]</em></p>
+    <p><em>[Når ferdig:]</em> Der. Ti bilder, sortert på tjue sekunder. Poenget er ikke ti bilder. Poenget er at det kunne vært tusen — og det hadde tatt like lang tid mentalt for meg, men litt lenger for Claude. Det går fra at jeg skal sitte og sortere, til at jeg gir en instruks og får et resultat.</p>
+    <p>Tenk på de rotete mappene deres. Konferansebilder som aldri ble sortert. Faktura-PDFer som ligger hulter til bulter. Kontrakter som trenger kategorisering. Alt dette — Claude kan ta.</p>
+    <p><em>[Pause. La det synke inn:]</em> Dette er ikke en kopilot. Det er en ansatt.</p>
+    <p><em>[Kort om Dispatch, verbalt, ingen live demo:]</em> Og det finnes også noe som heter Dispatch — der dere kan sende oppgaver fra mobilen og få Claude til å jobbe på PC-en hjemme. Litt ny, litt småbuggy, men prinsippet er det samme: AI som jobber når dere ikke er til stede.</p>
+    <p><em>[FØR EVENTET: Dobbeltsjekk at Cowork har tilgang til demo-bilder-mappen. Test sorteringen én gang dagen før. Ha backup-screenshot av sortert resultat klart hvis live henger.]</em></p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 16 — Where to start                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s17">
+  <div class="stack stack-lg full-w t-center">
+    <p class="t-label anim-in">Din mandag</p>
+    <h2 class="t-section anim-in anim-d1" style="margin-top:0.5rem;">Begynn med <span class="t-drama">én oppgave.</span></h2>
+    <div class="anim-in anim-d2" style="max-width:800px; margin:2rem auto 0; text-align:left;">
+      <div style="display:flex; gap:1.5rem; align-items:flex-start; padding:1.2rem 0; border-bottom:1px solid var(--dark-border);">
+        <span style="font-family:var(--font-mono); color:var(--accent); font-size:1.5rem; min-width:2rem;">1</span>
+        <div>
+          <h3 style="font-size:1.2rem; margin-bottom:0.3rem;">Opprett ett Project for ditt viktigste ansvar</h3>
+          <p style="color:var(--muted); line-height:1.6;">Bedriften, etaten, arrangementet. Legg inn strategi, løpende protokoller, rapporter — alt som hører til. Fyll på over tid.</p>
+        </div>
+      </div>
+      <div style="display:flex; gap:1.5rem; align-items:flex-start; padding:1.2rem 0; border-bottom:1px solid var(--dark-border);">
+        <span style="font-family:var(--font-mono); color:var(--accent); font-size:1.5rem; min-width:2rem;">2</span>
+        <div>
+          <h3 style="font-size:1.2rem; margin-bottom:0.3rem;">Skriv én Skill</h3>
+          <p style="color:var(--muted); line-height:1.6;">En huskelapp — "slik skriver jeg epost" eller "slik oppsummerer jeg et møte". 10 linjer er nok.</p>
+        </div>
+      </div>
+      <div style="display:flex; gap:1.5rem; align-items:flex-start; padding:1.2rem 0;">
+        <span style="font-family:var(--font-mono); color:var(--accent); font-size:1.5rem; min-width:2rem;">3</span>
+        <div>
+          <h3 style="font-size:1.2rem; margin-bottom:0.3rem;">Velg én gjentakende oppgave</h3>
+          <p style="color:var(--muted); line-height:1.6;">Den du gruer deg til hver uke. La Cowork ta den. Mål resultatet etter 7 dager.</p>
+        </div>
+      </div>
+    </div>
+    <p class="t-sub anim-in anim-d3" style="max-width:700px; margin-top:2rem; color:var(--muted);">
+      Ikke alt. Bare det første.
+    </p>
+  </div>
+  <aside class="notes">
+    <p>Dere går hjem i kveld. Dere åpner PC-en i morgen tidlig. Hva er det <em>første</em> dere gjør?</p>
+    <p>Mitt råd: start med disse tre. I denne rekkefølgen. Ikke alle på én gang.</p>
+    <p><strong>Ett</strong> — opprett ett Project i Claude.ai for det viktigste dere har ansvar for. Bedriften, etaten, eller arrangementet. Legg inn strategidokument, siste styremøteprotokoll, nyeste rapport. Fyll på hver uke. Dette er ikke noe dere lager på nytt — det er et rom som lever, og Claude blir skarpere i det over tid.</p>
+    <p><strong>To</strong> — skriv én Skill. En enkel huskelapp på ti linjer om hvordan dere <em>liker</em> å få ting gjort. "Alltid på fornavn". "Aldri bruk utropstegn". "Signer som meg". Det er alt som skal til.</p>
+    <p><strong>Tre</strong> — velg én gjentakende oppgave som stjeler tid. La Cowork ta den i en uke. Så måler dere.</p>
+    <p>Det er det hele. De fleste feiler ikke fordi AI er komplisert. De feiler fordi de prøver alt på én gang og blir overveldet. Én ting. Hold dere der.</p>
+    <p>Og det neste nivået — når hele teamet deres jobber slik, med egne Skills og automatiseringer — det er en annen samtale. Den tar vi etterpå.</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 17 — Close                               -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s18">
+  <div class="stack stack-lg t-center" style="max-width:1000px;">
+    <p class="t-sub anim-in">Husker dere videoene fra starten?</p>
+    <div class="close-panels anim-in anim-d1">
+      <div class="close-panel-mini close-thumb" style="padding:0;">
+        <video class="close-freeze" data-time="2.5" data-crop="left" muted playsinline preload="auto"
+               style="position:absolute; top:0; left:0; height:100%; width:200%; object-fit:cover;">
+          <source src="will-smith-comparison.mp4" type="video/mp4">
+        </video>
+        <span class="close-year-label">2023</span>
+      </div>
+      <div class="close-panel-mini close-thumb" style="padding:0;">
+        <video class="close-freeze" data-time="2.5" data-crop="right" muted playsinline preload="auto"
+               style="position:absolute; top:0; left:-100%; height:100%; width:200%; object-fit:cover;">
+          <source src="will-smith-comparison.mp4" type="video/mp4">
+        </video>
+        <span class="close-year-label">2025</span>
+      </div>
+      <div class="close-panel-mini close-thumb" style="padding:0; border-color:var(--accent);">
+        <video class="close-freeze" data-time="3.0" muted playsinline preload="auto"
+               style="position:absolute; top:0; left:0; height:100%; width:100%; object-fit:cover;">
+          <source src="seedance-2.mp4" type="video/mp4">
+        </video>
+        <span class="close-year-label" style="color:var(--accent);">2026</span>
+      </div>
+      <div class="close-question">?</div>
+    </div>
+    <div class="sep anim-in anim-d2"></div>
+    <p class="t-body anim-in anim-d3" style="max-width:720px; line-height:1.8;">
+      <span style="color:var(--accent); font-family:var(--font-serif); font-style:italic; font-size:1.4rem;">Leketøy i fjor. Arbeidskraft nå.</span><br>
+      <span style="color:var(--muted); margin-top:0.5rem; display:inline-block;">Spørsmålet er hvilken av <em>deres</em> oppgaver som egentlig tilhører en arbeider — ikke dere selv.</span>
+    </p>
+  </div>
+  <aside class="notes">
+    <p>Husker dere videoene fra starten? Latterlig i 2023. Nesten perfekt i 2025. Og allerede overgått i 2026.</p>
+    <p><em>[Pause. La det lande.]</em></p>
+    <p>Leketøy i fjor. Arbeidskraft nå. Det er det hele foredraget har handlet om.</p>
+    <p><em>[Rolig, klar stemme:]</em> Tenk på Claude som en medarbeider dere ansetter. Lønnen er 200 kroner i måneden. Den glemmer aldri noe dere forteller. Den jobber mens dere sover. Og dere kan skalere den fra én til hundre umiddelbart — uten å rekruttere, uten HR-møter.</p>
+    <p>Det jeg har vist dere i dag — Claude.ai, Projects, Artifacts, Skills, Cowork — det er ikke komplisert teknologi. Det er verktøy dere kan ha på plass i løpet av en ettermiddag. Denne presentasjonen? Den er bygget med Claude Code. Null PowerPoint.</p>
+    <p>Men det jeg <em>ikke</em> har vist dere, er hvordan dere får et helt team til å jobbe slik. Hvordan dere bygger Skills som passer for <em>deres</em> bedrift. Hvordan dere kobler dette til systemene dere allerede har.</p>
+    <p>Det krever en annen samtale. Og det er den vi tar etterpå.</p>
+    <p><em>[Pause. Se på rommet. Rolig stemme:]</em></p>
+    <p>Om seks måneder — når dere har ett Project som er fylt med bedriftens historikk, tre Skills som kjenner måten dere jobber på, og Cowork som gjør en ukentlig oppgave mens dere sover — kommer dere til å lure på hvorfor dere ikke startet i kveld.</p>
+    <p>Spørsmålet er ikke om AI endrer hvordan dere jobber. Det gjorde det allerede. Spørsmålet er hvilken av oppgavene deres som egentlig tilhører en arbeider — ikke dere selv.</p>
+  </aside>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SLIDE 18 — Q&A / Contact                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="slide" id="s19">
+  <div class="stack stack-lg t-center">
+    <p class="t-label anim-in">To ting før dere går</p>
+    <h2 class="t-hero anim-in anim-d1" style="font-size:clamp(2rem,4vw,3.5rem);">
+      Skann. <span class="t-drama">Snakk med meg.</span>
+    </h2>
+    <div class="anim-in anim-d2" style="display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; max-width:900px; margin:2rem auto 0; text-align:left;">
+      <div class="card" style="border-color:var(--accent);">
+        <span class="t-label" style="color:var(--accent);">Gratis i kveld</span>
+        <h3 style="margin-top:0.5rem;">QR → Claude-verktøykassen</h3>
+        <p style="color:var(--muted); line-height:1.6; margin-top:0.5rem;">Tre ferdige Skills: møtereferat → beslutninger, frontend-design, og dokumentknuseren. Klar til bruk i kveld.</p>
+      </div>
+      <div class="card">
+        <span class="t-label">Når dere er klare</span>
+        <h3 style="margin-top:0.5rem;">Workshop med teamet deres</h3>
+        <p style="color:var(--muted); line-height:1.6; margin-top:0.5rem;">Vi tar hele teamet gjennom dette — tilpasset <em>deres</em> bedrift og <em>deres</em> arbeidsflyt. Finn meg etterpå.</p>
+      </div>
+    </div>
+    <div class="anim-in anim-d3" style="max-width:900px; margin:2rem auto 0; text-align:left;">
+      <p class="t-label" style="margin-bottom:0.8rem; text-align:center;">Dette har vi bygget med Claude Code</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem;">
+        <div style="padding:1rem 1.2rem; border:1px solid var(--dark-border); border-radius:0.5rem;">
+          <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); margin-bottom:0.3rem;">1 DAG</div>
+          <div style="font-size:0.95rem; color:var(--light);">monstr.no</div>
+          <div style="font-size:0.8rem; color:var(--muted); margin-top:0.2rem;">Nettside fra null til live</div>
+        </div>
+        <div style="padding:1rem 1.2rem; border:1px solid var(--dark-border); border-radius:0.5rem;">
+          <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); margin-bottom:0.3rem;">650K</div>
+          <div style="font-size:0.95rem; color:var(--light);">Bedriftsregister</div>
+          <div style="font-size:0.8rem; color:var(--muted); margin-top:0.2rem;">Alle norske bedrifter, filtrerbart på omsetning</div>
+        </div>
+        <div style="padding:1rem 1.2rem; border:1px solid var(--dark-border); border-radius:0.5rem;">
+          <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); margin-bottom:0.3rem;">TIMER → SEK</div>
+          <div style="font-size:0.95rem; color:var(--light);">Airtable bulk-ZIP</div>
+          <div style="font-size:0.8rem; color:var(--muted); margin-top:0.2rem;">Én knapp laster ned alle logoer på en gang</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-block anim-in anim-d4" style="margin-top:2.5rem;">
+      <span class="contact-name">Ivar André Knutsen</span>
+      <div class="sep" style="margin:0.3rem auto;"></div>
+      <span class="contact-detail">907 07 902 &nbsp;·&nbsp; ivar@monstr.no</span>
+    </div>
+    <img src="logos/monstr-white.png" alt="Monstr AI" class="anim-in anim-d5" style="height:1.8rem; width:auto; margin-top:1.5rem; opacity:0.9;">
+  </div>
+  <aside class="notes">
+    <p><em>[Ikke si "spørsmål?". Avslutt med en forpliktelse først.]</em></p>
+    <p>To ting før dere går. Én — skann QR-koden. Legg igjen navn og epost. Dere laster ned Claude-verktøykassen med tre Skills — møtereferat, frontend-design, og dokumentknuseren. Klare til å lime inn i Claude.ai i kveld.</p>
+    <p>To — hvis dere tenker "dette vil vi få inn i teamet vårt": finn meg etterpå. Vi holder workshops der vi tar hele teamet deres gjennom Claude.ai, Skills, og Cowork — tilpasset deres bedrift. Én dag. Praktisk. Alle går ut med noe de faktisk bruker på mandag.</p>
+    <p><em>[Valgfri 20-30 sek hvis tiden tillater — pek på showcase-stripen:]</em> Og bare for kontekst: dette bygget jeg i Claude Code. Monstr.no — laget på én dag. Et register over alle 650 000 norske bedrifter som vi kan filtrere på omsetning, bransje, lokasjon. Og et lite verktøy som laster ned alle logoer fra et Airtable-bord som ZIP — før brukte vi timer, nå er det én klikk. Det er den typen ting vi bygger med dere i workshop.</p>
+    <p><em>[Hvis tiden er tight: ignorer showcase, publikum ser den uansett — den bygger autoritet i bakgrunnen.]</em></p>
+    <p>Nummeret mitt og eposten min er her oppe.</p>
+    <p><em>[Pause. Se på rommet.]</em></p>
+    <p>Og nå — spørsmål.</p>
+    <p><em>[Q&A, maks 3-4 minutter. Hvis noen spør direkte om hjelp:]</em></p>
+    <p>"Ja, det er det vi holder på med. Kom og snakk med meg etterpå, så ser vi på hva dere har i dag og hva som passer."</p>
+    <p><em>[Hard close:]</em> Tusen takk. Jeg står her etterpå — kom og ta en prat.</p>
+    <hr style="border-color:#333; margin:1rem 0;">
+    <p><strong>Q&A-beredskap — typiske spørsmål:</strong></p>
+    <p><em>"Hva med personvern/GDPR?"</em> — Anthropic trener ikke på enterprise-data. EU-servere er tilgjengelig. Claude.ai Pro og Team er dekket av databehandleravtale. For kommuner: det finnes offentlige aktører som allerede bruker dette — vi hjelper med compliance-delen i workshop.</p>
+    <p><em>"Hva koster dette for hele teamet?"</em> — Pro er ~200 kr/mnd per bruker. Team-plan ~330 kr per bruker, gir felles Projects og admin. Enterprise-avtale for større org — da snakker vi.</p>
+    <p><em>"Hvor mye tid tar en workshop?"</em> — Én dag for teamet, praktisk orientert. Alle går ut med minst én Skill og ett Project de faktisk bruker på mandag.</p>
+    <p><em>"Vil dette erstatte ChatGPT vi allerede har?"</em> — Ikke nødvendigvis. Mange bruker begge. Claude tar over der dere vil gi den en oppgave, ikke bare stille spørsmål. De utfyller hverandre.</p>
+    <p><em>"Er det trygt å la Cowork styre PC-en?"</em> — Sandkasse på OS-nivå. Bare mappene dere godkjenner. Nettverksproxy blokkerer alt ukjent. Strengere enn mange ting dere kjører allerede.</p>
+    <p><em>"Fungerer det på norsk?"</em> — Ja, Claude snakker flytende norsk. Bokmål og nynorsk. Skriver som en norsk kollega, ikke oversatt.</p>
+    <p><em>"Hva hvis Claude dikter opp ting?"</em> — Det skjer, spesielt hvis du spør om noe som ikke ligger i Project. Kunsten er å gi riktig kontekst — ikke stole blindt. Vi lærer bort hvordan i workshop.</p>
+    <p><em>"Kan den lese min Gmail/systemer direkte?"</em> — Ja. Connectors for de 50 største (Gmail, Drive, Notion, Slack, Linear...). For egne systemer bruker vi MCP — et åpent protokoll som lar Claude snakke med hva som helst. Kan vise live etter foredraget hvis ønsket.</p>
+  </aside>
+</section>
+
+</div><!-- .deck -->
+
+<!-- ─── Progress bar ─── -->
+<div class="progress" id="progress"></div>
+
+<!-- ─── Slide counter ─── -->
+<div class="counter" id="counter"></div>
+
+<!-- ─── Speaker notes panel ─── -->
+<div class="notes-panel" id="notes-panel"></div>
+
+<!-- ─── Speaker view ─── -->
+<div class="notes-stage" id="notes-stage">
+  <div class="ns-header">
+    <span class="ns-counter" id="ns-counter">—</span>
+    <span class="ns-timer" id="ns-timer">00:00</span>
+  </div>
+  <div class="ns-body">
+    <div class="ns-current">
+      <div class="ns-title" id="ns-title">Slide</div>
+      <div class="ns-notes" id="ns-notes"></div>
+    </div>
+    <div class="ns-next">
+      <span class="ns-next-label">Neste</span>
+      <div class="ns-next-preview" id="ns-next-preview"></div>
+    </div>
+  </div>
+  <div class="ns-footer">← → / PgUp PgDn naviger &nbsp;|&nbsp; T restart timer &nbsp;|&nbsp; B blackout</div>
+</div>
+
+<!-- ─── Keyboard hint ─── -->
+<div class="hint">← → / PgUp PgDn naviger &nbsp;|&nbsp; N noter &nbsp;|&nbsp; S speaker-view &nbsp;|&nbsp; F fullskjerm &nbsp;|&nbsp; B blackout</div>
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  const notesPanel = document.getElementById('notes-panel');
+  const total = slides.length;
+  let current = 0;
+  let notesVisible = false;
+
+  // Speaker view detection + BroadcastChannel sync
+  const params = new URLSearchParams(location.search);
+  const isNotesView = params.get('view') === 'notes';
+  if (isNotesView) document.body.classList.add('notes-view');
+
+  const channel = ('BroadcastChannel' in window) ? new BroadcastChannel('monstr-slides') : null;
+  let suppressBroadcast = false;
+
+  // Speaker-view elements
+  const nsCounter = document.getElementById('ns-counter');
+  const nsTimer = document.getElementById('ns-timer');
+  const nsTitle = document.getElementById('ns-title');
+  const nsNotes = document.getElementById('ns-notes');
+  const nsNextPreview = document.getElementById('ns-next-preview');
+
+  // Timer
+  let timerStart = null;
+  function fmt(t) {
+    const s = Math.floor(t / 1000);
+    return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+  }
+  function tickTimer() {
+    if (!nsTimer) return;
+    if (timerStart === null) { nsTimer.textContent = '00:00'; return; }
+    nsTimer.textContent = fmt(Date.now() - timerStart);
+  }
+  setInterval(tickTimer, 500);
+
+  function updateSpeakerView() {
+    if (!isNotesView) return;
+    const slide = slides[current];
+    const titleEl = slide.querySelector('h1, h2, h3, .t-label');
+    const titleText = titleEl ? titleEl.textContent.trim() : 'Slide ' + (current + 1);
+    if (nsCounter) nsCounter.textContent = (current + 1) + ' / ' + total;
+    if (nsTitle) nsTitle.textContent = titleText;
+    const notesEl = slide.querySelector('.notes');
+    if (nsNotes) nsNotes.innerHTML = notesEl ? notesEl.innerHTML : '<p style="color:#555;">(ingen notater)</p>';
+    if (nsNextPreview) {
+      if (current + 1 < total) {
+        const next = slides[current + 1];
+        const nextTitle = next.querySelector('h1, h2, h3, .t-label');
+        const nextSub = next.querySelector('.t-sub, p');
+        nsNextPreview.innerHTML =
+          '<h3>' + (nextTitle ? nextTitle.textContent.trim() : 'Slide ' + (current + 2)) + '</h3>' +
+          (nextSub && nextSub !== nextTitle ? '<p>' + nextSub.textContent.trim().slice(0, 180) + '</p>' : '');
+      } else {
+        nsNextPreview.innerHTML = '<h3 style="color:var(--accent);">Slutt</h3>';
+      }
+    }
+  }
+
+  function goTo(index, fromBroadcast) {
+    if (index < 0 || index >= total) return;
+    slides[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+    if (timerStart === null && index > 0) timerStart = Date.now();
+    updateUI();
+    animateSlide();
+    updateSpeakerView();
+    if (!fromBroadcast && channel && !suppressBroadcast) {
+      channel.postMessage({ type: 'goto', index: current });
+    }
+  }
+
+  if (channel) {
+    channel.onmessage = (e) => {
+      if (!e.data) return;
+      if (e.data.type === 'goto' && e.data.index !== current) goTo(e.data.index, true);
+      if (e.data.type === 'timer-reset') { timerStart = Date.now(); tickTimer(); }
+      if (e.data.type === 'blackout') document.body.classList.toggle('blackout');
+      if (e.data.type === 'hello' && !isNotesView) {
+        channel.postMessage({ type: 'goto', index: current });
+        if (timerStart !== null) channel.postMessage({ type: 'timer-state', start: timerStart });
+      }
+      if (e.data.type === 'timer-state' && isNotesView) { timerStart = e.data.start; tickTimer(); }
+    };
+  }
+
+  // Notes view: ask main window for current state on load
+  if (isNotesView && channel) {
+    setTimeout(() => channel.postMessage({ type: 'hello' }), 100);
+  }
+
+  function updateUI() {
+    progress.style.width = ((current + 1) / total * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + total;
+    if (notesVisible) showNotes();
+  }
+
+  function showNotes() {
+    const notes = slides[current].querySelector('.notes');
+    if (notes) {
+      notesPanel.innerHTML = notes.innerHTML;
+      notesPanel.classList.add('show');
+    } else {
+      notesPanel.innerHTML = '';
+      notesPanel.classList.remove('show');
+    }
+  }
+
+  function toggleNotes() {
+    notesVisible = !notesVisible;
+    if (notesVisible) {
+      showNotes();
+    } else {
+      notesPanel.classList.remove('show');
+    }
+  }
+
+  function animateSlide() {
+    // Reset animations for slides that need them
+    const resetSelectors = ['.timeline-item', '.lg-text', '.face-box', '.icon-item'];
+    resetSelectors.forEach(sel => {
+      slides[current].querySelectorAll(sel).forEach(el => {
+        // Only reset if not yet visible on this slide
+      });
+    });
+
+    // Timeline animation (slide 6)
+    if (slides[current].id === 's7') {
+      const items = slides[current].querySelectorAll('.timeline-item');
+      items.forEach((item, i) => {
+        setTimeout(() => item.classList.add('visible'), 200 + i * 150);
+      });
+    }
+
+    // Launch grid animation (slide 7)
+    if (slides[current].id === 's8') {
+      const items = slides[current].querySelectorAll('.lg-text');
+      items.forEach((item, i) => {
+        setTimeout(() => item.classList.add('visible'), 300 + i * 80);
+      });
+    }
+
+    // Three faces animation (slide 9)
+    if (slides[current].id === 's10') {
+      const boxes = slides[current].querySelectorAll('.face-box');
+      boxes.forEach((box, i) => {
+        setTimeout(() => box.classList.add('visible'), 400 + i * 250);
+      });
+    }
+
+    // Auto-play/pause videos
+    const wsVideo = document.getElementById('ws-video');
+    const sdVideo = document.getElementById('sd-video');
+    if (wsVideo) {
+      if (slides[current].id === 's5') { wsVideo.currentTime = 0; wsVideo.play().catch(() => {}); }
+      else { wsVideo.pause(); }
+    }
+    if (sdVideo) {
+      if (slides[current].id === 's6') { sdVideo.currentTime = 0; sdVideo.play().catch(() => {}); }
+      else { sdVideo.pause(); }
+    }
+  }
+
+  // Keyboard + clicker navigation
+  document.addEventListener('keydown', (e) => {
+    switch(e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case 'PageDown':
+      case ' ':
+      case 'Enter':
+        e.preventDefault();
+        goTo(current + 1);
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+      case 'PageUp':
+      case 'Backspace':
+        e.preventDefault();
+        goTo(current - 1);
+        break;
+      case 'n':
+      case 'N':
+        toggleNotes();
+        break;
+      case 'f':
+      case 'F':
+      case 'F5':
+        e.preventDefault();
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+        break;
+      case 'Escape':
+        // Let browser exit fullscreen naturally; don't prevent default
+        break;
+      case 'b':
+      case 'B':
+      case '.':
+        e.preventDefault();
+        document.body.classList.toggle('blackout');
+        if (channel) channel.postMessage({ type: 'blackout' });
+        break;
+      case 's':
+      case 'S':
+        if (!isNotesView) {
+          e.preventDefault();
+          window.open(location.pathname + '?view=notes', 'monstr-notes', 'width=1280,height=820');
+        }
+        break;
+      case 't':
+      case 'T':
+        e.preventDefault();
+        timerStart = Date.now();
+        tickTimer();
+        if (channel) channel.postMessage({ type: 'timer-reset' });
+        break;
+      case 'Home':
+        goTo(0);
+        break;
+      case 'End':
+        goTo(total - 1);
+        break;
+    }
+  });
+
+  // Click navigation (right half = next, left half = prev)
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.notes-panel') || e.target.closest('a') || e.target.closest('iframe')) return;
+    const x = e.clientX / window.innerWidth;
+    if (x > 0.5) goTo(current + 1);
+    else goTo(current - 1);
+  });
+
+  // Touch support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(dx) > 50) {
+      if (dx < 0) goTo(current + 1);
+      else goTo(current - 1);
+    }
+  });
+
+  // Hash navigation
+  function checkHash() {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#s')) {
+      const num = parseInt(hash.slice(2)) - 1;
+      if (num >= 0 && num < total) goTo(num);
+    }
+  }
+  window.addEventListener('hashchange', checkHash);
+
+  // Freeze close-slide thumbnail videos at a specific frame
+  document.querySelectorAll('.close-freeze').forEach(v => {
+    const t = parseFloat(v.dataset.time || '1.5');
+    const seek = () => {
+      try { v.currentTime = t; } catch (e) {}
+      v.pause();
+    };
+    if (v.readyState >= 1) seek();
+    else v.addEventListener('loadedmetadata', seek, { once: true });
+    v.addEventListener('seeked', () => v.pause(), { once: true });
+  });
+
+  // Initialize
+  checkHash();
+  if (current === 0) goTo(0);
+})();
+</script>
+
+</body>
+</html>
