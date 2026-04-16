@@ -658,7 +658,10 @@ function toggleMute() {
   var btn = document.getElementById('vsl-unmute');
   if (!vslUnmuted) {
     vimeoPlayer.setMuted(false).then(function() {
-      vimeoPlayer.setVolume(1);
+      return vimeoPlayer.setVolume(1);
+    }).then(function() {
+      return vimeoPlayer.play();
+    }).then(function() {
       vslUnmuted = true;
       btn.textContent = 'Trykk for å pause';
       btn.onclick = togglePlayback;
