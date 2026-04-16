@@ -35,9 +35,9 @@ export default async function handler(req, res) {
             Navn: name,
             'E-post': email,
             Rolle: role || '',
-            Interesser: Array.isArray(interests) && interests.length > 0
-              ? interests.map(i => ({ name: i }))
-              : [],
+            ...(Array.isArray(interests) && interests.length > 0
+              ? { Interesser: interests.map(i => ({ name: i })) }
+              : {}),
             Kilde: source || 'aiarendal-april-2026',
             Opprettet: new Date().toISOString(),
           },
@@ -47,8 +47,8 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       const error = await response.json();
-      console.error('Airtable error:', error);
-      return res.status(500).json({ error: 'Kunne ikke lagre.' });
+      console.error('Airtable error:', JSON.stringify(error));
+      return res.status(500).json({ error: 'Kunne ikke lagre.', detail: error });
     }
 
     return res.status(200).json({ success: true });
