@@ -483,7 +483,7 @@ body::after {
 <div class="container">
   <!-- Logo -->
   <div class="logo-bar">
-    <img src="/monstr-logo-white.png" alt="Monstr AI">
+    <a href="https://monstr.no" target="_blank" rel="noopener"><img src="/monstr-logo-white.png" alt="Monstr AI"></a>
   </div>
 
   <!-- VSL -->
@@ -521,7 +521,7 @@ body::after {
       <label for="role">Rolle <span style="color:#555;">(valgfritt)</span></label>
       <input type="text" id="role" name="role" placeholder="F.eks. daglig leder, prosjektleder, rådgiver">
 
-      <button type="submit" class="submit-btn" id="submit-btn">Send meg verktøykassen</button>
+      <button type="submit" class="submit-btn" id="submit-btn">Gi meg verktøykassen</button>
       <p class="form-note">Ingen spam. Kun verktøykassen + én oppfølgingsmail.</p>
     </form>
 
@@ -577,7 +577,7 @@ body::after {
     <div class="meta-contact">
       Ivar André Knutsen &nbsp;·&nbsp; 907 07 902 &nbsp;·&nbsp; <a href="mailto:ivar@monstr.no">ivar@monstr.no</a>
     </div>
-    <img src="/monstr-logo-white.png" alt="Monstr" class="meta-logo">
+    <a href="https://monstr.no" target="_blank" rel="noopener"><img src="/monstr-logo-white.png" alt="Monstr" class="meta-logo"></a>
   </div>
 </div>
 
@@ -598,7 +598,7 @@ async function handleSubmit(e) {
   const success = document.getElementById('success-state');
 
   btn.disabled = true;
-  btn.textContent = 'Sender...';
+  btn.textContent = 'Klargjør...';
 
   const data = {
     name: document.getElementById('name').value,
