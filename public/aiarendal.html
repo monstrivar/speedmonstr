@@ -685,16 +685,15 @@ var vslUnmuted = false;
 
 function toggleMute() {
   if (vslUnmuted) return;
-  vimeoPlayer.setMuted(false).then(function() {
-    return vimeoPlayer.setVolume(1);
-  }).then(function() {
-    return vimeoPlayer.play();
-  }).then(function() {
-    vslUnmuted = true;
-    document.getElementById('vsl-tap-overlay').style.display = 'none';
-    document.getElementById('vsl-wrapper').classList.add('unmuted');
-    document.getElementById('vsl-unmute').style.display = 'flex';
-  });
+  vslUnmuted = true;
+  document.getElementById('vsl-tap-overlay').style.display = 'none';
+  document.getElementById('vsl-wrapper').classList.add('unmuted');
+  document.getElementById('vsl-unmute').style.display = 'flex';
+  try {
+    vimeoPlayer.setMuted(false).catch(function(){});
+    vimeoPlayer.setVolume(1).catch(function(){});
+    vimeoPlayer.play().catch(function(){});
+  } catch(e) {}
 }
 
 function togglePlayback() {
