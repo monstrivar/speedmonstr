@@ -103,6 +103,28 @@ body::after {
   display: block;
 }
 
+.vsl-unmute {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 0.5rem 1.2rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.8rem;
+  font-family: var(--sans);
+  cursor: pointer;
+  transition: opacity 0.3s ease, background 0.2s ease;
+}
+
+.vsl-unmute:hover {
+  background: rgba(0,0,0,0.85);
+}
+
 
 .vsl-placeholder {
   position: absolute;
@@ -531,7 +553,8 @@ body::after {
   <!-- VSL -->
   <div class="vsl-section">
     <div class="vsl-wrapper" id="vsl-wrapper">
-      <iframe id="vimeo-player" src="https://player.vimeo.com/video/1183824226?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="VSL"></iframe>
+      <iframe id="vimeo-player" src="https://player.vimeo.com/video/1183824226?autoplay=1&amp;muted=1&amp;loop=1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;title=0&amp;byline=0&amp;portrait=0&amp;controls=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="VSL"></iframe>
+      <button class="vsl-unmute" id="vsl-unmute" onclick="toggleMute()">🔇 Trykk for lyd</button>
     </div>
   </div>
 
@@ -625,6 +648,26 @@ body::after {
 </div>
 
 <script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+var vimeoPlayer = new Vimeo.Player(document.getElementById('vimeo-player'));
+
+function toggleMute() {
+  var btn = document.getElementById('vsl-unmute');
+  vimeoPlayer.getVolume().then(function(vol) {
+    if (vol === 0) {
+      vimeoPlayer.setMuted(false).then(function() {
+        vimeoPlayer.setVolume(1);
+        btn.textContent = '🔊 Lyd på';
+      });
+    } else {
+      vimeoPlayer.setMuted(true).then(function() {
+        vimeoPlayer.setVolume(0);
+        btn.textContent = '🔇 Trykk for lyd';
+      });
+    }
+  });
+}
+</script>
 <script>
 
 
