@@ -274,6 +274,47 @@ body::after {
   margin-top: 1rem;
 }
 
+/* ─── Interest toggles ─── */
+.interest-group {
+  margin-top: 0.5rem;
+}
+
+.interest-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+
+.interest-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.interest-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-family: var(--sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.interest-btn:hover {
+  border-color: #4ade80;
+  color: #e0e0e0;
+}
+
+.interest-btn.active {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: #4ade80;
+  color: #4ade80;
+}
+
 /* ─── Success state ─── */
 .success-state {
   display: none;
@@ -513,6 +554,16 @@ body::after {
       <label for="role">Rolle <span style="color:#555;">(valgfritt)</span></label>
       <input type="text" id="role" name="role" placeholder="F.eks. daglig leder, prosjektleder, rådgiver">
 
+      <div class="interest-group">
+        <label>Ønsker du vi skal ta kontakt for en prat? <span style="color:#555;">(valgfritt)</span></label>
+        <div class="interest-toggles">
+          <button type="button" class="interest-btn" data-interest="Workshop" onclick="this.classList.toggle('active')">Workshop</button>
+          <button type="button" class="interest-btn" data-interest="AI-Revisjon" onclick="this.classList.toggle('active')">AI-Revisjon</button>
+          <button type="button" class="interest-btn" data-interest="Automasjoner" onclick="this.classList.toggle('active')">Automasjoner</button>
+          <button type="button" class="interest-btn" data-interest="Annet" onclick="this.classList.toggle('active')">Annet</button>
+        </div>
+      </div>
+
       <button type="submit" class="submit-btn" id="submit-btn">Gi meg verktøykassen</button>
       <p class="form-note">Ingen spam. Kun verktøykassen + én oppfølgingsmail.</p>
     </form>
@@ -586,10 +637,12 @@ async function handleSubmit(e) {
   btn.disabled = true;
   btn.textContent = 'Klargjør...';
 
+  const interests = Array.from(document.querySelectorAll('.interest-btn.active')).map(b => b.dataset.interest);
   const data = {
     name: document.getElementById('name').value,
     email: document.getElementById('email').value,
     role: document.getElementById('role').value,
+    interests: interests,
     source: 'aiarendal-april-2026'
   };
 
