@@ -271,7 +271,7 @@ body::after {
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
   box-shadow: 0 4px 15px rgba(230, 59, 46, 0.25);
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
 }
 
 .submit-btn:hover {
@@ -556,7 +556,7 @@ body::after {
   <div class="vsl-section">
     <div class="vsl-wrapper" id="vsl-wrapper">
       <iframe id="vimeo-player" src="https://player.vimeo.com/video/1183824226?autoplay=1&amp;muted=1&amp;loop=1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;title=0&amp;byline=0&amp;portrait=0&amp;controls=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="VSL"></iframe>
-      <button class="vsl-unmute" id="vsl-unmute" onclick="toggleMute()">🔇 Trykk for lyd</button>
+      <button class="vsl-unmute" id="vsl-unmute" onclick="toggleMute()">Trykk for lyd</button>
     </div>
   </div>
 
@@ -652,20 +652,29 @@ body::after {
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
 var vimeoPlayer = new Vimeo.Player(document.getElementById('vimeo-player'));
+var vslUnmuted = false;
 
 function toggleMute() {
   var btn = document.getElementById('vsl-unmute');
-  vimeoPlayer.getVolume().then(function(vol) {
-    if (vol === 0) {
-      vimeoPlayer.setMuted(false).then(function() {
-        vimeoPlayer.setVolume(1);
-        btn.textContent = '🔊 Lyd på';
-      });
+  if (!vslUnmuted) {
+    vimeoPlayer.setMuted(false).then(function() {
+      vimeoPlayer.setVolume(1);
+      vslUnmuted = true;
+      btn.textContent = 'Trykk for å pause';
+      btn.onclick = togglePlayback;
+    });
+  }
+}
+
+function togglePlayback() {
+  var btn = document.getElementById('vsl-unmute');
+  vimeoPlayer.getPaused().then(function(paused) {
+    if (paused) {
+      vimeoPlayer.play();
+      btn.textContent = 'Trykk for å pause';
     } else {
-      vimeoPlayer.setMuted(true).then(function() {
-        vimeoPlayer.setVolume(0);
-        btn.textContent = '🔇 Trykk for lyd';
-      });
+      vimeoPlayer.pause();
+      btn.textContent = 'Trykk for å spille av';
     }
   });
 }
