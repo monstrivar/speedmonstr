@@ -111,6 +111,10 @@ function buildSms(firstName, interests) {
 
   const formatted = formatList(items);
 
+  if (items.length === 4) {
+    return `Hei ${firstName}!\nTakk igjen for deltakelsen på introkurset!\nSer du er interessert i å snakke om mye! Vi tar snart kontakt for en prat.\n\nHa en fortsatt strålende helg videre!\n\nMvh, Ivar\nMonstrAI`;
+  }
+
   if (items.length === 1) {
     return `Hei ${firstName}!\nTakk igjen for deltakelsen på introkurset!\nSer du er interessert i en samtale rundt ${formatted}, vi tar snart kontakt med deg om dette!\n\nHa en kjempefin dag videre, og god helg!\n\nMvh, Ivar\nMonstrAI`;
   }
