@@ -46,6 +46,8 @@ export default async function handler(req, res) {
     email,
     phone,
     website,
+    message,
+    source,
     leadsPerMonth,
     leadSources,
     followUpProcess,
@@ -54,9 +56,12 @@ export default async function handler(req, res) {
     decisionMaker,
   } = req.body;
 
-  // Validation — matches frontend: firstName, phone, company required
-  if (!firstName || !phone || !company) {
-    return res.status(400).json({ error: 'Fornavn, telefonnummer og bedrift er påkrevd.' });
+  // Validation — firstName + company always required, plus phone or email
+  if (!firstName || !company) {
+    return res.status(400).json({ error: 'Navn og bedrift er påkrevd.' });
+  }
+  if (!phone && !email) {
+    return res.status(400).json({ error: 'Telefonnummer eller e-post er påkrevd.' });
   }
 
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -149,9 +154,13 @@ export default async function handler(req, res) {
   }
 
   // 1. Save to SMS Logg (Airtable)
+  const isTinde = source === 'tinde-landing';
+
   const extraData = {
     Selskap: company,
     Nettside: normalizedWebsite,
+    Kilde: isTinde ? 'Tinde (AI-rådgivning)' : 'Monstr (speed-to-lead)',
+    ...(message ? { Melding: message } : {}),
     'Leads per måned': leadsPerMonth || '',
     Leadkilder: Array.isArray(leadSources) ? leadSources.join(', ') : '',
     Oppfølgingsprosess: followUpProcess || '',
@@ -225,7 +234,7 @@ export default async function handler(req, res) {
             Telefon: normalizedPhone,
             'E-post': email || '',
             Nettside: normalizedWebsite || '',
-            Kilde: 'Skjema (nettside)',
+            Kilde: isTinde ? 'Tinde (AI-rådgivning)' : 'Skjema (nettside)',
             'Samtykke oppfølging': true,
             Prioritet: score >= 12 ? 'Hot' : score >= 8 ? 'Warm' : 'Cold',
             'Lead score': score,
@@ -245,7 +254,9 @@ export default async function handler(req, res) {
 
   if (TWILIO_ACCOUNT_SID && TWILIO_AUTH_TOKEN && normalizedPhone) {
     let smsBody;
-    if (score >= 8) {
+    if (isTinde) {
+      smsBody = `Hei ${firstName}! Takk for henvendelsen. Vi har mottatt forespørselen din og tar kontakt innen 24 timer for å avtale en uforpliktende samtale. Mvh Ivar, Monstr`;
+    } else if (score >= 8) {
       smsBody = `Hei ${firstName}! Takk for at du fylte ut skjemaet hos Monstr. Basert på det du har delt, ser det ut som vi kan hjelpe deg med å svare raskere på leads og konvertere flere av dem. Vi ringer deg i løpet av kort tid for å finne en tid som passer for en rask prat.`;
     } else {
       smsBody = `Hei ${firstName}! Takk for interessen for Monstr. Vi har mottatt forespørselen din og skal se nærmere på den. Vi tar kontakt dersom vi tror speed-to-lead kan skape verdi for deg.`;
@@ -275,16 +286,18 @@ export default async function handler(req, res) {
 
   // Telegram notification
   if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
-    const telegramMsg = [
-      `${priority} Nytt lead!`,
+    const telegramLines = [
+      `${priority} Nytt lead!${isTinde ? ' (AI-rådgivning)' : ''}`,
       '',
       `Navn: ${firstName} ${lastName || ''}`.trim(),
       `Selskap: ${company}`,
-      `Verdi: ${customerValue || 'Ukjent'}`,
-      `Leads/mnd: ${leadsPerMonth || '?'}`,
-      `E-post: ${email}`,
-      `Telefon: ${normalizedPhone || 'Ingen'}`,
-    ].join('\n');
+    ];
+    if (email) telegramLines.push(`E-post: ${email}`);
+    if (normalizedPhone) telegramLines.push(`Telefon: ${normalizedPhone}`);
+    if (message) telegramLines.push(`Melding: ${message}`);
+    if (customerValue) telegramLines.push(`Verdi: ${customerValue}`);
+    if (leadsPerMonth) telegramLines.push(`Leads/mnd: ${leadsPerMonth}`);
+    const telegramMsg = telegramLines.join('\n');
 
     promises.push(
       fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
