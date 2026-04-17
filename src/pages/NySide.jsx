@@ -665,35 +665,132 @@ const RiskReversal = () => (
 );
 
 // ─────────────────────────────────────────────────
-// FINAL CTA
+// CONTACT FORM
 // ─────────────────────────────────────────────────
-const FinalCTA = () => (
-  <section id="contact" className="reveal-section py-28 md:py-36 px-6" style={{ background: '#1A1F25' }}>
-    <div className="max-w-3xl mx-auto text-center">
-      <h2 className="reveal font-tinde text-[clamp(1.8rem,4.5vw,3.2rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-10">
-        Klar for å finne deres
-        <br /> AI-muligheter?
-      </h2>
+const ContactForm = () => {
+  const [form, setForm] = useState({ fornavn: '', bedrift: '', telefon: '', epost: '', maal: '' });
+  const [status, setStatus] = useState('idle'); // 'idle' | 'sending' | 'sent' | 'error'
 
-      <div className="reveal mb-8">
-        {/* TODO: Replace with actual booking URL (e.g. Cal.com link) */}
-        <button
-          onClick={() => scrollTo('contact')}
-          className="btn-magnetic rounded-full px-10 py-5 text-base md:text-lg bg-[#C4854C] text-[#F5F2EC] font-heading font-medium tracking-tight"
-        >
-          <span className="btn-layer bg-[#E8E4DC]"></span>
-          <span className="btn-text flex items-center gap-3">
-            Book en gratis samtale <ArrowRight size={20} />
-          </span>
-        </button>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    try {
+      const res = await fetch('/api/tinde-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        setStatus('sent');
+        setForm({ fornavn: '', bedrift: '', telefon: '', epost: '', maal: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  const inputClass =
+    'w-full bg-[#252A31] border border-[#E8E4DC]/10 rounded-lg px-4 py-3.5 text-[#E8E4DC] text-sm placeholder:text-[#E8E4DC]/35 focus:outline-none focus:border-[#C4854C]/50 focus:ring-1 focus:ring-[#C4854C]/30 transition-colors';
+
+  if (status === 'sent') {
+    return (
+      <section id="contact" className="reveal-section py-28 md:py-36 px-6" style={{ background: '#1A1F25' }}>
+        <div className="max-w-md mx-auto text-center">
+          <div className="w-14 h-14 rounded-full bg-[#1A6B6D]/20 flex items-center justify-center mx-auto mb-6">
+            <Check size={24} className="text-[#1A6B6D]" />
+          </div>
+          <h2 className="font-tinde font-bold text-2xl text-[#E8E4DC] tracking-tight mb-3">
+            Takk for henvendelsen
+          </h2>
+          <p className="text-[#E8E4DC]/50 text-base">
+            Vi tar kontakt innen kort tid.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section id="contact" className="reveal-section py-28 md:py-36 px-6" style={{ background: '#1A1F25' }}>
+      <div className="max-w-lg mx-auto">
+        <h2 className="reveal font-tinde font-bold text-[clamp(1.8rem,4.5vw,3.2rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-3 text-center">
+          Klar for å finne deres
+          <br /> AI-muligheter?
+        </h2>
+        <p className="reveal text-[#E8E4DC]/35 text-sm text-center mb-10">
+          Kun et begrenset antall selskaper tas inn hver måned
+        </p>
+
+        <form onSubmit={handleSubmit} className="reveal space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              placeholder="Fornavn"
+              required
+              value={form.fornavn}
+              onChange={(e) => setForm({ ...form, fornavn: e.target.value })}
+              className={inputClass}
+            />
+            <input
+              type="text"
+              placeholder="Bedrift"
+              required
+              value={form.bedrift}
+              onChange={(e) => setForm({ ...form, bedrift: e.target.value })}
+              className={inputClass}
+            />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="email"
+              placeholder="E-post"
+              required
+              value={form.epost}
+              onChange={(e) => setForm({ ...form, epost: e.target.value })}
+              className={inputClass}
+            />
+            <input
+              type="tel"
+              placeholder="Telefon (valgfritt)"
+              value={form.telefon}
+              onChange={(e) => setForm({ ...form, telefon: e.target.value })}
+              className={inputClass}
+            />
+          </div>
+          <textarea
+            placeholder="Målet med henvendelsen (valgfritt)"
+            rows={3}
+            value={form.maal}
+            onChange={(e) => setForm({ ...form, maal: e.target.value })}
+            className={`${inputClass} resize-none`}
+          />
+
+          <button
+            type="submit"
+            disabled={status === 'sending'}
+            className="btn-magnetic w-full rounded-lg py-4 text-base bg-[#C4854C] text-[#F5F2EC] font-heading font-medium tracking-tight disabled:opacity-60"
+          >
+            <span className="btn-layer bg-[#1A1F25]"></span>
+            <span className="btn-text flex items-center justify-center gap-2">
+              {status === 'sending' ? 'Sender...' : 'Book en gratis samtale'}
+              {status !== 'sending' && <ArrowRight size={18} />}
+            </span>
+          </button>
+
+          {status === 'error' && (
+            <p className="text-red-400 text-sm text-center">
+              Noe gikk galt. Prøv igjen eller send en e-post direkte.
+            </p>
+          )}
+        </form>
       </div>
-
-      <p className="reveal font-data text-[11px] text-[#E8E4DC]/25 tracking-[0.15em] uppercase">
-        Kun et begrenset antall selskaper tas inn hver måned
-      </p>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // ─────────────────────────────────────────────────
 // FOOTER
@@ -771,7 +868,7 @@ export const NySide = () => {
         <Workshops />
         <Process />
         <RiskReversal />
-        <FinalCTA />
+        <ContactForm />
       </main>
       <Footer />
       </div>
