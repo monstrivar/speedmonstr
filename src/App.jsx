@@ -2,36 +2,36 @@ import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Menu, X, ArrowRight, Zap, CheckCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle, Search, BookOpen, Lightbulb, TrendingUp } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Magnetic Button Component
-const MagneticButton = ({ children, className = '', onClick, variant = 'accent' }) => {
+const MagneticButton = ({ children, className = '', onClick, variant = 'accent', as = 'button', href }) => {
   const bgClass = variant === 'accent' ? 'bg-accent text-background' : 'bg-dark text-background';
   const layerClass = variant === 'accent' ? 'bg-dark' : 'bg-accent';
+  const Tag = as === 'a' ? 'a' : 'button';
 
   return (
-    <button
+    <Tag
       onClick={onClick}
+      href={href}
       className={`btn-magnetic rounded-full px-6 py-3 text-sm tracking-tight ${bgClass} ${className}`}
     >
       <span className={`btn-layer ${layerClass}`}></span>
       <span className="btn-text flex items-center gap-2">
         {children}
       </span>
-    </button>
+    </Tag>
   );
 };
 
-// Navbar Component
+// Navbar
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -45,26 +45,27 @@ const Navbar = () => {
       <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
         <img
           src="/monstr-logo.png"
-          alt="Monstr AI"
+          alt="Monstr"
           className={`h-10 w-auto transition-all duration-500 ${scrolled ? '' : 'brightness-0 invert'}`}
         />
       </a>
 
       <div className={`hidden md:flex items-center gap-8 text-sm font-medium tracking-tight ${scrolled ? 'text-dark' : 'text-primary/90'}`}>
-        <a href="#features" className="link-hover">Hvordan det fungerer</a>
-        <a href="#demo" className="link-hover">Prøv selv</a>
-        <a href="#philosophy" className="link-hover">Hvorfor</a>
-        <a href="#protocol" className="link-hover">Steg for steg</a>
+        <a href="#tjenester" className="link-hover">Tjenester</a>
+        <a href="#hvorfor" className="link-hover">Hvorfor AI</a>
+        <a href="#prosess" className="link-hover">Prosessen</a>
       </div>
 
       <div>
-        <MagneticButton onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>Book en gratis demo</MagneticButton>
+        <MagneticButton onClick={() => document.getElementById('kontakt')?.scrollIntoView({ behavior: 'smooth' })}>
+          Book en samtale
+        </MagneticButton>
       </div>
     </nav>
   );
 };
 
-// Hero Component
+// Hero
 const Hero = () => {
   const heroRef = useRef(null);
 
@@ -87,7 +88,7 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         <img
           src="/hero-bg.jpg"
-          alt="Concrete structure"
+          alt=""
           className="w-full h-full object-cover opacity-60 mix-blend-luminosity"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent"></div>
@@ -95,23 +96,19 @@ const Hero = () => {
 
       <div className="relative z-10 w-full h-full flex flex-col justify-end pb-24 px-6 md:px-16 max-w-7xl mx-auto">
         <div className="max-w-3xl">
-          <h1 className="flex flex-col mb-6">
-            <span className="hero-elem font-heading font-bold text-3xl md:text-5xl text-primary tracking-tight uppercase leading-none">
-              Slutt å miste
-            </span>
-            <span className="hero-elem font-drama italic text-6xl md:text-9xl text-accent leading-[0.85] mt-2">
-              jobber.
-            </span>
+          <p className="hero-elem font-data text-accent text-xs uppercase tracking-[0.3em] mb-6">AI-rådgivning for norske bedrifter</p>
+          <h1 className="hero-elem font-heading font-bold text-4xl md:text-6xl lg:text-7xl text-primary tracking-tight leading-[1.05] mb-6">
+            Finn ut hvor AI gir mest verdi i <span className="font-drama italic text-accent">din</span> bedrift.
           </h1>
-          <p className="hero-elem font-heading font-bold text-xl md:text-2xl text-primary/80 tracking-tight mb-6">
-            Svar på sekunder — automatisk, før konkurrenten rekker å reagere.
+          <p className="hero-elem font-sans text-primary/60 text-base md:text-lg max-w-xl mb-10 leading-relaxed tracking-tight">
+            Vi kartlegger prosessene dine, identifiserer de største mulighetene, og gir deg en konkret plan — på 30 dager. Ingen vage rapporter. Ingen uforpliktende strategier. Bare resultater.
           </p>
-          <p className="hero-elem font-sans text-primary/60 text-base md:text-lg max-w-lg mb-10 leading-relaxed tracking-tight">
-            Monstr sørger for at hver kundehenvendelse på nettsiden din får et umiddelbart, personlig svar. De som svarer først får jobben. Vi sørger for at du alltid er først.
-          </p>
-          <div className="hero-elem">
-            <MagneticButton className="px-8 py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>
-              Book en gratis demo <ArrowRight size={18} />
+          <div className="hero-elem flex flex-wrap gap-4">
+            <MagneticButton className="px-8 py-4 text-base" onClick={() => document.getElementById('kontakt')?.scrollIntoView({ behavior: 'smooth' })}>
+              Book en gratis samtale <ArrowRight size={18} />
+            </MagneticButton>
+            <MagneticButton variant="dark" className="px-8 py-4 text-base" onClick={() => document.getElementById('tjenester')?.scrollIntoView({ behavior: 'smooth' })}>
+              Se tjenestene
             </MagneticButton>
           </div>
         </div>
@@ -120,177 +117,33 @@ const Hero = () => {
   );
 };
 
-// Press Bar — "Som omtalt i" social proof
-const PressBar = () => (
-  <section className="bg-dark py-6 border-t border-primary/10">
-    <div className="max-w-7xl mx-auto px-6 md:px-16 flex flex-col items-center gap-3">
-      <span className="font-sans text-primary/40 text-xs uppercase tracking-[0.2em]">Som omtalt i</span>
-      <a
-        href="https://vvsaktuelt.no/den-som-svarer-forst-far-jobben/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-block opacity-50 hover:opacity-80 transition-opacity"
-      >
-        <img
-          src="/press/vvs-aktuelt.png"
-          alt="VVS-Aktuelt"
-          className="h-8 md:h-10 w-auto invert"
-        />
-      </a>
+// Stats bar
+const StatsBar = () => (
+  <section className="bg-dark py-12 border-t border-primary/10">
+    <div className="max-w-5xl mx-auto px-6 md:px-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div>
+        <div className="font-heading font-bold text-3xl md:text-4xl text-accent mb-1">30 dager</div>
+        <p className="font-sans text-primary/50 text-sm">Fra oppstart til ferdig handlingsplan</p>
+      </div>
+      <div>
+        <div className="font-heading font-bold text-3xl md:text-4xl text-accent mb-1">5-10</div>
+        <p className="font-sans text-primary/50 text-sm">AI-muligheter identifisert per bedrift</p>
+      </div>
+      <div>
+        <div className="font-heading font-bold text-3xl md:text-4xl text-accent mb-1">10-20 t</div>
+        <p className="font-sans text-primary/50 text-sm">Typisk tidsbesparelse per uke</p>
+      </div>
     </div>
   </section>
 );
 
-// Feature 1: Diagnostic Shuffler
-const FeatureShuffler = () => {
-  const [cards, setCards] = useState([
-    { id: 1, title: 'Skjema-innsending', time: '00:00:00', status: 'Innkommende' },
-    { id: 2, title: 'Meta Annonse-lead', time: '00:00:02', status: 'Fanget' },
-    { id: 3, title: 'Web Chat-melding', time: '00:00:05', status: 'Omdirigert' },
-  ]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCards(prev => {
-        const newArr = [...prev];
-        const last = newArr.pop();
-        newArr.unshift(last);
-        return newArr;
-      });
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="card-brutalist p-8 h-full flex flex-col relative min-h-[400px]">
-      <div className="mb-auto z-10 relative">
-        <p className="font-heading font-bold text-2xl text-dark tracking-tight mb-2">Svar innen sekunder</p>
-        <p className="font-sans text-dark/70 text-sm leading-relaxed">Når noen sender inn et skjema på nettsiden din, får de et personlig svar med en gang — mens de fortsatt sitter med telefonen i hånda. <span className="text-dark font-medium block mt-2">Ikke etter en time. Ikke etter lunsj. Innen sekunder. Før konkurrenten har åpnet innboksen.</span></p>
-      </div>
-
-      <div className="relative h-48 mt-8 flex justify-center items-end">
-        {cards.map((card, idx) => {
-          const isTop = idx === 0;
-          return (
-            <div
-              key={card.id}
-              className={`absolute transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] w-[85%] border border-dark bg-primary p-4 rounded-xl shadow-sm
-              `}
-              style={{
-                top: `${idx * 16}px`,
-                scale: 1 - (idx * 0.05),
-                zIndex: 10 - idx,
-                opacity: 1 - (idx * 0.3)
-              }}
-            >
-              <div className="flex justify-between items-center border-b border-dark/10 pb-2 mb-2">
-                <span className="font-data text-xs font-bold text-dark">{card.time}</span>
-                <span className={`font-data text-[10px] uppercase px-2 py-0.5 rounded-full ${isTop ? 'bg-accent text-background' : 'bg-dark/10 text-dark'}`}>
-                  {card.status}
-                </span>
-              </div>
-              <p className="font-heading font-bold text-sm text-dark">{card.title}</p>
-            </div>
-          )
-        })}
-      </div>
-    </div>
-  );
-}
-
-// Feature 2: Telemetry Typewriter
-const FeatureTypewriter = () => {
-  const messages = [
-    "Hei Ola! Vi ser på saken din om varmtvannsberederen.",
-    "Hei Kari! Vi har mottatt henvendelsen din om nytt bad.",
-    "Hei Per! En av våre folk tar kontakt om terrasseprosjektet."
-  ];
-
-  const [text, setText] = useState('');
-  const [msgIdx, setMsgIdx] = useState(0);
-
-  useEffect(() => {
-    let charIdx = 0;
-    const currentMsg = messages[msgIdx];
-    setText('');
-
-    const typeInterval = setInterval(() => {
-      setText(currentMsg.substring(0, charIdx + 1));
-      charIdx++;
-      if (charIdx === currentMsg.length) {
-        clearInterval(typeInterval);
-        setTimeout(() => {
-          setMsgIdx((prev) => (prev + 1) % messages.length);
-        }, 2000);
-      }
-    }, 50);
-
-    return () => {
-      clearInterval(typeInterval);
-    }
-  }, [msgIdx]);
-
-  return (
-    <div className="card-brutalist p-8 h-full flex flex-col relative min-h-[400px]">
-      <div className="mb-auto z-10 relative">
-        <p className="font-heading font-bold text-2xl text-dark tracking-tight mb-2">Personlig, ikke generisk</p>
-        <p className="font-sans text-dark/70 text-sm leading-relaxed">SMS-en er ikke en kjedelig "vi har mottatt henvendelsen din". Den nevner hva kunden faktisk trenger hjelp med — med firmanavnet ditt som avsender. <span className="text-dark font-medium block mt-2">Kunden føler seg sett, ikke prosessert.</span></p>
-      </div>
-
-      <div className="mt-8 bg-dark rounded-xl p-5 border border-dark flex-grow relative overflow-hidden">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-          <span className="font-data text-[10px] uppercase text-primary/50 tracking-widest">SMS Sendt</span>
-        </div>
-        <div className="font-data text-primary text-sm leading-loose">
-          <span className="text-accent">{'> '}</span>
-          {text}
-          <span className="inline-block w-2 h-[1em] bg-accent ml-1 animate-pulse align-middle"></span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Feature 3: Internal Notification
-const FeatureScheduler = () => {
-  const containerRef = useRef(null);
-
-  return (
-    <div className="card-brutalist p-8 h-full flex flex-col relative min-h-[400px]">
-      <div className="mb-auto z-10 relative">
-        <p className="font-heading font-bold text-2xl text-dark tracking-tight mb-2">Du får beskjed med en gang</p>
-        <p className="font-sans text-dark/70 text-sm leading-relaxed">Samtidig som kunden får SMS, får du et varsel med all info — hvem det er og hva de trenger. <span className="text-dark font-medium block mt-2">Ring dem opp med full kontekst mens de fortsatt er varme. Ingen kald åpning.</span></p>
-      </div>
-
-      <div ref={containerRef} className="mt-8 bg-dark rounded-xl p-5 border border-dark flex-grow relative overflow-hidden">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-          <span className="font-data text-[10px] uppercase text-primary/50 tracking-widest">Internt varsel</span>
-        </div>
-        <div className="space-y-3">
-          <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 animate-[fadeIn_0.5s_ease-in-out]">
-            <p className="font-data text-[10px] text-accent uppercase tracking-wider mb-1">Ny henvendelse</p>
-            <p className="font-sans text-primary text-sm font-medium">Ola Nordmann — Rørlegger</p>
-            <p className="font-sans text-primary/60 text-xs mt-1">Trenger hjelp med vannlekkasje</p>
-          </div>
-          <div className="bg-accent/20 border border-accent/30 rounded-lg p-3">
-            <p className="font-data text-[10px] text-accent uppercase tracking-wider mb-1">SMS sendt automatisk</p>
-            <p className="font-sans text-primary/80 text-xs">"Hei Ola! Vi har mottatt henvendelsen din om vannlekkasjen..."</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Features Section
-const Features = () => {
+// Services Section
+const Services = () => {
   const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      gsap.from('.feature-card', {
+      gsap.from('.service-card', {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 75%',
@@ -305,91 +158,68 @@ const Features = () => {
     return () => ctx.revert();
   }, []);
 
+  const services = [
+    {
+      icon: <Search size={28} />,
+      title: 'AI Opportunity Audit',
+      desc: 'Vi kartlegger alle prosessene dine og finner de 3-5 stedene AI gir størst verdi. Du får en prioritert handlingsplan med ROI-estimat og konkrete neste steg.',
+      tag: 'Kjernetjeneste',
+      detail: '30 dager · Fra 50 000 kr',
+    },
+    {
+      icon: <BookOpen size={28} />,
+      title: 'Kurs og workshops',
+      desc: 'Praktisk opplæring i AI-verktøy for teamet ditt. Ingen teori — bare hands-on øvelser med verktøy dere kan bruke fra dag én.',
+      tag: 'Kompetansebygging',
+      detail: 'Halvdag eller heldag · Fra 15 000 kr',
+    },
+    {
+      icon: <Lightbulb size={28} />,
+      title: 'Implementering',
+      desc: 'Vi bygger og konfigurerer AI-løsninger sammen med deg. Automatisering, kundeservice, dokumenthåndtering — alt med fast pris og tydelig scope.',
+      tag: 'Hands-on',
+      detail: '2-6 uker · Fra 30 000 kr',
+    },
+  ];
+
   return (
-    <section id="features" ref={sectionRef} className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+    <section id="tjenester" ref={sectionRef} className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
       <div className="mb-16 max-w-2xl">
-        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Hvordan det fungerer.</h2>
-        <ol className="font-sans text-dark/80 text-lg space-y-2">
-          <li className="flex gap-3"><span className="font-heading font-bold text-accent shrink-0">1.</span> Kunde sender inn skjema på nettsiden din</li>
-          <li className="flex gap-3"><span className="font-heading font-bold text-accent shrink-0">2.</span> De får umiddelbar SMS fra bedriften din</li>
-          <li className="flex gap-3"><span className="font-heading font-bold text-accent shrink-0">3.</span> Du får beskjed og følger opp mens kunden fortsatt er varm</li>
-        </ol>
+        <p className="font-data text-accent text-xs uppercase tracking-[0.3em] mb-4">Tjenester</p>
+        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Tre veier inn i AI.</h2>
+        <p className="font-sans text-dark/70 text-lg leading-relaxed">
+          Uansett om du trenger en strategisk kartlegging, praktisk opplæring eller noen som bygger løsningen — vi starter der du er.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="feature-card"><FeatureShuffler /></div>
-        <div className="feature-card"><FeatureTypewriter /></div>
-        <div className="feature-card"><FeatureScheduler /></div>
-      </div>
-    </section>
-  );
-};
-
-// VSL Section
-const VSL = () => {
-  const iframeRef = useRef(null);
-  const [playing, setPlaying] = useState(false);
-
-  const postVimeo = (method, value) => {
-    const msg = value !== undefined ? { method, value } : { method };
-    iframeRef.current?.contentWindow?.postMessage(JSON.stringify(msg), '*');
-  };
-
-  const handleClick = () => {
-    if (playing) {
-      postVimeo('pause');
-      setPlaying(false);
-    } else {
-      postVimeo('play');
-      postVimeo('setVolume', 1);
-      setPlaying(true);
-    }
-  };
-
-  return (
-    <section className="relative bg-dark py-20 px-6 md:px-16">
-      <div className="max-w-4xl mx-auto">
-        <p className="font-heading font-bold text-primary/60 text-sm tracking-widest uppercase mb-4 text-center">
-          Se hvordan det fungerer
-        </p>
-        <div
-          className="relative w-full rounded-2xl overflow-hidden border border-primary/10 shadow-2xl cursor-pointer group"
-          style={{ aspectRatio: '16/9' }}
-          onClick={handleClick}
-        >
-          <iframe
-            ref={iframeRef}
-            src="https://player.vimeo.com/video/1180465943?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&controls=0"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            className="absolute inset-0 w-full h-full pointer-events-none"
-            title="VSLferdig"
-          />
-          <div className="absolute inset-0 z-10 flex items-center justify-center">
-            <span className={`font-heading font-bold text-primary/70 text-lg tracking-tight px-6 py-3 rounded-full bg-dark/40 backdrop-blur-sm transition-opacity duration-300 ${playing ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
-              {playing ? 'Pause' : 'Spill av'}
-            </span>
+        {services.map((s, i) => (
+          <div key={i} className="service-card card-brutalist p-8 flex flex-col h-full">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 rounded-xl bg-dark text-accent flex items-center justify-center">
+                {s.icon}
+              </div>
+              <span className="font-data text-[10px] uppercase text-dark/40 tracking-[0.2em]">{s.tag}</span>
+            </div>
+            <h3 className="font-heading font-bold text-2xl text-dark tracking-tight mb-3">{s.title}</h3>
+            <p className="font-sans text-dark/70 text-sm leading-relaxed mb-6 flex-grow">{s.desc}</p>
+            <div className="pt-4 border-t border-dark/10">
+              <span className="font-data text-xs text-accent font-bold uppercase tracking-wider">{s.detail}</span>
+            </div>
           </div>
-        </div>
-        <div className="mt-8 text-center">
-          <MagneticButton className="px-8 py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>
-            Prøv det risikofritt <ArrowRight size={18} />
-          </MagneticButton>
-        </div>
+        ))}
       </div>
     </section>
   );
 };
 
-// Philosophy Section
-const Philosophy = () => {
+// Why AI Now — Philosophy section
+const WhyAI = () => {
   const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      // Reveal lines
-      gsap.from('.phil-line', {
+      gsap.from('.why-line', {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 60%',
@@ -401,8 +231,7 @@ const Philosophy = () => {
         ease: 'power3.out'
       });
 
-      // Parallax background
-      gsap.to('.phil-bg', {
+      gsap.to('.why-bg', {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top bottom',
@@ -417,303 +246,206 @@ const Philosophy = () => {
   }, []);
 
   return (
-    <section id="philosophy" ref={sectionRef} className="relative py-32 px-6 overflow-hidden bg-dark">
+    <section id="hvorfor" ref={sectionRef} className="relative py-32 px-6 overflow-hidden bg-dark">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-dark z-10 opacity-60"></div>
         <img
           src="/hero-bg.jpg"
-          alt="Concrete texture bg"
+          alt=""
           loading="lazy"
-          className="phil-bg w-full h-[120%] object-cover opacity-30 select-none scale-105"
+          className="why-bg w-full h-[120%] object-cover opacity-30 select-none scale-105"
         />
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto flex flex-col justify-center min-h-[50vh]">
-        <h2 className="phil-line font-heading font-bold text-xl md:text-2xl text-primary/60 tracking-tight mb-6">
-          Folk finner deg på nett og sender en henvendelse. <span className="text-primary/90">Men hva skjer etterpå?</span>
+        <h2 className="why-line font-heading font-bold text-xl md:text-2xl text-primary/60 tracking-tight mb-6">
+          Alle snakker om AI. <span className="text-primary/90">Men de færreste gjør noe med det.</span>
         </h2>
-        <div className="phil-line font-drama italic text-5xl md:text-7xl lg:text-8xl text-primary leading-[1.1] max-w-4xl">
-          De fleste kundene du mister, mister du ikke på pris. De glipper fordi <br />
-          <span className="text-accent underline decoration-4 underline-offset-[12px]">noen andre svarte først.</span>
+        <div className="why-line font-drama italic text-5xl md:text-7xl lg:text-8xl text-primary leading-[1.1] max-w-4xl">
+          Bedriftene som tar grep nå, bygger et forsprang som blir <br />
+          <span className="text-accent underline decoration-4 underline-offset-[12px]">umulig å ta igjen.</span>
         </div>
+        <p className="why-line font-sans text-primary/50 text-lg mt-10 max-w-2xl leading-relaxed">
+          AI er ikke hype. Det er et verktøy som allerede sparer norske bedrifter tusenvis av timer. Spørsmålet er ikke om du bør bruke det — men hvor det gir mest verdi for akkurat deg.
+        </p>
       </div>
     </section>
   );
 };
 
-// Protocol Step Component
-const ProtocolStep = ({ num, title, desc, icon }) => {
-  return (
-    <div className="protocol-card sticky top-0 h-[100vh] w-full flex items-center justify-center bg-background transform origin-top pt-20">
-      <div className="max-w-5xl w-full px-6 md:px-16 mx-auto grid md:grid-cols-2 gap-12 items-center">
-        <div className="flex flex-col">
-          <span className="font-data text-accent font-bold text-sm mb-4 tracking-widest uppercase">Steg {num}</span>
-          <h2 className="font-heading font-bold text-4xl md:text-6xl text-dark tracking-tight mb-6">{title}</h2>
-          <p className="font-sans text-dark/70 text-lg md:text-xl leading-relaxed max-w-md">{desc}</p>
-        </div>
-        <div className="relative aspect-square w-full max-w-md mx-auto card-brutalist flex items-center justify-center">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--tw-colors-background)_0%,transparent_100%)] opacity-20"></div>
-          {icon}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Protocol Section (Sticky Stacking Archive)
-const Protocol = () => {
-  const containerRef = useRef(null);
+// Process Section
+const Process = () => {
+  const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray('.protocol-card');
-
-      cards.forEach((card, i) => {
-        if (i !== cards.length - 1) {
-          gsap.to(card, {
-            scale: 0.9,
-            opacity: 0.5,
-            filter: "blur(10px)",
-            scrollTrigger: {
-              trigger: cards[i + 1],
-              start: "top bottom",
-              end: "top top",
-              scrub: true,
-            }
-          });
-        }
+      gsap.from('.process-step', {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 70%',
+        },
+        y: 50,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 1,
+        ease: 'power3.out'
       });
-    }, containerRef);
+    }, sectionRef);
     return () => ctx.revert();
   }, []);
 
+  const steps = [
+    {
+      num: '01',
+      title: 'Vi snakker sammen',
+      desc: 'En uforpliktende samtale der vi forstår bedriften din, utfordringene dine, og hva du håper AI kan løse. Ingen salgspitch — bare ærlig rådgivning.',
+    },
+    {
+      num: '02',
+      title: 'Vi kartlegger mulighetene',
+      desc: 'Intervjuer med nøkkelpersoner, gjennomgang av prosesser og systemer. Vi finner de stedene der AI gir reell verdi — ikke bare fancy tech.',
+    },
+    {
+      num: '03',
+      title: 'Du får en konkret plan',
+      desc: 'Prioritert handlingsplan med ROI-estimat, verktøyanbefalinger og implementeringsrekkefølge. Alt du trenger for å komme i gang.',
+    },
+    {
+      num: '04',
+      title: 'Vi hjelper deg i gang',
+      desc: 'Implementeringsstøtte på de viktigste tiltakene. Vi er med deg hele veien — fra plan til faktiske resultater.',
+    },
+  ];
+
   return (
-    <section id="protocol" ref={containerRef} className="relative bg-background">
-      <ProtocolStep
-        num="01"
-        title="Henvendelsen mottas"
-        desc="Noen sender inn et skjema på nettsiden din. De har sannsynligvis sendt til deg og to konkurrenter samtidig. I stedet for at henvendelsen ligger og venter — fanger Monstr den opp umiddelbart."
-        icon={
-          <div className="relative w-full h-full flex justify-center items-center">
-            <div className="absolute w-40 h-40 border-2 border-dark rounded-full animate-[spin_10s_linear_infinite]"></div>
-            <div className="absolute w-24 h-24 border-2 border-accent border-dashed rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
-            <Zap className="text-dark w-12 h-12" />
+    <section id="prosess" ref={sectionRef} className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+      <div className="mb-16 max-w-2xl">
+        <p className="font-data text-accent text-xs uppercase tracking-[0.3em] mb-4">Prosessen</p>
+        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Fra usikkerhet til handling.</h2>
+        <p className="font-sans text-dark/70 text-lg leading-relaxed">
+          Du trenger ikke vite noe om AI for å starte. Det er vår jobb. Her er hva du kan forvente.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {steps.map((step, i) => (
+          <div key={i} className="process-step card-brutalist p-8 md:p-10">
+            <span className="font-data text-accent font-bold text-sm tracking-widest uppercase">{step.num}</span>
+            <h3 className="font-heading font-bold text-2xl md:text-3xl text-dark tracking-tight mt-3 mb-4">{step.title}</h3>
+            <p className="font-sans text-dark/70 text-base leading-relaxed">{step.desc}</p>
           </div>
-        }
-      />
-      <ProtocolStep
-        num="02"
-        title="Umiddelbart svar"
-        desc="Sekunder senere får kunden en personlig SMS med firmanavnet ditt som avsender — før konkurrenten har sjekket innboksen sin."
-        icon={
-          <div className="relative w-full h-full flex justify-center items-center p-12">
-            <div className="w-full h-full overflow-hidden relative border border-dark bg-primary flex flex-col gap-2 p-4">
-              <div className="h-4 bg-dark/20 w-3/4"></div>
-              <div className="h-4 bg-dark/20 w-full"></div>
-              <div className="h-4 bg-dark/20 w-5/6"></div>
-              <div className="absolute top-0 left-0 w-full h-2 bg-accent/80 animate-[ping_3s_ease-in-out_infinite]"></div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+// Social Proof / Differentiator
+const Differentiator = () => {
+  return (
+    <section className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+      <div className="max-w-4xl mx-auto">
+        <div className="card-brutalist-dark p-8 md:p-12 border-primary/20">
+          <p className="font-data text-accent text-xs uppercase tracking-[0.3em] mb-6">Hvorfor oss</p>
+          <h2 className="font-heading font-bold text-3xl md:text-4xl text-primary tracking-tight mb-8">
+            Vi er ikke et konsulentselskap. Vi er praktikere.
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6">
+              <h3 className="font-heading font-bold text-lg text-primary mb-3">Vi bygger med AI selv</h3>
+              <p className="font-sans text-primary/60 text-sm leading-relaxed">
+                Vi bruker AI til å bygge produkter, automatisere prosesser og drive vårt eget selskap. Vi anbefaler ikke noe vi ikke har brukt selv.
+              </p>
+            </div>
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6">
+              <h3 className="font-heading font-bold text-lg text-primary mb-3">Konkret, ikke vagt</h3>
+              <p className="font-sans text-primary/60 text-sm leading-relaxed">
+                Du får ikke en 80-siders rapport som samler støv. Du får en prioritert liste med tall — hva det koster, hva det sparer, og hva du gjør først.
+              </p>
+            </div>
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6">
+              <h3 className="font-heading font-bold text-lg text-primary mb-3">Fast pris, ingen overraskelser</h3>
+              <p className="font-sans text-primary/60 text-sm leading-relaxed">
+                Du vet hva det koster før vi starter. Ingen timebombe som tikker i bakgrunnen. Ingen scope creep.
+              </p>
+            </div>
+            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6">
+              <h3 className="font-heading font-bold text-lg text-primary mb-3">Vi bygger tillit, ikke avhengighet</h3>
+              <p className="font-sans text-primary/60 text-sm leading-relaxed">
+                Målet er at du kan klare deg selv etterpå. Vi overfører kompetanse — ikke bare leveranser.
+              </p>
             </div>
           </div>
-        }
-      />
-      <ProtocolStep
-        num="03"
-        title="Du får beskjed"
-        desc="Samtidig får du varsel med all info — hvem det er, hva de trenger, og at de allerede har fått svar. Du følger opp mens kunden fortsatt er varm."
-        icon={
-          <div className="relative w-full h-full flex justify-center items-center">
-            <svg viewBox="0 0 200 100" className="w-full h-32 px-12">
-              <path
-                d="M 10 50 L 50 50 L 70 20 L 90 80 L 110 50 L 190 50"
-                fill="none"
-                stroke="#E63B2E"
-                strokeWidth="4"
-                strokeLinejoin="round"
-                strokeDasharray="400"
-                strokeDashoffset="400"
-                className="animate-[dash_3s_linear_infinite]"
-              />
-              <style>{`
-                @keyframes dash {
-                  to { stroke-dashoffset: 0; }
-                }
-              `}</style>
-            </svg>
-          </div>
-        }
-      />
-    </section>
-  );
-};
-
-// Get Started Section
-const Pricing = () => {
-  return (
-    <section className="py-32 px-6 md:px-16 max-w-7xl mx-auto bg-background">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="font-heading font-bold text-4xl md:text-5xl text-dark tracking-tight mb-6">Klar til å svare først?</h2>
-        <p className="font-sans text-dark/70 text-lg md:text-xl mb-10 leading-relaxed">
-          Vi setter opp alt. Du ser effekten før du betaler noe.
-        </p>
-        <MagneticButton variant="accent" className="px-10 py-4 text-base" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}>
-          Book en gratis demo <ArrowRight size={18} />
-        </MagneticButton>
-      </div>
-
-      {/* Risk Reversal */}
-      <div className="mt-16 bg-dark rounded-[2rem] p-8 md:p-12 border border-primary/20 flex flex-col md:flex-row items-center gap-10 max-w-4xl mx-auto">
-        <div className="flex-1 space-y-4">
-          <div className="inline-block px-3 py-1 bg-accent/20 text-accent font-data text-xs font-bold rounded-full mb-2">UTEN RISIKO</div>
-          <h3 className="font-heading font-bold text-2xl md:text-3xl text-primary">Prøv 14 dager gratis</h3>
-          <ul className="font-sans text-primary/70 text-lg leading-relaxed space-y-2 mt-2">
-            <li className="flex items-center gap-2"><span className="text-accent">●</span> 14 dager gratis</li>
-            <li className="flex items-center gap-2"><span className="text-accent">●</span> Vi setter opp alt</li>
-            <li className="flex items-center gap-2"><span className="text-accent">●</span> Du ser effekten før du betaler noe</li>
-          </ul>
-        </div>
-        <div className="w-full md:w-px h-px md:h-32 bg-primary/20"></div>
-        <div className="flex-1 space-y-4">
-          <h3 className="font-heading font-bold text-xl text-primary">De som svarer først får jobben</h3>
-          <p className="font-sans text-primary/70 text-base leading-relaxed">
-            Vi sørger for at du alltid er først. Automatisk, hver gang, innen sekunder.
-            <br /><br />
-            Slutt å miste jobber fordi du svarer for sent.
-          </p>
         </div>
       </div>
     </section>
   );
 };
 
-// Footer Component
-const Footer = () => {
-  return (
-    <footer className="bg-dark pt-20 pb-10 px-6 rounded-t-[4rem]">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 border-b border-primary/10 pb-16">
-        <div>
-          <div className="font-heading font-bold text-3xl text-primary mb-4">Monstr</div>
-          <p className="font-sans text-primary/60 max-w-sm">Den som svarer først, får jobben. Vi sørger for at det alltid er deg.</p>
-        </div>
-
-        <div className="grid grid-cols-2 gap-8 font-sans">
-          <div>
-            <h4 className="font-heading font-bold text-primary mb-4 tracking-tight">System</h4>
-            <ul className="space-y-3 text-primary/60 text-sm">
-              <li><a href="#features" className="hover:text-primary transition-colors">Funksjoner</a></li>
-              <li><a href="#protocol" className="hover:text-primary transition-colors">Protokoll</a></li>
-              <li><a href="/blogg" className="hover:text-primary transition-colors">Ressurser</a></li>
-              <li><a href="#book" className="hover:text-primary transition-colors">Book en gratis demo</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-heading font-bold text-primary mb-4 tracking-tight">Juridisk</h4>
-            <ul className="space-y-3 text-primary/60 text-sm">
-              <li><a href="/personvern" className="hover:text-primary transition-colors">Personvernerklæring</a></li>
-              <li><a href="/vilkar" className="hover:text-primary transition-colors">Brukervilkår</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        <p className="font-sans text-primary/40 text-xs">© {new Date().getFullYear()} Monstr. Org.nr: 933 378 179 · Skien, Norge</p>
-
-        <div className="font-data text-primary text-xs flex items-center gap-3 border border-primary/20 rounded-full px-4 py-2 bg-background/5">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-          SYSTEMSTATUS: ONLINE
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-// Fit Check Section
+// Fit Check
 const FitCheck = () => {
   return (
     <section className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
       <div className="max-w-4xl mx-auto">
         <h2 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight mb-6">Er dette noe for deg?</h2>
         <p className="font-sans text-dark/80 text-lg md:text-xl mb-4 leading-relaxed">
-          Vi setter kun opp dette der det realistisk sett kan skape økt inntjening. Hvis du allerede får henvendelser via skjemaer og vil gjøre flere av dem til betalende kunder, er du sannsynligvis en god match.
+          Vi jobber best med bedrifter som er klare til å gjøre noe — ikke bare utforske. Hvis du er nysgjerrig men usikker, er en gratis samtale et godt sted å starte.
         </p>
         <p className="font-sans text-accent font-medium text-lg mb-16">
-          Hvis hovedproblemet ditt i dag er at du ikke får nok henvendelser, vil vi fortelle deg det direkte i stedet for å selge deg feil tjeneste.
+          Hvis AI ikke gir verdi for din bedrift, sier vi det direkte. Vi selger ikke noe du ikke trenger.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-16">
           <div className="card-brutalist bg-primary p-8 md:p-10 border-dark/20">
             <h3 className="font-heading font-bold text-2xl text-dark mb-6 flex items-center gap-3">
               <span className="w-8 h-8 rounded-full bg-dark text-accent flex items-center justify-center text-sm shrink-0">✓</span>
-              Dette passer for deg hvis:
+              God match
             </h3>
             <ul className="space-y-4 font-sans text-dark/80">
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du allerede mottar henvendelser via skjemaer, nettsiden, bookingforespørsler eller annonser.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> En ny kunde er verdt ekte penger for din bedrift.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du vet at dere av og til bruker for lang tid på å svare.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du vil ha noe som bare fungerer — uten at du trenger å tenke på det.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Én ekstra kunde i måneden er allerede verdt mer enn det koster.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du har 5-500 ansatte og prosesser som tar for mye tid</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du vet at AI er viktig, men ikke hvor du skal starte</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du vil ha en konkret plan, ikke en generell strategi</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du er klar til å investere tid og budsjett i å bli bedre</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du ønsker en sparringspartner som har gjort det selv</li>
             </ul>
           </div>
 
           <div className="card-brutalist-dark p-8 md:p-10 border-primary/20">
             <h3 className="font-heading font-bold text-2xl text-primary mb-6 flex items-center gap-3">
               <span className="w-8 h-8 rounded-full bg-accent text-background flex items-center justify-center text-sm shrink-0">✕</span>
-              Sannsynligvis ikke match hvis:
+              Sannsynligvis ikke match
             </h3>
             <ul className="space-y-4 font-sans text-primary/80">
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du får veldig få henvendelser per i dag.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Alle kundene dine ringer — ingen bruker skjema eller nett.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du enda ikke har en pålitelig kilde til henvendelser eller markedsføring.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Problemet er at du ikke får nok henvendelser i det hele tatt.</li>
-              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du er bare nysgjerrig — ikke klar til å faktisk gjøre noe med det.</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du er bare nysgjerrig og ikke klar til å gjøre noe ennå</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du leter etter den billigste løsningen uansett kvalitet</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du har et internt tech-team som allerede jobber med AI</li>
+              <li className="flex gap-3"><span className="text-accent mt-1 shrink-0">●</span> Du trenger et utviklingsselskap, ikke en rådgiver</li>
             </ul>
           </div>
-        </div>
-
-        <div className="font-data text-dark/60 text-sm md:text-base text-center border border-dark/10 rounded-2xl p-6 bg-primary/30 uppercase tracking-widest leading-relaxed">
-          Vårt mål er langsiktige kundeforhold. Vi vil heller diskvalifisere en dårlig match fremfor å la deg betale for noe som ikke skaper verdi.
         </div>
       </div>
     </section>
   );
 };
 
-// Booking Form Component — Two-step: contact info first, qualifying questions after
-const BookingForm = () => {
+// Contact Form
+const ContactForm = () => {
   const [formData, setFormData] = useState({
-    firstName: '', lastName: '', company: '', email: '', phone: '', website: '',
-    leadsPerMonth: '', leadSources: [], followUpProcess: '',
-    customerValue: '', intent: '', decisionMaker: '',
+    firstName: '', company: '', email: '', phone: '', message: '',
   });
-  const [step, setStep] = useState(1); // 1 = contact info, 2 = qualifying questions
-  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
+  const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
   const updateField = (field, value) => setFormData(prev => ({ ...prev, [field]: value }));
 
-  const toggleSource = (source) => {
-    setFormData(prev => ({
-      ...prev,
-      leadSources: prev.leadSources.includes(source)
-        ? prev.leadSources.filter(s => s !== source)
-        : [...prev.leadSources, source],
-    }));
-  };
-
-  const handleStep1 = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.firstName || !formData.phone || !formData.company) {
-      setErrorMsg('Vennligst fyll inn fornavn, telefonnummer og bedrift.');
+    if (!formData.firstName || !formData.company || !formData.email) {
+      setErrorMsg('Vennligst fyll inn navn, bedrift og e-post.');
       setStatus('error');
       return;
     }
-    setErrorMsg('');
-    setStatus('idle');
-    setStep(2);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
     setStatus('submitting');
     setErrorMsg('');
     try {
@@ -722,7 +454,10 @@ const BookingForm = () => {
       const res = await fetch('/api/submit-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          source: 'tinde-landing',
+        }),
         signal: controller.signal,
       });
       clearTimeout(timeoutId);
@@ -739,14 +474,14 @@ const BookingForm = () => {
 
   if (status === 'success') {
     return (
-      <section id="book" className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+      <section id="kontakt" className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
         <div className="max-w-3xl mx-auto card-brutalist bg-primary p-8 md:p-12 text-center">
           <div className="w-16 h-16 rounded-full bg-dark text-accent flex items-center justify-center text-3xl mx-auto mb-6">
             <CheckCircle size={32} />
           </div>
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-dark tracking-tight mb-4">Forespørsel mottatt</h2>
+          <h2 className="font-heading font-bold text-3xl md:text-4xl text-dark tracking-tight mb-4">Takk for henvendelsen</h2>
           <p className="font-sans text-dark/80 text-lg leading-relaxed max-w-lg mx-auto">
-            Vi går gjennom detaljene dine og tar kontakt innen 24 timer. Hvis det er en god match, inviterer vi deg til en kort samtale.
+            Vi tar kontakt innen 24 timer for å avtale en uforpliktende samtale.
           </p>
         </div>
       </section>
@@ -754,532 +489,152 @@ const BookingForm = () => {
   }
 
   const inputClass = "w-full bg-background border border-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors shadow-[2px_2px_0px_#111111]";
-  const selectClass = "w-full bg-background border border-dark text-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors appearance-none shadow-[2px_2px_0px_#111111]";
-  const leadSourceOptions = ['Kontaktskjema på nettsiden', 'Landingssider', 'Google Ads', 'Meta Ads', 'Organisk søk / SEO', 'Henvisningssider / markedsplasser', 'Bookingskjema', 'Annet'];
 
   return (
-    <section id="book" className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
+    <section id="kontakt" className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
       <div className="max-w-3xl mx-auto card-brutalist bg-primary p-8 md:p-12 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
-        {step === 1 ? (
-          <>
-            <div className="relative z-10 mb-12">
-              <h2 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight mb-4">Prøv 14 dager gratis</h2>
-              <p className="font-sans text-dark/80 text-lg leading-relaxed">
-                Fyll inn detaljene dine, så tar vi kontakt for å sette opp alt. Du skal se at det fungerer før du betaler noe.
-              </p>
-            </div>
-
-            <form className="relative z-10 space-y-6" onSubmit={handleStep1}>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Fornavn *</label>
-                  <input type="text" className={inputClass} placeholder="Fornavn" value={formData.firstName} onChange={e => updateField('firstName', e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Etternavn</label>
-                  <input type="text" className={inputClass} placeholder="Etternavn" value={formData.lastName} onChange={e => updateField('lastName', e.target.value)} />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Bedrift *</label>
-                  <input type="text" className={inputClass} placeholder="Ditt Selskap AS" value={formData.company} onChange={e => updateField('company', e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Telefonnummer *</label>
-                  <input type="tel" className={inputClass} placeholder="+47 000 00 000" value={formData.phone} onChange={e => updateField('phone', e.target.value)} />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">E-post</label>
-                  <input type="email" className={inputClass} placeholder="navn@selskap.no" value={formData.email} onChange={e => updateField('email', e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Nettside</label>
-                  <input type="text" className={inputClass} placeholder="dinside.no" value={formData.website} onChange={e => updateField('website', e.target.value)} />
-                </div>
-              </div>
-
-              {status === 'error' && (
-                <div className="bg-accent/10 border border-accent rounded-xl p-4 font-sans text-accent text-sm">
-                  {errorMsg}
-                </div>
-              )}
-
-              <div className="pt-4">
-                <button
-                  type="submit"
-                  className="w-full text-lg py-5 font-heading font-bold rounded-2xl border-2 border-dark shadow-[4px_4px_0px_#111111] bg-accent text-background hover:scale-[1.02] active:scale-[0.98] active:shadow-[2px_2px_0px_#111111] transition-all duration-200 flex items-center justify-center"
-                >
-                  Neste steg <ArrowRight className="ml-2" size={20} />
-                </button>
-              </div>
-            </form>
-          </>
-        ) : (
-          <>
-            <div className="relative z-10 mb-8">
-              <h2 className="font-heading font-bold text-2xl md:text-4xl text-dark tracking-tight mb-3">Bare noen kjappe spørsmål til</h2>
-              <p className="font-sans text-dark/70 text-base leading-relaxed">
-                Så vi kan forberede oss og gi deg mest mulig verdi fra dag én. Du kan hoppe over disse om du vil.
-              </p>
-            </div>
-
-            <form className="relative z-10 space-y-8" onSubmit={handleSubmit}>
-              <div className="space-y-8">
-                <div className="space-y-3">
-                  <label className="font-heading font-medium text-dark text-lg">1. Omtrent hvor mange henvendelser får du i måneden?</label>
-                  <div className="relative">
-                    <select className={selectClass} value={formData.leadsPerMonth} onChange={e => updateField('leadsPerMonth', e.target.value)}>
-                      <option value="" disabled>Velg et alternativ</option>
-                      <option>0–10</option>
-                      <option>10–30</option>
-                      <option>30–75</option>
-                      <option>75+</option>
-                    </select>
-                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                      <span className="text-dark/50">▼</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <label className="font-heading font-medium text-dark text-lg">2. Hvor kommer de fleste henvendelsene fra?</label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-sans text-dark/90 text-sm">
-                    {leadSourceOptions.map(source => (
-                      <label key={source} className="flex items-center gap-3 cursor-pointer p-3 bg-background border border-dark/20 rounded-xl hover:border-dark transition-colors">
-                        <input type="checkbox" className="accent-accent w-4 h-4 cursor-pointer" checked={formData.leadSources.includes(source)} onChange={() => toggleSource(source)} /> {source}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <label className="font-heading font-medium text-dark text-lg">3. Hva skjer vanligvis etter at en ny henvendelse kommer inn?</label>
-                  <div className="relative">
-                    <select className={selectClass} value={formData.followUpProcess} onChange={e => updateField('followUpProcess', e.target.value)}>
-                      <option value="" disabled>Velg et alternativ</option>
-                      <option>Vi svarer raskt mesteparten av tiden</option>
-                      <option>Vi svarer, men det er inkonsekvent</option>
-                      <option>Vi er ofte for trege med å svare</option>
-                      <option>Vi har ikke en tydelig prosess</option>
-                    </select>
-                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                      <span className="text-dark/50">▼</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <label className="font-heading font-medium text-dark text-lg">4. Omtrent hva er én ny kunde verdt for deg?</label>
-                  <div className="relative">
-                    <select className={selectClass} value={formData.customerValue} onChange={e => updateField('customerValue', e.target.value)}>
-                      <option value="" disabled>Velg et alternativ</option>
-                      <option>Under 5 000 NOK</option>
-                      <option>5 000–15 000 NOK</option>
-                      <option>15 000–50 000 NOK</option>
-                      <option>50 000+ NOK</option>
-                    </select>
-                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                      <span className="text-dark/50">▼</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {status === 'error' && (
-                <div className="bg-accent/10 border border-accent rounded-xl p-4 font-sans text-accent text-sm">
-                  {errorMsg}
-                </div>
-              )}
-
-              <div className="pt-4 space-y-3">
-                <button
-                  type="submit"
-                  disabled={status === 'submitting'}
-                  className={`w-full text-lg py-5 font-heading font-bold rounded-2xl border-2 border-dark shadow-[4px_4px_0px_#111111] transition-all duration-200 flex items-center justify-center ${
-                    status === 'submitting'
-                      ? 'bg-dark/50 text-background cursor-not-allowed'
-                      : 'bg-accent text-background hover:scale-[1.02] active:scale-[0.98] active:shadow-[2px_2px_0px_#111111]'
-                  }`}
-                >
-                  {status === 'submitting' ? 'Sender...' : <>Send inn <ArrowRight className="ml-2" size={20} /></>}
-                </button>
-                <button
-                  type="button"
-                  onClick={async () => {
-                    setStatus('submitting');
-                    setErrorMsg('');
-                    try {
-                      const controller = new AbortController();
-                      const timeoutId = setTimeout(() => controller.abort(), 15000);
-                      const res = await fetch('/api/submit-lead', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData),
-                        signal: controller.signal,
-                      });
-                      clearTimeout(timeoutId);
-                      if (!res.ok) {
-                        const data = await res.json();
-                        throw new Error(data.error || 'Noe gikk galt.');
-                      }
-                      setStatus('success');
-                    } catch (err) {
-                      setErrorMsg(err.message);
-                      setStatus('error');
-                    }
-                  }}
-                  className="w-full text-sm py-3 font-sans text-dark/50 hover:text-dark/70 transition-colors"
-                >
-                  Hopp over — send inn uten ekstra info
-                </button>
-              </div>
-            </form>
-          </>
-        )}
-
-        <div className="relative z-10 mt-12 bg-background border border-dark p-8 rounded-[2rem] shadow-[4px_4px_0px_#111111]">
-          <h3 className="font-heading font-bold text-xl text-dark mb-3">Den som svarer først, får jobben.</h3>
-          <p className="font-sans text-dark/80 leading-relaxed text-sm md:text-base">
-            Hvert minutt som går etter en henvendelse reduserer sjansen for at kunden velger deg. Svarer du innen sekunder, er du nesten alltid den de ringer tilbake. <strong className="text-accent">Slutt å miste jobber fordi du svarer for sent.</strong>
+        <div className="relative z-10 mb-12">
+          <p className="font-data text-accent text-xs uppercase tracking-[0.3em] mb-4">Ta kontakt</p>
+          <h2 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight mb-4">Book en gratis samtale</h2>
+          <p className="font-sans text-dark/80 text-lg leading-relaxed">
+            30 minutter der vi snakker om din bedrift og dine muligheter. Ingen forpliktelser, ingen salgspitch — bare ærlig rådgivning.
           </p>
         </div>
-      </div>
-    </section>
-  );
-};
 
-// Social Proof — Real test data
-const SocialProof = () => {
-  return (
-    <section className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
-      <div className="max-w-4xl mx-auto">
-        <div className="card-brutalist-dark p-8 md:p-12 border-primary/20">
-          <div className="inline-block px-3 py-1 bg-accent/20 text-accent font-data text-xs font-bold rounded-full mb-6">EKTE DATA</div>
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-primary tracking-tight mb-6">
-            Vi testet 50+ håndverkerbedrifter i Norge.
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 text-center">
-              <div className="font-heading font-bold text-4xl text-accent mb-2">1,5 t</div>
-              <p className="font-sans text-primary/70 text-sm">Raskeste svar</p>
+        <form className="relative z-10 space-y-6" onSubmit={handleSubmit}>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Navn *</label>
+              <input type="text" className={inputClass} placeholder="Ditt navn" value={formData.firstName} onChange={e => updateField('firstName', e.target.value)} />
             </div>
-            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 text-center">
-              <div className="font-heading font-bold text-4xl text-accent mb-2">7+ d</div>
-              <p className="font-sans text-primary/70 text-sm">Tregest — fortsatt ingen svar</p>
-            </div>
-            <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 text-center">
-              <div className="font-heading font-bold text-4xl text-accent mb-2">0</div>
-              <p className="font-sans text-primary/70 text-sm">Svarte innen 5 minutter</p>
+            <div className="space-y-2">
+              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Bedrift *</label>
+              <input type="text" className={inputClass} placeholder="Ditt Selskap AS" value={formData.company} onChange={e => updateField('company', e.target.value)} />
             </div>
           </div>
-          <p className="font-sans text-primary/80 text-lg leading-relaxed">
-            Ikke én eneste bedrift svarte innen 5 minutter. De raskeste brukte halvannen time. Mange har fortsatt ikke svart etter over en uke. Her ligger det et stort konkurransefortrinn for de som svarer raskest.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-};
 
-// ROI Section
-const ROI = () => {
-  return (
-    <section className="py-16 px-6 md:px-16 max-w-7xl mx-auto bg-background">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="font-heading font-bold text-3xl md:text-4xl text-dark tracking-tight mb-4">Hva er én jobb verdt for deg?</h2>
-        <p className="font-sans text-dark/70 text-lg mb-8">Et nytt bad? En varmtvannsbereder? En terrasse? Du vet selv hva én ekstra kunde betyr for bunnlinjen.</p>
-        <div className="max-w-md mx-auto mb-10">
-          <div className="card-brutalist p-6 border-accent/50 text-center">
-            <p className="font-sans text-dark/60 text-sm mb-2">Du trenger bare</p>
-            <p className="font-heading font-bold text-3xl text-accent">1 ekstra kunde</p>
-            <p className="font-sans text-dark/60 text-sm mt-1">for å tjene inn hele investeringen</p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">E-post *</label>
+              <input type="email" className={inputClass} placeholder="navn@selskap.no" value={formData.email} onChange={e => updateField('email', e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Telefon</label>
+              <input type="tel" className={inputClass} placeholder="+47 000 00 000" value={formData.phone} onChange={e => updateField('phone', e.target.value)} />
+            </div>
           </div>
-        </div>
 
-        <p className="max-w-2xl mx-auto font-sans text-dark/70 text-base md:text-lg leading-relaxed mt-2">
-          De som svarer først får jobben. Når konkurrentene dine bruker timer på å svare og du svarer innen sekunder, er spørsmålet ikke <em>om</em> du får flere kunder — det er hvor mange.
-        </p>
-      </div>
-    </section>
-  );
-};
-
-// Live Demo Section — "Prøv selv"
-const LiveDemo = () => {
-  const sectionRef = useRef(null);
-  const [fornavn, setFornavn] = useState('');
-  const [bedriftsnavn, setBedriftsnavn] = useState('');
-  const [avsender, setAvsender] = useState('');
-  const [telefon, setTelefon] = useState('');
-  const [samtykke, setSamtykke] = useState(false);
-
-  // Auto-generate sender ID from business name (transliterate Nordic chars, max 11 chars)
-  const handleBedriftChange = (val) => {
-    setBedriftsnavn(val);
-    const transliterated = val
-      .replace(/[æÆ]/g, m => m === 'æ' ? 'ae' : 'Ae')
-      .replace(/[øØ]/g, m => m === 'ø' ? 'o' : 'O')
-      .replace(/[åÅ]/g, m => m === 'å' ? 'aa' : 'Aa')
-      .replace(/[^a-zA-Z0-9 ]/g, '')
-      .substring(0, 11)
-      .trim();
-    setAvsender(transliterated);
-  };
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
-  const [errorMsg, setErrorMsg] = useState('');
-  const [timer, setTimer] = useState(null);
-
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from('.demo-elem', {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
-        },
-        y: 50,
-        opacity: 0,
-        stagger: 0.12,
-        duration: 1,
-        ease: 'power3.out'
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
-
-  // Timer that counts up after sending
-  useEffect(() => {
-    if (status !== 'sending') return;
-    const start = Date.now();
-    const interval = setInterval(() => {
-      setTimer(((Date.now() - start) / 1000).toFixed(1));
-    }, 100);
-    return () => clearInterval(interval);
-  }, [status]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!fornavn || !telefon || !bedriftsnavn || !avsender) {
-      setErrorMsg('Fyll inn alle feltene.');
-      setStatus('error');
-      return;
-    }
-    if (!samtykke) {
-      setErrorMsg('Du må godta at vi kan kontakte deg.');
-      setStatus('error');
-      return;
-    }
-    setStatus('sending');
-    setErrorMsg('');
-    try {
-      const res = await fetch('/api/demo-sms', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fornavn, telefon, bedriftsnavn, avsender, samtykke }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Noe gikk galt.');
-      setStatus('success');
-    } catch (err) {
-      setErrorMsg(err.message);
-      setStatus('error');
-    }
-  };
-
-  const inputClass = "w-full bg-background border border-dark rounded-xl px-4 py-3 font-sans focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors shadow-[2px_2px_0px_#111111]";
-
-  if (status === 'success') {
-    return (
-      <section ref={sectionRef} className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
-        <div className="max-w-3xl mx-auto card-brutalist bg-primary p-8 md:p-12 text-center">
-          <div className="w-16 h-16 rounded-full bg-dark text-accent flex items-center justify-center text-3xl mx-auto mb-6">
-            <Zap size={32} />
+          <div className="space-y-2">
+            <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Hva kan vi hjelpe med?</label>
+            <textarea
+              className={`${inputClass} min-h-[120px] resize-y`}
+              placeholder="Fortell kort om bedriften din og hva du lurer på..."
+              value={formData.message}
+              onChange={e => updateField('message', e.target.value)}
+            />
           </div>
-          <h2 className="font-heading font-bold text-3xl md:text-4xl text-dark tracking-tight mb-4">
-            Fikk du den, {fornavn}?
-          </h2>
-          <p className="font-sans text-dark/80 text-lg leading-relaxed max-w-lg mx-auto mb-8">
-            Tenk om kundene til <span className="font-bold text-dark">{bedriftsnavn}</span> opplevde det samme — innen et minutt, hver gang. La oss sette det opp for deg, prøv det gratis.
-          </p>
-          <MagneticButton
-            variant="accent"
-            className="px-10 py-4 text-base"
-            onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Fyll ut skjema <ArrowRight size={18} />
-          </MagneticButton>
-        </div>
-      </section>
-    );
-  }
 
-  return (
-    <section id="demo" ref={sectionRef} className="py-24 px-6 md:px-16 max-w-7xl mx-auto bg-background">
-      <div className="max-w-4xl mx-auto">
-        <div className="demo-elem mb-12 text-center">
-          <div className="inline-block px-3 py-1 bg-accent/10 text-accent font-data text-xs font-bold rounded-full mb-4 uppercase tracking-wider">Prøv selv</div>
-          <h2 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight mb-4">
-            Opplev det kundene dine vil oppleve
-          </h2>
-          <p className="font-sans text-dark/70 text-lg max-w-2xl mx-auto">
-            Fyll inn et navn, et bedriftsnavn, og ditt eget nummer. Trykk send — og kjenn på telefonen din hva speed-to-lead betyr i praksis.
-          </p>
-        </div>
-
-        <div className="demo-elem grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="card-brutalist bg-primary p-8 md:p-10 space-y-5">
-            <div className="space-y-2">
-              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Kundens fornavn</label>
-              <input
-                type="text"
-                className={inputClass}
-                placeholder="F.eks. Ola"
-                value={fornavn}
-                onChange={e => setFornavn(e.target.value)}
-                maxLength={50}
-              />
+          {status === 'error' && (
+            <div className="bg-accent/10 border border-accent rounded-xl p-4 font-sans text-accent text-sm">
+              {errorMsg}
             </div>
-            <div className="space-y-2">
-              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Ditt bedriftsnavn</label>
-              <input
-                type="text"
-                className={inputClass}
-                placeholder="F.eks. Bergens Rør AS"
-                value={bedriftsnavn}
-                onChange={e => handleBedriftChange(e.target.value)}
-                maxLength={80}
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Avsender-ID på SMSen</label>
-              <input
-                type="text"
-                className={inputClass}
-                placeholder="F.eks. BergensRor"
-                value={avsender}
-                onChange={e => setAvsender(e.target.value.replace(/[æÆ]/g, m => m === 'æ' ? 'ae' : 'Ae').replace(/[øØ]/g, m => m === 'ø' ? 'o' : 'O').replace(/[åÅ]/g, m => m === 'å' ? 'aa' : 'Aa').replace(/[^a-zA-Z0-9 ]/g, '').substring(0, 11))}
-                maxLength={11}
-              />
-              <p className="font-sans text-dark/40 text-xs pl-1">Maks 11 tegn, kun bokstaver, tall og mellomrom</p>
-            </div>
-            <div className="space-y-2">
-              <label className="font-data text-xs font-bold text-dark uppercase tracking-wider pl-1">Ditt mobilnummer</label>
-              <input
-                type="tel"
-                className={inputClass}
-                placeholder="F.eks. 400 50 600"
-                value={telefon}
-                onChange={e => setTelefon(e.target.value)}
-                maxLength={20}
-              />
-            </div>
+          )}
 
-            <label className="flex items-start gap-3 cursor-pointer pt-1">
-              <input
-                type="checkbox"
-                checked={samtykke}
-                onChange={e => setSamtykke(e.target.checked)}
-                className="mt-1 w-4 h-4 accent-accent"
-              />
-              <span className="font-sans text-dark/60 text-sm leading-snug">
-                Vi kan kontakte deg for å vise hvordan dette fungerer for din bedrift
-              </span>
-            </label>
-
-            {status === 'error' && (
-              <div className="bg-accent/10 border border-accent rounded-xl px-4 py-3 font-sans text-accent text-sm">
-                {errorMsg}
-              </div>
-            )}
-
+          <div className="pt-4">
             <button
               type="submit"
-              disabled={status === 'sending'}
-              className="w-full bg-accent text-background font-heading font-bold text-base py-4 rounded-xl shadow-[4px_4px_0px_#111111] hover:scale-[1.02] active:scale-[0.98] transition-transform disabled:opacity-70 disabled:cursor-not-allowed"
+              disabled={status === 'submitting'}
+              className={`w-full text-lg py-5 font-heading font-bold rounded-2xl border-2 border-dark shadow-[4px_4px_0px_#111111] transition-all duration-200 flex items-center justify-center ${
+                status === 'submitting'
+                  ? 'bg-dark/50 text-background cursor-not-allowed'
+                  : 'bg-accent text-background hover:scale-[1.02] active:scale-[0.98] active:shadow-[2px_2px_0px_#111111]'
+              }`}
             >
-              {status === 'sending' ? (
-                <span className="flex items-center justify-center gap-3">
-                  <span className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin"></span>
-                  Sender... {timer && <span className="font-data text-sm">{timer}s</span>}
-                </span>
-              ) : (
-                <span className="flex items-center justify-center gap-2">
-                  Send SMS <Zap size={18} />
-                </span>
-              )}
+              {status === 'submitting' ? 'Sender...' : <>Send inn <ArrowRight className="ml-2" size={20} /></>}
             </button>
-          </form>
-
-          {/* SMS Preview */}
-          <div className="demo-elem card-brutalist-dark p-8 md:p-10 flex flex-col">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
-                <Zap size={20} className="text-accent" />
-              </div>
-              <div>
-                <p className="font-heading font-bold text-primary text-sm">{avsender || 'Avsender'}</p>
-                <p className="font-data text-primary/40 text-xs uppercase tracking-wider">SMS</p>
-              </div>
-            </div>
-            <div className="bg-background/10 rounded-2xl rounded-tl-sm p-5 flex-grow">
-              <p className="font-sans text-primary/90 text-sm leading-relaxed whitespace-pre-line">
-                Heisann {fornavn || '{kundenavn}'},
-{'\n'}Takk for at du tok kontakt med oss!
-{'\n\n'}Vi tar straks opp tråden, og ser frem til å hjelpe deg.
-{'\n\n'}Med vennlig hilsen,
-{'\n'}{bedriftsnavn || '{bedriftsnavn}'}
-              </p>
-            </div>
-            <div className="mt-4 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-              <span className="font-data text-primary/40 text-[10px] uppercase tracking-widest">
-                {status === 'sending' ? 'Sender nå...' : status === 'success' ? 'Sendt!' : 'Forhåndsvisning'}
-              </span>
-            </div>
           </div>
+        </form>
+
+        <div className="relative z-10 mt-12 bg-background border border-dark p-8 rounded-[2rem] shadow-[4px_4px_0px_#111111]">
+          <h3 className="font-heading font-bold text-xl text-dark mb-3">Ingen risiko, full åpenhet.</h3>
+          <p className="font-sans text-dark/80 leading-relaxed text-sm md:text-base">
+            Vi tar kun inn et begrenset antall kunder per måned for å sikre kvalitet. Samtalen er uforpliktende — vi gir deg ærlig rådgivning uansett om vi jobber sammen eller ikke.
+          </p>
         </div>
       </div>
     </section>
   );
 };
 
-// Main App component
+// Footer
+const Footer = () => {
+  return (
+    <footer className="bg-dark pt-20 pb-10 px-6 rounded-t-[4rem]">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 border-b border-primary/10 pb-16">
+        <div>
+          <div className="font-heading font-bold text-3xl text-primary mb-4">Monstr</div>
+          <p className="font-sans text-primary/60 max-w-sm">AI-rådgivning for norske bedrifter. Vi finner ut hvor AI gir mest verdi — og hjelper deg komme i gang.</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 font-sans">
+          <div>
+            <h4 className="font-heading font-bold text-primary mb-4 tracking-tight">Tjenester</h4>
+            <ul className="space-y-3 text-primary/60 text-sm">
+              <li><a href="#tjenester" className="hover:text-primary transition-colors">AI Opportunity Audit</a></li>
+              <li><a href="#tjenester" className="hover:text-primary transition-colors">Kurs og workshops</a></li>
+              <li><a href="#tjenester" className="hover:text-primary transition-colors">Implementering</a></li>
+              <li><a href="#kontakt" className="hover:text-primary transition-colors">Book en samtale</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-heading font-bold text-primary mb-4 tracking-tight">Juridisk</h4>
+            <ul className="space-y-3 text-primary/60 text-sm">
+              <li><a href="/personvern" className="hover:text-primary transition-colors">Personvernerklaring</a></li>
+              <li><a href="/vilkar" className="hover:text-primary transition-colors">Brukervilkar</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <p className="font-sans text-primary/40 text-xs">&copy; {new Date().getFullYear()} Monstr. Org.nr: 933 378 179 &middot; Skien, Norge</p>
+      </div>
+    </footer>
+  );
+};
+
+// Main App
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Monstr',
   url: 'https://monstr.no',
-  description: 'Automatisk oppfølging for norske bedrifter. Svar på henvendelser innen sekunder og gjør flere av dem til betalende kunder.',
+  description: 'AI-rådgivning for norske bedrifter. Vi hjelper bedrifter med å identifisere og implementere AI-løsninger som sparer tid og skaper vekst.',
   areaServed: { '@type': 'Country', name: 'Norway' },
-  serviceType: 'Speed-to-lead automatisering',
+  serviceType: 'AI-rådgivning',
 };
 
 function App() {
   return (
     <div className="min-h-screen bg-background relative w-full selection:bg-accent selection:text-background">
       <Helmet>
+        <title>Monstr | AI-rådgivning for norske bedrifter</title>
+        <meta name="description" content="Vi hjelper norske bedrifter med å finne ut hvor AI gir mest verdi. AI Opportunity Audit, kurs, workshops og implementering." />
+        <meta property="og:title" content="Monstr | AI-rådgivning for norske bedrifter" />
+        <meta property="og:description" content="Finn ut hvor AI gir mest verdi i din bedrift. Konkret handlingsplan på 30 dager." />
         <script type="application/ld+json">{JSON.stringify(orgSchema)}</script>
       </Helmet>
       <Navbar />
       <Hero />
-      <PressBar />
-      <VSL />
-      <Philosophy />
-      <SocialProof />
-      <Features />
-      <LiveDemo />
-      <Protocol />
-      <ROI />
-      <Pricing />
+      <StatsBar />
+      <WhyAI />
+      <Services />
+      <Process />
+      <Differentiator />
       <FitCheck />
-      <BookingForm />
+      <ContactForm />
       <Footer />
     </div>
   );
