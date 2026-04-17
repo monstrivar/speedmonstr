@@ -10,6 +10,7 @@ import Article3 from './pages/Article3.jsx'
 import Personvern from './pages/Personvern.jsx'
 import Vilkar from './pages/Vilkar.jsx'
 import Enterprise from './pages/Enterprise.jsx'
+import { NySide } from './pages/NySide.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/personvern" element={<Personvern />} />
           <Route path="/vilkar" element={<Vilkar />} />
           <Route path="/enterprise" element={<Enterprise />} />
+          <Route path="/nyside" element={<NySide />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
