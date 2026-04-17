@@ -191,7 +191,7 @@ const Hero = () => {
             </span>
           </button>
           <p className="text-[#E8E4DC]/25 text-xs tracking-wide">
-            Brukt av Morrow, Gard, Å Energi og flere
+            Brukt av Droptech, Brainwaves, SalesUp og flere
           </p>
         </div>
       </div>
@@ -483,48 +483,75 @@ const Outcomes = () => {
 // ─────────────────────────────────────────────────
 // PROOF
 // ─────────────────────────────────────────────────
-const Proof = () => {
-  const companies = ['Morrow', 'Gard', 'Å Energi', 'Blatchford Mobility'];
+const CLIENT_LOGOS = [
+  { src: '/clients/droptech.png', alt: 'Droptech' },
+  { src: '/clients/brainwaves.png', alt: 'Brainwaves' },
+  { src: '/clients/salesup.png', alt: 'SalesUp' },
+  { src: '/clients/Badogbygg.webp', alt: 'Bad og Bygg' },
+  { src: '/clients/kick-trening.png', alt: 'Kick Trening' },
+  { src: '/clients/arendalnaringsforening-ung-sort-logo.png', alt: 'Arendal Næringsforening Ung' },
+  { src: '/clients/imitch.png', alt: 'iMitch' },
+  { src: '/clients/nes.png', alt: 'NES' },
+];
 
-  return (
-    <section id="proof" className="reveal-section py-24 md:py-32 px-6" style={{ background: '#E8E4DC' }}>
-      <div className="max-w-4xl mx-auto text-center">
-        <p className="reveal font-data text-[11px] uppercase tracking-[0.3em] text-[#1A1F25]/30 mb-6">
-          Sosial proof
-        </p>
-        <h2 className="reveal font-tinde text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-6">
-          Allerede brukt av selskaper i Norge
-        </h2>
-        <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg max-w-2xl mx-auto mb-16 leading-relaxed">
-          Vi har gjennomført workshops for deltakere fra blant annet:
-        </p>
+const TESTIMONIALS = [
+  {
+    quote: 'Sparer 4 timer i uka på oppfølging av kunder. Tid vi nå bruker på det som faktisk tjener penger!',
+    name: 'Tommy Grude',
+    company: 'Grude Consulting',
+  },
+  {
+    quote: 'Praktisk og konkret — viste oss nye verktøy vi faktisk kan bruke med en gang. Vi er allerede i gang med å teste. Verdt tiden 100%.',
+    name: 'Fredrik Opheim',
+    company: 'Brainwaves',
+  },
+  {
+    quote: 'Hjulpet meg med å identifisere og løse utfordringer gjennom en grundig og profesjonell prosess. Kom tilbake med solide anbefalinger etter bare noen dager.',
+    name: 'Jørn Nilsen',
+    company: 'Droptech',
+  },
+];
 
-        <div className="reveal flex flex-wrap justify-center gap-4 md:gap-5 mb-16">
-          {companies.map((name) => (
-            <div
-              key={name}
-              className="px-6 py-3 rounded-full border border-[#1A1F25]/12 bg-[#F5F2EC]/60 backdrop-blur-sm"
-            >
-              <span className="font-heading font-semibold text-[#1A1F25] text-sm md:text-base tracking-tight">
-                {name}
-              </span>
-            </div>
-          ))}
-          <div className="px-6 py-3 rounded-full border border-[#1A1F25]/8 bg-[#F5F2EC]/30">
-            <span className="font-sans text-[#1A1F25]/35 text-sm md:text-base">+ flere</span>
-          </div>
-        </div>
+const Proof = () => (
+  <section id="proof" className="reveal-section py-24 md:py-32 px-6" style={{ background: '#E8E4DC' }}>
+    <div className="max-w-4xl mx-auto">
+      <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8 mx-auto" />
+      <h2 className="reveal font-tinde font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4 text-center">
+        Brukt av selskaper over hele Norge
+      </h2>
+      <p className="reveal text-[#1A1F25]/50 text-sm text-center mb-14">
+        Noen av selskapene vi har hjulpet med AI-strategi og implementering
+      </p>
 
-        <div className="reveal max-w-lg mx-auto">
-          <p className="font-tinde italic text-lg md:text-xl text-[#1A1F25]/60 leading-relaxed">
-            Ekstremt positive tilbakemeldinger — og flere har allerede gått videre
-            til konkrete AI-prosjekter med oss.
-          </p>
-        </div>
+      {/* Logo strip */}
+      <div className="reveal flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-20 px-4">
+        {CLIENT_LOGOS.map((logo) => (
+          <img
+            key={logo.alt}
+            src={logo.src}
+            alt={logo.alt}
+            className="h-8 md:h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+          />
+        ))}
       </div>
-    </section>
-  );
-};
+
+      {/* Testimonials */}
+      <div className="grid md:grid-cols-3 gap-6">
+        {TESTIMONIALS.map((t) => (
+          <div key={t.name} className="reveal bg-[#F5F2EC] rounded-2xl p-6 md:p-8">
+            <p className="text-[#1A1F25]/70 text-sm leading-relaxed mb-6">
+              &ldquo;{t.quote}&rdquo;
+            </p>
+            <div>
+              <p className="font-tinde font-semibold text-[#1A1F25] text-sm tracking-tight">{t.name}</p>
+              <p className="text-[#1A1F25]/40 text-xs">{t.company}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 // ─────────────────────────────────────────────────
 // WORKSHOPS (trust-builder → funnels back to audit)
@@ -563,8 +590,8 @@ const Workshops = () => {
         </div>
 
         <p className="reveal font-sans text-[#1A1F25]/50 text-sm mb-14 leading-relaxed max-w-xl">
-          Våre workshops har samlet deltakere fra selskaper som Morrow, Gard,
-          Å Energi og flere.
+          Våre workshops har samlet deltakere fra selskaper som Brainwaves,
+          Droptech, SalesUp og flere.
         </p>
 
         {/* Bridge line → funnels to audit */}
