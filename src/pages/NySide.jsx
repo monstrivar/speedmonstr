@@ -2,16 +2,20 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Check, X } from 'lucide-react';
+import { ArrowRight, Check, Phone, Mail, Zap, FileText, Mic, BarChart3, ChevronDown } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── Tinde palette ──────────────────────────────
+// ─── Agentik palette ────────────────────────────
+// Two-accent system: teal = brand / system / "live agent" signal,
+// copper = CTA / conversion / "do this" moments only.
+//
 // Dark:   #1A1F25  (deep slate)
 // Cream:  #F5F2EC  (warm off-white — backgrounds)
 // Paper:  #E8E4DC  (warm cream — text on dark, surfaces)
-// Petrol: #1A6B6D  (deep teal — primary brand accent)
-// Copper: #C4854C  (warm amber — CTAs & action color)
+// Petrol: #1A6B6D  (deep teal — brand accent on LIGHT backgrounds)
+// Signal: #4FC3B0  (bright teal — brand accent on DARK backgrounds, "live")
+// Copper: #C4854C  (warm amber — CTAs & conversion only, used sparingly)
 // ─────────────────────────────────────────────────
 
 const scrollTo = (id) => {
@@ -25,16 +29,30 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', onScroll);
+    let ticking = false;
+    let lastScrolled = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const next = window.scrollY > 60;
+        if (next !== lastScrolled) {
+          lastScrolled = next;
+          setScrolled(next);
+        }
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-5xl rounded-full transition-all duration-500 flex items-center justify-between px-6 py-3 ${
+      style={{ willChange: 'transform', transform: 'translate3d(-50%, 0, 0)' }}
+      className={`fixed top-4 left-1/2 z-50 w-[92%] max-w-5xl rounded-full transition-all duration-500 flex items-center justify-between px-6 py-3 ${
         scrolled
-          ? 'bg-[#F5F2EC]/80 backdrop-blur-xl border border-[#1A1F25]/10 shadow-sm'
+          ? 'bg-[#F5F2EC]/90 backdrop-blur-md border border-[#1A1F25]/10 shadow-sm'
           : 'bg-transparent'
       }`}
     >
@@ -44,7 +62,7 @@ const Navbar = () => {
           scrolled ? 'text-[#1A1F25]' : 'text-[#E8E4DC]'
         }`}
       >
-        Tinde
+        Agentik
       </a>
 
       <div
@@ -52,8 +70,8 @@ const Navbar = () => {
           scrolled ? 'text-[#1A1F25]' : 'text-[#E8E4DC]/70'
         }`}
       >
-        <button onClick={() => scrollTo('problem')} className="link-hover cursor-pointer bg-transparent border-none">
-          Utfordringen
+        <button onClick={() => scrollTo('agents')} className="link-hover cursor-pointer bg-transparent border-none">
+          Agenter
         </button>
         <button onClick={() => scrollTo('process')} className="link-hover cursor-pointer bg-transparent border-none">
           Prosess
@@ -126,18 +144,49 @@ const Hero = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-[100dvh] w-full overflow-hidden flex items-center justify-center px-6"
-      style={{ background: '#1A1F25' }}
+      className="relative h-[100dvh] w-full overflow-hidden flex items-center justify-center px-6"
+      style={{ background: '#1A1F25', contain: 'paint' }}
     >
+      {/* Background video — heavy blur keeps it ambient, not distracting */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none scale-110"
+        style={{ filter: 'blur(24px) saturate(1.1)' }}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster="/hero-bg.jpg"
+      >
+        <source src="/hero-bg.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark vignette so text stays legible over the video */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, rgba(26,31,37,0.45) 0%, rgba(26,31,37,0.78) 70%, #1A1F25 100%)',
+        }}
+      />
+
       {/* Ambient glow — petrol */}
       <div
-        className="absolute w-[800px] h-[800px] top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-[120px] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(26,107,109,0.4) 0%, transparent 70%)' }}
+        className="absolute w-[800px] h-[800px] top-1/2 left-1/4 rounded-full opacity-30 blur-[120px] pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(26,107,109,0.4) 0%, transparent 70%)',
+          transform: 'translate3d(-50%, -50%, 0)',
+          willChange: 'transform',
+        }}
       />
       {/* Ambient glow — copper */}
       <div
-        className="absolute w-[600px] h-[600px] top-1/3 right-0 translate-x-1/4 -translate-y-1/4 rounded-full opacity-20 blur-[100px] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(196,133,76,0.35) 0%, transparent 70%)' }}
+        className="absolute w-[600px] h-[600px] top-1/3 right-0 rounded-full opacity-20 blur-[100px] pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(196,133,76,0.35) 0%, transparent 70%)',
+          transform: 'translate3d(25%, -25%, 0)',
+          willChange: 'transform',
+        }}
       />
 
       {/* Faint grid overlay */}
@@ -196,47 +245,303 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Bottom gradient transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#F5F2EC] to-transparent" />
+      {/* Scroll prompt */}
+      <button
+        onClick={() => scrollTo('agents')}
+        aria-label="Bla til agentene"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-[#E8E4DC]/40 hover:text-[#E8E4DC]/80 transition-colors duration-300"
+      >
+        <span className="font-data text-[10px] uppercase tracking-[0.3em]">Bla ned</span>
+        <ChevronDown size={18} className="animate-bounce" />
+      </button>
+
+      {/* Bottom gradient transition into next section (dark agents section, so very subtle) */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0E1114] to-transparent pointer-events-none" />
     </section>
   );
 };
 
 // ─────────────────────────────────────────────────
-// PROBLEM
+// LIVE AGENTS — rotating showcase of agents in production
 // ─────────────────────────────────────────────────
-const Problem = () => {
-  const painPoints = [
-    'Vet ikke hvilke prosesser som faktisk bør automatiseres',
-    'Bruker tid på feil verktøy',
-    'Mangler en klar plan for implementering',
-  ];
+const AGENTS = [
+  {
+    name: 'Stemme-agent',
+    role: 'Telefon-resepsjonist',
+    Icon: Phone,
+    metrics: [
+      { label: 'Samtaler besvart (30 dager)', value: '1 247', unit: '' },
+      { label: 'Snitt-tid før svar', value: '2.1', unit: 's' },
+      { label: 'Møter booket', value: '89', unit: '' },
+      { label: 'Timer spart', value: '143', unit: 't' },
+    ],
+    terminal: [
+      { type: 'cmd', text: '$ agentik init voice-receptionist' },
+      { type: 'dim', text: '→ Trener på 200 historiske samtaler...' },
+      { type: 'dim', text: '→ Klone stemme + tone-of-voice...' },
+      { type: 'dim', text: '→ Kobler til SIP-trunk...' },
+      { type: 'ok', text: '✓ Live på +47 22 XX XX XX' },
+      { type: 'accent', text: '◆ Booker møter 24/7. Ingen tapte anrop.' },
+    ],
+  },
+  {
+    name: 'E-post Support Agent',
+    role: 'Inbox-triage',
+    Icon: Mail,
+    metrics: [
+      { label: 'Behandlet (30 dager)', value: '12 892', unit: '' },
+      { label: 'Snitt-respons', value: '43', unit: 's' },
+      { label: 'Eskalert til menneske', value: '4.2', unit: '%' },
+      { label: 'Timer spart', value: '287', unit: 't' },
+    ],
+    terminal: [
+      { type: 'cmd', text: '$ agentik init email-support' },
+      { type: 'dim', text: '→ Indekserer 14 230 historiske svar...' },
+      { type: 'dim', text: '→ Bygger response-templates...' },
+      { type: 'dim', text: '→ Kobler til support@selskap.no...' },
+      { type: 'ok', text: '✓ Treffsikkerhet: 95.8%' },
+      { type: 'accent', text: '◆ Svarer kunder mens du sover.' },
+    ],
+  },
+  {
+    name: 'Lead Response Agent',
+    role: 'Speed-to-lead',
+    Icon: Zap,
+    metrics: [
+      { label: 'Leads behandlet', value: '3 421', unit: '' },
+      { label: 'Snitt-respons', value: '47', unit: 's' },
+      { label: 'Booket møte (av besvart)', value: '38', unit: '%' },
+      { label: 'Estimert økt omsetning', value: '2.4', unit: 'M kr' },
+    ],
+    terminal: [
+      { type: 'cmd', text: '$ agentik init speed-to-lead' },
+      { type: 'dim', text: '→ Kobler til kontakt-skjema + HubSpot...' },
+      { type: 'dim', text: '→ Skriver SMS + e-post-templates...' },
+      { type: 'dim', text: '→ Setter opp eskaleringslogikk...' },
+      { type: 'ok', text: '✓ Leveringsrate: 99.1%' },
+      { type: 'accent', text: '◆ Konvertering opp 21x på 5-min-svar.' },
+    ],
+  },
+  {
+    name: 'Faktura-agent',
+    role: 'Bokføring',
+    Icon: FileText,
+    metrics: [
+      { label: 'Fakturaer prosessert', value: '8 540', unit: '' },
+      { label: 'Treffsikkerhet', value: '98.4', unit: '%' },
+      { label: 'Krever manuell sjekk', value: '1.6', unit: '%' },
+      { label: 'Timer spart', value: '192', unit: 't' },
+    ],
+    terminal: [
+      { type: 'cmd', text: '$ agentik init invoice-sorter' },
+      { type: 'dim', text: '→ Analyserer 1 240 historiske fakturaer...' },
+      { type: 'dim', text: '→ Bygger klassifiseringsmodell...' },
+      { type: 'dim', text: '→ Kobler mot Tripletex + Visma...' },
+      { type: 'ok', text: '✓ Live i bokføringen' },
+      { type: 'accent', text: '◆ ROI estimert: 340%' },
+    ],
+  },
+  {
+    name: 'Møtenotat-agent',
+    role: 'CRM-oppdatering',
+    Icon: Mic,
+    metrics: [
+      { label: 'Møter transkribert', value: '412', unit: '' },
+      { label: 'Action items hentet', value: '1 287', unit: '' },
+      { label: 'CRM-oppdateringer', value: '412', unit: '' },
+      { label: 'Møter uten oppfølging', value: '0', unit: '' },
+    ],
+    terminal: [
+      { type: 'cmd', text: '$ agentik init meeting-notes' },
+      { type: 'dim', text: '→ Kobler til Zoom + Teams + HubSpot...' },
+      { type: 'dim', text: '→ Henter transkript...' },
+      { type: 'dim', text: '→ Klassifiserer action items + neste steg...' },
+      { type: 'ok', text: '✓ Oppdaterer CRM automatisk' },
+      { type: 'accent', text: '◆ Ingen møter glemmes igjen.' },
+    ],
+  },
+  {
+    name: 'Rapport-agent',
+    role: 'Daglig morgenrapport',
+    Icon: BarChart3,
+    metrics: [
+      { label: 'Rapporter sendt', value: '180', unit: '' },
+      { label: 'Datakilder koblet', value: '8', unit: '' },
+      { label: 'Lesetid for ledelsen', value: '2', unit: 'min' },
+      { label: 'Manuelle timer spart', value: '96', unit: 't/mnd' },
+    ],
+    terminal: [
+      { type: 'cmd', text: '$ agentik init morning-report' },
+      { type: 'dim', text: '→ Kobler Stripe + Shopify + GA4 + HubSpot...' },
+      { type: 'dim', text: '→ Bygger dashboard-narrativ...' },
+      { type: 'dim', text: '→ Test-leveranse til ledelsen...' },
+      { type: 'ok', text: '✓ Levert 06:00 hver morgen' },
+      { type: 'accent', text: '◆ Ledelsen er alltid oppdatert.' },
+    ],
+  },
+];
+
+const ROTATE_MS = 7500;
+
+const LiveAgents = () => {
+  const [active, setActive] = useState(0);
+  // Auto-rotate runs by default. Stops permanently the first time the user
+  // clicks a tab — they're driving now, no surprise jumps.
+  const [userSelected, setUserSelected] = useState(false);
+
+  useEffect(() => {
+    if (userSelected) return;
+    const id = setInterval(() => {
+      setActive((i) => (i + 1) % AGENTS.length);
+    }, ROTATE_MS);
+    return () => clearInterval(id);
+  }, [userSelected]);
+
+  const handleTabClick = (i) => {
+    setActive(i);
+    setUserSelected(true);
+  };
+
+  const agent = AGENTS[active];
 
   return (
-    <section id="problem" className="reveal-section bg-[#F5F2EC] py-24 md:py-32 px-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
-        <h2 className="reveal font-tinde text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-8">
-          AI er overalt — men hvor
-          <br className="hidden md:block" /> starter du egentlig?
-        </h2>
-
-        <p className="reveal font-sans text-[#1A1F25]/60 text-base md:text-lg max-w-2xl mb-12 leading-relaxed">
-          De fleste selskaper vet at AI er viktig, men:
-        </p>
-
-        <div className="space-y-5 mb-14">
-          {painPoints.map((point, i) => (
-            <div key={i} className="reveal flex items-start gap-4 pl-5 border-l-2 border-[#1A1F25]/15">
-              <X size={18} className="text-[#1A1F25]/35 mt-1 flex-shrink-0" strokeWidth={2.5} />
-              <p className="font-sans text-[#1A1F25]/75 text-base md:text-lg leading-relaxed">{point}</p>
-            </div>
-          ))}
+    <section
+      id="agents"
+      className="relative py-24 md:py-32 px-6"
+      style={{ background: '#0E1114' }}
+    >
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-3 mb-5">
+            <span className="block w-6 h-px bg-[#4FC3B0]" />
+            <p className="font-data text-[10px] uppercase tracking-[0.25em] text-[#E8E4DC]/50">
+              Live agenter · i produksjon
+            </p>
+          </div>
+          <h2 className="font-tinde font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-4">
+            Agenter som tar seg av jobben.
+          </h2>
+          <p className="text-[#E8E4DC]/45 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+            Vi bygger ikke strategier. Vi bygger agenter som kjører — døgnet rundt, uten pause, uten lønnsslipp.
+          </p>
         </div>
 
-        <p className="reveal font-tinde italic text-xl md:text-2xl text-[#1A1F25]/80 tracking-tight">
-          Resultatet? Lite effekt — og bortkastet tid.
-        </p>
+        {/* Agent tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-5">
+          {AGENTS.map((a, i) => {
+            const isActive = i === active;
+            return (
+              <button
+                key={a.name}
+                onClick={() => handleTabClick(i)}
+                className={`font-data text-[11px] uppercase tracking-[0.12em] px-4 py-2.5 rounded-full border transition-all duration-300 ${
+                  isActive
+                    ? 'bg-[#E8E4DC] text-[#0E1114] border-[#E8E4DC]'
+                    : 'bg-transparent text-[#E8E4DC]/55 border-[#E8E4DC]/15 hover:text-[#E8E4DC] hover:border-[#E8E4DC]/40'
+                }`}
+              >
+                {a.name}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Auto-rotate progress bar */}
+        <div className="max-w-xs mx-auto mb-10 h-[3px] flex items-center justify-center">
+          {!userSelected ? (
+            <div className="w-full h-[3px] bg-[#E8E4DC]/8 rounded-full overflow-hidden">
+              <div
+                key={active}
+                className="h-full bg-[#4FC3B0]"
+                style={{ animation: `agent-progress ${ROTATE_MS}ms linear forwards` }}
+              />
+            </div>
+          ) : (
+            <button
+              onClick={() => setUserSelected(false)}
+              className="font-data text-[10px] uppercase tracking-[0.2em] text-[#E8E4DC]/30 hover:text-[#4FC3B0] transition-colors"
+            >
+              ▶ Start auto-rotasjon
+            </button>
+          )}
+        </div>
+
+        {/* Agent card + terminal */}
+        <div
+          key={active}
+          className="grid md:grid-cols-2 gap-5 agent-fade-in"
+        >
+          {/* Card */}
+          <div className="bg-[#161A1F] border border-[#E8E4DC]/8 rounded-2xl p-6 md:p-8 flex flex-col">
+            <div className="flex items-center gap-3 mb-7">
+              <div className="w-11 h-11 rounded-xl bg-[#4FC3B0]/12 border border-[#4FC3B0]/30 flex items-center justify-center">
+                <agent.Icon size={20} className="text-[#4FC3B0]" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-tinde font-semibold text-[#E8E4DC] text-base tracking-tight truncate">
+                  {agent.name}
+                </p>
+                <p className="font-data text-[10px] uppercase tracking-[0.15em] text-[#E8E4DC]/35">
+                  {agent.role}
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-1.5 font-data text-[10px] tracking-[0.1em] uppercase text-[#4FC3B0] bg-[#4FC3B0]/10 px-2.5 py-1 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#4FC3B0] shadow-[0_0_8px_#4FC3B0]" />
+                Live
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-4 flex-1">
+              {agent.metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="flex justify-between items-baseline pb-3 border-b border-[#E8E4DC]/6 last:border-b-0 last:pb-0"
+                >
+                  <span className="text-[#E8E4DC]/55 text-[13px] tracking-tight">{m.label}</span>
+                  <span className="font-data text-[#E8E4DC] text-[16px] font-medium tracking-tight">
+                    {m.value}
+                    {m.unit && <span className="text-[#E8E4DC]/40 text-[11px] ml-1">{m.unit}</span>}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Terminal */}
+          <div className="bg-[#161A1F] border border-[#E8E4DC]/8 rounded-2xl overflow-hidden flex flex-col">
+            <div className="flex items-center gap-2.5 px-5 py-3.5 border-b border-[#E8E4DC]/8 bg-black/25">
+              <span className="flex gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#3A3D42]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#3A3D42]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#3A3D42]" />
+              </span>
+              <span className="font-data text-[10px] text-[#E8E4DC]/40 ml-2">
+                ~/agentik/deploy
+              </span>
+            </div>
+            <div className="p-5 md:p-6 font-data text-[12px] leading-[1.85] flex-1">
+              {agent.terminal.map((line, i) => {
+                const colorClass = {
+                  cmd: 'text-[#E8E4DC]',
+                  dim: 'text-[#E8E4DC]/40',
+                  ok: 'text-[#4FC3B0]',
+                  accent: 'text-[#C4854C]',
+                  warn: 'text-[#E8B449]',
+                }[line.type] || 'text-[#E8E4DC]';
+                return (
+                  <div
+                    key={i}
+                    className={`agent-line ${colorClass}`}
+                    style={{ animationDelay: `${i * 90}ms` }}
+                  >
+                    {line.text}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -308,8 +613,8 @@ const GraphSection = () => {
             {/* Area fill */}
             <defs>
               <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#C4854C" stopOpacity="0.15" />
-                <stop offset="100%" stopColor="#C4854C" stopOpacity="0.02" />
+                <stop offset="0%" stopColor="#4FC3B0" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#4FC3B0" stopOpacity="0.02" />
               </linearGradient>
             </defs>
             <path ref={fillRef} d={areaPath} fill="url(#areaGrad)" />
@@ -318,14 +623,14 @@ const GraphSection = () => {
             <path
               ref={pathRef}
               d={linePath}
-              stroke="#C4854C"
+              stroke="#4FC3B0"
               strokeWidth="3"
               strokeLinecap="round"
               fill="none"
             />
 
             {/* Dot at inflection point */}
-            <circle cx="300" cy="38" r="5" fill="#C4854C" opacity="0.6" />
+            <circle cx="300" cy="38" r="5" fill="#4FC3B0" opacity="0.7" />
           </svg>
 
           {/* Y-axis labels */}
@@ -342,7 +647,7 @@ const GraphSection = () => {
           <p className="graph-text font-tinde font-bold text-xl md:text-2xl text-[#E8E4DC] tracking-tight mb-4">
             Behovet for manuelt arbeid har gått ned dramatisk
           </p>
-          <p className="graph-text text-[#C4854C]/70 text-base md:text-lg">
+          <p className="graph-text text-[#4FC3B0]/75 text-base md:text-lg">
             Visste du at du kan automatisere opptil 80% av arbeidshverdagen med AI?
           </p>
         </div>
@@ -390,7 +695,7 @@ const Urgency = () => {
   return (
     <section className="reveal-section py-24 md:py-32 px-6" style={{ background: '#E8E4DC' }}>
       <div className="max-w-4xl mx-auto">
-        <div className="reveal w-12 h-0.5 bg-[#C4854C] mb-8" />
+        <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
         <h2 className="reveal font-tinde font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4">
           Konkurrentene dine har allerede begynt
         </h2>
@@ -407,7 +712,7 @@ const Urgency = () => {
               <ul className="space-y-2.5">
                 {area.items.map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <span className="block w-1 h-1 rounded-full bg-[#C4854C] mt-2.5 flex-shrink-0" />
+                    <span className="block w-1 h-1 rounded-full bg-[#1A6B6D] mt-2.5 flex-shrink-0" />
                     <span className="text-[#1A1F25]/65 text-sm leading-relaxed">{item}</span>
                   </li>
                 ))}
@@ -674,6 +979,57 @@ const Process = () => {
 };
 
 // ─────────────────────────────────────────────────
+// TEAM — who's behind Agentik
+// ─────────────────────────────────────────────────
+const TEAM = [
+  {
+    name: 'Ivar André Knutsen',
+    role: 'CEO & Co-founder',
+    image: '/team/ivar.jpg',
+  },
+  {
+    name: 'Ole Kristian',
+    role: 'COO & Co-founder',
+    image: '/team/ole.jpg',
+  },
+];
+
+const Team = () => (
+  <section className="reveal-section py-24 md:py-28 px-6" style={{ background: '#E8E4DC' }}>
+    <div className="max-w-4xl mx-auto">
+      <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
+      <h2 className="reveal font-tinde font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4">
+        Hvem som står bak
+      </h2>
+      <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg max-w-2xl mb-14 leading-relaxed">
+        Agentik bygges av to gründere som har levd og pustet AI-systemer i flere år.
+        Når dere snakker med oss, snakker dere med folka som faktisk bygger agentene.
+      </p>
+
+      <div className="grid sm:grid-cols-2 gap-8 md:gap-10">
+        {TEAM.map((person) => (
+          <div key={person.name} className="reveal flex flex-col">
+            <div className="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-[#1A1F25]/5 mb-5">
+              <img
+                src={person.image}
+                alt={person.name}
+                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-[1.03]"
+              />
+            </div>
+            <h3 className="font-tinde font-semibold text-[#1A1F25] text-lg md:text-xl tracking-tight mb-1">
+              {person.name}
+            </h3>
+            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#1A6B6D]">
+              {person.role}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+// ─────────────────────────────────────────────────
 // RISK REVERSAL
 // ─────────────────────────────────────────────────
 const RiskReversal = () => (
@@ -823,12 +1179,69 @@ const ContactForm = () => {
 // FOOTER
 // ─────────────────────────────────────────────────
 const Footer = () => (
-  <footer className="border-t border-[#E8E4DC]/8 py-12 px-6" style={{ background: '#1A1F25' }}>
-    <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <span className="font-tinde font-semibold text-[#E8E4DC]/30 tracking-tight">Tinde</span>
-      <p className="font-sans text-[#E8E4DC]/20 text-sm">
-        &copy; {new Date().getFullYear()} Tinde. Alle rettigheter forbeholdt.
-      </p>
+  <footer className="border-t border-[#E8E4DC]/8 pt-16 pb-10 px-6" style={{ background: '#1A1F25' }}>
+    <div className="max-w-5xl mx-auto">
+      {/* Top row — brand + nav */}
+      <div className="grid md:grid-cols-2 gap-10 pb-10 border-b border-[#E8E4DC]/8">
+        <div>
+          <div className="font-tinde font-semibold text-[#E8E4DC] text-xl tracking-tight mb-3">
+            Agentik
+          </div>
+          <p className="font-sans text-[#E8E4DC]/40 text-sm max-w-sm leading-relaxed">
+            Vi bygger AI-agenter som kjører i produksjon for norske selskaper.
+            Fra kartlegging til live system — på uker, ikke måneder.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 md:justify-self-end font-sans">
+          <div>
+            <h4 className="font-data text-[10px] uppercase tracking-[0.18em] text-[#E8E4DC]/35 mb-4">
+              Selskap
+            </h4>
+            <ul className="space-y-3 text-[#E8E4DC]/55 text-sm">
+              <li>
+                <button onClick={() => scrollTo('agents')} className="hover:text-[#4FC3B0] transition-colors">
+                  Agenter
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollTo('process')} className="hover:text-[#4FC3B0] transition-colors">
+                  Prosess
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollTo('contact')} className="hover:text-[#4FC3B0] transition-colors">
+                  Book samtale
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-data text-[10px] uppercase tracking-[0.18em] text-[#E8E4DC]/35 mb-4">
+              Juridisk
+            </h4>
+            <ul className="space-y-3 text-[#E8E4DC]/55 text-sm">
+              <li>
+                <a href="/vilkar" className="hover:text-[#4FC3B0] transition-colors">
+                  Vilkår
+                </a>
+              </li>
+              <li>
+                <a href="/personvern" className="hover:text-[#4FC3B0] transition-colors">
+                  Personvern
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom row — legal line */}
+      <div className="pt-8">
+        <p className="font-sans text-[#E8E4DC]/30 text-xs tracking-tight">
+          &copy; {new Date().getFullYear()} Agentik · Org.nr 933 378 179 · Skien, Norge
+        </p>
+      </div>
     </div>
   </footer>
 );
@@ -860,12 +1273,12 @@ export const NySide = () => {
   return (
     <>
       <Helmet>
-        <title>Tinde | AI-rådgivning som gir konkrete resultater</title>
+        <title>Agentik | AI-rådgivning som gir konkrete resultater</title>
         <meta
           name="description"
           content="Vi hjelper norske selskaper med å identifisere og implementere AI-løsninger. Konkrete resultater på 30 dager."
         />
-        <meta property="og:title" content="Tinde | AI-rådgivning som gir konkrete resultater" />
+        <meta property="og:title" content="Agentik | AI-rådgivning som gir konkrete resultater" />
         <meta
           property="og:description"
           content="Vi hjelper norske selskaper med å identifisere og implementere AI-løsninger. Konkrete resultater på 30 dager."
@@ -874,12 +1287,28 @@ export const NySide = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
         <style>{`
           .font-tinde{font-family:'Plus Jakarta Sans',sans-serif}
           .tinde-page,.tinde-page .font-heading,.tinde-page .font-sans{font-family:'Plus Jakarta Sans',sans-serif}
+          .tinde-page .font-data{font-family:'JetBrains Mono',ui-monospace,monospace}
+
+          @keyframes agent-progress {
+            from { width: 0%; }
+            to { width: 100%; }
+          }
+          @keyframes agent-fade-in {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes agent-line-in {
+            from { opacity: 0; transform: translateX(-6px); }
+            to { opacity: 1; transform: translateX(0); }
+          }
+          .tinde-page .agent-fade-in { animation: agent-fade-in 600ms ease-out both; }
+          .tinde-page .agent-line { opacity: 0; animation: agent-line-in 380ms ease-out forwards; }
         `}</style>
       </Helmet>
 
@@ -887,13 +1316,14 @@ export const NySide = () => {
       <Navbar />
       <main>
         <Hero />
-        <Problem />
+        <LiveAgents />
         <GraphSection />
         <Urgency />
         <Outcomes />
         <Proof />
         <Workshops />
         <Process />
+        <Team />
         <RiskReversal />
         <ContactForm />
       </main>
