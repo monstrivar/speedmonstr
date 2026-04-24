@@ -1,4 +1,4 @@
-# Hva er Tinde?
+# Hva er Agentik?
 
 *Sist oppdatert: 2026-04-17*
 
@@ -6,11 +6,11 @@
 
 ## Kort oppsummering
 
-Tinde er et AI-rådgivningsselskap for norske bedrifter. Vi hjelper selskaper med å identifisere og implementere AI-løsninger som sparer tid, kutter kostnader og skaper vekst — uten at de trenger et eget tech-team.
+Agentik er et AI-rådgivningsselskap for norske bedrifter. Vi hjelper selskaper med å identifisere og implementere AI-løsninger som sparer tid, kutter kostnader og skaper vekst — uten at de trenger et eget tech-team.
 
-Tinde er ikke et tech-byrå. Vi er praktikere som selv bygger med AI hver dag, og som oversetter den kompetansen til konkrete, målbare resultater for kundene våre.
+Agentik er ikke et tech-byrå. Vi er praktikere som selv bygger med AI hver dag, og som oversetter den kompetansen til konkrete, målbare resultater for kundene våre.
 
-**Domene:** tinde.ai
+**Domene:** agentik.no
 **Juridisk:** TBD
 **Grunnlagt:** 2026
 
@@ -75,7 +75,7 @@ Prisene er veiledende og vil justeres basert på erfaring og markedsrespons.
 
 **Partner** — medgrunnlegger. Komplementær kompetanse.
 
-Tinde opererer som et lean team som bruker AI-verktøy for å levere på nivået til et langt større selskap. Det er hele poenget — vi er vår egen beste case study.
+Agentik opererer som et lean team som bruker AI-verktøy for å levere på nivået til et langt større selskap. Det er hele poenget — vi er vår egen beste case study.
 
 ---
 
@@ -93,21 +93,21 @@ Tinde opererer som et lean team som bruker AI-verktøy for å levere på nivået
 
 ## Relasjon til Monstr
 
-Tinde og Monstr er søsterselskaper med felles grunnlegger.
+Agentik og Monstr er søsterselskaper med felles grunnlegger.
 
 - **Monstr** er et SaaS-produkt (speed-to-lead for håndverkere)
-- **Tinde** er et rådgivningsselskap (AI-strategi for bredere norsk næringsliv)
+- **Agentik** er et rådgivningsselskap (AI-strategi for bredere norsk næringsliv)
 
-Monstr er Tindes egen case study: et AI-drevet produkt bygget fra scratch med moderne verktøy. Erfaringen fra å bygge Monstr er det som gjør Tinde troverdig — vi vet hva som fungerer fordi vi har gjort det selv.
+Monstr er Agentiks egen case study: et AI-drevet produkt bygget fra scratch med moderne verktøy. Erfaringen fra å bygge Monstr er det som gjør Agentik troverdig — vi vet hva som fungerer fordi vi har gjort det selv.
 
 ---
 
 ## Målsettinger (2026)
 
-- **Q2:** Lansere tinde.ai, gjennomføre 2-3 pilot-audits
+- **Q2:** Lansere agentik.no, gjennomføre 2-3 pilot-audits
 - **Q3:** 5+ betalende audit-kunder, etablere kurs-kalender
 - **Q4:** 10+ kunder totalt, vurdere første ansettelse
-- **År 1 mål:** Etablere Tinde som den foretrukne AI-rådgiveren for norsk SMB
+- **År 1 mål:** Etablere Agentik som den foretrukne AI-rådgiveren for norsk SMB
 
 ---
 

@@ -1059,7 +1059,7 @@ const ContactForm = () => {
     setStatus('sending');
 
     try {
-      const res = await fetch('/api/tinde-contact', {
+      const res = await fetch('/api/agentik-contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

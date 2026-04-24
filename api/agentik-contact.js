@@ -1,4 +1,4 @@
-// Contact form handler for /nyside (Agentik landing).
+// Contact form handler for Agentik landing page.
 // Forwards every submission to a Make.com webhook, which routes the lead
 // into Attio.
 

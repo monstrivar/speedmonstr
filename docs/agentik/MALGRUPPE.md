@@ -1,4 +1,4 @@
-# Tinde — Målgruppe og personas
+# Agentik — Målgruppe og personas
 
 *Sist oppdatert: 2026-04-17*
 
@@ -108,7 +108,7 @@ Norske bedrifter med 5-500 ansatte. Ledere som vet at AI er viktig, men som mang
 - Tydelig metodikk og prosess
 - Kompetanse på personvern og compliance
 - Evne til å "snakke forretning" — ikke bare tech
-- At Tinde kan hjelpe henne lage et business case for ledergruppen
+- At Agentik kan hjelpe henne lage et business case for ledergruppen
 
 ---
 
@@ -141,7 +141,7 @@ Norske bedrifter med 5-500 ansatte. Ledere som vet at AI er viktig, men som mang
 
 - Workshop-formatet (lærer teamet opp raskt, relativt rimelig)
 - Implementeringsprosjekter med fast pris og rask leveranse
-- At Tinde selv er en startup som bruker AI — "de skjønner oss"
+- At Agentik selv er en startup som bruker AI — "de skjønner oss"
 
 ---
 
@@ -149,7 +149,7 @@ Norske bedrifter med 5-500 ansatte. Ledere som vet at AI er viktig, men som mang
 
 | Prioritet | Bransje | Hvorfor |
 |-----------|---------|---------|
-| 1 | Bygg og håndverk | Stor bransje, lav digitalisering, høy verdi per jobb, Tinde har bransjeerfaring |
+| 1 | Bygg og håndverk | Stor bransje, lav digitalisering, høy verdi per jobb, Agentik har bransjeerfaring |
 | 2 | Eiendom og megling | Mye repetitivt tekstarbeid, villige til å betale, synlig bransje |
 | 3 | Regnskap og revisjon | Enormt AI-potensial, regulert (trenger trygg veiledning), høy betalingsvilje |
 | 4 | Rekruttering | CV-screening er en perfekt AI use-case, høy kundeverdi |
@@ -176,7 +176,7 @@ Norske bedrifter med 5-500 ansatte. Ledere som vet at AI er viktig, men som mang
 | Referanser/jungeltelegrafen | Alle | Sterkeste salgskanal for SMB |
 | Næringsforeninger | Per | Tilgang til SMB-ledere i lokalmiljøet |
 | Partnere (regnskapsbyråer, etc.) | Per | De rådgir allerede SMB-kunder |
-| Blogg på tinde.ai | Alle | SEO, innholdsmarkedsføring |
+| Blogg på agentik.no | Alle | SEO, innholdsmarkedsføring |
 
 ---
 

@@ -1,4 +1,4 @@
-# Tinde — Tjenestebeskrivelser
+# Agentik — Tjenestebeskrivelser
 
 *Sist oppdatert: 2026-04-17*
 
@@ -139,7 +139,7 @@ Kontinuerlig sparring og støtte for bedrifter som ønsker en AI-rådgiver "på 
 
 ### Hva det er
 
-Hands-on implementering av spesifikke AI-løsninger identifisert i audit eller rådgivning. Tinde bygger eller konfigurerer løsningen sammen med kunden.
+Hands-on implementering av spesifikke AI-løsninger identifisert i audit eller rådgivning. Agentik bygger eller konfigurerer løsningen sammen med kunden.
 
 ### Eksempler
 

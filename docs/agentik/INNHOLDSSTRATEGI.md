@@ -1,4 +1,4 @@
-# Tinde — Innholdsstrategi
+# Agentik — Innholdsstrategi
 
 *Sist oppdatert: 2026-04-17*
 
@@ -6,8 +6,8 @@
 
 ## Mål med innhold
 
-1. **Bygge tillit og autoritet** — posisjonere Tinde som den pragmatiske AI-eksperten for norsk næringsliv
-2. **Generere leads** — trekke riktige bedrifter til tinde.ai og kontaktskjema
+1. **Bygge tillit og autoritet** — posisjonere Agentik som den pragmatiske AI-eksperten for norsk næringsliv
+2. **Generere leads** — trekke riktige bedrifter til agentik.no og kontaktskjema
 3. **Utdanne markedet** — hjelpe potensielle kunder forstå hva AI kan (og ikke kan) gjøre for dem
 4. **Støtte salg** — gi salgsmateriale som svarer på innvendinger og bygger business case
 
@@ -45,7 +45,7 @@ Si når AI ikke er svaret. Si når noe er vanskelig. Si når vi ikke vet. Det by
 | Innsikt/observasjon | 25% | Korte, spisse observasjoner om AI i norsk næringsliv |
 | Praktisk tips | 20% | "Prøv dette promptet", "Slik setter du opp X" |
 | Behind-the-scenes | 15% | Hva vi bygger, hva vi lærer, hva som gikk galt |
-| Mening/perspektiv | 10% | Tinde sin posisjon på trender, nyheter, debatter |
+| Mening/perspektiv | 10% | Agentik sin posisjon på trender, nyheter, debatter |
 
 **Ikke gjør:**
 - Hashtags
@@ -55,7 +55,7 @@ Si når AI ikke er svaret. Si når noe er vanskelig. Si når vi ikke vet. Det by
 - Selge direkte i poster
 - Tagge folk for rekkevidde
 
-### Blogg på tinde.ai — Sekundærkanal
+### Blogg på agentik.no — Sekundærkanal
 
 **Frekvens:** 2-4 artikler per måned
 **Formål:** SEO + dybdeinnhold som LinkedIn-poster kan peke til
@@ -94,7 +94,7 @@ Si når AI ikke er svaret. Si når noe er vanskelig. Si når vi ikke vet. Det by
 | Måned | Tema | Vinkling |
 |-------|------|---------|
 | Mai | AI-start | "Hvor starter du?" — grunnleggende for de som vurderer |
-| Juni | Bransje-dyppdykk | AI i bygg/håndverk (Tinde sin kjernebransje) |
+| Juni | Bransje-dyppdykk | AI i bygg/håndverk (Agentik sin kjernebransje) |
 | Juli | Verktøy-guide | Praktisk sammenligning av AI-verktøy for ulike behov |
 | August | ROI og business case | Hvordan regne på AI-investering, hva koster det å vente |
 | September | Personvern og AI | GDPR, datasikkerhet, trygg bruk av AI i bedriften |
