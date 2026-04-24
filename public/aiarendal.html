@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude-verktøykassen — Monstr AI</title>
-<meta name="description" content="Fem ferdige Claude Skills for ledere. Gratis fra Monstr AI.">
+<title>Claude-verktøykassen — Agentik</title>
+<meta name="description" content="Fem ferdige Claude Skills for ledere. Gratis fra Agentik.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,9 +17,9 @@
   --border-hover: #333;
   --text: #f0ece6;
   --text-muted: #888;
-  --accent: #E63B2E;
-  --accent-glow: rgba(230, 59, 46, 0.12);
-  --accent-soft: rgba(230, 59, 46, 0.08);
+  --accent: #C4854C;
+  --accent-glow: rgba(196, 133, 76, 0.12);
+  --accent-soft: rgba(196, 133, 76, 0.08);
   --sans: 'Space Grotesk', system-ui, sans-serif;
   --serif: 'DM Serif Display', Georgia, serif;
   --mono: 'Space Mono', monospace;
@@ -74,6 +74,21 @@ body::after {
   height: 1.4rem;
   width: auto;
   opacity: 0.7;
+}
+
+.logo-bar .text-logo {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.logo-bar .text-logo:hover {
+  opacity: 1;
 }
 
 /* ─── VSL Section ─── */
@@ -565,6 +580,19 @@ body::after {
   opacity: 0.4;
 }
 
+.meta-logo-text {
+  display: block;
+  margin: 1.5rem auto 0;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-decoration: none;
+  opacity: 0.4;
+  text-align: center;
+}
+
 /* ─── Animations ─── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
@@ -577,7 +605,7 @@ body::after {
 <div class="container">
   <!-- Logo -->
   <div class="logo-bar">
-    <a href="https://monstr.no" target="_blank" rel="noopener"><img src="/monstr-logo-white.png" alt="Monstr AI"></a>
+    <a href="https://agentik.no" target="_blank" rel="noopener" class="text-logo">Agentik</a>
   </div>
 
   <!-- VSL -->
@@ -672,9 +700,9 @@ body::after {
     <div class="meta-tag">Bygget med Claude Code — på minutter</div>
     <p>Denne landingssiden ble laget med Claude Code rett før foredraget. Null design-byrå. Null mal. Bare en idé og et verktøy.</p>
     <div class="meta-contact">
-      Ivar André Knutsen &nbsp;·&nbsp; 907 07 902 &nbsp;·&nbsp; <a href="mailto:ivar@monstr.no">ivar@monstr.no</a>
+      Ivar André Knutsen &nbsp;·&nbsp; 907 07 902 &nbsp;·&nbsp; <a href="mailto:ivar@agentik.no">ivar@agentik.no</a>
     </div>
-    <a href="https://monstr.no" target="_blank" rel="noopener"><img src="/monstr-logo-white.png" alt="Monstr" class="meta-logo"></a>
+    <a href="https://agentik.no" target="_blank" rel="noopener" class="meta-logo-text">Agentik</a>
   </div>
 </div>
 

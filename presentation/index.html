@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fra leke til arbeidskraft — Monstr</title>
+<title>Fra leke til arbeidskraft — Agentik</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -944,6 +944,25 @@ body.notes-view { overflow: auto; }
   display: block;
 }
 
+.deck-logo-text,
+.inline-logo-text {
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.deck-logo-text {
+  font-size: 1rem;
+}
+
+.inline-logo-text {
+  font-size: 1.4rem;
+  color: inherit;
+}
+
 /* ─── Footer ─── */
 .slide-footer {
   position: absolute;
@@ -1037,7 +1056,7 @@ body.notes-view { overflow: auto; }
 <!-- ═══════════════════════════════════════════════ -->
 <section class="slide" id="s1" style="background:#000;">
   <div class="stack stack-lg t-center" style="max-width:1100px;">
-    <img src="logos/monstr-white.png" alt="Monstr AI" class="anim-in" style="height:3rem; width:auto; margin-bottom:0.5rem;">
+    <span class="inline-logo-text anim-in" style="font-size:3rem; margin-bottom:0.5rem; color:#fff;">Agentik</span>
     <h1 class="t-hero opener">
       <span class="anim-reveal anim-d1">Det du lekte med i fjor.</span>
       <br>
@@ -1050,7 +1069,7 @@ body.notes-view { overflow: auto; }
   </div>
   <aside class="notes">
     <p><em>[Etter svart skjerm — klikk. La teksten bygge seg ferdig i stillhet.]</em></p>
-    <p>Jeg heter Ivar, og jeg driver Monstr — et AI-byrå som hjelper norske bedrifter ta i bruk kunstig intelligens.</p>
+    <p>Jeg heter Ivar, og jeg driver Agentik — et AI-studio som hjelper norske bedrifter ta i bruk kunstig intelligens.</p>
     <p>Det jeg skal vise dere i dag — det er ikke fremtiden. Det er nå. Og de fleste bedrifter vet det ikke ennå.</p>
     <p>Vi har 30 minutter. Stopp meg underveis. Dette er en samtale, ikke en forelesning.</p>
   </aside>
@@ -1403,8 +1422,8 @@ body.notes-view { overflow: auto; }
     </h2>
     <div class="anim-in anim-d2" style="display:grid; grid-template-columns:auto 1fr; gap:2.5rem; max-width:900px; margin:2rem auto 0; align-items:center;">
       <div style="background:#fff; border-radius:1rem; padding:1rem; display:flex; flex-direction:column; align-items:center; gap:0.5rem;">
-        <img src="qr-aiarendal.svg" alt="QR-kode til monstr.no/aiarendal" style="width:200px; height:200px; display:block;">
-        <span style="font-family:var(--font-mono); font-size:1.4rem; color:#111; letter-spacing:0.03em; font-weight:800;">monstr.no/aiarendal</span>
+        <img src="qr-aiarendal.svg" alt="QR-kode til agentik.no/aiarendal" style="width:200px; height:200px; display:block;">
+        <span style="font-family:var(--font-mono); font-size:1.4rem; color:#111; letter-spacing:0.03em; font-weight:800;">agentik.no/aiarendal</span>
       </div>
       <div style="text-align:left;">
         <span class="t-label" style="color:var(--accent);">Dette får du nå</span>
@@ -1420,15 +1439,15 @@ body.notes-view { overflow: auto; }
     <div class="contact-block anim-in anim-d3" style="margin-top:2.5rem;">
       <span class="contact-name">Ivar André Knutsen</span>
       <div class="sep" style="margin:0.3rem auto;"></div>
-      <span class="contact-detail">907 07 902 &nbsp;·&nbsp; ivar@monstr.no</span>
+      <span class="contact-detail">907 07 902 &nbsp;·&nbsp; ivar@agentik.no</span>
     </div>
-    <img src="logos/monstr-white.png" alt="Monstr AI" class="anim-in anim-d5" style="height:1.8rem; width:auto; margin-top:1.5rem; opacity:0.9;">
+    <span class="inline-logo-text anim-in anim-d5" style="font-size:1.8rem; margin-top:1.5rem; opacity:0.9; color:#fff;">Agentik</span>
   </div>
   <aside class="notes">
     <p><em>[Ikke si "spørsmål?". Avslutt med en forpliktelse først.]</em></p>
     <p>To ting før dere går. Én — skann QR-koden. Legg igjen navn og epost. Dere laster ned Claude-verktøykassen med tre Skills — møtereferat, frontend-design, og dokumentknuseren. Klare til å lime inn i Claude.ai i kveld.</p>
     <p>To — hvis dere tenker "dette vil vi få inn i teamet vårt": finn meg etterpå. Vi holder workshops der vi tar hele teamet deres gjennom Claude.ai, Skills, og Cowork — tilpasset deres bedrift. Én dag. Praktisk. Alle går ut med noe de faktisk bruker på mandag.</p>
-    <p><em>[Valgfri 20-30 sek hvis tiden tillater — pek på showcase-stripen:]</em> Og bare for kontekst: dette bygget jeg i Claude Code. Monstr.no — laget på én dag. Et register over alle 650 000 norske bedrifter som vi kan filtrere på omsetning, bransje, lokasjon. Og et lite verktøy som laster ned alle logoer fra et Airtable-bord som ZIP — før brukte vi timer, nå er det én klikk. Det er den typen ting vi bygger med dere i workshop.</p>
+    <p><em>[Valgfri 20-30 sek hvis tiden tillater — pek på showcase-stripen:]</em> Og bare for kontekst: dette bygget jeg i Claude Code. Agentik.no — laget på én dag. Et register over alle 650 000 norske bedrifter som vi kan filtrere på omsetning, bransje, lokasjon. Og et lite verktøy som laster ned alle logoer fra et Airtable-bord som ZIP — før brukte vi timer, nå er det én klikk. Det er den typen ting vi bygger med dere i workshop.</p>
     <p><em>[Hvis tiden er tight: ignorer showcase, publikum ser den uansett — den bygger autoritet i bakgrunnen.]</em></p>
     <p>Nummeret mitt og eposten min er her oppe.</p>
     <p><em>[Pause. Se på rommet.]</em></p>
@@ -1453,7 +1472,7 @@ body.notes-view { overflow: auto; }
 
 <!-- Persistent logo -->
 <div class="deck-logo">
-  <img src="logos/monstr-white.png" alt="Monstr AI">
+  <span class="deck-logo-text">Agentik</span>
 </div>
 
 <!-- ─── Progress bar ─── -->
@@ -1502,7 +1521,7 @@ body.notes-view { overflow: auto; }
   const isNotesView = params.get('view') === 'notes';
   if (isNotesView) document.body.classList.add('notes-view');
 
-  const channel = ('BroadcastChannel' in window) ? new BroadcastChannel('monstr-slides') : null;
+  const channel = ('BroadcastChannel' in window) ? new BroadcastChannel('agentik-slides') : null;
   let suppressBroadcast = false;
 
   // Speaker-view elements
@@ -1699,7 +1718,7 @@ body.notes-view { overflow: auto; }
       case 'S':
         if (!isNotesView) {
           e.preventDefault();
-          window.open(location.pathname + '?view=notes', 'monstr-notes', 'width=1280,height=820');
+          window.open(location.pathname + '?view=notes', 'agentik-notes', 'width=1280,height=820');
         }
         break;
       case 't':
