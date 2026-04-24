@@ -16,6 +16,12 @@
     filter: url(#noiseFilter);
     background: transparent;
   }
+
+  /* Noise overlay rasterizes the whole viewport through feTurbulence on every
+     paint. Disable it on pages that prioritize scroll smoothness. */
+  body:has(.tinde-page)::before {
+    display: none;
+  }
 }
 
 @layer components {
