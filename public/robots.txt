@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://monstr.no/sitemap.xml
+Sitemap: https://agentik.no/sitemap.xml

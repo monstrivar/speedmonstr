@@ -7,16 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#E8E4DD",     // Paper
-        accent: "#E63B2E",      // Signal Red
-        background: "#F5F3EE",  // Off-white
-        dark: "#111111",        // Black
+        background: "#F5F2EC",  // Cream
+        dark: "#1A1F25",        // Deep slate
+        petrol: "#1A6B6D",      // Brand accent on light
+        signal: "#4FC3B0",      // Brand accent on dark
+        copper: "#C4854C",      // CTAs
       },
       fontFamily: {
-        heading: ['"Space Grotesk"', 'sans-serif'],
-        drama: ['"DM Serif Display"', 'serif'],
-        data: ['"Space Mono"', 'monospace'],
-        sans: ['"Space Grotesk"', 'sans-serif'],
+        heading: ['"Plus Jakarta Sans"', 'sans-serif'],
+        data: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
       },
       letterSpacing: {
         tight: '-0.02em',

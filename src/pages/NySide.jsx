@@ -57,8 +57,8 @@ const Navbar = () => {
       }`}
     >
       <a
-        href="/nyside"
-        className={`font-tinde font-semibold text-xl tracking-tight transition-colors duration-500 ${
+        href="/"
+        className={`font-agentik font-semibold text-xl tracking-tight transition-colors duration-500 ${
           scrolled ? 'text-[#1A1F25]' : 'text-[#E8E4DC]'
         }`}
       >
@@ -209,7 +209,7 @@ const Hero = () => {
         <h1 className="ny-h mb-6">
           <span className="block mb-2 h-[1.4em] overflow-hidden" style={{ fontSize: 'clamp(2.2rem,5.5vw,4.2rem)' }}>
             <span
-              className="inline-block font-tinde font-bold text-[#C4854C] tracking-[-0.02em] leading-[1.4] pb-1"
+              className="inline-block font-agentik font-bold text-[#C4854C] tracking-[-0.02em] leading-[1.4] pb-1"
               style={{
                 opacity: animating ? 0 : 1,
                 transform: animating ? 'translateY(-12px)' : 'translateY(0)',
@@ -220,12 +220,12 @@ const Hero = () => {
               {ROTATE_WORDS[wordIndex]}
             </span>
           </span>
-          <span className="block font-tinde font-bold text-[clamp(2.2rem,5.5vw,4.2rem)] text-[#E8E4DC] tracking-[-0.02em] leading-[1.12]">
+          <span className="block font-agentik font-bold text-[clamp(2.2rem,5.5vw,4.2rem)] text-[#E8E4DC] tracking-[-0.02em] leading-[1.12]">
             burde kunne automatiseres.
           </span>
         </h1>
 
-        <p className="ny-h font-tinde font-bold text-[clamp(1.6rem,3.5vw,2.4rem)] text-[#C4854C] tracking-tight mb-8">
+        <p className="ny-h font-agentik font-bold text-[clamp(1.6rem,3.5vw,2.4rem)] text-[#C4854C] tracking-tight mb-8">
           Det kan det.
         </p>
 
@@ -419,7 +419,7 @@ const LiveAgents = () => {
               Live agenter · i produksjon
             </p>
           </div>
-          <h2 className="font-tinde font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-4">
+          <h2 className="font-agentik font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-4">
             Agenter som tar seg av jobben.
           </h2>
           <p className="text-[#E8E4DC]/45 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
@@ -479,7 +479,7 @@ const LiveAgents = () => {
                 <agent.Icon size={20} className="text-[#4FC3B0]" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-tinde font-semibold text-[#E8E4DC] text-base tracking-tight truncate">
+                <p className="font-agentik font-semibold text-[#E8E4DC] text-base tracking-tight truncate">
                   {agent.name}
                 </p>
                 <p className="font-data text-[10px] uppercase tracking-[0.15em] text-[#E8E4DC]/35">
@@ -644,7 +644,7 @@ const GraphSection = () => {
 
         {/* Text */}
         <div className="text-center">
-          <p className="graph-text font-tinde font-bold text-xl md:text-2xl text-[#E8E4DC] tracking-tight mb-4">
+          <p className="graph-text font-agentik font-bold text-xl md:text-2xl text-[#E8E4DC] tracking-tight mb-4">
             Behovet for manuelt arbeid har gått ned dramatisk
           </p>
           <p className="graph-text text-[#4FC3B0]/75 text-base md:text-lg">
@@ -696,7 +696,7 @@ const Urgency = () => {
     <section className="reveal-section py-24 md:py-32 px-6" style={{ background: '#E8E4DC' }}>
       <div className="max-w-4xl mx-auto">
         <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
-        <h2 className="reveal font-tinde font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4">
+        <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4">
           Konkurrentene dine har allerede begynt
         </h2>
         <p className="reveal text-[#1A1F25]/55 text-base md:text-lg mb-14 max-w-2xl leading-relaxed">
@@ -706,7 +706,7 @@ const Urgency = () => {
         <div className="grid md:grid-cols-2 gap-8 md:gap-10 mb-14">
           {areas.map((area) => (
             <div key={area.name} className="reveal">
-              <h3 className="font-tinde font-bold text-[#1A1F25] text-base md:text-lg tracking-tight mb-3">
+              <h3 className="font-agentik font-bold text-[#1A1F25] text-base md:text-lg tracking-tight mb-3">
                 {area.name}
               </h3>
               <ul className="space-y-2.5">
@@ -721,7 +721,7 @@ const Urgency = () => {
           ))}
         </div>
 
-        <p className="reveal font-tinde italic text-lg md:text-xl text-[#1A1F25]/70 tracking-tight max-w-lg">
+        <p className="reveal font-agentik italic text-lg md:text-xl text-[#1A1F25]/70 tracking-tight max-w-lg">
           Spørsmålet er ikke om du skal bruke AI. Det er om du skal være først — eller sist.
         </p>
       </div>
@@ -756,7 +756,7 @@ const Outcomes = () => {
     <section className="reveal-section py-24 md:py-32 px-6" style={{ background: '#1A1F25' }}>
       <div className="max-w-4xl mx-auto">
         <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
-        <h2 className="reveal font-tinde font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-4">
+        <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-4">
           Etter 30 dager sitter du igjen med dette
         </h2>
         <p className="reveal text-[#E8E4DC]/45 text-base md:text-lg max-w-2xl mb-16 leading-relaxed">
@@ -821,7 +821,7 @@ const Proof = () => (
   <section id="proof" className="reveal-section py-24 md:py-32 px-6" style={{ background: '#E8E4DC' }}>
     <div className="max-w-4xl mx-auto">
       <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8 mx-auto" />
-      <h2 className="reveal font-tinde font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4 text-center">
+      <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4 text-center">
         Brukt av selskaper over hele Norge
       </h2>
       <p className="reveal text-[#1A1F25]/50 text-sm text-center mb-14">
@@ -848,7 +848,7 @@ const Proof = () => (
               &ldquo;{t.quote}&rdquo;
             </p>
             <div>
-              <p className="font-tinde font-semibold text-[#1A1F25] text-sm tracking-tight">{t.name}</p>
+              <p className="font-agentik font-semibold text-[#1A1F25] text-sm tracking-tight">{t.name}</p>
               <p className="text-[#1A1F25]/40 text-xs">{t.company}</p>
             </div>
           </div>
@@ -872,7 +872,7 @@ const Workshops = () => {
     <section className="reveal-section bg-[#F5F2EC] py-24 md:py-32 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
-        <h2 className="reveal font-tinde text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-6">
+        <h2 className="reveal font-agentik text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-6">
           Vi trener også team i praktisk bruk av AI
         </h2>
         <p className="reveal font-sans text-[#1A1F25]/60 text-base md:text-lg max-w-2xl mb-10 leading-relaxed">
@@ -901,7 +901,7 @@ const Workshops = () => {
 
         {/* Bridge line → funnels to audit */}
         <div className="reveal border-t border-[#1A1F25]/8 pt-10">
-          <p className="font-tinde italic text-lg md:text-xl text-[#1A1F25]/75 tracking-tight mb-8 max-w-lg">
+          <p className="font-agentik italic text-lg md:text-xl text-[#1A1F25]/75 tracking-tight mb-8 max-w-lg">
             For selskaper som ønsker mer enn bare opplæring, starter de fleste
             med en AI Audit.
           </p>
@@ -949,14 +949,14 @@ const Process = () => {
     <section id="process" className="reveal-section bg-[#F5F2EC] py-24 md:py-32 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
-        <h2 className="reveal font-tinde text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-16">
+        <h2 className="reveal font-agentik text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-16">
           Slik fungerer det
         </h2>
 
         <div className="grid md:grid-cols-3 gap-10 md:gap-12">
           {steps.map((step) => (
             <div key={step.num} className="reveal">
-              <span className="block font-tinde text-7xl md:text-8xl text-[#1A6B6D]/15 leading-none mb-4 select-none">
+              <span className="block font-agentik text-7xl md:text-8xl text-[#1A6B6D]/15 leading-none mb-4 select-none">
                 {step.num}
               </span>
               <div className="flex items-center gap-3 mb-3">
@@ -998,7 +998,7 @@ const Team = () => (
   <section className="reveal-section py-24 md:py-28 px-6" style={{ background: '#E8E4DC' }}>
     <div className="max-w-4xl mx-auto">
       <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
-      <h2 className="reveal font-tinde font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4">
+      <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4">
         Hvem som står bak
       </h2>
       <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg max-w-2xl mb-14 leading-relaxed">
@@ -1016,7 +1016,7 @@ const Team = () => (
                 className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-[1.03]"
               />
             </div>
-            <h3 className="font-tinde font-semibold text-[#1A1F25] text-lg md:text-xl tracking-tight mb-1">
+            <h3 className="font-agentik font-semibold text-[#1A1F25] text-lg md:text-xl tracking-tight mb-1">
               {person.name}
             </h3>
             <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#1A6B6D]">
@@ -1036,7 +1036,7 @@ const RiskReversal = () => (
   <section className="reveal-section py-20 md:py-24 px-6 border-t border-[#1A1F25]/8" style={{ background: '#F5F2EC' }}>
     <div className="max-w-3xl mx-auto text-center">
       <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mx-auto mb-8" />
-      <h2 className="reveal font-tinde text-[clamp(1.6rem,3.5vw,2.5rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-6">
+      <h2 className="reveal font-agentik text-[clamp(1.6rem,3.5vw,2.5rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-6">
         Lav risiko — høy oppside
       </h2>
       <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
@@ -1086,7 +1086,7 @@ const ContactForm = () => {
           <div className="w-14 h-14 rounded-full bg-[#1A6B6D]/20 flex items-center justify-center mx-auto mb-6">
             <Check size={24} className="text-[#1A6B6D]" />
           </div>
-          <h2 className="font-tinde font-bold text-2xl text-[#E8E4DC] tracking-tight mb-3">
+          <h2 className="font-agentik font-bold text-2xl text-[#E8E4DC] tracking-tight mb-3">
             Takk for henvendelsen
           </h2>
           <p className="text-[#E8E4DC]/50 text-base">
@@ -1100,7 +1100,7 @@ const ContactForm = () => {
   return (
     <section id="contact" className="reveal-section py-28 md:py-36 px-6" style={{ background: '#1A1F25' }}>
       <div className="max-w-lg mx-auto">
-        <h2 className="reveal font-tinde font-bold text-[clamp(1.8rem,4.5vw,3.2rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-3 text-center">
+        <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4.5vw,3.2rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-3 text-center">
           Klar for å finne deres
           <br /> AI-muligheter?
         </h2>
@@ -1184,7 +1184,7 @@ const Footer = () => (
       {/* Top row — brand + nav */}
       <div className="grid md:grid-cols-2 gap-10 pb-10 border-b border-[#E8E4DC]/8">
         <div>
-          <div className="font-tinde font-semibold text-[#E8E4DC] text-xl tracking-tight mb-3">
+          <div className="font-agentik font-semibold text-[#E8E4DC] text-xl tracking-tight mb-3">
             Agentik
           </div>
           <p className="font-sans text-[#E8E4DC]/40 text-sm max-w-sm leading-relaxed">
@@ -1284,6 +1284,8 @@ export const NySide = () => {
           content="Vi hjelper norske selskaper med å identifisere og implementere AI-løsninger. Konkrete resultater på 30 dager."
         />
         <meta property="og:locale" content="nb_NO" />
+        <meta property="og:url" content="https://agentik.no/" />
+        <link rel="canonical" href="https://agentik.no/" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
@@ -1291,9 +1293,9 @@ export const NySide = () => {
           rel="stylesheet"
         />
         <style>{`
-          .font-tinde{font-family:'Plus Jakarta Sans',sans-serif}
-          .tinde-page,.tinde-page .font-heading,.tinde-page .font-sans{font-family:'Plus Jakarta Sans',sans-serif}
-          .tinde-page .font-data{font-family:'JetBrains Mono',ui-monospace,monospace}
+          .font-agentik{font-family:'Plus Jakarta Sans',sans-serif}
+          .agentik-page,.agentik-page .font-heading,.agentik-page .font-sans{font-family:'Plus Jakarta Sans',sans-serif}
+          .agentik-page .font-data{font-family:'JetBrains Mono',ui-monospace,monospace}
 
           @keyframes agent-progress {
             from { width: 0%; }
@@ -1307,12 +1309,12 @@ export const NySide = () => {
             from { opacity: 0; transform: translateX(-6px); }
             to { opacity: 1; transform: translateX(0); }
           }
-          .tinde-page .agent-fade-in { animation: agent-fade-in 600ms ease-out both; }
-          .tinde-page .agent-line { opacity: 0; animation: agent-line-in 380ms ease-out forwards; }
+          .agentik-page .agent-fade-in { animation: agent-fade-in 600ms ease-out both; }
+          .agentik-page .agent-line { opacity: 0; animation: agent-line-in 380ms ease-out forwards; }
         `}</style>
       </Helmet>
 
-      <div className="tinde-page">
+      <div className="agentik-page">
       <Navbar />
       <main>
         <Hero />
