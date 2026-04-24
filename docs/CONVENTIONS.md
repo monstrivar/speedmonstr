@@ -1,6 +1,8 @@
 # Kodekonvensjoner
 
-> Referansedokument for CLAUDE.md. Gjeldende konvensjoner for hele prosjektet.
+> Referansedokument for CLAUDE.md. Gjeldende konvensjoner for agentik.no-repoet.
+
+*Sist oppdatert: 2026-04-24*
 
 ---
 
@@ -9,79 +11,76 @@
 ### I kode
 - Variabelnavn, funksjoner, komponenter, typer: **engelsk**
 - Kommentarer: **engelsk** (korte, kun der logikken ikke er selvforklarende)
-- Commit-meldinger: **engelsk**
-- Filnavn: **engelsk** (kebab-case for filer, PascalCase for komponenter)
+- Commit-meldinger: **engelsk**, imperativ form
+- Filnavn: **engelsk** (kebab-case for utility-filer, PascalCase for React-komponenter)
 
 ### I brukergrensesnitt
-- All brukervendt tekst går gjennom i18n (`t()`-funksjonen)
-- Standardspråk: norsk bokmål
-- Ingen hardkodede strenger i JSX/TSX — alltid nøkler
-- Datoer: `Intl.DateTimeFormat` med brukerens locale
-- Tall: `Intl.NumberFormat` med brukerens locale
+- All brukervendt tekst på **norsk bokmål**
+- Datoer: `Intl.DateTimeFormat` med `no-NO`
+- Tall: `Intl.NumberFormat` med `no-NO`
+- Landingssiden er kun norsk i første versjon (ingen i18n-setup — legg til når vi faktisk har engelske kunder)
 
 ### I dokumentasjon
-- `/docs/` skrives på norsk (primært for Ivar og partneren)
-- README.md og teknisk docs skrives på engelsk (for fremtidig team)
+- `/docs/` skrives på norsk
+- Kode-kommentarer og commit-meldinger: engelsk
 
 ## Filstruktur
 
-### Companion-appen (`app/`)
 ```
-app/src/
-├── components/          Delte UI-komponenter
-│   ├── ui/              shadcn/ui-komponenter (auto-generert)
-│   └── [Feature].tsx    Feature-spesifikke komponenter
-├── pages/               Sidekomponenter (én per rute)
-├── hooks/               Custom React hooks
-├── lib/                 Utilities, Supabase-klient, helpers
-├── locales/             i18n-oversettelser (no.json, en.json, ...)
-├── types/               TypeScript-typer (inkl. Supabase-genererte)
-└── assets/              Statiske filer (ikoner, lyeder)
+speedmonstr/  (repo-navn beholdes midlertidig, ikke kritisk)
+├── index.html              Landing page entry
+├── src/
+│   ├── main.jsx            Router
+│   ├── index.css           Globale styles + Tailwind
+│   └── pages/
+│       ├── NySide.jsx      Hovedsiden (Agentik landing)
+│       ├── Personvern.jsx
+│       └── Vilkar.jsx
+├── api/
+│   └── agentik-contact.js  Kontaktskjema → Make → Attio
+├── public/                 Statiske assets
+├── presentation/           HTML keynote (for events)
+├── docs/                   Intern dokumentasjon
+├── vercel.json
+├── package.json
+├── tailwind.config.js
+└── vite.config.js
 ```
 
-### Navnekonvensjoner
+## Navnekonvensjoner
+
 | Type | Konvensjon | Eksempel |
 |------|-----------|----------|
-| Komponent-filer | PascalCase.tsx | `LeadCard.tsx` |
-| Hook-filer | camelCase.ts | `useLeads.ts` |
-| Utility-filer | kebab-case.ts | `format-phone.ts` |
-| Typer | PascalCase | `Lead`, `Organization` |
-| Konstanter | UPPER_SNAKE | `ESCALATION_THRESHOLD` |
+| React-komponenter | PascalCase.jsx | `NySide.jsx`, `Personvern.jsx` |
+| Utility-filer | kebab-case.js | `format-phone.js` |
+| Konstanter | UPPER_SNAKE | `MAKE_WEBHOOK_URL` |
 | CSS-klasser | Tailwind utilities | Ingen custom CSS med mindre nødvendig |
 
-## TypeScript
-
-- Strict mode aktivert
-- Ingen `any` — bruk `unknown` og type-guards hvis nødvendig
-- Supabase-typer genereres med `supabase gen types typescript` og importeres
-- Props-interfaces defineres i samme fil som komponenten
-- Eksporter typer med `export type` (ikke `export interface` med mindre det er for extending)
-
-## Komponenter
+## JSX (landingsside)
 
 - Funksjonelle komponenter med arrow functions
 - Props destruktureres i funksjonsparameteren
-- Ingen default exports — alltid named exports
-- En komponent per fil (med unntak av små hjelpere)
-- Hooks øverst i komponenten, return-statement nederst
+- Landingssiden (`NySide.jsx`) er én stor fil med nested komponenter — ikke et problem for en statisk side
+- Default export for sidekomponenter brukt av router er OK her (react-router-dom bruker det)
+
+## Tailwind
+
+- Palette-tokens i `tailwind.config.js`: `background`, `dark`, `petrol`, `signal`, `copper`
+- For Agentik-spesifikke hex-farger (#F5F2EC osv.) brukes `bg-[#...]` bracket-syntaks i NySide. Det er OK — designet er tett koblet til disse eksakte verdiene.
 
 ## Git
 
-- Branch per feature: `feature/push-notifications`, `feature/call-tracking`
-- Commit-meldinger: imperativ form, kort ("Add lead detail view", "Fix escalation timer")
+- Branch per større endring: `feature/...`, `fix/...`, `chore/...`
+- Commit-meldinger: imperativ form, kort subject (<70 tegn), lengre forklaring i body
 - Ingen force-push til main
-- Squash-merge for feature branches
-
-## Testing
-
-- Tester skrives for forretningslogikk (scoring, eskalering, routing)
-- Ikke test UI-komponenter med mindre de har kompleks logikk
-- Vitest som test runner (konsistent med Vite)
-- Test-filer ved siden av kildefil: `useLeads.test.ts`
+- En logisk endring per commit
 
 ## Avhengigheter
 
 - Foretrekk innebygd/plattform-API fremfor npm-pakker
 - Ingen pakke installeres uten klar begrunnelse
-- Lock-fil (package-lock.json) committes alltid
-- Hold Capacitor-plugins på samme major-versjon
+- `package-lock.json` committes alltid
+
+## Agent-prosjekter (kundeleveranser)
+
+Når vi bygger agenter for kunder, lever de i egne repoer — ikke i dette. Konvensjoner for agent-prosjekter dokumenteres per prosjekt (hver kunde har ulike krav).

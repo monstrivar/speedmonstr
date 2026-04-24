@@ -1,134 +1,132 @@
-# Monstr — Speed-to-Lead Platform
+# Agentik — AI-studio for norske bedrifter
 
-## What this project is
+## Hva dette prosjektet er
 
-Monstr automates instant customer response for Norwegian service businesses (plumbers, electricians, painters, carpenters). When a potential customer submits an inquiry, Monstr sends a personalized SMS response within 30-60 seconds — automatically, with the business name as sender. Businesses that respond within 5 minutes are 21x more likely to close the deal.
+Agentik er et norsk AI-studio som bygger AI-agenter for norske bedrifter. Vi kartlegger hvor AI gir verdi, prioriterer etter ROI, og bygger agentene i produksjon — fra stemme-resepsjonist til faktura-agent.
 
-**Two products in one repo:**
-- **Landing page** (`src/`) — monstr.no, sells the product. React + Vite + JSX. Mostly done.
-- **Companion app** (`app/`) — app.monstr.no, IS the product. React + Vite + TypeScript. Under active development.
+Dette repoet inneholder **agentik.no** — landingssiden som selger studiet. Selve agent-leveransene lever i egne, kundespesifikke repoer.
 
-## Repository structure
+## Repostruktur
 
 ```
-speedmonstr/
-├── CLAUDE.md              ← You are here
-├── src/                   ← Landing page (monstr.no) — JSX, do not refactor to TS
-├── app/                   ← Companion app (app.monstr.no) — TypeScript
-│   ├── src/
-│   │   ├── components/    UI components (shadcn/ui in components/ui/)
-│   │   ├── pages/         One component per route
-│   │   ├── hooks/         Custom React hooks
-│   │   ├── lib/           Supabase client, utilities
-│   │   ├── locales/       i18n translations (no.json, en.json, se.json, dk.json)
-│   │   ├── types/         TypeScript types (incl. Supabase-generated)
-│   │   └── assets/        Static files (icons, notification sounds)
-│   ├── ios/               Capacitor iOS project
-│   └── vite.config.ts
-├── api/                   ← Shared Vercel serverless functions
-├── docs/                  ← Product and architecture documentation
-└── vercel.json            ← Subdomain routing (monstr.no / app.monstr.no)
+speedmonstr/                  ← repo-navnet er fortsatt fra tidligere (Monstr-arven). Ikke kritisk å endre.
+├── CLAUDE.md                 ← Du er her
+├── index.html                Landing page entry (Plus Jakarta Sans + JetBrains Mono)
+├── src/
+│   ├── main.jsx              Router: /, /personvern, /vilkar
+│   ├── index.css             Tailwind + globale styles
+│   └── pages/
+│       ├── NySide.jsx        Hovedsiden (Agentik-landingen)
+│       ├── Personvern.jsx
+│       └── Vilkar.jsx
+├── api/
+│   └── agentik-contact.js    POST-endepunkt → Make.com → Attio
+├── public/                   Statiske assets (hero-video, logoer, team, klientlogoer)
+│   ├── aiarendal.html        AI Arendal event-landing
+│   ├── skills/               Claude-skill-kort (PDF/MD)
+│   └── claude-verktoykassen.zip
+├── presentation/             HTML keynote-deck for events
+├── docs/                     Intern dokumentasjon (norsk)
+├── vercel.json
+├── package.json              name: "agentik"
+├── tailwind.config.js        Agentik-palette (cream, deep slate, petrol, signal, copper)
+└── vite.config.js
 ```
 
-## Tech stack (companion app)
+## Tech-stack (landingsside)
 
-| Layer | Technology | Notes |
-|-------|-----------|-------|
-| Language | TypeScript (strict) | No `any`. Generated Supabase types. |
-| Framework | React 19 + Vite | Same foundation as landing page |
-| UI | shadcn/ui + Tailwind CSS v4 | Own the components, Monstr-branded |
-| Database | Supabase | Auth, Realtime, Edge Functions, RLS |
-| Auth | Supabase Magic Link | No passwords — email link, 30-day sessions |
-| Native | Capacitor (iOS first) | Android in phase 2, same codebase |
-| Push | APNs (via Supabase Edge Function) | Native iOS push, no Firebase needed yet |
-| i18n | react-i18next | Norwegian default, prepared for en/se/dk |
-| Charts | Recharts | Lightweight, responsive |
-| Server state | TanStack Query | Caching, sync with Supabase |
-| Testing | Vitest | Business logic only, not UI snapshots |
+| Lag | Teknologi |
+|-----|-----------|
+| Språk | JavaScript (JSX). **Ingen TypeScript** — landingen er enkel, TS er overhead her |
+| Framework | React 19 + Vite 8 |
+| Styling | Tailwind CSS v3 (konfigurert med Agentik-palette) |
+| Animasjon | GSAP + ScrollTrigger |
+| Ikoner | Lucide React |
+| Ruting | react-router-dom v7 |
+| SEO | react-helmet-async |
+| Fonter | Plus Jakarta Sans (body + heading) + JetBrains Mono (data/tall) |
+| API | Vercel Serverless Functions (Node.js) |
+| Lead-flyt | Kontaktskjema → `/api/agentik-contact` → Make.com (EU2) → Attio CRM |
+| Hosting | Vercel (agentik.no) |
 
-## Key conventions
+## Designsystem
 
-- **English** for all code, variables, comments, commits
-- **Norwegian** for UI text (via i18n `t()` keys — never hardcoded strings)
-- **Norwegian** for docs in `/docs/`
-- Named exports only (no default exports)
-- One component per file, PascalCase filenames
-- Hooks: `useLeads.ts`, utils: `format-phone.ts`
-- No global state manager — React Context + TanStack Query + Supabase Realtime
-- See `docs/CONVENTIONS.md` for complete rules
+Palette lever to steder:
+1. **Tailwind config** — `background` (#F5F2EC), `dark` (#1A1F25), `petrol`, `signal`, `copper`
+2. **Inline brackets i NySide.jsx** — `bg-[#F5F2EC]`, `text-[#C4854C]` osv., fordi noen komponenter trenger eksakte verdier med transparens (`#F5F2EC/90`)
 
-## Build and run
+Fonter: Plus Jakarta Sans overalt. JetBrains Mono kun for tall, tekniske labels, eyebrow-tekst.
+
+Full brand-dokumentasjon: `docs/MERKEVARE-OG-DESIGN.md`.
+
+## Kjøre lokalt
 
 ```bash
-# Landing page (monstr.no)
-npm run dev              # Vite dev server on :5173
-
-# Companion app (app.monstr.no)
-cd app && npm run dev    # Vite dev server on :5174
-
-# Capacitor (iOS)
-cd app && npx cap sync && npx cap open ios
-
-# Generate Supabase types
-npx supabase gen types typescript --project-id <id> > app/src/types/supabase.ts
+npm install
+npm run dev              # Vite dev server på :5173
+npm run build            # Produksjonsbygg
+npm run preview          # Forhåndsvisning av bygg
+npm run lint             # ESLint
 ```
 
-## Architecture decisions
+## Kontaktskjema-flyten
 
-All technical rationale is in `docs/TECH-DECISIONS.md`. Key points:
-- TypeScript for companion app, JSX stays for landing page
-- Capacitor over React Native (one codebase, web + iOS + Android)
-- APNs directly (no Firebase) for iOS-only phase
-- shadcn/ui for professional, accessible, customizable components
-- Supabase for everything backend (auth, db, realtime, edge functions)
+1. Bruker fyller ut skjema på `/` (NySide.jsx)
+2. POST til `/api/agentik-contact` med `{ fornavn, bedrift, telefon, epost, maal }`
+3. API videresender til `MAKE_WEBHOOK_URL` (standard: `hook.eu2.make.com/...`) med `kilde: "agentik.no"`
+4. Make.com router leadet inn i Attio CRM og sender eventuelle varsler
 
-## The companion app in brief
+Eneste miljøvariabel: `MAKE_WEBHOOK_URL` (har fallback, men settes i Vercel).
 
-The app's core job: **notify instantly when a lead arrives, make it trivial to call back.**
+## Konvensjoner
 
-1. Push notification with customer name + issue
-2. Tap "Call" → phone app opens with number
-3. Return to app → "Did you follow up?" prompt
-4. Everything logged: call tracking, response times, escalations
+- **Engelsk** i kode, commits, kommentarer
+- **Norsk** i UI og `/docs/`
+- En logisk endring per commit, imperativ form i subject
+- Ingen TypeScript i landingssiden (bevisst valg)
+- Ikke legg til tunge avhengigheter uten klar grunn
 
-For full scope: `docs/COMPANION-APP-SCOPE.md`
-For database schema: `docs/DASHBOARD-SPEC.md` + `docs/COMPANION-APP-SCOPE.md` (extended tables)
-For brand/design: `docs/MERKEVARE-OG-DESIGN.md`
+Detaljer: `docs/CONVENTIONS.md`.
 
-## Current priority
+## Tjenester Agentik selger (kontekst for AI-arbeid)
 
-**Push notifications that work on iOS.** This is the core of the product. Everything else is secondary until a business owner's phone goes BING when a lead arrives.
+| Tjeneste | Pris | Modell |
+|----------|------|--------|
+| AI Opportunity Audit | 50 000 kr | Fast pris, 30 dager |
+| Agent-implementering | 50 000 – 300 000 kr | Prosjekt per agent |
+| Workshop (halvdag/heldag) | 15 000 – 45 000 kr | Engangshendelse |
+| Løpende rådgivning | 2 500 kr/t | Retainer eller time |
 
-## Business context
+Audit-investeringen (50 000 kr) trekkes fra første implementering. Se `docs/agentik/HVA-ER-AGENTIK.md` for full produktbeskrivelse.
 
-- **Pricing:** Graduated cohort model, starting at 2,999 kr/mnd (see `docs/salg/PRISMODELL.md`)
-- **Target:** Norwegian SMB service businesses, 1-500 employees
-- **Scale path:** Norway → Scandinavia → UK/USA
-- **Team:** Ivar + partner, Claude Code as development tool
-- **Apple Developer Account:** Active (registered on partner, private)
-- **Event deadline:** April 17, 2026 — demo to 30-40 business owners
+## Team
 
-Full business context: `docs/HVA-ER-MONSTR.md`
-Full platform spec: `docs/PLATTFORM-OG-TEKNOLOGI.md`
+- **Ivar Knutsen** — medgründer. Teknisk lead, bygger med Claude Code daglig.
+- **Ole Kristian Haug** — medgründer. Salg og kundeleveranser.
 
-## Documentation routing
+Lokasjon: Skien og Arendal.
 
-**This file must stay under 200 lines.** When adding new context:
+## Doc-routing
 
-1. Create a dedicated file in `docs/` for the detailed content
-2. Add a one-line reference here pointing to that file
-3. This CLAUDE.md is the index — docs/ files hold the depth
+**Hold CLAUDE.md under 200 linjer.** Dypere kontekst legges i `docs/`:
 
-Current reference files:
-| File | Contains |
-|------|----------|
-| `docs/HVA-ER-MONSTR.md` | Product overview, pricing, value prop, targets |
-| `docs/MERKEVARE-OG-DESIGN.md` | Brand identity, colors, typography, design system |
-| `docs/PLATTFORM-OG-TEKNOLOGI.md` | System architecture, API endpoints, data model |
-| `docs/COMPANION-APP-SCOPE.md` | Full companion app scope, PWA, native, call tracking |
-| `docs/TECH-DECISIONS.md` | Technical rationale for all stack choices |
-| `docs/CONVENTIONS.md` | Code style, naming, file structure, git workflow |
-| `docs/salg/PRISMODELL.md` | Graduated cohort pricing model, annual pricing, implementation |
-| `docs/DASHBOARD-SPEC.md` | Database schema, escalation logic, onboarding flow |
+| Fil | Innhold |
+|-----|---------|
+| `docs/agentik/HVA-ER-AGENTIK.md` | Full produktbeskrivelse, forretningsmodell, posisjon |
+| `docs/agentik/TJENESTER.md` | Detaljert tjenestebeskrivelse |
+| `docs/agentik/MALGRUPPE.md` | Målgruppedefinisjon |
+| `docs/agentik/INNHOLDSSTRATEGI.md` | Innholds- og markedsføringsstrategi |
+| `docs/MERKEVARE-OG-DESIGN.md` | Merkevareidentitet, farger, typografi, designsystem |
+| `docs/PLATTFORM-OG-TEKNOLOGI.md` | Systemarkitektur, API, miljøvariabler, deployment |
+| `docs/TECH-DECISIONS.md` | Tech-stack og agent-referansearkitektur |
+| `docs/CONVENTIONS.md` | Kodestandard, filstruktur, git-praksis |
+| `docs/juridisk/DATABEHANDLERAVTALE.md` | Databehandleravtale-mal |
+| `docs/forretning/` | Forretningsplan, roadmap, neste steg |
 
-**Follow this pattern for all future additions.** If a topic needs more than ~10 lines of detail, it goes in a `docs/` file with a pointer from here.
+Når du legger til ny kontekst: opprett dedikert fil i `docs/`, legg til én-linjes-referanse her. CLAUDE.md er indeksen — `docs/` holder dybden.
+
+## Hva dette repoet IKKE er
+
+- **Ikke et SaaS-produkt.** Agentik selger tjenester, ikke software.
+- **Ikke et monorepo.** En eneste landingsside, minimal API-funksjon.
+- **Ikke Monstr.** Monstr (speed-to-lead SMS for håndverkere) er sunsettet. All Monstr-kode er slettet i april 2026.

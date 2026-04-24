@@ -1,237 +1,146 @@
-# Monstr — Plattform og teknologi
+# Agentik — Plattform og teknologi
 
-## Systemarkitektur
+*Sist oppdatert: 2026-04-24*
 
-Monstr består av tre hovedkomponenter:
+## Systemarkitektur (landingsside)
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                    LEADKILDER                         │
-│  Nettskjema · Meta Ads · Google Ads · Finn.no        │
-│  Booking-systemer · Google Business · Chat            │
-└──────────────┬──────────────────────────┬────────────┘
-               │ webhook                   │ skjema
-               ▼                           ▼
-┌──────────────────────┐    ┌──────────────────────────┐
-│   /api/webhook       │    │   /api/submit-lead       │
-│   (kundeintegrasjon) │    │   (booking-skjema)       │
-│   Vercel Function    │    │   Vercel Function        │
-└──────────┬───────────┘    └──────────┬───────────────┘
-           │                           │
-           ▼                           ▼
-┌──────────────────────────────────────────────────────┐
-│                  PROSESSERING                         │
-│  Validering → Scoring → Normalisering → Lagring      │
-└──────┬──────────┬──────────────┬─────────────────────┘
-       │          │              │
-       ▼          ▼              ▼
-   ┌────────┐ ┌────────┐  ┌──────────────┐
-   │Airtable│ │ Twilio │  │ Telegram Bot │
-   │  (CRM) │ │ (SMS)  │  │  (varsling)  │
-   └────────┘ └────────┘  └──────────────┘
-                                │
-                                ▼
-                    ┌───────────────────────┐
-                    │  app.monstr.no        │
-                    │  (dashbord - planlagt)│
-                    │  Supabase + React     │
-                    └───────────────────────┘
+┌───────────────────────────┐
+│   Potensiell kunde        │
+│   besøker agentik.no      │
+└─────────────┬─────────────┘
+              │
+              ▼
+┌───────────────────────────┐
+│   Vercel (agentik.no)     │
+│   - React 19 SPA (Vite)   │
+│   - /  /personvern /vilkar│
+└─────────────┬─────────────┘
+              │  (skjema)
+              ▼
+┌───────────────────────────┐
+│   /api/agentik-contact    │
+│   (Vercel Function, Node) │
+└─────────────┬─────────────┘
+              │
+              ▼
+┌───────────────────────────┐
+│   Make.com (EU2 region)   │
+│   Webhook: iedbsay1...    │
+└─────────────┬─────────────┘
+              │
+              ▼
+┌───────────────────────────┐
+│   Attio CRM               │
+│   Lead opprettet +        │
+│   oppfølging trigget      │
+└───────────────────────────┘
 ```
+
+Agentik-landingssiden er med vilje en enkel SPA. All logikk rundt leadhåndtering skjer i Make.com slik at vi kan endre flyten (varsling, berikelse, scoring) uten å deploye kode.
 
 ## Teknisk stack
 
-### Frontend (monstr.no — landing page)
+### Landingsside (agentik.no)
 | Teknologi | Versjon | Rolle |
 |-----------|---------|-------|
 | React | 19 | UI-rammeverk |
-| Vite | 6 | Bundler og dev-server |
-| Tailwind CSS | 4 | Styling |
-| GSAP | 3 | Scroll-animasjoner |
-| Lucide React | — | Ikoner |
+| Vite | 8 | Bundler og dev-server |
+| Tailwind CSS | 3 | Styling |
+| GSAP + ScrollTrigger | 3 | Scroll-animasjoner |
+| Lucide React | 1 | Ikoner |
 | React Router | 7 | Navigasjon |
-| React Helmet Async | — | SEO meta-tags |
+| React Helmet Async | 3 | SEO og OG-tags |
 
-### Backend (Vercel Serverless Functions)
+### API-lag
 | Teknologi | Rolle |
 |-----------|-------|
-| Node.js | Runtime |
-| Vercel Functions | Serverless API |
-| Airtable API | Database og CRM |
-| Twilio | SMS-utsending |
-| Telegram Bot API | Eiervarsling |
-
-### Fremtidig dashbord (app.monstr.no)
-| Teknologi | Rolle |
-|-----------|-------|
-| React + Vite | Frontend |
-| Supabase | Database, auth, real-time subscriptions |
-| Supabase Row Level Security | Tilgangskontroll per organisasjon |
-| Vercel | Hosting |
+| Node.js (Vercel Fluid Compute) | Runtime |
+| Vercel Serverless Functions | API-handler |
+| Make.com | Webhook-ruting til CRM |
+| Attio | CRM og lead-oppfølging |
 
 ### Infrastruktur
 | Tjeneste | Rolle |
 |----------|-------|
 | Vercel | Hosting, edge-nettverk, serverless functions, automatisk deploy |
-| Git/GitHub | Versjonskontroll, CI/CD trigger |
-| Airtable | Primær datalager (nåværende fase) |
-| Supabase | Planlagt datalager (dashbord-fase) |
+| GitHub | Versjonskontroll, CI/CD trigger |
+| Make.com | Integrasjonsplattform (EU2-region, EU-lagret data) |
+| Attio | CRM |
 
 ## API-endepunkter
 
-### POST /api/submit-lead
-**Formål:** Fanger kvalifiserte prospekter fra booking-skjemaet på monstr.no
+### POST /api/agentik-contact
+
+**Formål:** Mottar innsendinger fra kontaktskjemaet på agentik.no og videresender til Make → Attio.
 
 **Input:**
 ```json
 {
-  "firstName": "Ola",
-  "company": "Ola Rør AS",
-  "phone": "99887766",
-  "email": "ola@olaror.no",
-  "website": "olaror.no",
-  "leadsPerMonth": "10-30",
-  "leadSources": ["web_form", "meta_ads"],
-  "followUpProcess": "noen_ganger",
-  "customerValue": "25000+",
-  "intent": "pilot",
-  "decisionMaker": "ja"
+  "fornavn": "Ola",
+  "bedrift": "Ola AS",
+  "telefon": "99887766",
+  "epost": "ola@ola.no",
+  "maal": "Vi vil automatisere tilbudsprosessen"
 }
 ```
 
-**Prosessering:**
-1. Rate limiting (maks 3 innsendinger per IP per time)
-2. Validering (påkrevde felt, e-postformat)
-3. Lead scoring-algoritme (volum + verdi + intensjon + prosesskvalitet)
-4. Prioritetstildeling (Hot >=12 poeng, Warm >=8, Cold <8)
-5. Telefon/nettside-normalisering (norsk format)
+**Validering:**
+- `fornavn`, `bedrift`, `epost` påkrevd
+- Metode må være POST
 
-**Output:**
-- Lagrer i Airtable (alle skjemadata + score + prioritet)
-- Sender SMS via Twilio (personalisert melding basert på score)
-- Sender Telegram-varsling til eier (med lead-sammendrag og prioritets-emoji)
+**Output til Make.com webhook:**
+```json
+{
+  "fornavn": "Ola",
+  "bedrift": "Ola AS",
+  "telefon": "99887766",
+  "epost": "ola@ola.no",
+  "maal": "Vi vil automatisere tilbudsprosessen",
+  "kilde": "agentik.no",
+  "opprettet": "2026-04-24T..."
+}
+```
 
-### POST /api/webhook
-**Formål:** Fleksibel webhook-mottaker for leads fra kundeintegrasjoner
-
-**Autentisering:** API-nøkkel i header (`x-api-key`)
-
-**Input:** Fleksibel feltmapping — støtter mange navnekonvensjoner:
-- `firstName` / `first_name` / `name` / `fornavn`
-- `email` / `e-post`
-- `phone` / `telefon`
-- `company` / `firma`
-- `website` / `nettside`
-- `source` (leadsource-identifikator)
-
-**Output:**
-- Lagrer i Airtable med kildesporing
-- Sender SMS via Twilio
-- Sender Telegram-varsling til eier
+**Respons til klient:**
+- 200 `{ success: true }` ved OK
+- 400 hvis validering feiler
+- 500 hvis Make ikke svarer 2xx
 
 ## Miljøvariabler
 
 | Variabel | Tjeneste | Bruk |
 |----------|----------|------|
-| `AIRTABLE_TOKEN` | Airtable | API-tilgang |
-| `AIRTABLE_BASE_ID` | Airtable | Base-identifikator |
-| `AIRTABLE_TABLE_ID` | Airtable | Tabell-identifikator |
-| `TWILIO_ACCOUNT_SID` | Twilio | Konto-ID |
-| `TWILIO_AUTH_TOKEN` | Twilio | Autentisering |
-| `TELEGRAM_BOT_TOKEN` | Telegram | Bot-tilgang |
-| `TELEGRAM_CHAT_ID` | Telegram | Mottaker-chat |
-| `WEBHOOK_API_KEY` | Intern | Webhook-autentisering |
+| `MAKE_WEBHOOK_URL` | Make.com | Webhook-endepunkt (default hardkodet som fallback) |
 
-## Dashbord — teknisk spesifikasjon
-
-### Datamodell (Supabase)
-
-**8 tabeller:**
-
-1. **organizations** — Bedrifter som bruker Monstr
-2. **users** — Brukere (eiere, ledere, ansatte) koblet til org
-3. **departments** — Avdelinger innen en organisasjon
-4. **leads** — Alle innkommende henvendelser
-5. **lead_notes** — Notater lagt til av teammedlemmer
-6. **lead_events** — Tidslinje over alle hendelser (mottatt, SMS sendt, varslet, eskalert, fulgt opp)
-7. **escalation_settings** — Konfigurerbare eskaleringsnivåer per org/avdeling
-8. **sms_templates** — SMS-maler per avdeling med avsender-ID
-
-### Hovedfunksjoner
-
-**1. Oversiktside (Dashboard)**
-- 4 nøkkeltallskort: Dagens leads, gjennomsnittlig responstid, leads denne måneden, leads som venter
-- Sanntids lead-feed (sortert nyeste først) med fargekodede statuser
-- Linjegraf: Leads per dag siste 30 dager
-
-**2. Lead-detaljvisning (slide-over panel)**
-- Full kontaktinfo og henvendelsetekst
-- Tidslinje over alle hendelser
-- Handlingsknapper: "Fulgt opp", "Legg til notat", "Ikke relevant", "Tilordne annen"
-
-**3. Avdelingsytelse**
-- Leads per avdeling med oppfølgingsrate
-- Gjennomsnittlig oppfølgingstid per avdeling
-
-**4. Leadkilde-analyse**
-- Hvor leads kommer fra denne måneden (søyle/donut)
-- Prosentfordeling per kilde
-
-**5. Eskaleringssystem**
-- Lead inn → status "venter"
-- Ingen oppfølging etter X timer (standard 2t) → SMS til salgsleder, lead blir 🔴
-- Fortsatt ingen etter 2X timer (standard 4t) → SMS til daglig leder
-- Respekterer arbeidstider (kan deaktiveres utenfor 07-17 hverdager)
-
-**6. Innstillinger (kun admin)**
-- Teammedlem-håndtering
-- Rutingsregler (nøkkelord → avdeling)
-- SMS-malredigering per avdeling
-- Eskaleringterskler og varslingspreferanser
-- Arbeidstidkonfigurasjon
-
-### Sanntidsoppdateringer
-Supabase Realtime brukes for:
-- Nye leads dukker opp umiddelbart i feedet
-- Statusendringer reflekteres over alle tilkoblede klienter
-- Eskaleringsalarmer vises i sanntid
-
-### Autentisering og tilgang
-- Supabase Auth (e-post/passord)
-- Row Level Security (RLS) sikrer at bedrifter kun ser egne data
-- Roller: Admin (eier), Manager (leder), Member (ansatt)
+Få eksterne secrets — Attio-token og ruting lever i Make.
 
 ## Deploymentflyt
 
 ```
-Utvikler pusher til Git
+Utvikler pusher til main
         │
         ▼
 Vercel bygger automatisk (Vite build)
         │
-        ├── Preview deployment (branch/PR)
+        ├── Preview deployment (per branch/PR)
         │
-        └── Produksjon deployment (main branch)
+        └── Produksjonsdeployment (main)
               │
-              ├── monstr.no (landing page + SPA)
-              ├── /api/submit-lead (serverless function)
-              └── /api/webhook (serverless function)
+              ├── agentik.no (SPA)
+              └── /api/agentik-contact (Serverless Function)
 ```
 
-### vercel.json konfigurering
-- SPA rewrites: Alle ruter → `/index.html`
-- API rewrites: `/api/*` → serverless functions
-- Headers: CORS, cache-kontroll
+### vercel.json
+- SPA rewrite: alle ruter (bortsett fra `/api/*` og `/aiarendal`) → `/index.html`
+- `/aiarendal` → statisk HTML
 
-## Integrasjoner og automatisering
+## Hva vi bygger for kunder
 
-### Nåværende integrasjoner
-- **Airtable:** Alle leads lagres her, fungerer som CRM
-- **Twilio:** Sender SMS med bedriftens avsender-ID
-- **Telegram:** Sanntidsvarsling til bedriftseier
+Landingssiden er Agentik-presentasjonen. Selve tjenesten — AI-agenter — bygges per kundeprosjekt. Stack og referansearkitektur for agent-leveranser er dokumentert i `docs/TECH-DECISIONS.md` under "Agent-stack".
 
-### Planlagte integrasjoner
-- **Make.com / n8n:** Workflow-automatisering for komplekse flyter
-- **Supabase:** Database, auth og real-time for dashbordet
-- **OpenAI API:** AI-personaliserte SMS-svar (fremtidig utvidelse)
-- **Google Sheets:** Alternativ/enkel datautgang for kunder
-- **Slack:** Teamvarsling for kunder
+## Fremtidig utvidelse
+
+- **Presentation-deck** (`presentation/index.html`) — brukes på keynotes, vedlikeholdes som en del av landing-repoet
+- **/aiarendal** — statisk event-landing for AI Arendal, ruter til `public/aiarendal.html`
+- **Blogg/case studies** — ikke bygget ennå, men ville lagt til som egen rute når det er innhold verdt å publisere
