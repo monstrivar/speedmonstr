@@ -5,11 +5,14 @@
 // upserts into the `documents` table in the Agentik Supabase project.
 //
 // Usage:
-//   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... OPENAI_API_KEY=... \
+//   SUPABASE_URL=... SUPABASE_KEY=... OPENAI_API_KEY=... \
 //     node scripts/ingest-kb.mjs
 //
 // Or with .env (dotenv loads it automatically):
 //   node scripts/ingest-kb.mjs
+//
+// SUPABASE_KEY accepts either a service_role key or an anon key (works as long
+// as the documents table has RLS disabled, which is the default).
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -21,14 +24,16 @@ import 'dotenv/config';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 
-const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, OPENAI_API_KEY } = process.env;
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !OPENAI_API_KEY) {
-  console.error('Missing required env vars. Set SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, and OPENAI_API_KEY.');
+if (!SUPABASE_URL || !SUPABASE_KEY || !OPENAI_API_KEY) {
+  console.error('Missing required env vars. Set SUPABASE_URL, SUPABASE_KEY, and OPENAI_API_KEY.');
   process.exit(1);
 }
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: { persistSession: false },
 });
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
