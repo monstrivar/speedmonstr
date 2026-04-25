@@ -1170,6 +1170,16 @@ const ContactForm = () => {
             </p>
           )}
         </form>
+
+        <p className="reveal mt-8 text-center text-sm text-[#F5F2EC]/60">
+          Eller send oss en epost:{' '}
+          <a
+            href="mailto:hei@agentik.no"
+            className="text-[#F5F2EC] underline decoration-[#C4854C]/50 underline-offset-4 hover:decoration-[#C4854C] transition-colors"
+          >
+            hei@agentik.no
+          </a>
+        </p>
       </div>
     </section>
   );
