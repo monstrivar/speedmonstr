@@ -1,6 +1,6 @@
 # Agentik — Plattform og teknologi
 
-*Sist oppdatert: 2026-04-24*
+*Sist oppdatert: 2026-04-25*
 
 ## Systemarkitektur (landingsside)
 
@@ -22,22 +22,23 @@
 │   /api/agentik-contact    │
 │   (Vercel Function, Node) │
 └─────────────┬─────────────┘
-              │
+              │  (POST)
               ▼
 ┌───────────────────────────┐
-│   Make.com (EU2 region)   │
-│   Webhook: iedbsay1...    │
+│   N8N webhook             │
+│   "AI Form Lead Handler"  │
 └─────────────┬─────────────┘
               │
-              ▼
-┌───────────────────────────┐
-│   Attio CRM               │
-│   Lead opprettet +        │
-│   oppfølging trigget      │
-└───────────────────────────┘
+   ┌──────────┼──────────────┬─────────────┐
+   ▼          ▼              ▼             ▼
+┌──────┐  ┌──────┐    ┌──────────┐   ┌──────────┐
+│Attio │  │Gmail │    │  Slack   │   │ Supabase │
+│CRM   │  │auto- │    │ #social  │   │  (audit) │
+│      │  │svar  │    │  varsel  │   │          │
+└──────┘  └──────┘    └──────────┘   └──────────┘
 ```
 
-Agentik-landingssiden er med vilje en enkel SPA. All logikk rundt leadhåndtering skjer i Make.com slik at vi kan endre flyten (varsling, berikelse, scoring) uten å deploye kode.
+Lead-håndtering er konsolidert på N8N. Samme N8N-instans driver også `AI Email Auto-Reply with Knowledge Base` som svarer på innkommende e-post til hei@agentik.no — så når en lead svarer på auto-svaret vårt, fanger eksisterende e-postagent svaret og kjører booking-flowen automatisk.
 
 ## Teknisk stack
 
@@ -56,23 +57,38 @@ Agentik-landingssiden er med vilje en enkel SPA. All logikk rundt leadhåndterin
 | Teknologi | Rolle |
 |-----------|-------|
 | Node.js (Vercel Fluid Compute) | Runtime |
-| Vercel Serverless Functions | API-handler |
-| Make.com | Webhook-ruting til CRM |
-| Attio | CRM og lead-oppfølging |
+| Vercel Serverless Functions | API-handler (videresender til N8N) |
+
+### Lead-pipeline (N8N)
+| Komponent | Rolle |
+|-----------|-------|
+| Webhook trigger | Mottar skjema-payload fra Vercel-funksjonen |
+| Set node | Normaliserer felter (fornavn, bedrift, telefon, epost, maal, domain) |
+| Attio HTTP-noder | Oppretter person, bedrift, notat ("Skjema-innsending fra agentik.no — {{dato}}"), Sales Pipeline-oppføring |
+| Supabase | Audit-log i `email_log`-tabellen |
+| LangChain Agent | Genererer personlig auto-svar (gpt-5-mini + kunnskapsbase via Supabase vector store) |
+| Gmail | Sender svaret fra hei@agentik.no |
+| Slack | Varsler #social med lead-info og lenke til Attio |
+
+Workflow-id: `Zu6rLrT0bRlDeQb2`. Kjenner du SDK-koden? Den er i N8N — endres direkte i UI eller via `mcp__n8n__update_workflow`.
 
 ### Infrastruktur
 | Tjeneste | Rolle |
 |----------|-------|
 | Vercel | Hosting, edge-nettverk, serverless functions, automatisk deploy |
 | GitHub | Versjonskontroll, CI/CD trigger |
-| Make.com | Integrasjonsplattform (EU2-region, EU-lagret data) |
+| N8N (agentiknorway.app.n8n.cloud) | Lead-pipeline, e-postagent, kunnskapsbase |
 | Attio | CRM |
+| Supabase | Audit-log + kunnskapsbase (vector store) |
+| OpenAI | Auto-svar-modell (gpt-5-mini) + embeddings (text-embedding-3-small) |
+| Slack | Lead-varsler |
+| Gmail (Google Workspace) | hei@agentik.no |
 
 ## API-endepunkter
 
 ### POST /api/agentik-contact
 
-**Formål:** Mottar innsendinger fra kontaktskjemaet på agentik.no og videresender til Make → Attio.
+**Formål:** Mottar innsendinger fra kontaktskjemaet på agentik.no og videresender til N8N-webhooken.
 
 **Input:**
 ```json
@@ -88,8 +104,9 @@ Agentik-landingssiden er med vilje en enkel SPA. All logikk rundt leadhåndterin
 **Validering:**
 - `fornavn`, `bedrift`, `epost` påkrevd
 - Metode må være POST
+- `N8N_WEBHOOK_URL` må være satt i miljøet (returnerer 500 ellers)
 
-**Output til Make.com webhook:**
+**Output til N8N webhook:**
 ```json
 {
   "fornavn": "Ola",
@@ -98,22 +115,22 @@ Agentik-landingssiden er med vilje en enkel SPA. All logikk rundt leadhåndterin
   "epost": "ola@ola.no",
   "maal": "Vi vil automatisere tilbudsprosessen",
   "kilde": "agentik.no",
-  "opprettet": "2026-04-24T..."
+  "opprettet": "2026-04-25T..."
 }
 ```
 
 **Respons til klient:**
 - 200 `{ success: true }` ved OK
 - 400 hvis validering feiler
-- 500 hvis Make ikke svarer 2xx
+- 500 hvis N8N ikke svarer 2xx, eller hvis `N8N_WEBHOOK_URL` mangler
 
 ## Miljøvariabler
 
 | Variabel | Tjeneste | Bruk |
 |----------|----------|------|
-| `MAKE_WEBHOOK_URL` | Make.com | Webhook-endepunkt (default hardkodet som fallback) |
+| `N8N_WEBHOOK_URL` | N8N | Webhook-endepunkt til AI Form Lead Handler-workflowen |
 
-Få eksterne secrets — Attio-token og ruting lever i Make.
+`MAKE_WEBHOOK_URL` ble brukt frem til 2026-04-25 og er fjernet. Make-scenarioet `Agentik · kontaktskjema → Attio + auto-svar` er deaktivert. Kan slettes etter en ukes rollback-periode (~2026-05-02).
 
 ## Deploymentflyt
 

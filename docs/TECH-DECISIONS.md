@@ -18,9 +18,11 @@
 ## API-laget
 
 - **Vercel Serverless Functions** (Node.js) — `api/agentik-contact.js`. En eneste endpoint for kontaktskjemaet.
-- **Make.com → Attio** — kontaktskjemaet poster til Make-webhook (EU2-regionen), som ruter leadet inn i Attio CRM. Ingen direkte CRM-integrasjon i vår kode; Make gjør berikelsen.
+- **N8N → Attio + Gmail + Slack + Supabase** — kontaktskjemaet poster til N8N-webhooken `AI Form Lead Handler`. Workflowen oppretter person, bedrift, notat og Sales Pipeline-oppføring i Attio, genererer personlig auto-svar via gpt-5-mini med kunnskapsbase (Supabase vector store), sender svaret fra hei@agentik.no, og varsler #social i Slack. Hele flyten er detaljert i `docs/PLATTFORM-OG-TEKNOLOGI.md`.
 
-Hvorfor ikke direkte til Attio: Make gir oss muligheten til å endre flyten (legge til Slack-varsling, e-postbekreftelse, lead-scoring) uten å redeploye koden.
+Hvorfor N8N og ikke Make.com: lead-håndteringen krevde mer enn ren CRM-ruting — auto-svar med kunnskapsbase, Slack-varsler, Supabase audit, og samme behandling som inngående e-post (som allerede kjørte i N8N via `AI Email Auto-Reply with Knowledge Base`). Konsolidering på N8N betyr én plattform å vedlikeholde, og når en lead svarer på vårt auto-svar fanges svaret av eksisterende e-postagent som kjører booking-flowen automatisk.
+
+**Migreringsdato:** 2026-04-25 — se `docs/superpowers/specs/2026-04-25-skjema-til-n8n-design.md` for designrasjonale.
 
 ## Hosting
 
@@ -39,7 +41,7 @@ Dette er teknologiene vi vanligvis anbefaler og bygger med — ikke låst, men s
 | Orkestrering | Vercel Workflow / AI Gateway | Temporal for durable workflows |
 | Vektorsøk | Embed direkte via Gateway | Pinecone, Supabase pgvector |
 | Stemme-agent | Vapi eller Retell + Claude backend | Twilio Voice + egen stack |
-| Automasjon | Make.com | n8n, Zapier |
+| Automasjon | N8N | Make.com, Zapier |
 | CRM-integrasjon | Attio, HubSpot | Salesforce for større kunder |
 | Backend | Supabase | PostgreSQL + Vercel Functions |
 | Observability | LangSmith, Langfuse | PostHog, egen logging |

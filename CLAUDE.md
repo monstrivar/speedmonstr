@@ -20,7 +20,7 @@ speedmonstr/                  ← repo-navnet er fortsatt fra tidligere (Monstr-
 │       ├── Personvern.jsx
 │       └── Vilkar.jsx
 ├── api/
-│   └── agentik-contact.js    POST-endepunkt → Make.com → Attio
+│   └── agentik-contact.js    POST-endepunkt → N8N → Attio + Gmail + Slack
 ├── public/                   Statiske assets (hero-video, logoer, team, klientlogoer)
 │   ├── aiarendal.html        AI Arendal event-landing
 │   ├── skills/               Claude-skill-kort (PDF/MD)
@@ -46,7 +46,7 @@ speedmonstr/                  ← repo-navnet er fortsatt fra tidligere (Monstr-
 | SEO | react-helmet-async |
 | Fonter | Plus Jakarta Sans (body + heading) + JetBrains Mono (data/tall) |
 | API | Vercel Serverless Functions (Node.js) |
-| Lead-flyt | Kontaktskjema → `/api/agentik-contact` → Make.com (EU2) → Attio CRM |
+| Lead-flyt | Kontaktskjema → `/api/agentik-contact` → N8N webhook → Attio + Gmail auto-svar + Slack-varsel + Supabase audit |
 | Hosting | Vercel (agentik.no) |
 
 ## Designsystem
@@ -73,10 +73,16 @@ npm run lint             # ESLint
 
 1. Bruker fyller ut skjema på `/` (NySide.jsx)
 2. POST til `/api/agentik-contact` med `{ fornavn, bedrift, telefon, epost, maal }`
-3. API videresender til `MAKE_WEBHOOK_URL` (standard: `hook.eu2.make.com/...`) med `kilde: "agentik.no"`
-4. Make.com router leadet inn i Attio CRM og sender eventuelle varsler
+3. API videresender til `N8N_WEBHOOK_URL` med `kilde: "agentik.no"`
+4. N8N-workflowen `AI Form Lead Handler` (id: `Zu6rLrT0bRlDeQb2`):
+   - Oppretter person + bedrift + notat ("Skjema-innsending fra agentik.no — {{dato}}") + Sales Pipeline-oppføring i Attio
+   - Genererer personlig auto-svar (gpt-5-mini + kunnskapsbase) og sender fra hei@agentik.no
+   - Varsler #social i Slack med lead-info og lenke til Attio
+   - Logger til `email_log`-tabell i Supabase
 
-Eneste miljøvariabel: `MAKE_WEBHOOK_URL` (har fallback, men settes i Vercel).
+Når lead-en svarer på auto-svaret, fanges svaret av eksisterende `AI Email Auto-Reply with Knowledge Base`-workflow som kjører booking-flowen automatisk (kalender-sjekk + Slack-godkjenning + invitasjon).
+
+Eneste miljøvariabel: `N8N_WEBHOOK_URL` (settes i Vercel, ingen fallback). Detaljer i `docs/PLATTFORM-OG-TEKNOLOGI.md`.
 
 ## Konvensjoner
 
