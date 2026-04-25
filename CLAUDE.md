@@ -124,6 +124,7 @@ Lokasjon: Skien og Arendal.
 | `docs/agentik/INNHOLDSSTRATEGI.md` | Innholds- og markedsføringsstrategi |
 | `docs/MERKEVARE-OG-DESIGN.md` | Merkevareidentitet, farger, typografi, designsystem |
 | `docs/PLATTFORM-OG-TEKNOLOGI.md` | Systemarkitektur, API, miljøvariabler, deployment |
+| `docs/automasjoner/README.md` | Live N8N-workflows: ID-er, credentials, felles infrastruktur (Attio/Supabase/Slack/OpenAI) |
 | `docs/TECH-DECISIONS.md` | Tech-stack og agent-referansearkitektur |
 | `docs/CONVENTIONS.md` | Kodestandard, filstruktur, git-praksis |
 | `docs/juridisk/DATABEHANDLERAVTALE.md` | Databehandleravtale-mal |
