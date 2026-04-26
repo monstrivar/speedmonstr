@@ -500,7 +500,7 @@ const RiskReversal = () => (
 );
 ```
 
-- [ ] **Step 2: Replace with garanti teaser**
+- [ ] **Step 2: Replace with 90-dagers verdigaranti teaser**
 
 Change the section to:
 
@@ -510,16 +510,19 @@ const RiskReversal = () => (
     <div className="max-w-3xl mx-auto text-center">
       <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mx-auto mb-8" />
       <h2 className="reveal font-agentik text-[clamp(1.6rem,3.5vw,2.5rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-6">
-        Betaler seg selv-garantien
+        90-dagers verdigaranti
       </h2>
-      <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-6">
-        Innen 90 dager har vi kartlagt, prioritert og implementert AI-tiltak med dokumentert verdipotensial som minst tilsvarer investeringen deres. Hvis ikke, jobber vi videre uten månedlig honorar til verdien er dokumentert.
+      <p className="reveal font-sans text-[#1A1F25]/65 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-5">
+        Vi dokumenterer og implementerer AI-tiltak med <strong className="text-[#1A1F25]">minst 2x investeringen i årlig verdipotensial</strong> — eller jobber videre uten månedlig honorar til vi gjør det.
+      </p>
+      <p className="reveal font-agentik italic text-[#1A6B6D] text-sm md:text-base mb-8">
+        Garantien er gulvet. Business caset er målet.
       </p>
       <Link
         to="/ai-partner"
         className="reveal inline-flex items-center gap-2 font-heading font-semibold text-[14px] text-[#1A6B6D] hover:text-[#1A1F25] transition-colors"
       >
-        Les mer om garantien <ArrowRight size={14} />
+        Les hele garantien <ArrowRight size={14} />
       </Link>
     </div>
   </section>
@@ -806,9 +809,9 @@ const AiPartner = () => {
     <div className="min-h-screen bg-[#F5F2EC]">
       <Helmet>
         <title>AI-Partner — fast AI-rådgiver for norske bedrifter | Agentik</title>
-        <meta name="description" content="AI-Partner: fast månedlig avtale med AI-rådgiver og dev-team. 39 000 kr/mnd, ingen binding etter 90 dager. Betaler seg selv-garanti inkludert." />
+        <meta name="description" content="AI-Partner: fast månedlig avtale med AI-rådgiver og dev-team. 39 000 kr/mnd, ingen binding etter 90 dager. 90-dagers verdigaranti — minst 2x investeringen i årlig verdipotensial." />
         <meta property="og:title" content="AI-Partner | Agentik" />
-        <meta property="og:description" content="Fra AI-nysgjerrighet til AI i drift. Fast månedlig avtale, ingen lang binding, garanti inkludert." />
+        <meta property="og:description" content="Fra AI-nysgjerrighet til AI i drift. 90-dagers verdigaranti — minst 2x investeringen i årlig verdipotensial." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://agentik.no/ai-partner" />
         <link rel="canonical" href="https://agentik.no/ai-partner" />
@@ -930,20 +933,53 @@ const AiPartner = () => {
           </div>
         </section>
 
-        {/* Garantien */}
+        {/* Garantien — 90-dagers verdigaranti */}
         <section className="mb-16 bg-gradient-to-br from-[#1A6B6D]/8 to-[#4FC3B0]/5 border border-[#1A6B6D]/20 rounded-2xl p-6 md:p-10">
           <div className="font-data text-[10px] text-[#1A6B6D] uppercase tracking-[0.2em] font-semibold mb-3">
             ★ Inkludert i alle partneravtaler
           </div>
           <h2 className="font-agentik font-bold text-2xl md:text-3xl text-[#1A1F25] tracking-tight mb-5">
-            Betaler seg selv-garantien
+            90-dagers verdigaranti
           </h2>
-          <p className="font-sans text-[#1A1F25] text-lg md:text-xl leading-relaxed mb-5">
-            Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI- og automasjonstiltak med et dokumentert verdipotensial som <strong>minst tilsvarer investeringen deres i perioden</strong>. Hvis vi ikke klarer det, jobber vi videre uten månedlig honorar til verdien er dokumentert.
+          <p className="font-sans text-[#1A1F25] text-lg md:text-xl leading-relaxed mb-4">
+            Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI- og automasjonstiltak med dokumentert årlig verdipotensial tilsvarende <strong>minst 2x investeringen deres i perioden</strong>.
           </p>
-          <p className="font-sans italic text-[#1A1F25]/65 text-sm md:text-base leading-relaxed">
-            Verdien måles i spart tid, raskere oppfølging, redusert manuelt arbeid, færre feil eller økt kapasitet.
+          <p className="font-sans text-[#1A1F25] text-base md:text-lg leading-relaxed mb-5">
+            Hvis vi ikke klarer det, jobber vi videre uten månedlig honorar til verdien er dokumentert.
           </p>
+          <p className="font-sans italic text-[#1A1F25]/65 text-sm md:text-base leading-relaxed mb-6">
+            Verdien kan komme fra spart tid, frigjort kapasitet, raskere oppfølging, færre manuelle steg, færre feil eller bedre utnyttelse av eksisterende ressurser.
+          </p>
+          <div className="border-t border-[#1A6B6D]/20 pt-5">
+            <p className="font-agentik italic text-lg md:text-xl text-[#1A1F25] text-center">
+              Garantien er gulvet. Business caset er målet.
+            </p>
+          </div>
+        </section>
+
+        {/* Vilkår for garantien */}
+        <section className="mb-16">
+          <h2 className="font-agentik font-bold text-2xl md:text-3xl text-[#1A1F25] tracking-tight mb-5">
+            Vilkår for at garantien gjelder
+          </h2>
+          <p className="font-sans text-[#1A1F25]/70 text-base leading-relaxed mb-5">
+            Verdiarbeidet krever at dere er aktive partnere. Garantien gjelder når dere:
+          </p>
+          <ul className="space-y-3 text-[#1A1F25]/75 text-base leading-relaxed">
+            {[
+              'Gir nødvendige systemtilganger innen avtalt tid',
+              'Stiller med én intern kontaktperson som eier samarbeidet',
+              'Deltar på avtalte møter og workshops',
+              'Gir tilbakemelding innen avtalt frist',
+              'Tar i bruk løsningene som er avtalt',
+              'Har nok volum eller repetitive prosesser til at verdipotensialet er realistisk',
+            ].map((item, i) => (
+              <li key={i} className="flex gap-3 items-start">
+                <CheckCircle size={20} className="text-[#1A6B6D] flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* Pris */}
@@ -981,17 +1017,23 @@ const AiPartner = () => {
           </ul>
         </section>
 
-        {/* For hvem */}
+        {/* For hvem passer dette */}
         <section className="mb-16">
-          <h2 className="font-agentik font-bold text-2xl md:text-3xl text-[#1A1F25] tracking-tight mb-6">
-            For hvem passer dette?
+          <h2 className="font-agentik font-bold text-2xl md:text-3xl text-[#1A1F25] tracking-tight mb-5">
+            For hvem passer AI-Partner?
           </h2>
+          <p className="font-sans text-[#1A1F25]/70 text-base md:text-lg leading-relaxed mb-5">
+            AI-Partner passer for bedrifter som allerede har manuelle prosesser, repeterende oppgaver og nok volum til at små forbedringer kan gi stor årlig verdi.
+          </p>
+          <p className="font-sans text-[#1A1F25]/70 text-base md:text-lg leading-relaxed mb-5">
+            Konkret betyr det dere som:
+          </p>
           <ul className="space-y-3 text-[#1A1F25]/75 text-base md:text-lg leading-relaxed">
             {[
-              'Bedrifter med 5–100 ansatte som bruker mye tid på manuelle prosesser',
-              'Ledere som vil bruke AI strategisk, men ikke vil ansette en AI-spesialist',
-              'Selskaper som har prøvd AI-verktøy uten å få det inn i fast drift',
-              'Bedrifter som vil ha trygghet på at AI faktisk gir målbar effekt',
+              'Bruker mye tid på manuelle steg som kan systematiseres',
+              'Får inn nok henvendelser, leads eller bestillinger til at automasjon flytter nålen',
+              'Vil bruke AI strategisk, men ikke vil ansette en intern AI-spesialist',
+              'Har en ledelse som kan ta beslutninger og prioritere internt',
             ].map((item, i) => (
               <li key={i} className="flex gap-3 items-start">
                 <CheckCircle size={20} className="text-[#1A6B6D] flex-shrink-0 mt-1" />
@@ -999,6 +1041,23 @@ const AiPartner = () => {
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* Når passer det ikke */}
+        <section className="mb-16 bg-[#1A1F25]/4 border-l-3 border-[#1A6B6D] rounded-r-xl p-6 md:p-7">
+          <h2 className="font-agentik font-bold text-xl md:text-2xl text-[#1A1F25] tracking-tight mb-4">
+            Når passer det ikke?
+          </h2>
+          <p className="font-sans text-[#1A1F25]/75 text-base leading-relaxed mb-4">
+            Hvis vi etter en samtale ikke ser realistisk potensial for minst 2x årlig verdi, anbefaler vi heller:
+          </p>
+          <ul className="space-y-2 text-[#1A1F25]/75 text-base leading-relaxed mb-4">
+            <li>• En <strong>AI Workshop</strong> (fra 25 000 kr) for å bygge intern kompetanse</li>
+            <li>• Et <strong>mindre forprosjekt</strong> for å teste én konkret løsning før dere binder dere</li>
+          </ul>
+          <p className="font-sans italic text-[#1A1F25]/65 text-sm md:text-base leading-relaxed">
+            Bedre å være ærlig før enn etter.
+          </p>
         </section>
 
         {/* FAQ */}
@@ -1009,12 +1068,28 @@ const AiPartner = () => {
           <div className="space-y-5">
             {[
               {
-                q: 'Hva hvis vi vil avslutte etter 90 dager?',
-                a: 'Da gjør dere det. Etter 90-dagers Sprint er det månedlig oppsigelse — ingen lang binding, ingen lock-in.',
+                q: 'Skal dere spare oss 240 000 kr på 90 dager?',
+                a: 'Ikke nødvendigvis realisert cash på 90 dager. Det vi garanterer er at vi innen 90 dager skal ha implementert tiltak med dokumentert årlig verdipotensial tilsvarende minst 2x investeringen. Det kan være spart tid, frigjort kapasitet, raskere oppfølging, færre manuelle steg eller færre feil. Målet er at AI-arbeidet skal gi økonomisk mening — ikke bare bli en kul demo.',
               },
               {
-                q: 'Hva skjer hvis garantien ikke innfris?',
-                a: 'Vi jobber videre uten månedlig honorar til vi har dokumentert verdien. Internt har vi en cap på 90 ekstra dager fritt arbeid før vi refunderer siste faktura — dette skrives inn i kontrakten på Dag 1.',
+                q: 'Hvordan beregner dere verdien?',
+                a: 'Vi lager en value baseline i starten. Da ser vi på hvor mye tid som brukes på konkrete prosesser i dag, hvem som gjør jobben, hvor ofte det skjer, intern timekost og hva som kan forbedres. Eksempel: Hvis vi frigjør 6 timer i uka hos ansatte med intern kost på 800 kr/time, er det 6 × 800 × 52 = 249 600 kr i årlig verdipotensial.',
+              },
+              {
+                q: 'Hva skjer hvis dere ikke klarer garantien?',
+                a: 'Da stopper vi faktureringen av månedlig honorar og jobber videre uten ekstra månedlig kostnad til vi har dokumentert verdien. Det er ikke en pengene-tilbake-garanti, men en leveranse- og verdigaranti. Internt har vi en cap på 90 ekstra dager fritt arbeid før vi refunderer siste faktura — dette skrives inn i kontrakten på Dag 1.',
+              },
+              {
+                q: 'Hva om vi ikke får tatt løsningene i bruk internt?',
+                a: 'Da må vi være ærlige: verdien kommer først når løsningene tas i bruk. Derfor krever sprinten at dere har én intern kontaktperson, gir oss nødvendige tilganger og deltar i korte avklaringer underveis. Hvis dere ikke ønsker å endre arbeidsflyter, bør dere ikke kjøpe en AI-Partner.',
+              },
+              {
+                q: 'Hvorfor ikke bare gjøre dette selv?',
+                a: 'Det kan dere absolutt gjøre hvis dere har intern kapasitet, teknisk kompetanse og noen som eier implementeringen. Utfordringen vi ofte ser er at AI blir liggende som enkeltstående tester og ikke kommer inn i arbeidsflytene. Vår jobb er å prioritere riktig, bygge det som gir mest verdi først, og sørge for at det faktisk kommer i drift.',
+              },
+              {
+                q: 'Hva hvis vi vil avslutte etter 90 dager?',
+                a: 'Da gjør dere det. Etter 90-dagers Sprint er det månedlig oppsigelse — ingen lang binding, ingen lock-in.',
               },
               {
                 q: 'Hvor mange timer dekker 39 000 kr/mnd?',
@@ -1023,10 +1098,6 @@ const AiPartner = () => {
               {
                 q: 'Kan vi få AI-Revisjonen alene, uten partneravtale?',
                 a: 'Nei. Vi har sluttet å selge revisjon som standalone fordi det skaper "rapport som havner i skuffen"-problemet. Revisjonen er inkludert i AI-Partner.',
-              },
-              {
-                q: 'Hvilke verktøy bruker dere?',
-                a: 'Det avhenger av problemet — OpenAI, Anthropic Claude, n8n, Make, Supabase, Attio, custom dev. Vi velger riktig verktøy for hver oppgave, ikke det motsatte.',
               },
               {
                 q: 'Eier vi løsningene dere bygger?',
@@ -1045,13 +1116,13 @@ const AiPartner = () => {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* CTA — uforpliktende samtale */}
         <section className="text-center pt-8 border-t border-[#1A1F25]/10">
-          <p className="font-agentik italic text-lg md:text-xl text-[#1A1F25]/75 mb-2">
-            2 av 3 Founding-spots er igjen.
+          <p className="font-agentik italic text-lg md:text-xl text-[#1A1F25]/75 mb-3">
+            Ta en uforpliktende samtale med oss
           </p>
-          <p className="font-sans text-[#1A1F25]/60 text-base mb-8 max-w-md mx-auto">
-            Ta kontakt for en kort samtale, så ser vi om dette passer dere.
+          <p className="font-sans text-[#1A1F25]/60 text-base mb-8 max-w-lg mx-auto leading-relaxed">
+            Vi bruker første samtale på å se om det finnes 2x verdipotensial hos dere. Hvis ikke, sier vi det rett ut og foreslår et bedre alternativ — Workshop eller et mindre forprosjekt.
           </p>
           <Link
             to="/#contact"
@@ -1059,9 +1130,12 @@ const AiPartner = () => {
           >
             <span className="btn-layer bg-[#1A1F25]"></span>
             <span className="btn-text flex items-center gap-2">
-              Snakk med oss <ArrowRight size={16} />
+              Book en samtale <ArrowRight size={16} />
             </span>
           </Link>
+          <p className="font-data text-[10px] text-[#1A1F25]/40 uppercase tracking-[0.15em] mt-6">
+            2 av 3 Founding-spots igjen
+          </p>
         </section>
 
       </article>
@@ -1176,7 +1250,7 @@ In `src/pages/AiPartner.jsx`, find the `<Helmet>` block. Add the schema:
       url: 'https://agentik.no',
     },
     serviceType: 'AI Consulting Retainer',
-    description: 'Fast månedlig avtale med AI-rådgiver og dev-team. Kartlegging, bygging og forbedring av AI-løsninger med Betaler seg selv-garanti.',
+    description: 'Fast månedlig avtale med AI-rådgiver og dev-team. Kartlegging, bygging og forbedring av AI-løsninger. 90-dagers verdigaranti — minst 2x investeringen i årlig verdipotensial.',
     areaServed: { '@type': 'Country', name: 'Norway' },
     offers: {
       '@type': 'Offer',

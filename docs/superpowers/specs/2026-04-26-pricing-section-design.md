@@ -29,14 +29,27 @@ Nye landing pages bygges for SEO og selvstendig kunde-utforsking. Eksisterende s
   4. Bygging, vedlikehold og videreutvikling av AI-løsninger
   5. Direkte Slack-tilgang for løpende rådgivning
   6. Opplæring av teamet i de nye løsningene
-- **"Betaler seg selv"-garantien (kun på /ai-partner-siden, ikke på pricing-kortet):**
-  > **Betaler seg selv-garanti**
+- **"90-dagers verdigaranti" (vises både på pricing-kort som teaser, og full versjon på /ai-partner):**
+  > **90-dagers verdigaranti**
   >
-  > Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI-/automasjonstiltak med et dokumentert verdipotensial som minst tilsvarer investeringen deres i perioden. Hvis vi ikke klarer det, jobber vi videre uten månedlig honorar til verdien er dokumentert.
+  > Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI- og automasjonstiltak med dokumentert årlig verdipotensial tilsvarende **minst 2x investeringen deres i perioden**.
   >
-  > *Verdien måles i spart tid, raskere oppfølging, redusert manuelt arbeid, færre feil eller økt kapasitet.*
+  > Hvis vi ikke klarer det, jobber vi videre uten månedlig honorar til verdien er dokumentert.
   >
-  > **Kontraktsmessig tids-cap (intern, ikke nevnt på siden):** maks 90 ekstra dager fritt arbeid. Etter det refunderes siste faktura. Definisjon av "dokumentert" skrives inn i kontrakt på Dag 1.
+  > *Verdien kan komme fra spart tid, frigjort kapasitet, raskere oppfølging, færre manuelle steg, færre feil eller bedre utnyttelse av eksisterende ressurser.*
+  >
+  > **Punchline:** "Garantien er gulvet. Business caset er målet."
+
+- **Vilkår for at garantien gjelder (vises på /ai-partner i egen seksjon):**
+  Garantien gjelder når kunden:
+  - gir nødvendige systemtilganger innen avtalt tid
+  - stiller med én intern kontaktperson
+  - deltar på avtalte møter/workshops
+  - gir tilbakemelding innen avtalt frist
+  - tar i bruk løsningene som er avtalt
+  - har nok volum/repetitive prosesser til at verdipotensialet er realistisk
+
+- **Kontraktsmessig tids-cap (intern, ikke nevnt på siden):** maks 90 ekstra dager fritt arbeid. Etter det refunderes siste faktura. Definisjon av "dokumentert" og "verdipotensial" skrives inn i kontrakt på Dag 1.
 
 ### AI Workshop (sidetilbud)
 
@@ -129,7 +142,9 @@ Lås godkjent i visuell brainstorm v7. Kort sammendrag av komponenten:
 5. **Garantien vår** — full tekst som over, fremhevet seksjon
 6. **Pris** — 39k/mnd Founding (3 spots), 49k/mnd etter
 7. **Hva som IKKE er inkludert** — ærlighet om grenser (software-kostnader, eksterne API-kostnader, ekstreme prosjekter prises separat)
-8. **For hvem passer dette?** — målgruppe-beskrivelse
+8. **For hvem passer dette?** — kvalifiserings-framing: passer for bedrifter med manuelle prosesser, repeterende oppgaver og nok volum
+9. **Når passer det ikke?** — ærlig: hvis ikke 2x potensial → anbefal heller Workshop eller mindre forprosjekt
+10. **CTA** — "uforpliktende samtale" framing, ikke commit-to-buy
 9. **FAQ** — 7–10 spørsmål: oppsigelse, scope, software-kostnader, om vi feiler garantien, oppskalering, etc.
 10. **CTA** — kontaktskjema-link (`#contact` på forsiden) eller calendly-style booking-link
 
