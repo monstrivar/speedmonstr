@@ -20,7 +20,7 @@ Målgruppen er norsk næringsliv som har sett gjennom AI-hypen. Designet skal si
 | **Copper** | Warm Amber | `#C4854C` | CTA og konverteringspunkter (sparsomt) |
 
 ### Fargebruk i praksis
-- **Copper** er eksklusivt for handling: primær-CTA, konverteringsknapper, "bestill audit"-momenter. Aldri dekorativt.
+- **Copper** er eksklusivt for handling: primær-CTA, konverteringsknapper, "bli AI-Partner"-momenter. Aldri dekorativt.
 - **Petrol** er brandens signaturfarge på lys bakgrunn — bruk for aksenter, linjer, ikoner, sekundære CTA.
 - **Signal** er petrol-søsteren for mørk bakgrunn — bruk for "kjører nå"-indikatorer og subtile highlights.
 - **Cream-mot-Deep Slate** er hovedkontrasten. Varmt, ikke klinisk — unngå ren hvit og ren svart.
@@ -89,7 +89,7 @@ Plus Jakarta Sans bærer hele stemmen. Ingen serif-kontrast, ingen display-font 
 1. **Navbar** — Flytende pille-nav, kontekst-avhengig farge (mørk bakgrunn på hero, cream når scrolled)
 2. **Hero** (mørk) — Rotating-word-overskrift, ambient video, copper CTA
 3. **Live agents** — Animerte agent-eksempler som demonstrerer at Agentik kjører, ikke bare snakker
-4. **Prosess** — 30-dagers audit → implementering, fast pris, tydelige milepæler
+4. **Prosess** — Kartlegg → Bygg → Forbedre, månedlig partnerskap, 90-dagers verdigaranti
 5. **Resultater / Proof** — Kundecases og målbare utfall
 6. **Team** — Ivar og Ole Kristian, varmt og personlig
 7. **Kontaktskjema** — Fornavn, bedrift, telefon, epost, mål (kort)

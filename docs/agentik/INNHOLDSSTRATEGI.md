@@ -73,7 +73,7 @@ Si når AI ikke er svaret. Si når noe er vanskelig. Si når vi ikke vet. Det by
 - 800-1500 ord
 - Tydelig intro som svarer "hvorfor skal jeg lese dette?"
 - Praktiske eksempler og skjermbilder
-- CTA til kontaktskjema eller audit nederst
+- CTA til kontaktskjema eller AI-Partner-siden nederst
 
 ### E-post — Støttekanal
 
@@ -144,7 +144,7 @@ Si når AI ikke er svaret. Si når noe er vanskelig. Si når vi ikke vet. Det by
 - Generiske "5 ways AI will change your business"-poster
 - Nyhetsjakt uten egen vinkling ("OpenAI lanserte X" — unless vi har noe å si om det)
 - Teknisk innhold uten forretningsrelevans
-- Innhold som selger direkte ("Book en audit NÅ!")
+- Innhold som selger direkte ("Bli AI-Partner NÅ!")
 - Innhold på engelsk (foreløpig — norsk er strategisk differensiator)
 
 ---

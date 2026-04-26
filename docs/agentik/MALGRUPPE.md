@@ -60,9 +60,9 @@ Norske bedrifter med 5-500 ansatte. Ledere som vet at AI er viktig, men som mang
 |-----------|------|
 | "Det er for dyrt" | "Hva koster det å ikke gjøre noe? Hvis én forbedring sparer 10 timer/uke, er det spart på 2 måneder." |
 | "Vi har prøvd ChatGPT, det fungerte ikke" | "ChatGPT er et verktøy. Uten strategi er det som å kjøpe en drill uten å vite hvor du skal bore." |
-| "Vi har ikke tid til dette nå" | "En audit tar 4-5 timer av din tid fordelt over 30 dager. Alt annet gjør vi." |
+| "Vi har ikke tid til dette nå" | "AI-Revisjonen krever 4–5 timer av din tid fordelt over de første 2 ukene. Alt annet gjør vi." |
 | "AI passer ikke for vår bransje" | "Det sa de om internett også. Her er 3 eksempler fra din bransje." |
-| "Hva om det ikke gir resultater?" | "Vi inkluderer et oppfølgingsmøte etter 60 dager. Hvis ingen av anbefalingene har gitt verdi, snakker vi om det." |
+| "Hva om det ikke gir resultater?" | "Vi har 90-dagers verdigaranti: dokumentert verdipotensial som er minst 2x investeringen, eller jobber vi videre uten honorar til vi når dit." |
 
 ---
 
@@ -133,7 +133,7 @@ Norske bedrifter med 5-500 ansatte. Ledere som vet at AI er viktig, men som mang
 
 ### Smertepoeng
 
-1. **Begrenset budsjett.** Kan ikke bruke 150k på en audit.
+1. **Begrenset budsjett.** Trenger forutsigbar månedlig kostnad, ikke store engangsinvesteringer.
 2. **Kapasitetsmangel.** Alle gjør alt — ingen har tid til å bli AI-ekspert.
 3. **Rask vekst.** Trenger løsninger som skalerer med dem.
 
@@ -161,7 +161,7 @@ Norske bedrifter med 5-500 ansatte. Ledere som vet at AI er viktig, men som mang
 ## Geografisk fokus
 
 1. **Fase 1:** Stavanger-regionen og omegn (lokal tilstedeværelse, nettverk)
-2. **Fase 2:** Hele Norge (remote audit og workshops fungerer)
+2. **Fase 2:** Hele Norge (AI-Partner og workshops kan leveres remote)
 3. **Fase 3:** Skandinavia (om tjenestene kan leveres på engelsk/svensk/dansk)
 
 ---
