@@ -501,6 +501,30 @@ const MetricsStrip = () => {
 // SPRINT PHASES — 90-Day AI Partner Sprint
 // ─────────────────────────────────────────────────────────────
 const SprintPhases = () => {
+  const ref = useRef(null);
+  const lineRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      if (!lineRef.current) return;
+      gsap.fromTo(
+        lineRef.current,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: lineRef.current,
+            start: 'top 75%',
+            end: 'bottom 60%',
+            scrub: 0.6,
+          },
+        }
+      );
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+
   const phases = [
     {
       n: '01',
@@ -551,6 +575,7 @@ const SprintPhases = () => {
   return (
     <section
       id="sprint"
+      ref={ref}
       className="reveal-section relative py-28 md:py-40 px-6 overflow-hidden"
       style={{ background: '#F5F2EC' }}
     >
@@ -571,10 +596,11 @@ const SprintPhases = () => {
 
         {/* Phase timeline */}
         <div className="relative">
-          {/* Vertical line for desktop */}
+          {/* Vertical line for desktop — scrub-tied scaleY */}
           <div
-            className="hidden md:block absolute left-0 top-12 bottom-12 w-px bg-gradient-to-b from-[#1A6B6D]/40 via-[#1A6B6D]/20 to-transparent"
-            style={{ left: 'calc(8.33% - 0.5px)' }}
+            ref={lineRef}
+            className="hidden md:block absolute top-12 bottom-12 w-px bg-gradient-to-b from-[#1A6B6D]/50 via-[#1A6B6D]/25 to-transparent"
+            style={{ left: '8.33%', transformOrigin: 'top center' }}
             aria-hidden="true"
           />
 
@@ -910,6 +936,7 @@ const CaseStudy = () => {
 const ValueGuarantee = () => {
   const ref = useRef(null);
   const [animatedNum, setAnimatedNum] = useState(0);
+  const [pulse, setPulse] = useState(false);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -924,6 +951,7 @@ const ValueGuarantee = () => {
             duration: 2.2,
             ease: 'power2.out',
             onUpdate: () => setAnimatedNum(Math.round(obj.v)),
+            onComplete: () => setPulse(true),
           });
         },
       });
@@ -1001,7 +1029,11 @@ const ValueGuarantee = () => {
                 <p className="font-data text-[10px] uppercase tracking-[0.2em] text-[#4FC3B0] mb-3">
                   Årlig verdipotensial
                 </p>
-                <p className="font-agentik font-bold text-[#4FC3B0] text-3xl md:text-4xl tracking-tight tabular-nums">
+                <p
+                  className={`font-agentik font-bold text-[#4FC3B0] text-3xl md:text-4xl tracking-tight tabular-nums ${
+                    pulse ? 's2-pulse-glow' : ''
+                  }`}
+                >
                   {animatedNum.toLocaleString('nb-NO')}
                   <span className="text-[#4FC3B0]/50 text-lg ml-1">kr</span>
                 </p>
@@ -2047,6 +2079,14 @@ export default function Side2() {
           .font-agentik{font-family:'Plus Jakarta Sans',sans-serif}
           .agentik-page,.agentik-page .font-heading,.agentik-page .font-sans{font-family:'Plus Jakarta Sans',sans-serif}
           .agentik-page .font-data{font-family:'JetBrains Mono',ui-monospace,monospace}
+          @keyframes s2-pulse-glow {
+            0%, 100% { text-shadow: 0 0 0 rgba(79,195,176,0); }
+            50% { text-shadow: 0 0 32px rgba(79,195,176,0.55); }
+          }
+          .agentik-page .s2-pulse-glow {
+            animation: s2-pulse-glow 2.4s ease-in-out 1;
+            animation-delay: 0.3s;
+          }
         `}</style>
       </Helmet>
 
