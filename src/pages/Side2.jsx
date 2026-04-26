@@ -253,6 +253,39 @@ const Hero = () => {
 };
 
 // ─────────────────────────────────────────────────────────────
+// LOGO STRIP — instant credibility right after hero
+// ─────────────────────────────────────────────────────────────
+const LOGO_STRIP = [
+  { src: '/clients/droptech.png', alt: 'Droptech' },
+  { src: '/clients/brainwaves.png', alt: 'Brainwaves' },
+  { src: '/clients/salesup.png', alt: 'SalesUp' },
+  { src: '/clients/Badogbygg.webp', alt: 'Bad og Bygg' },
+  { src: '/clients/kick-trening.png', alt: 'Kick Trening' },
+  { src: '/clients/imitch.png', alt: 'iMitch' },
+  { src: '/clients/nes.png', alt: 'NES' },
+];
+
+const LogoStrip = () => (
+  <section className="reveal-section py-14 md:py-16 px-6 border-b border-[#1A1F25]/8" style={{ background: '#F5F2EC' }}>
+    <div className="max-w-6xl mx-auto">
+      <p className="reveal text-center font-data text-[10px] uppercase tracking-[0.28em] text-[#1A1F25]/40 mb-9">
+        Selskaper vi har jobbet med
+      </p>
+      <div className="reveal flex flex-wrap justify-center items-center gap-x-10 gap-y-7 md:gap-x-14">
+        {LOGO_STRIP.map((logo) => (
+          <img
+            key={logo.alt}
+            src={logo.src}
+            alt={logo.alt}
+            className="h-7 md:h-8 w-auto object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+// ─────────────────────────────────────────────────────────────
 // PROBLEM — "De fleste tester AI. Få får det i drift."
 // ─────────────────────────────────────────────────────────────
 const Problem = () => {
@@ -381,6 +414,85 @@ const NewApproach = () => {
         <p className="reveal mt-16 font-agentik italic text-[#E8E4DC]/75 text-2xl md:text-3xl tracking-tight max-w-3xl leading-[1.3]">
           Ingen AI uten eier. Ingen eier uten ansvar.<br className="hidden md:block" /> <span className="text-[#4FC3B0]">Ingen ansvar uten resultat.</span>
         </p>
+      </div>
+    </section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
+// METRICS STRIP — aggregated proof
+// NOTE: Tall er placeholder — bytt med faktiske aggregater før prod.
+// ─────────────────────────────────────────────────────────────
+const MetricsStrip = () => {
+  const ref = useRef(null);
+  const [counts, setCounts] = useState({ hours: 0, systems: 0, value: 0 });
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: ref.current,
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+          const obj = { hours: 0, systems: 0, value: 0 };
+          gsap.to(obj, {
+            hours: 12480,
+            systems: 47,
+            value: 8.4,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: () =>
+              setCounts({
+                hours: Math.round(obj.hours),
+                systems: Math.round(obj.systems),
+                value: Number(obj.value.toFixed(1)),
+              }),
+          });
+        },
+      });
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section
+      ref={ref}
+      className="reveal-section relative py-20 md:py-24 px-6 border-y border-[#E8E4DC]/8"
+      style={{ background: '#0E1114' }}
+    >
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] rounded-full opacity-20 blur-[120px] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, #1A6B6D 0%, transparent 70%)' }}
+      />
+      <div className="relative max-w-5xl mx-auto">
+        <p className="reveal text-center font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]/70 mb-10">
+          Så langt for våre kunder
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-10 sm:gap-y-0">
+          <div className="reveal text-center">
+            <p className="font-agentik font-bold text-[#E8E4DC] text-4xl md:text-5xl tracking-[-0.03em] tabular-nums mb-2">
+              {counts.hours.toLocaleString('nb-NO')}
+            </p>
+            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#E8E4DC]/45">
+              Timer spart
+            </p>
+          </div>
+          <div className="reveal text-center sm:border-x border-[#E8E4DC]/10">
+            <p className="font-agentik font-bold text-[#E8E4DC] text-4xl md:text-5xl tracking-[-0.03em] tabular-nums mb-2">
+              {counts.systems}
+            </p>
+            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#E8E4DC]/45">
+              AI-løsninger i drift
+            </p>
+          </div>
+          <div className="reveal text-center">
+            <p className="font-agentik font-bold text-[#C4854C] text-4xl md:text-5xl tracking-[-0.03em] tabular-nums mb-2">
+              {counts.value.toFixed(1)}<span className="text-[#C4854C]/60 text-2xl ml-1">M kr</span>
+            </p>
+            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#E8E4DC]/45">
+              Dokumentert årlig verdipotensial
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -670,6 +782,130 @@ const UseCaseModules = () => {
 };
 
 // ─────────────────────────────────────────────────────────────
+// CASE STUDY — anonymized before/after with concrete numbers
+// NOTE: Tall er realistiske placeholdere fra spec §11. Bytt med
+// faktisk anonymisert kunde-case når første sprint er ferdig.
+// ─────────────────────────────────────────────────────────────
+const CaseStudy = () => {
+  const beforeMetrics = [
+    { label: 'Faktura-sortering', value: '14', unit: 't/uke' },
+    { label: 'Tilbuds-produksjon', value: '6', unit: 't/uke' },
+    { label: 'Møte-til-CRM admin', value: '4', unit: 't/uke' },
+  ];
+  const afterMetrics = [
+    { label: 'Faktura-sortering', value: '1.2', unit: 't/uke' },
+    { label: 'Tilbuds-produksjon', value: '1.5', unit: 't/uke' },
+    { label: 'Møte-til-CRM admin', value: '0.5', unit: 't/uke' },
+  ];
+
+  return (
+    <section
+      className="reveal-section relative py-28 md:py-36 px-6 overflow-hidden"
+      style={{ background: '#F5F2EC' }}
+    >
+      <div className="relative max-w-6xl mx-auto">
+        <div className="reveal flex items-center gap-3 mb-8">
+          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#1A6B6D]">
+            05 — Case
+          </span>
+          <span className="block flex-1 h-px bg-[#1A1F25]/10" />
+        </div>
+
+        <div className="max-w-3xl mb-14">
+          <h2 className="reveal font-agentik font-bold text-[clamp(2.2rem,5vw,4rem)] text-[#1A1F25] tracking-[-0.025em] leading-[1.02] mb-6">
+            Slik så det ut etter <span className="text-[#1A6B6D]">90 dager.</span>
+          </h2>
+          <p className="reveal font-agentik text-[#1A1F25]/60 text-lg md:text-xl leading-relaxed">
+            Anonymisert. Norsk regnskapsbedrift, 45 ansatte. Tre arbeidsflyter prioritert i sprinten — fakturasortering, tilbudsutkast og møte-til-CRM.
+          </p>
+        </div>
+
+        {/* Before / After grid */}
+        <div className="reveal grid md:grid-cols-2 gap-5 mb-10">
+          {/* Before */}
+          <div className="bg-white border border-[#1A1F25]/8 rounded-2xl p-7 md:p-9">
+            <div className="flex items-center gap-3 mb-7">
+              <span className="font-data text-[10px] uppercase tracking-[0.22em] text-[#1A1F25]/50 bg-[#1A1F25]/5 px-2.5 py-1 rounded-full">
+                Før
+              </span>
+              <span className="font-agentik text-[#1A1F25]/60 text-sm">
+                Manuelt arbeid
+              </span>
+            </div>
+            <ul className="space-y-5">
+              {beforeMetrics.map((m) => (
+                <li key={m.label} className="flex justify-between items-baseline pb-4 border-b border-[#1A1F25]/8 last:border-b-0 last:pb-0">
+                  <span className="font-agentik text-[#1A1F25]/70 text-[15px]">{m.label}</span>
+                  <span className="font-agentik font-bold text-[#1A1F25] text-2xl tracking-tight tabular-nums">
+                    {m.value}
+                    <span className="text-[#1A1F25]/40 text-sm ml-1">{m.unit}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* After */}
+          <div className="bg-gradient-to-br from-[#1A6B6D]/8 to-[#4FC3B0]/4 border border-[#1A6B6D]/25 rounded-2xl p-7 md:p-9">
+            <div className="flex items-center gap-3 mb-7">
+              <span className="font-data text-[10px] uppercase tracking-[0.22em] text-[#1A6B6D] bg-[#1A6B6D]/12 px-2.5 py-1 rounded-full">
+                Etter 90 dager
+              </span>
+              <span className="font-agentik text-[#1A6B6D] text-sm font-medium">
+                I drift
+              </span>
+            </div>
+            <ul className="space-y-5">
+              {afterMetrics.map((m) => (
+                <li key={m.label} className="flex justify-between items-baseline pb-4 border-b border-[#1A6B6D]/15 last:border-b-0 last:pb-0">
+                  <span className="font-agentik text-[#1A1F25]/80 text-[15px]">{m.label}</span>
+                  <span className="font-agentik font-bold text-[#1A6B6D] text-2xl tracking-tight tabular-nums">
+                    {m.value}
+                    <span className="text-[#1A6B6D]/50 text-sm ml-1">{m.unit}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Outcome row */}
+        <div className="reveal bg-[#1A1F25] rounded-2xl p-7 md:p-10 grid sm:grid-cols-3 gap-y-6 sm:gap-y-0 sm:gap-x-8">
+          <div>
+            <p className="font-data text-[10px] uppercase tracking-[0.2em] text-[#4FC3B0] mb-2">
+              Frigjort kapasitet
+            </p>
+            <p className="font-agentik font-bold text-[#E8E4DC] text-3xl tracking-tight tabular-nums">
+              20.8<span className="text-[#E8E4DC]/40 text-base ml-1">t/uke</span>
+            </p>
+          </div>
+          <div className="sm:border-x sm:border-[#E8E4DC]/10 sm:px-8">
+            <p className="font-data text-[10px] uppercase tracking-[0.2em] text-[#4FC3B0] mb-2">
+              Dokumentert årlig verdi
+            </p>
+            <p className="font-agentik font-bold text-[#E8E4DC] text-3xl tracking-tight tabular-nums">
+              865 280<span className="text-[#E8E4DC]/40 text-base ml-1">kr</span>
+            </p>
+          </div>
+          <div>
+            <p className="font-data text-[10px] uppercase tracking-[0.2em] text-[#C4854C] mb-2">
+              Avkastning år 1
+            </p>
+            <p className="font-agentik font-bold text-[#C4854C] text-3xl tracking-tight tabular-nums">
+              7.4×<span className="text-[#C4854C]/50 text-base ml-1">av investering</span>
+            </p>
+          </div>
+        </div>
+
+        <p className="reveal mt-8 text-center font-data text-[11px] uppercase tracking-[0.18em] text-[#1A1F25]/40">
+          Verdi-baseline = 800 kr/time intern kost · oppgitt i oppdragsavtalen
+        </p>
+      </div>
+    </section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
 // VALUE GUARANTEE — dramatic black with animated 2x
 // ─────────────────────────────────────────────────────────────
 const ValueGuarantee = () => {
@@ -713,7 +949,7 @@ const ValueGuarantee = () => {
         <div className="reveal flex items-center gap-3 mb-8 justify-center">
           <span className="block w-6 h-px bg-[#C4854C]" />
           <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#C4854C]">
-            05 — 90-dagers verdigaranti
+            06 — 90-dagers verdigaranti
           </span>
           <span className="block w-6 h-px bg-[#C4854C]" />
         </div>
@@ -841,7 +1077,7 @@ const WhoItIsFor = () => {
     >
       <div className="relative max-w-6xl mx-auto">
         <div className="reveal flex items-center gap-3 mb-8">
-          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">06 — Hvem det passer for</span>
+          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">07 — Hvem det passer for</span>
           <span className="block flex-1 h-px bg-[#E8E4DC]/10" />
         </div>
 
@@ -1073,7 +1309,7 @@ const ContactForm = () => {
 
       <div className="relative max-w-lg mx-auto">
         <p className="reveal text-center font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0] mb-5">
-          07 — La oss snakke
+          08 — La oss snakke
         </p>
         <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4.5vw,3.2rem)] text-[#E8E4DC] tracking-tight leading-[1.05] mb-4 text-center">
           Vil du finne hvor AI kan skape verdi
@@ -1257,10 +1493,13 @@ export default function Side2() {
         <Navbar />
         <main>
           <Hero />
+          <LogoStrip />
           <Problem />
           <NewApproach />
+          <MetricsStrip />
           <SprintPhases />
           <UseCaseModules />
+          <CaseStudy />
           <ValueGuarantee />
           <PricingSection />
           <WhoItIsFor />
