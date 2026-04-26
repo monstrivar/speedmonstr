@@ -10,6 +10,7 @@ import Side2 from './pages/Side2.jsx'
 import Takk from './pages/Takk.jsx'
 import Preso from './pages/Preso.jsx'
 import Onboarding from './pages/Onboarding.jsx'
+import Partner from './pages/Partner.jsx'
 import { NySide } from './pages/NySide.jsx'
 import { ScrollToTop } from './components/ScrollToTop.jsx'
 import './index.css'
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/takk" element={<Takk />} />
           <Route path="/preso/:id" element={<Preso />} />
           <Route path="/onboarding/:token" element={<Onboarding />} />
+          <Route path="/partner/:slug" element={<Partner />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
