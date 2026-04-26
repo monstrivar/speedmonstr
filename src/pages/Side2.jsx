@@ -276,7 +276,7 @@ const LogoStrip = () => (
             key={logo.alt}
             src={logo.src}
             alt={logo.alt}
-            className="h-7 md:h-8 w-auto object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+            className="h-7 md:h-8 w-auto object-contain brightness-0 opacity-55 hover:opacity-100 transition-opacity duration-500"
           />
         ))}
       </div>
@@ -1467,7 +1467,7 @@ const Proof = () => (
             key={logo.alt}
             src={logo.src}
             alt={logo.alt}
-            className="h-8 md:h-10 w-auto object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+            className="h-8 md:h-10 w-auto object-contain brightness-0 opacity-50 hover:opacity-100 transition-opacity duration-500"
           />
         ))}
       </div>
@@ -1540,8 +1540,6 @@ const ContactForm = () => {
     bedrift: '',
     telefon: '',
     epost: '',
-    ansatte: '',
-    manuelleTimer: '',
     maal: '',
   });
   const [status, setStatus] = useState('idle');
@@ -1552,26 +1550,13 @@ const ContactForm = () => {
     setStatus('sending');
 
     try {
-      const payload = {
-        fornavn: form.fornavn,
-        bedrift: form.bedrift,
-        telefon: form.telefon,
-        epost: form.epost,
-        maal: [
-          form.ansatte ? `Antall ansatte: ${form.ansatte}` : null,
-          form.manuelleTimer ? `Estimerte manuelle timer/uke: ${form.manuelleTimer}` : null,
-          form.maal ? `Mål: ${form.maal}` : null,
-        ].filter(Boolean).join(' · '),
-      };
-
       const res = await fetch('/api/agentik-contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(form),
       });
 
       if (res.ok) {
-        // Redirect to /takk with prefilled context for the assessment
         const params = new URLSearchParams({
           n: form.fornavn,
           e: form.epost,
@@ -1588,10 +1573,6 @@ const ContactForm = () => {
 
   const inputClass =
     'w-full bg-[#252A31] border border-[#E8E4DC]/10 rounded-lg px-4 py-3.5 text-[#E8E4DC] text-sm placeholder:text-[#E8E4DC]/35 focus:outline-none focus:border-[#C4854C]/50 focus:ring-1 focus:ring-[#C4854C]/30 transition-colors';
-  const selectClass = `${inputClass} appearance-none bg-no-repeat bg-[length:14px] bg-[position:right_1rem_center] cursor-pointer`;
-  const selectStyle = {
-    backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23E8E4DC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>")`,
-  };
 
   return (
     <section id="contact" className="reveal-section relative py-28 md:py-36 px-6 overflow-hidden" style={{ background: '#1A1F25' }}>
@@ -1640,38 +1621,6 @@ const ContactForm = () => {
               onChange={(e) => setForm({ ...form, telefon: e.target.value })}
               className={inputClass}
             />
-          </div>
-
-          {/* Qualification fields */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <select
-              required
-              value={form.ansatte}
-              onChange={(e) => setForm({ ...form, ansatte: e.target.value })}
-              className={selectClass}
-              style={selectStyle}
-            >
-              <option value="" disabled>Antall ansatte</option>
-              <option value="1-19">1–19</option>
-              <option value="20-49">20–49</option>
-              <option value="50-99">50–99</option>
-              <option value="100-299">100–299</option>
-              <option value="300+">300+</option>
-            </select>
-            <select
-              required
-              value={form.manuelleTimer}
-              onChange={(e) => setForm({ ...form, manuelleTimer: e.target.value })}
-              className={selectClass}
-              style={selectStyle}
-            >
-              <option value="" disabled>Estimerte manuelle timer/uke</option>
-              <option value="0-10">0–10 timer</option>
-              <option value="10-30">10–30 timer</option>
-              <option value="30-60">30–60 timer</option>
-              <option value="60+">60+ timer</option>
-              <option value="vet ikke">Vet ikke</option>
-            </select>
           </div>
 
           <textarea

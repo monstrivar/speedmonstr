@@ -5,8 +5,9 @@ import { gsap } from 'gsap';
 import { ArrowRight, ArrowLeft, Check, ChevronDown } from 'lucide-react';
 
 // ─────────────────────────────────────────────────────────────
-// Step definitions — 16 questions across 7 substantive steps
-// + intro (step 0) + done (step 8)
+// Step definitions — 12 questions across 7 substantive steps
+// + intro (step 0) + done (step 8). Wording kept universal so
+// no business gets stuck on a question that doesn't apply.
 // ─────────────────────────────────────────────────────────────
 const STEPS = [
   // Step 0 — Intro / VSL
@@ -29,7 +30,7 @@ const STEPS = [
         id: 'rolle',
         type: 'text',
         question: 'Hva er din rolle i bedriften?',
-        placeholder: 'F.eks. Daglig leder, COO, Avdelingsleder support',
+        placeholder: 'F.eks. Daglig leder, COO, Avdelingsleder',
         required: true,
       },
       {
@@ -44,7 +45,18 @@ const STEPS = [
         type: 'multiselect',
         question: 'Hvilke avdelinger eller team har dere?',
         sub: 'Velg alle som passer',
-        options: ['Salg', 'Support / kundeservice', 'Drift / operasjon', 'Administrasjon', 'Økonomi / regnskap', 'Marked', 'HR', 'Produkt / utvikling', 'Ledelse', 'Annet'],
+        options: [
+          'Salg',
+          'Support / kundeservice',
+          'Drift / operasjon',
+          'Administrasjon',
+          'Økonomi / regnskap',
+          'Marked',
+          'HR',
+          'Produkt / utvikling',
+          'Ledelse',
+          'Annet',
+        ],
         required: true,
       },
     ],
@@ -60,62 +72,51 @@ const STEPS = [
         id: 'friksjonOmrader',
         type: 'multiselect',
         question: 'Hvor opplever dere mest friksjon eller glipper i dag?',
-        sub: 'Velg de 2–4 viktigste',
+        sub: 'Velg de 2–4 viktigste — eller "Annet" om ingenting passer',
         options: [
-          'Treg oppfølging av kunder/leads',
+          'Treg oppfølging — kunder, leads eller saker',
           'Mye manuelt dobbeltarbeid',
-          'Mange repeterende spørsmål',
-          'Manglende oversikt',
+          'Mange repeterende spørsmål eller henvendelser',
+          'Manglende intern oversikt',
           'Rapportering tar for mye tid',
-          'Support tar mye kapasitet',
-          'Tilbud og oppfølging tar for lang tid',
-          'Onboarding av kunder er for manuell',
-          'Informasjon ligger spredt',
-          'Intern koordinering tar for mye tid',
+          'Henvendelser eller saker tar mye kapasitet',
+          'Tilbud, fakturering eller dokumenter tar lang tid',
+          'Onboarding (kunder, ansatte, prosjekter) er manuell',
+          'Informasjon ligger spredt på flere systemer',
+          'Intern koordinering og kommunikasjon',
+          'Annet — vi utdyper i neste spørsmål',
         ],
         required: true,
       },
       {
         id: 'unodvendigTid',
         type: 'longtext',
-        question: 'Hvilke 3 prosesser bruker dere mest unødvendig tid på i dag?',
-        placeholder: 'Eksempel: support, rapportering, tilbud, onboarding, kundeoppfølging, manuell registrering',
+        question: 'Hvilke 2–3 prosesser bruker dere mest unødvendig tid på?',
+        sub: 'Vær så konkret som mulig — det er disse vi vil løse først',
+        placeholder: 'F.eks. sortering av e-post, oppdatering av CRM, klargjøring av tilbud, manuell datainntasting, oppfølging av prosjekter',
         required: true,
       },
     ],
   },
 
-  // Step 3 — Volum
+  // Step 3 — Volum (kun det som driver business case)
   {
     type: 'group',
     title: 'Volum',
     progress: 3,
     questions: [
       {
-        id: 'supportVolum',
-        type: 'choice',
-        question: 'Ca. hvor mange kundehenvendelser eller supportsaker per uke?',
-        options: ['0–25', '26–50', '51–100', '101–250', '250+', 'Ikke relevant'],
-        required: true,
-      },
-      {
-        id: 'salgsVolum',
-        type: 'choice',
-        question: 'Ca. hvor mange tilbud eller salgsoppfølginger per måned?',
-        options: ['0–10', '11–25', '26–50', '51–100', '100+', 'Ikke relevant'],
-        required: true,
-      },
-      {
         id: 'manuelleTimer',
         type: 'choice',
-        question: 'Ca. hvor mange timer per uke går til manuelt admin-arbeid på tvers av teamet?',
+        question: 'Anslag: hvor mange timer/uke går totalt til manuelt admin-arbeid på tvers av teamet?',
+        sub: 'Inkluderer alt repeterende arbeid som i prinsippet kunne vært automatisert. "Usikker" er et gyldig svar.',
         options: ['0–5 timer', '6–10 timer', '11–20 timer', '21–40 timer', '40+ timer', 'Usikker'],
         required: true,
       },
     ],
   },
 
-  // Step 4 — Kjernen (most important question)
+  // Step 4 — Den viktigste arbeidsflyten
   {
     type: 'group',
     title: 'Den viktigste',
@@ -125,26 +126,19 @@ const STEPS = [
         id: 'forsteArbeidsflyt',
         type: 'longtext',
         question: 'Hvis én arbeidsflyt kunne gått automatisk eller blitt kraftig forbedret med AI — hvilken ville dere valgt først?',
-        sub: 'Vær så konkret som mulig. Dette blir startpunktet for samtalen.',
-        placeholder: 'F.eks. "Sortere og svare på de første 200 supporthenvendelsene per uke" eller "Forberede tilbud basert på tidligere kunde-data"',
+        sub: 'Det viktigste spørsmålet i skjemaet. Dette blir startpunktet for samtalen.',
+        placeholder: 'F.eks. "Sortere og foreslå svar på de første 200 supporthenvendelsene per uke" eller "Klargjøre tilbudsutkast basert på tidligere kunde-data"',
         required: true,
       },
     ],
   },
 
-  // Step 5 — AI i dag
+  // Step 5 — Hva har stoppet dere
   {
     type: 'group',
     title: 'AI i dag',
     progress: 5,
     questions: [
-      {
-        id: 'aiTestet',
-        type: 'choice',
-        question: 'Har dere testet AI internt allerede?',
-        options: ['Ja, aktivt', 'Ja, litt', 'Nei', 'Usikker'],
-        required: true,
-      },
       {
         id: 'aiBlokkering',
         type: 'multiselect',
@@ -154,18 +148,19 @@ const STEPS = [
           'Vi vet ikke hvor vi skal starte',
           'Vi mangler intern kompetanse',
           'Vi mangler tid',
-          'Vi er usikre på sikkerhet/personvern',
+          'Vi er usikre på sikkerhet og personvern',
           'Det blir bare enkeltstående tester',
           'Vi mangler noen som kan implementere',
           'Vi mangler oversikt over mulighetene',
-          'Ledelsen/teamet er usikre',
+          'Ledelsen eller teamet er usikre',
+          'Vi har ikke kommet i gang ennå',
         ],
         required: true,
       },
     ],
   },
 
-  // Step 6 — Mål
+  // Step 6 — Mål og verdi
   {
     type: 'group',
     title: 'Suksess og verdi',
@@ -175,7 +170,7 @@ const STEPS = [
         id: 'suksessMaal',
         type: 'longtext',
         question: 'Hva ville gjort de neste 90 dagene til en åpenbar suksess for dere?',
-        sub: 'Eksempel: spart tid, raskere respons, færre feil, bedre oversikt, mindre manuelt arbeid',
+        sub: 'Tenk konkret: spart tid, raskere prosesser, færre feil, bedre oversikt',
         placeholder: 'F.eks. "Frigjort 8 timer/uke i supportteamet og kuttet responstid fra 4 timer til 30 min"',
         required: true,
       },
@@ -187,13 +182,13 @@ const STEPS = [
         max: 3,
         options: [
           'Spart tid',
-          'Raskere kunde-/leadoppfølging',
-          'Bedre supportkapasitet',
+          'Raskere oppfølging og responstid',
+          'Bedre kapasitet i kundekontakt',
           'Bedre salgsoppfølging',
-          'Færre feil/glipper',
+          'Færre feil eller glipper',
           'Bedre intern oversikt',
           'Redusert manuelt arbeid',
-          'Bedre onboarding',
+          'Smidigere onboarding',
           'Økt kapasitet uten å ansette',
         ],
         required: true,
@@ -212,13 +207,6 @@ const STEPS = [
         type: 'text',
         question: 'Hvem ville være intern kontaktperson for et eventuelt AI-prosjekt?',
         placeholder: 'Navn og rolle, eller "meg selv"',
-        required: true,
-      },
-      {
-        id: 'tilgangsTid',
-        type: 'choice',
-        question: 'Hvor raskt kan dere gi tilgang til relevante systemer hvis vi starter?',
-        options: ['Innen 2 dager', 'Innen 1 uke', 'Innen 2 uker', 'Usikker'],
         required: true,
       },
       {
@@ -432,45 +420,51 @@ export default function Takk() {
               Agentik
             </a>
           </header>
-          <main className="flex-1 flex items-center justify-center px-6 py-16">
+          <main className="flex-1 flex items-start justify-center px-6 pt-10 pb-16">
             <div className="max-w-2xl w-full">
-              <div className="mb-8 inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#1A6B6D]/10 border border-[#1A6B6D]/25">
+              {/* Eyebrow */}
+              <div className="mb-5 inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#1A6B6D]/10 border border-[#1A6B6D]/25">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#1A6B6D]" />
                 <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#1A6B6D]">
                   {step.eyebrow}
                 </span>
               </div>
 
-              <h1 className="font-agentik font-bold text-[clamp(2rem,5.5vw,3.8rem)] text-[#1A1F25] tracking-[-0.025em] leading-[1.05] mb-5">
-                {fornavn ? `Takk, ${fornavn}.` : 'Takk for henvendelsen.'}<br />
-                <span className="text-[#1A6B6D]">{step.headline}</span>
+              {/* Headline + small subhead */}
+              <h1 className="font-agentik font-bold text-[clamp(1.9rem,5vw,3.4rem)] text-[#1A1F25] tracking-[-0.025em] leading-[1.05] mb-2">
+                {fornavn ? `Takk, ${fornavn}.` : 'Takk for henvendelsen.'}
               </h1>
-
-              <p className="font-agentik text-[#1A1F25]/65 text-lg md:text-xl leading-relaxed mb-10 max-w-xl">
-                {step.sub}
+              <p className="font-agentik text-[#1A6B6D] text-lg md:text-xl tracking-tight mb-7">
+                {step.headline}
               </p>
 
-              {/* VSL placeholder — bytt med video-embed når video er klar */}
-              <div className="relative aspect-video w-full bg-[#1A1F25] rounded-2xl overflow-hidden mb-10 border border-[#1A1F25]/10">
+              {/* VSL — high up, video-first */}
+              <div className="relative aspect-video w-full bg-[#1A1F25] rounded-2xl overflow-hidden mb-6 border border-[#1A1F25]/10 shadow-[0_8px_32px_rgba(26,31,37,0.12)]">
                 <div className="absolute inset-0 flex items-center justify-center text-center px-8">
                   <div>
-                    <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-[#C4854C]/15 border border-[#C4854C]/40 flex items-center justify-center">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#C4854C]/15 border border-[#C4854C]/40 flex items-center justify-center">
                       <span className="block w-0 h-0 ml-1 border-l-[12px] border-l-[#C4854C] border-y-[8px] border-y-transparent" />
                     </div>
-                    <p className="font-agentik text-[#E8E4DC]/75 text-sm md:text-base max-w-md">
-                      VSL kommer her — kort video som forklarer hvorfor pre-assessment hjelper begge parter.
+                    <p className="font-data text-[10px] uppercase tracking-[0.22em] text-[#E8E4DC]/55">
+                      VSL plassholder
                     </p>
                   </div>
                 </div>
                 <div
-                  className="absolute inset-0 opacity-20 pointer-events-none"
+                  className="absolute inset-0 opacity-25 pointer-events-none"
                   style={{
                     backgroundImage:
-                      'radial-gradient(circle at 30% 30%, rgba(26,107,109,0.6), transparent 60%), radial-gradient(circle at 70% 70%, rgba(196,133,76,0.4), transparent 60%)',
+                      'radial-gradient(circle at 30% 30%, rgba(26,107,109,0.7), transparent 60%), radial-gradient(circle at 70% 70%, rgba(196,133,76,0.45), transparent 60%)',
                   }}
                 />
               </div>
 
+              {/* Description below VSL */}
+              <p className="font-agentik text-[#1A1F25]/65 text-base md:text-lg leading-relaxed mb-8 max-w-xl">
+                {step.sub}
+              </p>
+
+              {/* CTA */}
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => setStepIdx(1)}
