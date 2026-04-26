@@ -75,11 +75,14 @@ const Navbar = () => {
         <button onClick={() => scrollTo('agents')} className="link-hover cursor-pointer bg-transparent border-none">
           Agenter
         </button>
-        <button onClick={() => scrollTo('process')} className="link-hover cursor-pointer bg-transparent border-none">
-          Prosess
-        </button>
         <button onClick={() => scrollTo('proof')} className="link-hover cursor-pointer bg-transparent border-none">
           Resultater
+        </button>
+        <button onClick={() => scrollTo('tilbud')} className="link-hover cursor-pointer bg-transparent border-none">
+          Tilbud
+        </button>
+        <button onClick={() => scrollTo('process')} className="link-hover cursor-pointer bg-transparent border-none">
+          Prosess
         </button>
       </div>
 
