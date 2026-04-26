@@ -184,7 +184,7 @@ Parallelle løp etter signering:
 | Trigger | Slack-melding `/onboard [bedrift]` | Manuelt — Ivar fyller ut Notion-form |
 | BRREG-oppslag | Manuelt på brreg.no | Klipp-og-lim org.nr og adresse |
 | Velkomst-mail | Gmail (manuelt) | Mal i drafts → personlig touch + send |
-| Kontrakt | Penneo eller Verified | Last opp PDF-mal, send |
+| Kontrakt | Vipps eSign | Last opp PDF-mal, send med BankID-signering |
 | Slack-kanal | Slack manuelt | Opprett `#partner-[slug]`, inviter + Ivar+Ole |
 | Notion-arbeidsområde | Notion manuelt | Dupliser template, inviter kunde |
 | Dashbord | `agentik.no/partner/[slug]` | Ny side i kode (vi bygger malen denne uka) |
@@ -204,7 +204,7 @@ Parallelle løp etter signering:
 | Trigger | n8n-workflow «AI Partner Onboarding» starter på Slack-kommando eller Notion-form |
 | BRREG | API-oppslag (gratis API hos brreg.no) |
 | Velkomst-mail | Auto-generert med Claude Opus (personlig tone, fyller inn navn/bedrift) |
-| Kontrakt | Penneo API auto-genererer fra mal |
+| Kontrakt | Vipps eSign API auto-genererer fra mal (eller fortsatt halv-manuelt — uansett er det rask) |
 | Slack | Slack API: oppretter kanal + inviterer |
 | Notion | Notion API: dupliserer template |
 | Dashbord | Auto-provisjoneres fra Supabase + ferdig dashbord-side |
@@ -223,10 +223,25 @@ Parallelle løp etter signering:
 
 ### Kontrakt-signering
 
-**Anbefalt:** Penneo (norsk, BankID-signering, ~250 kr/dokument).
-**Alternativ:** Verified.no (mer rimelig hvis volum) eller Signhero (gratis under 3 dokumenter/mnd).
+**Anbefalt: Vipps eSign.**
 
-For founding-partnere, et enkelt **Letter of Intent** på e-post kan være nok for å starte arbeidet — formell kontrakt signeres innen 7 dager.
+Hvorfor:
+- BankID-signering — norsk standard, juridisk sterkest i Norge
+- Vipps er et merke alle norske bedrifter kjenner og stoler på
+- Pay-per-use (~25 kr/dok) — ingen månedlig abo
+- Lav friksjon for kunden — de kjenner allerede Vipps-flowen
+
+**Hvordan det fungerer:**
+1. Vi laster opp PDF-kontrakten i Vipps eSign
+2. Sender til daglig leders e-post + telefon
+3. De får varsel — signerer med BankID på mobilen (~30 sek)
+4. Vi får ferdig signert PDF tilbake + signeringslogg
+
+**Backup hvis Vipps eSign ikke er tilgjengelig:**
+- Verified.no Free plan (5 dok/mnd gratis, BankID)
+- Visma Sign (~390 kr/mnd hvis volum øker)
+
+**For Founding-fasen:** Et enkelt **Letter of Intent** på e-post mellom Ivar/Ole og daglig leder kan være nok for å starte arbeidet umiddelbart — formell kontrakt signeres via Vipps eSign innen 7 dager. Avtaleloven dekker digitale samtykker, så vi mister ingenting på å starte raskt.
 
 ### Faktura
 
@@ -238,23 +253,52 @@ For founding-partnere, et enkelt **Letter of Intent** på e-post kan være nok f
 
 ### Prosjekthåndtering / klient-hub
 
-**Anbefalt: Notion**.
-**Hvorfor:** Alle vet hvordan Notion fungerer. Beautiful out-of-box. Gratis for klienten. Kan embed eksterne dashbord. Lett å lage templates som dupliseres.
+**Anbefalt: Notion — for både klient-facing og internt arbeid.**
 
-**Strukturen i Notion-templaten:**
+Hvorfor: 2 personer × 5 klienter er ikke stort nok til å rettferdiggjøre Linear (~200 kr/mnd) i tillegg til Notion. Holder oss til ett verktøy → en login, ingen tool-sprawl, alle data på samme sted.
+
+**Strukturen i Notion-workspacet:**
+
 ```
-Workspace: [Bedrift] × Agentik
-├── Velkommen (intro + lenker)
-├── Roadmap (90-dagers Sprint visualisert)
-├── Aktive prosjekter (Kanban-board: Planlagt / Bygges / Test / I drift)
-├── Møtenotater (alle strategi-møter)
-├── Beslutninger (decisions log)
-├── Dokumentasjon (system-info, prosessbeskrivelser)
-├── ROI-dashbord (embed fra agentik.no/partner/[slug])
-└── Kontakter (Ivar, Ole, kunden + system-eiere)
+Notion: «Agentik»
+├── 📁 Klienter (database — én side per klient, deles med kunden)
+│   ├── 📄 Klient A — Bedrift AS
+│   │   ├── Velkommen + lenker
+│   │   ├── Roadmap (90-dagers Sprint visualisert)
+│   │   ├── Aktive prosjekter (Kanban: Planlagt / Bygges / Test / I drift)
+│   │   ├── Møtenotater
+│   │   ├── Beslutninger (decisions log)
+│   │   ├── Dokumentasjon (system-info, prosessbeskrivelser)
+│   │   ├── ROI-dashbord (embed fra agentik.no/partner/[slug])
+│   │   └── Kontakter
+│   ├── 📄 Klient B (samme struktur)
+│   └── 📄 Klient C
+│
+├── 🛠 Internt — Backlog (database, IKKE delt med klienter)
+│   ├── Bygge: Faktura-agent for Klient A
+│   ├── Bygge: Support-bot for Klient B
+│   ├── Vedlikehold: Dashbord-fix
+│   └── Markedsføring: LinkedIn-post om Klient A
+│
+└── 📚 Templates
+    ├── Klient-side template (dupliseres per ny kunde)
+    └── Møtenotat-template
 ```
 
-**Internt verktøy hos oss:** Linear (for tekniske oppgaver, sprint-planlegging). Klienter ser ikke Linear — bare Notion.
+**Hva som deles med kunden:**
+- Deres egen klient-side i `Klienter`-databasen (Notion share-link)
+- Ingenting fra `Internt — Backlog`
+
+**Hva som er privat hos oss:**
+- Hele `Internt — Backlog`
+- Alle andre klient-sider
+
+Ulike permissions per side i samme workspace. Cleaner enn å ha 2 verktøy.
+
+**Hva det sparer oss:**
+- ~200 kr/mnd i Linear-abo
+- Én login mindre
+- Cognitive overhead — alt på samme sted
 
 ### Slack
 
