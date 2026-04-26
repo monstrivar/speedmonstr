@@ -17,6 +17,7 @@ export default {
         heading: ['"Plus Jakarta Sans"', 'sans-serif'],
         data: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        agentik: ['"Plus Jakarta Sans"', 'sans-serif'],
       },
       letterSpacing: {
         tight: '-0.02em',

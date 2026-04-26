@@ -48,7 +48,7 @@ export const PricingSection = () => {
           >
             <div className="flex-1">
               <div className="font-data text-[9px] text-[#1A6B6D] uppercase tracking-[0.18em] font-semibold mb-1">
-                ★ Inkludert
+                <span aria-hidden="true">★</span> Inkludert
               </div>
               <div className="font-heading font-bold text-[17px] text-[#1A1F25] tracking-tight">
                 Komplett AI-Revisjon
@@ -62,26 +62,26 @@ export const PricingSection = () => {
           <ul className="list-none p-0 m-0 mb-7 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-x-7">
 
             <li className="md:col-span-2 flex gap-3 text-[13px] text-[#1A1F25] leading-snug bg-[#C4854C]/6 border border-[#C4854C]/15 rounded-lg px-4 py-3">
-              <span className="text-[#C4854C] font-bold flex-shrink-0 text-base">📊</span>
+              <span aria-hidden="true" className="text-[#C4854C] font-bold flex-shrink-0 text-base">📊</span>
               <span>
                 <strong className="text-[#1A1F25]">Eget ROI-dashbord</strong> — live oversikt over hva vi har bygget og målbar effekt i sanntid. Settes opp automatisk ved oppstart.
               </span>
             </li>
 
             <li className="flex gap-3 text-[13px] text-[#1A1F25] leading-snug">
-              <span className="text-[#1A6B6D] font-bold flex-shrink-0">→</span>
+              <span aria-hidden="true" className="text-[#1A6B6D] font-bold flex-shrink-0">→</span>
               <span>Månedlig strategimøte og prioritering</span>
             </li>
             <li className="flex gap-3 text-[13px] text-[#1A1F25] leading-snug">
-              <span className="text-[#1A6B6D] font-bold flex-shrink-0">→</span>
+              <span aria-hidden="true" className="text-[#1A6B6D] font-bold flex-shrink-0">→</span>
               <span>Bygging, vedlikehold og videreutvikling av AI-løsninger</span>
             </li>
             <li className="flex gap-3 text-[13px] text-[#1A1F25] leading-snug">
-              <span className="text-[#1A6B6D] font-bold flex-shrink-0">→</span>
+              <span aria-hidden="true" className="text-[#1A6B6D] font-bold flex-shrink-0">→</span>
               <span>Direkte Slack-tilgang for løpende rådgivning</span>
             </li>
             <li className="flex gap-3 text-[13px] text-[#1A1F25] leading-snug">
-              <span className="text-[#1A6B6D] font-bold flex-shrink-0">→</span>
+              <span aria-hidden="true" className="text-[#1A6B6D] font-bold flex-shrink-0">→</span>
               <span>Opplæring av teamet i de nye løsningene</span>
             </li>
 
@@ -89,7 +89,7 @@ export const PricingSection = () => {
 
           <Link
             to="/ai-partner"
-            className="btn-magnetic inline-flex rounded-full px-6 py-3 text-[13px] bg-[#C4854C] text-white font-heading font-semibold tracking-tight no-underline"
+            className="btn-magnetic inline-flex rounded-full px-6 py-3 text-[13px] bg-[#C4854C] text-[#F5F2EC] font-heading font-medium tracking-tight no-underline"
           >
             <span className="btn-layer bg-[#1A1F25]"></span>
             <span className="btn-text flex items-center gap-2">
@@ -119,7 +119,7 @@ export const PricingSection = () => {
 
           <a
             href="#contact"
-            className="btn-magnetic inline-flex rounded-full px-5 py-2.5 text-[12px] bg-transparent text-[#1A1F25] border border-[#1A1F25]/20 font-heading font-semibold tracking-tight no-underline self-start md:self-center whitespace-nowrap"
+            className="btn-magnetic inline-flex rounded-full px-5 py-2.5 text-[12px] bg-transparent text-[#1A1F25] border border-[#1A1F25]/20 font-heading font-medium tracking-tight no-underline self-start md:self-center whitespace-nowrap"
           >
             <span className="btn-layer bg-[#1A1F25]"></span>
             <span className="btn-text flex items-center gap-2">
