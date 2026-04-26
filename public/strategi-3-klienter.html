@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<title>Agentik · 60-dagers strategi for 3 Founding-partnere</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f151d; --ink-2: #131a24; --ink-3: #1a2330;
+  --bone: #f4ede0; --bone-2: #fbf7f0;
+  --off-white: #f2ece1;
+  --slate: #2a2720; --slate-muted: #4a4539;
+  --copper: #c47a4a; --copper-light: #d18d5e;
+  --teal: #2ca785; --teal-light: #3cbf93;
+  --border-dark: rgba(255,255,255,0.08);
+  --border-light: rgba(42,39,32,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Manrope', sans-serif; font-size: 16px; line-height: 1.5; color: var(--slate); background: var(--bone); -webkit-font-smoothing: antialiased; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+.serif-italic { font-family: 'Fraunces', serif; font-style: italic; }
+.eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; }
+.rule { display: block; width: 40px; height: 2px; background: var(--teal); margin: 0 0 24px; }
+.section { padding: 80px 6vw; max-width: 1400px; margin: 0 auto; }
+.section-dark { background: var(--ink); color: var(--off-white); }
+.section-dark .rule { background: var(--copper); }
+.section-dark .eyebrow { color: rgba(242,236,225,0.55); }
+
+.hero { background: var(--ink); color: var(--off-white); padding: 100px 6vw 120px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(196,122,74,0.25), transparent 70%); filter: blur(40px); pointer-events: none; }
+.hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.hero .eyebrow { color: var(--teal); margin-bottom: 24px; display: inline-block; }
+.hero h1 { font-size: clamp(40px, 5.5vw, 76px); font-weight: 600; line-height: 1.04; letter-spacing: -0.025em; margin-bottom: 24px; max-width: 1000px; }
+.hero h1 em { color: var(--copper); font-style: normal; font-weight: 600; }
+.hero .lede { font-size: clamp(16px, 1.4vw, 20px); color: rgba(242,236,225,0.65); max-width: 720px; line-height: 1.55; }
+.hero-meta { display: flex; gap: 32px; margin-top: 56px; flex-wrap: wrap; }
+.hero-meta-item { border-left: 2px solid var(--teal); padding-left: 18px; }
+.hero-meta-item .v { font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 500; color: var(--off-white); display: block; margin-bottom: 4px; }
+.hero-meta-item .l { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(242,236,225,0.5); }
+
+.sec-h { font-size: clamp(28px, 3vw, 44px); font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 12px; }
+.sec-h em { color: var(--teal); font-style: normal; }
+.section-dark .sec-h em { color: var(--copper); }
+.sec-dek { font-size: 17px; color: var(--slate-muted); max-width: 700px; margin-bottom: 56px; line-height: 1.55; }
+.section-dark .sec-dek { color: rgba(242,236,225,0.6); }
+
+/* FUNNEL */
+.funnel { max-width: 700px; margin: 0 auto; }
+.funnel-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 80px;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.funnel-bar {
+  height: 56px;
+  background: linear-gradient(90deg, var(--teal), var(--copper));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+}
+.funnel-row.r1 .funnel-bar { width: 100%; }
+.funnel-row.r2 .funnel-bar { width: 70%; }
+.funnel-row.r3 .funnel-bar { width: 45%; }
+.funnel-row.r4 .funnel-bar { width: 25%; }
+.funnel-row.r5 .funnel-bar { width: 15%; background: var(--copper); }
+.funnel-num { font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 600; color: var(--slate); text-align: right; }
+.funnel-pct { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--slate-muted); }
+
+/* CHANNELS */
+.channels { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.channel {
+  background: var(--bone-2);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 22px;
+  position: relative;
+}
+.channel.priority-1 { border-color: var(--teal); border-width: 2px; }
+.channel.priority-7 { opacity: 0.7; }
+.channel-rank {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-family: 'JetBrains Mono';
+  font-size: 28px;
+  font-weight: 600;
+  color: rgba(42,39,32,0.12);
+}
+.channel.priority-1 .channel-rank { color: var(--teal); }
+.channel-name {
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--slate);
+  margin-bottom: 10px;
+  padding-right: 40px;
+}
+.channel-meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.channel-tag {
+  font-family: 'JetBrains Mono';
+  font-size: 10px;
+  background: rgba(44,167,133,0.12);
+  color: var(--teal);
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.channel-tag.cost { background: rgba(196,122,74,0.12); color: var(--copper); }
+.channel-desc { font-size: 14px; color: var(--slate-muted); line-height: 1.55; margin-bottom: 12px; }
+.channel-output { font-size: 12px; color: var(--slate); border-top: 1px dashed var(--border-light); padding-top: 10px; line-height: 1.4; }
+.channel-output strong { color: var(--teal); }
+
+/* WEEKS ROADMAP */
+.weeks {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.week-cell {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink-2);
+  border: 1px solid var(--border-dark);
+  padding: 6px;
+}
+.week-num { font-family: 'JetBrains Mono'; font-size: 11px; color: rgba(242,236,225,0.4); margin-bottom: 4px; }
+.week-label { font-size: 11px; color: var(--off-white); text-align: center; line-height: 1.2; }
+.week-cell.milestone { background: var(--copper); border-color: var(--copper); }
+.week-cell.milestone .week-num, .week-cell.milestone .week-label { color: white; }
+.week-cell.scale { background: var(--ink-3); border-color: var(--teal); }
+
+.weeks-detail { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.week-card {
+  background: var(--ink-2);
+  border-left: 3px solid var(--teal);
+  border-radius: 10px;
+  padding: 18px;
+}
+.week-card.copper { border-left-color: var(--copper); }
+.week-card-num { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 0.2em; color: var(--teal); margin-bottom: 6px; }
+.week-card.copper .week-card-num { color: var(--copper); }
+.week-card-title { font-weight: 600; color: var(--off-white); font-size: 15px; margin-bottom: 8px; }
+.week-card-desc { font-size: 13px; color: rgba(242,236,225,0.6); line-height: 1.5; }
+.week-card ul { list-style: none; margin-top: 10px; }
+.week-card li { font-size: 12px; color: rgba(242,236,225,0.5); margin-bottom: 4px; padding-left: 14px; position: relative; }
+.week-card li::before { content: '→'; position: absolute; left: 0; color: var(--teal); }
+.week-card.copper li::before { color: var(--copper); }
+
+/* BUDGET COMPARISON */
+.budget {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 800px) { .budget { grid-template-columns: 1fr; } }
+.budget-col {
+  background: var(--bone-2);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 28px;
+}
+.budget-col.phase-2 {
+  background: var(--ink-2);
+  color: var(--off-white);
+  border-color: var(--copper);
+  border-width: 2px;
+}
+.budget-tag { font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 0.22em; color: var(--teal); margin-bottom: 8px; }
+.budget-col.phase-2 .budget-tag { color: var(--copper); }
+.budget-amount {
+  font-family: 'JetBrains Mono';
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--slate);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.budget-col.phase-2 .budget-amount { color: var(--off-white); }
+.budget-period { font-size: 13px; color: var(--slate-muted); margin-bottom: 24px; }
+.budget-col.phase-2 .budget-period { color: rgba(242,236,225,0.6); }
+.budget-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
+}
+.budget-col.phase-2 .budget-row { border-bottom-color: var(--border-dark); color: rgba(242,236,225,0.85); }
+.budget-row:last-child { border-bottom: 0; }
+.budget-row .v { font-family: 'JetBrains Mono'; font-size: 13px; color: var(--slate); font-weight: 500; }
+.budget-col.phase-2 .budget-row .v { color: var(--off-white); }
+
+/* KPI TABLE */
+.kpi-table {
+  background: var(--bone-2);
+  border-radius: 14px;
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+}
+.kpi-row {
+  display: grid;
+  grid-template-columns: 1fr 120px 120px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
+  align-items: center;
+  font-size: 14px;
+}
+.kpi-row:last-child { border-bottom: 0; }
+.kpi-row.header { background: var(--ink); color: var(--off-white); font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+.kpi-row.highlight { background: var(--copper); color: white; font-weight: 600; }
+.kpi-row .name { color: var(--slate); }
+.kpi-row .v { font-family: 'JetBrains Mono'; text-align: center; font-weight: 500; }
+.kpi-row.highlight .name, .kpi-row.highlight .v { color: white; }
+
+/* RISK CARDS */
+.risks { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.risk-card {
+  background: var(--ink-2);
+  border-left: 3px solid var(--copper);
+  border-radius: 10px;
+  padding: 20px;
+}
+.risk-tag { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 0.2em; color: var(--copper); margin-bottom: 8px; }
+.risk-title { font-weight: 600; color: var(--off-white); font-size: 15px; margin-bottom: 8px; }
+.risk-mit { font-size: 13px; color: rgba(242,236,225,0.6); line-height: 1.5; }
+.risk-mit strong { color: var(--teal-light); }
+
+/* OUTCOME */
+.outcome {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%);
+  border-radius: 20px;
+  padding: 56px;
+  color: var(--off-white);
+  position: relative;
+  overflow: hidden;
+}
+.outcome::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,122,74,0.3), transparent 70%);
+  filter: blur(60px);
+}
+.outcome-inner { position: relative; z-index: 1; }
+.outcome h3 { font-size: clamp(24px, 2.5vw, 36px); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 32px; max-width: 800px; }
+.outcome h3 em { color: var(--copper); font-style: normal; }
+.outcome-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 32px; margin-top: 32px; }
+.outcome-stat .v { font-family: 'JetBrains Mono'; font-size: 32px; font-weight: 600; color: var(--copper); display: block; margin-bottom: 4px; }
+.outcome-stat .l { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(242,236,225,0.55); }
+
+.kicker-line { font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(18px, 1.8vw, 26px); color: var(--slate-muted); max-width: 800px; line-height: 1.45; margin-top: 56px; }
+.section-dark .kicker-line { color: rgba(242,236,225,0.7); }
+
+.footer { background: var(--ink); color: rgba(242,236,225,0.55); padding: 60px 6vw; text-align: center; }
+.footer .brand { font-weight: 600; font-size: 18px; color: var(--off-white); margin-bottom: 6px; }
+.footer .meta { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">60-dagers strategi · 2 founders × 3 000 kr/mnd</span>
+    <h1>3 Founding-partnere på <em>60 dager</em>.</h1>
+    <p class="lede">
+      Realistisk plan for å lande første tre AI-Partnere med begrenset budsjett. Personlig outreach + organisk LinkedIn + henvisninger som hovedkanaler — Meta retargeting som eneste betalte.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="v">3</span><span class="l">Founding-partnere</span></div>
+      <div class="hero-meta-item"><span class="v">60</span><span class="l">dager</span></div>
+      <div class="hero-meta-item"><span class="v">117k</span><span class="l">MRR ved mål</span></div>
+      <div class="hero-meta-item"><span class="v">5 300 kr</span><span class="l">CAC per partner</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNNEL -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Realistisk funnel</span>
+  <h2 class="sec-h">Hva 3 lukkede partnere <em>faktisk</em> krever</h2>
+  <p class="sec-dek">Regnet baklengs fra 3 lukkede avtaler. Konverteringsratene er optimistiske men oppnåelige siden vi gjør personlig outreach, ikke kald massemail.</p>
+
+  <div class="funnel">
+    <div class="funnel-row r1">
+      <div class="funnel-num">120</div>
+      <div class="funnel-bar">Total leads (varme + outreach)</div>
+      <div class="funnel-pct">100%</div>
+    </div>
+    <div class="funnel-row r2">
+      <div class="funnel-num">40</div>
+      <div class="funnel-bar">Mulighetssamtaler</div>
+      <div class="funnel-pct">33%</div>
+    </div>
+    <div class="funnel-row r3">
+      <div class="funnel-num">15</div>
+      <div class="funnel-bar">Forberedte møter (preso)</div>
+      <div class="funnel-pct">38%</div>
+    </div>
+    <div class="funnel-row r4">
+      <div class="funnel-num">8</div>
+      <div class="funnel-bar">Tilbud sendt</div>
+      <div class="funnel-pct">53%</div>
+    </div>
+    <div class="funnel-row r5">
+      <div class="funnel-num">3</div>
+      <div class="funnel-bar">Lukket</div>
+      <div class="funnel-pct">38%</div>
+    </div>
+  </div>
+
+  <p class="kicker-line" style="margin-top: 56px;">«Volum er ikke målet. Volum av riktige samtaler er målet.»</p>
+</section>
+
+<!-- CHANNELS -->
+<section class="section section-dark">
+  <span class="rule"></span>
+  <span class="eyebrow" style="display: inline-block; margin-bottom: 16px;">Kanaler i prioritert rekkefølge</span>
+  <h2 class="sec-h" style="color: var(--off-white);">Hvor <em>tiden</em> går</h2>
+  <p class="sec-dek">Mer tid på de første kanalene, mindre på de siste. Følger ROI per arbeidstime + budsjettrealitet.</p>
+
+  <div class="channels">
+    <div class="channel priority-1">
+      <span class="channel-rank">01</span>
+      <div class="channel-name">Henvisninger fra eksisterende klienter</div>
+      <div class="channel-meta">
+        <span class="channel-tag">Gratis</span>
+        <span class="channel-tag">Høy lukkesannsynlighet</span>
+      </div>
+      <div class="channel-desc">Kontakt alle 8 nåværende klienter. Be om 1–2 introduksjoner hver.</div>
+      <div class="channel-output"><strong>Mål:</strong> 5–10 introduksjoner → 2–3 samtaler → 1 partner</div>
+    </div>
+
+    <div class="channel">
+      <span class="channel-rank">02</span>
+      <div class="channel-name">Personlig LinkedIn-outreach</div>
+      <div class="channel-meta">
+        <span class="channel-tag">Gratis</span>
+        <span class="channel-tag">Skalerbart</span>
+      </div>
+      <div class="channel-desc">50 meldinger/uke × 8 uker = 400 berøringer. Ekte kommentarer, ikke mass-mail.</div>
+      <div class="channel-output"><strong>Mål:</strong> 5–10% svarrate = 40–80 samtaler over 8 uker</div>
+    </div>
+
+    <div class="channel">
+      <span class="channel-rank">03</span>
+      <div class="channel-name">LinkedIn organisk innhold</div>
+      <div class="channel-meta">
+        <span class="channel-tag">Gratis</span>
+        <span class="channel-tag">Compounding</span>
+      </div>
+      <div class="channel-desc">5 poster/uke (Ivar 3, Ole 2). 1 long-form artikkel hver 2. uke. Bygger autoritet.</div>
+      <div class="channel-output"><strong>Mål:</strong> 3–5 inbound-leads + forsterkning av outreach</div>
+    </div>
+
+    <div class="channel">
+      <span class="channel-rank">04</span>
+      <div class="channel-name">Lokalt nettverk (Skien + Arendal)</div>
+      <div class="channel-meta">
+        <span class="channel-tag">~500 kr/mnd</span>
+      </div>
+      <div class="channel-desc">Frokostmøter, lokale næringsforeninger. Hjemme-fortrinn.</div>
+      <div class="channel-output"><strong>Mål:</strong> 2–4 nye samtaler over 8 uker</div>
+    </div>
+
+    <div class="channel">
+      <span class="channel-rank">05</span>
+      <div class="channel-name">Podcast-gjester</div>
+      <div class="channel-meta">
+        <span class="channel-tag">Gratis</span>
+        <span class="channel-tag">SEO-effekt</span>
+      </div>
+      <div class="channel-desc">Mål: 3 podcast-opptredener over 60 dager. Norske tech-podcaster.</div>
+      <div class="channel-output"><strong>Mål:</strong> 1–3 leads + langsiktig autoritet</div>
+    </div>
+
+    <div class="channel">
+      <span class="channel-rank">06</span>
+      <div class="channel-name">Strategiske partnerskap</div>
+      <div class="channel-meta">
+        <span class="channel-tag">Gratis</span>
+        <span class="channel-tag">Lengre game</span>
+      </div>
+      <div class="channel-desc">Regnskapsfirmaer, lokale IT-selskaper. Henvisnings-samarbeid.</div>
+      <div class="channel-output"><strong>Mål:</strong> 1–2 leads (bygges over tid)</div>
+    </div>
+
+    <div class="channel">
+      <span class="channel-rank">07</span>
+      <div class="channel-name">Meta retargeting</div>
+      <div class="channel-meta">
+        <span class="channel-tag cost">1 500 kr/mnd</span>
+      </div>
+      <div class="channel-desc">Re-eksponer /side2-besøkende som ikke konverterte. Kun warm audience.</div>
+      <div class="channel-output"><strong>Mål:</strong> 1–3 returns + 1 ekstra samtale</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8-UKE ROADMAP -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">8-ukers roadmap</span>
+  <h2 class="sec-h">Uke for <em>uke</em></h2>
+  <p class="sec-dek">Hver uke har ett dominerende fokus. Tidlig: bygging og volum. Senere: konvertering og skalering.</p>
+
+  <div class="weeks">
+    <div class="week-cell"><span class="week-num">U1</span><span class="week-label">Foundation</span></div>
+    <div class="week-cell"><span class="week-num">U2</span><span class="week-label">Aktivering</span></div>
+    <div class="week-cell"><span class="week-num">U3</span><span class="week-label">Volum opp</span></div>
+    <div class="week-cell milestone"><span class="week-num">U4</span><span class="week-label">1. partner</span></div>
+    <div class="week-cell scale"><span class="week-num">U5</span><span class="week-label">Skala 10k</span></div>
+    <div class="week-cell milestone"><span class="week-num">U6</span><span class="week-label">2. partner</span></div>
+    <div class="week-cell"><span class="week-num">U7</span><span class="week-label">Maks-volum</span></div>
+    <div class="week-cell milestone"><span class="week-num">U8</span><span class="week-label">3. partner</span></div>
+  </div>
+
+  <div class="weeks-detail">
+    <div class="week-card">
+      <div class="week-card-num">UKE 1</div>
+      <div class="week-card-title">Foundation</div>
+      <div class="week-card-desc">Sett alt på plass. Ingen unnskyldninger fra uke 2.</div>
+      <ul>
+        <li>Identifiser 100 mål-bedrifter i Notion</li>
+        <li>Klargjør 5 LinkedIn-post-utkast</li>
+        <li>Be alle 8 klienter om 1 intro hver</li>
+        <li>Push branch + deploy /side2 + /takk live</li>
+      </ul>
+    </div>
+    <div class="week-card">
+      <div class="week-card-num">UKE 2</div>
+      <div class="week-card-title">Aktivering</div>
+      <div class="week-card-desc">Kjør i gang alt. Få første samtale i kalenderen.</div>
+      <ul>
+        <li>50 LinkedIn-meldinger sendt</li>
+        <li>5 LinkedIn-poster publisert</li>
+        <li>3 mulighetssamtaler avholdt</li>
+        <li>1 lokalt frokostmøte</li>
+      </ul>
+    </div>
+    <div class="week-card">
+      <div class="week-card-num">UKE 3</div>
+      <div class="week-card-title">Volum opp</div>
+      <div class="week-card-desc">Få funnel-tallene til å rulle.</div>
+      <ul>
+        <li>50 nye meldinger</li>
+        <li>8 mulighetssamtaler</li>
+        <li>2 oppfølgingsmøter (preso vist)</li>
+        <li>Pitch til 5 podcast-verter</li>
+      </ul>
+    </div>
+    <div class="week-card copper">
+      <div class="week-card-num">UKE 4 — MILEPÆL</div>
+      <div class="week-card-title">1. partner lukket</div>
+      <div class="week-card-desc">Forventet første lukke. Hvis ikke: justere taktikk.</div>
+      <ul>
+        <li>50 meldinger + 1 long-form artikkel</li>
+        <li>10 mulighetssamtaler</li>
+        <li>4 oppfølgingsmøter</li>
+        <li><strong>1 tilbud sendt → lukket</strong></li>
+      </ul>
+    </div>
+    <div class="week-card">
+      <div class="week-card-num">UKE 5</div>
+      <div class="week-card-title">Skala til 10k/mnd</div>
+      <div class="week-card-desc">Aktiver betalt etter første cash-in.</div>
+      <ul>
+        <li>LinkedIn Ads (4k/mnd) startet</li>
+        <li>Sales Navigator aktivert</li>
+        <li>Meta retargeting opp til 2.5k</li>
+        <li>50 meldinger + 8 samtaler</li>
+      </ul>
+    </div>
+    <div class="week-card copper">
+      <div class="week-card-num">UKE 6 — MILEPÆL</div>
+      <div class="week-card-title">2. partner lukket</div>
+      <div class="week-card-desc">Bruk første kunde som case study i alt innhold.</div>
+      <ul>
+        <li>60 meldinger med Sales Navigator</li>
+        <li>12 mulighetssamtaler</li>
+        <li>5 oppfølgingsmøter</li>
+        <li><strong>2 tilbud sendt → lukket</strong></li>
+      </ul>
+    </div>
+    <div class="week-card">
+      <div class="week-card-num">UKE 7</div>
+      <div class="week-card-title">Maks-volum</div>
+      <div class="week-card-desc">Få funnel full nok til å lukke #3.</div>
+      <ul>
+        <li>70 meldinger</li>
+        <li>12 mulighetssamtaler</li>
+        <li>5 oppfølgingsmøter</li>
+        <li>1–2 podcast-opptredener</li>
+      </ul>
+    </div>
+    <div class="week-card copper">
+      <div class="week-card-num">UKE 8 — MILEPÆL</div>
+      <div class="week-card-title">3. partner lukket</div>
+      <div class="week-card-desc">Mål oppnådd. Pipeline for neste 60 dager bygd.</div>
+      <ul>
+        <li>Avslutt åpne tilbud — push for ja eller nei</li>
+        <li>8 mulighetssamtaler + 4 møter</li>
+        <li>2–3 tilbud sendt</li>
+        <li><strong>3. partner lukket</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Budsjett</span>
+  <h2 class="sec-h">Hvordan <em>pengene</em> brukes</h2>
+  <p class="sec-dek">3 000 kr/mnd starter. 10 000 kr/mnd etter første lukke. Total spend over 8 uker: 16 000 kr → 117 000 kr/mnd MRR. CAC: ~5 300 kr per partner.</p>
+
+  <div class="budget">
+    <div class="budget-col">
+      <div class="budget-tag">Fase 1 — Uke 1–4</div>
+      <div class="budget-amount">3 000<span style="font-size: 16px; color: var(--slate-muted); margin-left: 6px;">kr/mnd</span></div>
+      <div class="budget-period">Pre-første-klient · egenkapital</div>
+      <div class="budget-row"><span>Meta retargeting</span><span class="v">1 500</span></div>
+      <div class="budget-row"><span>Software (Loom, Calendly, Notion)</span><span class="v">600</span></div>
+      <div class="budget-row"><span>Coffee/lunch-møter</span><span class="v">500</span></div>
+      <div class="budget-row"><span>Reise (lokale arrangementer)</span><span class="v">400</span></div>
+    </div>
+
+    <div class="budget-col phase-2">
+      <div class="budget-tag">Fase 2 — Uke 5–8</div>
+      <div class="budget-amount">10 000<span style="font-size: 16px; color: rgba(242,236,225,0.55); margin-left: 6px;">kr/mnd</span></div>
+      <div class="budget-period">Etter 1. partner — fra cash flow</div>
+      <div class="budget-row"><span>LinkedIn Ads</span><span class="v">4 000</span></div>
+      <div class="budget-row"><span>Meta retargeting</span><span class="v">2 500</span></div>
+      <div class="budget-row"><span>LinkedIn Sales Navigator</span><span class="v">600</span></div>
+      <div class="budget-row"><span>Software (samme)</span><span class="v">600</span></div>
+      <div class="budget-row"><span>Coffee + reise</span><span class="v">1 000</span></div>
+      <div class="budget-row"><span>Innholds-produksjon</span><span class="v">1 300</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- KPIs -->
+<section class="section section-dark">
+  <span class="rule"></span>
+  <span class="eyebrow" style="display: inline-block; margin-bottom: 16px;">Ukentlige KPI-er</span>
+  <h2 class="sec-h" style="color: var(--off-white);">Hva vi <em>måler</em> hver fredag</h2>
+  <p class="sec-dek">Hvis vi er bak ukens mål, justere neste uke. Tall i tabellen er kumulative.</p>
+
+  <div class="kpi-table">
+    <div class="kpi-row header"><span class="name">Metrikk</span><span class="v">Uke 4</span><span class="v">Uke 8</span></div>
+    <div class="kpi-row"><span class="name">LinkedIn-meldinger sendt</span><span class="v">200</span><span class="v">450</span></div>
+    <div class="kpi-row"><span class="name">Mulighetssamtaler avholdt</span><span class="v">16</span><span class="v">50</span></div>
+    <div class="kpi-row"><span class="name">Oppfølgings-møter</span><span class="v">6</span><span class="v">22</span></div>
+    <div class="kpi-row"><span class="name">Tilbud sendt</span><span class="v">1</span><span class="v">8</span></div>
+    <div class="kpi-row highlight"><span class="name">Lukkede partnere</span><span class="v">1</span><span class="v">3</span></div>
+    <div class="kpi-row"><span class="name">Inbound via LinkedIn-poster</span><span class="v">1–2</span><span class="v">5–8</span></div>
+    <div class="kpi-row"><span class="name">LinkedIn-følgere (kombinert)</span><span class="v">+200</span><span class="v">+500</span></div>
+    <div class="kpi-row"><span class="name">Henvisninger fra klienter</span><span class="v">3</span><span class="v">8</span></div>
+  </div>
+</section>
+
+<!-- RISKS -->
+<section class="section section-dark">
+  <span class="rule"></span>
+  <span class="eyebrow" style="display: inline-block; margin-bottom: 16px;">Risiko og kontingens</span>
+  <h2 class="sec-h" style="color: var(--off-white);">Hvis det <em>ikke</em> går som planlagt</h2>
+  <p class="sec-dek">Ærlige risikoer + konkrete plan-B-tiltak. Mest sannsynlige fellene først.</p>
+
+  <div class="risks">
+    <div class="risk-card">
+      <div class="risk-tag">Risiko 1</div>
+      <div class="risk-title">Lavere svarrate på LinkedIn (&lt; 5%)</div>
+      <div class="risk-mit"><strong>Plan B:</strong> Variér åpningslinjen, test ulike tider. Hvis fortsatt lavt etter uke 3 → flytt til e-post med varmt navn.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-tag">Risiko 2</div>
+      <div class="risk-title">Ingen lukket innen uke 4</div>
+      <div class="risk-mit"><strong>Plan B:</strong> Vurder 6-ukers mini-engasjement (50k) eller workshop (25k) som inngangsport. Mindre commitment fra dem.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-tag">Risiko 3</div>
+      <div class="risk-title">Henvisninger fra klienter uteblir</div>
+      <div class="risk-mit"><strong>Plan B:</strong> Personlig kaffemøte med hver klient (heller enn e-post). Skap konkret «hvem skal jeg snakke med»-spørsmål, ikke vagt «kjenner du noen».</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-tag">Risiko 4</div>
+      <div class="risk-title">Begge full-time uten lukket klient</div>
+      <div class="risk-mit"><strong>Plan B:</strong> Hold Ivar tilgjengelig for konsulent-oppdrag som backup-cash. Kortsiktig konsulent-arbeid finansierer mens vi bygger AI-Partner-base.</div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section class="section">
+  <div class="outcome">
+    <div class="outcome-inner">
+      <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Slik ser slutten av 60 dager ut</span>
+      <h3>3 partnere lukket. <em>117 000 kr/mnd MRR.</em> Begge gründere kan gå full-time. CAC-modellen bevist.</h3>
+      <div class="outcome-stats">
+        <div class="outcome-stat">
+          <span class="v">3</span>
+          <span class="l">Founding-partnere</span>
+        </div>
+        <div class="outcome-stat">
+          <span class="v">117k</span>
+          <span class="l">MRR</span>
+        </div>
+        <div class="outcome-stat">
+          <span class="v">1.4M</span>
+          <span class="l">Årlig omsetning</span>
+        </div>
+        <div class="outcome-stat">
+          <span class="v">5 300</span>
+          <span class="l">Kr CAC</span>
+        </div>
+        <div class="outcome-stat">
+          <span class="v">22×</span>
+          <span class="l">LTV/CAC ratio</span>
+        </div>
+      </div>
+      <p style="margin-top: 32px; font-size: 16px; color: rgba(242,236,225,0.7); line-height: 1.55; max-width: 640px;">
+        Etter 60 dager: prishopp til 49 000 kr/mnd for partner #4. Vi vurderer første kontraktør (~150 000 kr/mnd MRR-trigger). 1 case study publisert + 2 i emning.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TLDR -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Oppsummert</span>
+  <h2 class="sec-h">Strategien i <em>én setning</em></h2>
+  <p style="font-size: 22px; color: var(--slate); line-height: 1.5; max-width: 900px; margin-top: 24px; font-weight: 500;">
+    Personlig outreach + organisk LinkedIn + henvisninger fra eksisterende klienter, med Meta retargeting som eneste betalte kanal — er hva som realistisk får oss til 3 partnere på 60 dager med 3 000 kr/mnd budsjett.
+  </p>
+  <p style="font-size: 16px; color: var(--slate-muted); margin-top: 24px; max-width: 800px; line-height: 1.6;">
+    Alt annet (LinkedIn Ads, Sales Navigator, podcaster) er forsterkere som kommer på når den første klienten er lukket og vi har 10 000 kr/mnd å bruke.
+  </p>
+
+  <p class="kicker-line">«Volum av riktige samtaler &gt;&gt; volum av meldinger.»</p>
+</section>
+
+<footer class="footer">
+  <div class="brand">Agentik</div>
+  <div class="meta">2-måneders strategi · Uke 1 startes nå</div>
+</footer>
+
+</body>
+</html>

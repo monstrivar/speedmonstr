@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<title>Agentik · Partner-onboarding-flyt</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f151d;
+  --ink-2: #131a24;
+  --ink-3: #1a2330;
+  --bone: #f4ede0;
+  --bone-2: #fbf7f0;
+  --off-white: #f2ece1;
+  --slate: #2a2720;
+  --slate-muted: #4a4539;
+  --copper: #c47a4a;
+  --copper-light: #d18d5e;
+  --teal: #2ca785;
+  --teal-light: #3cbf93;
+  --border-dark: rgba(255,255,255,0.08);
+  --border-light: rgba(42,39,32,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--slate);
+  background: var(--bone);
+  -webkit-font-smoothing: antialiased;
+}
+.mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.serif-italic { font-family: 'Fraunces', serif; font-style: italic; }
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.rule {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--teal);
+  margin: 0 0 24px;
+}
+.section {
+  padding: 80px 6vw;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.section-dark {
+  background: var(--ink);
+  color: var(--off-white);
+}
+.section-dark .rule { background: var(--copper); }
+.section-dark .eyebrow { color: rgba(242,236,225,0.55); }
+
+/* HERO */
+.hero {
+  background: var(--ink);
+  color: var(--off-white);
+  padding: 100px 6vw 120px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,122,74,0.25), transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+.hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.hero .eyebrow { color: var(--teal); margin-bottom: 24px; display: inline-block; }
+.hero h1 {
+  font-size: clamp(40px, 5.5vw, 76px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+  max-width: 1000px;
+}
+.hero h1 em {
+  color: var(--copper);
+  font-style: normal;
+  font-weight: 600;
+}
+.hero .lede {
+  font-size: clamp(16px, 1.4vw, 20px);
+  color: rgba(242,236,225,0.65);
+  max-width: 720px;
+  line-height: 1.55;
+}
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 56px;
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  border-left: 2px solid var(--teal);
+  padding-left: 18px;
+}
+.hero-meta-item .v {
+  font-family: 'JetBrains Mono';
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--off-white);
+  display: block;
+  margin-bottom: 4px;
+}
+.hero-meta-item .l {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(242,236,225,0.5);
+}
+
+/* SECTION HEADER */
+.sec-h {
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.sec-h em { color: var(--teal); font-style: normal; }
+.section-dark .sec-h em { color: var(--copper); }
+.sec-dek {
+  font-size: 17px;
+  color: var(--slate-muted);
+  max-width: 700px;
+  margin-bottom: 56px;
+  line-height: 1.55;
+}
+.section-dark .sec-dek { color: rgba(242,236,225,0.6); }
+
+/* FLOW — 5 stages */
+.flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  position: relative;
+}
+.flow::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal) 0%, var(--copper) 100%);
+  opacity: 0.3;
+  z-index: 0;
+}
+.stage {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.stage-num {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  background: var(--ink);
+  color: var(--copper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono';
+  font-weight: 600;
+  font-size: 18px;
+  border: 2px solid var(--copper);
+}
+.stage-title {
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--slate);
+  margin-bottom: 6px;
+}
+.stage-time {
+  font-family: 'JetBrains Mono';
+  font-size: 11px;
+  color: var(--slate-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.stage-desc {
+  font-size: 14px;
+  color: var(--slate-muted);
+  line-height: 1.5;
+  padding: 0 6px;
+}
+@media (max-width: 900px) {
+  .flow { grid-template-columns: 1fr; }
+  .flow::before { display: none; }
+  .stage { text-align: left; padding-left: 80px; position: relative; padding-bottom: 20px; }
+  .stage-num { position: absolute; left: 0; top: 0; }
+}
+
+/* TIMELINE */
+.timeline {
+  position: relative;
+  padding-left: 60px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--teal) 0%, var(--copper) 100%);
+}
+.tl-item {
+  position: relative;
+  padding-bottom: 36px;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -45px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--teal);
+  border: 3px solid var(--bone);
+  box-shadow: 0 0 0 3px var(--teal);
+}
+.tl-item.copper::before { background: var(--copper); box-shadow: 0 0 0 3px var(--copper); }
+.tl-tag {
+  font-family: 'JetBrains Mono';
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+.tl-item.copper .tl-tag { color: var(--copper); }
+.tl-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 6px;
+}
+.tl-desc {
+  font-size: 14px;
+  color: var(--slate-muted);
+  line-height: 1.55;
+  max-width: 700px;
+}
+
+/* GRID — Notion mockup */
+.notion-mockup {
+  background: var(--ink-2);
+  border: 1px solid var(--border-dark);
+  border-radius: 16px;
+  padding: 20px;
+  font-family: 'Manrope', sans-serif;
+}
+.notion-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-dark);
+}
+.notion-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--copper);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.notion-title {
+  color: var(--off-white);
+  font-weight: 600;
+  font-size: 15px;
+}
+.notion-dbs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.notion-db {
+  background: var(--ink-3);
+  border: 1px solid var(--border-dark);
+  border-radius: 10px;
+  padding: 14px;
+}
+.notion-db-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--off-white);
+  margin-bottom: 6px;
+}
+.notion-db-emoji {
+  background: var(--teal);
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--ink);
+  font-weight: 700;
+}
+.notion-db-desc {
+  font-size: 11px;
+  color: rgba(242,236,225,0.55);
+  line-height: 1.45;
+}
+.notion-db-cols {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.notion-col {
+  font-family: 'JetBrains Mono';
+  font-size: 9px;
+  background: rgba(255,255,255,0.04);
+  color: rgba(242,236,225,0.55);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* INTAKE MOCKUP */
+.intake {
+  background: var(--bone-2);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow: 0 8px 24px -12px rgba(30,24,10,0.12);
+}
+.intake-bar {
+  height: 3px;
+  background: rgba(42,39,32,0.08);
+  border-radius: 999px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.intake-bar-fill {
+  height: 100%;
+  width: 44%;
+  background: var(--copper);
+  border-radius: 999px;
+}
+.intake-eyebrow {
+  font-family: 'JetBrains Mono';
+  font-size: 10px;
+  color: var(--teal);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.intake h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 4px;
+  letter-spacing: -0.015em;
+}
+.intake-sub {
+  font-size: 13px;
+  color: var(--slate-muted);
+  margin-bottom: 18px;
+}
+.intake-input {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--slate-muted);
+}
+.intake-input.placeholder {
+  color: rgba(42,39,32,0.35);
+}
+.intake-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.intake-cta {
+  background: var(--copper);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 12px;
+}
+.intake-step-marker {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono';
+  font-size: 10px;
+  color: var(--slate-muted);
+  letter-spacing: 0.12em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+/* TWO-COL SECTION */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .two-col { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* TOOLS / CHIPS */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.tool-card {
+  background: var(--bone-2);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tool-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--ink);
+  color: var(--off-white);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.tool-info { flex: 1; }
+.tool-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.tool-role {
+  font-family: 'JetBrains Mono';
+  font-size: 9px;
+  color: var(--slate-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* WOW moments */
+.wow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.wow-card {
+  background: var(--ink-2);
+  border: 1px solid var(--border-dark);
+  border-radius: 14px;
+  padding: 22px;
+  position: relative;
+}
+.wow-num {
+  font-family: 'JetBrains Mono';
+  font-size: 11px;
+  color: var(--copper);
+  letter-spacing: 0.22em;
+  margin-bottom: 8px;
+}
+.wow-when {
+  font-size: 13px;
+  color: var(--teal-light);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.wow-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--off-white);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.wow-desc {
+  font-size: 13px;
+  color: rgba(242,236,225,0.6);
+  line-height: 1.5;
+}
+
+/* ARCHITECTURE diagram */
+.arch {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 32px;
+}
+.arch-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px dashed var(--border-light);
+}
+.arch-row:last-child { border-bottom: 0; }
+.arch-actor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--slate);
+}
+.arch-actor-emoji {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--teal);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.arch-actor-emoji.copper { background: var(--copper); }
+.arch-actor-emoji.ink { background: var(--ink); color: var(--off-white); }
+.arch-action {
+  font-size: 13px;
+  color: var(--slate-muted);
+  line-height: 1.5;
+}
+
+/* CTA / FOOTER */
+.footer {
+  background: var(--ink);
+  color: rgba(242,236,225,0.55);
+  padding: 60px 6vw;
+  text-align: center;
+}
+.footer .brand {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--off-white);
+  margin-bottom: 6px;
+}
+.footer .meta {
+  font-family: 'JetBrains Mono';
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.kicker-line {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: clamp(18px, 1.8vw, 26px);
+  color: var(--slate-muted);
+  max-width: 800px;
+  line-height: 1.45;
+  margin-top: 56px;
+}
+.section-dark .kicker-line { color: rgba(242,236,225,0.7); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Partner-onboarding · Agentik</span>
+    <h1>Fra «la oss kjøre» til <em>AI i drift</em> — på 5 virkedager.</h1>
+    <p class="lede">
+      Sømløs onboarding-arkitektur for nye AI-Partnere. Bygget rundt 4 prinsipper: hastighet, automasjon i bakgrunnen, personlig touch på fronten, og synlighet fra dag 1.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="v">12</span>
+        <span class="l">automatiserte trinn</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="v">5</span>
+        <span class="l">Notion-databaser</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="v">2</span>
+        <span class="l">n8n-workflows</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="v">~5d</span>
+        <span class="l">fra ja til kickoff</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW: 5 STAGES -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Helhetlig flyt</span>
+  <h2 class="sec-h">5 stadier — fra <em>ja</em> til <em>i drift</em></h2>
+  <p class="sec-dek">Hver stadie har én tydelig hendelse. Mellom stadiene skjer det automasjon vi ikke trenger å tenke på.</p>
+
+  <div class="flow">
+    <div class="stage">
+      <div class="stage-num">01</div>
+      <div class="stage-title">Ja</div>
+      <div class="stage-time">T+0</div>
+      <div class="stage-desc">Kunden sier ja muntlig eller på e-post. Ivar/Ole klikker «Onboard new partner».</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">02</div>
+      <div class="stage-title">Init</div>
+      <div class="stage-time">T+0 – 5min</div>
+      <div class="stage-desc">System oppretter Notion klient-side, sender onboarding-mail, oppretter 5 initielle oppgaver.</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">03</div>
+      <div class="stage-title">Form</div>
+      <div class="stage-time">T+0 – 24h</div>
+      <div class="stage-desc">Kunden fyller ut intake-skjema med nøkkelpersoner, systemer, brand-info, gave-adresse.</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">04</div>
+      <div class="stage-title">Setup</div>
+      <div class="stage-time">T+24h – 5d</div>
+      <div class="stage-desc">System oppretter rad per nøkkelperson, intro-møter, faktura-oppgave, dashbord-task.</div>
+    </div>
+    <div class="stage">
+      <div class="stage-num">05</div>
+      <div class="stage-title">Kickoff</div>
+      <div class="stage-time">T+5d</div>
+      <div class="stage-desc">90-min kickoff. AI-Revisjon starter umiddelbart. 90-dagers Sprint i gang.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE: hvem gjør hva -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Roller</span>
+  <h2 class="sec-h">Hvem gjør <em>hva</em>?</h2>
+  <p class="sec-dek">Mennesker fokuserer på det som er menneskelig (samtaler, video, gave). Systemer gjør repeterbart arbeid (skjema, lagring, varsler).</p>
+
+  <div class="arch">
+    <div class="arch-row">
+      <div class="arch-actor"><span class="arch-actor-emoji">I</span> Ivar / Ole</div>
+      <div class="arch-action">Sier ja sammen med kunden, trigger init-skjemaet i Slack, krysser av tasks i Notion etterhvert.</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-actor"><span class="arch-actor-emoji ink">⚙</span> n8n INIT</div>
+      <div class="arch-action">Oppretter klient-side i Notion, lager 5 initielle oppgaver, sender onboarding-mail, varsler Slack.</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-actor"><span class="arch-actor-emoji copper">K</span> Kunden</div>
+      <div class="arch-action">Mottar mail, klikker link, fyller ut 10-stegs intake-form med nøkkelpersoner og systemer.</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-actor"><span class="arch-actor-emoji ink">⚙</span> n8n SUBMIT</div>
+      <div class="arch-action">Oppdaterer klient-side, oppretter rad per nøkkelperson, intro-møte-tasks, ekstra setup-tasks.</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-actor"><span class="arch-actor-emoji">I</span> Ivar / Ole</div>
+      <div class="arch-action">Spille inn velkomstvideo, sende kontrakt via Vipps eSign, sende gave, book intro-møter.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO-COL: NOTION + INTAKE -->
+<section class="section section-dark" style="background: var(--ink); padding-top: 100px; padding-bottom: 100px;">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Verktøyene i bruk</span>
+  <h2 class="sec-h" style="color: var(--off-white);">Notion-arbeidsrom + <em>intake-skjema</em></h2>
+  <p class="sec-dek">Vi opererer fra ett Notion-arbeidsrom (5 databaser med relasjoner). Kunden fyller ut ett skjema som styrer hele setupen.</p>
+
+  <div class="two-col">
+    <!-- NOTION DASHBOARD MOCKUP -->
+    <div>
+      <p class="eyebrow" style="color: var(--copper); margin-bottom: 14px;">Vårt Notion-arbeidsrom</p>
+      <div class="notion-mockup">
+        <div class="notion-header">
+          <div class="notion-icon">🤖</div>
+          <div class="notion-title">Agentik</div>
+        </div>
+        <div class="notion-dbs">
+          <div class="notion-db">
+            <div class="notion-db-name"><span class="notion-db-emoji">K</span> Klienter</div>
+            <div class="notion-db-desc">Master-record per kunde med status og kontaktinfo.</div>
+            <div class="notion-db-cols">
+              <span class="notion-col">Bedrift</span>
+              <span class="notion-col">Status</span>
+              <span class="notion-col">Pris</span>
+              <span class="notion-col">Onboarding-dato</span>
+              <span class="notion-col">+10</span>
+            </div>
+          </div>
+          <div class="notion-db">
+            <div class="notion-db-name"><span class="notion-db-emoji">N</span> Nøkkelpersoner</div>
+            <div class="notion-db-desc">Kontaktpersoner per klient med møte-status.</div>
+            <div class="notion-db-cols">
+              <span class="notion-col">Navn</span>
+              <span class="notion-col">Rolle</span>
+              <span class="notion-col">E-post</span>
+              <span class="notion-col">Booket</span>
+            </div>
+          </div>
+          <div class="notion-db">
+            <div class="notion-db-name"><span class="notion-db-emoji">O</span> Onboarding-oppgaver</div>
+            <div class="notion-db-desc">Sjekkliste fra «yes» til «i drift». Auto-generert.</div>
+            <div class="notion-db-cols">
+              <span class="notion-col">Oppgave</span>
+              <span class="notion-col">Status</span>
+              <span class="notion-col">Tildelt</span>
+              <span class="notion-col">Type</span>
+            </div>
+          </div>
+          <div class="notion-db">
+            <div class="notion-db-name"><span class="notion-db-emoji">A</span> Arbeidsoppgaver</div>
+            <div class="notion-db-desc">Post-onboarding sprint-arbeid og vedlikehold.</div>
+            <div class="notion-db-cols">
+              <span class="notion-col">Oppgave</span>
+              <span class="notion-col">Status</span>
+              <span class="notion-col">Verdi-est</span>
+            </div>
+          </div>
+          <div class="notion-db" style="grid-column: span 2;">
+            <div class="notion-db-name"><span class="notion-db-emoji">M</span> Møter</div>
+            <div class="notion-db-desc">Alle møter med klienter — kickoff, strategimøter, workshops, intro-møter. Alle relateres tilbake til klienten.</div>
+            <div class="notion-db-cols">
+              <span class="notion-col">Tittel</span>
+              <span class="notion-col">Type</span>
+              <span class="notion-col">Dato</span>
+              <span class="notion-col">Action items</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top: 18px; font-size: 13px; color: rgba(242,236,225,0.55); line-height: 1.5;">
+        Hver klient kan inviteres til sin egen Klient-side med ulike permissions. Vi ser alt internt; de ser kun sin egen.
+      </p>
+    </div>
+
+    <!-- INTAKE FORM MOCKUP -->
+    <div>
+      <p class="eyebrow" style="color: var(--copper); margin-bottom: 14px;">Kundens intake-skjema</p>
+      <div class="intake">
+        <div class="intake-bar">
+          <div class="intake-bar-fill"></div>
+        </div>
+        <div class="intake-step-marker">
+          <span>Steg 4 / 9</span>
+          <span>~3 min igjen</span>
+        </div>
+        <div class="intake-eyebrow">Nøkkelpersoner</div>
+        <h3>Hvem skal vi snakke med?</h3>
+        <p class="intake-sub">Legg til 2–6 personer vi bør møte i de første ukene.</p>
+
+        <div style="background: rgba(44,167,133,0.05); border: 1px solid rgba(44,167,133,0.2); border-radius: 12px; padding: 14px; margin-bottom: 10px;">
+          <p style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--teal); letter-spacing: 0.18em; margin-bottom: 8px; text-transform: uppercase;">Person 1</p>
+          <div class="intake-grid">
+            <div class="intake-input">Kari Hansen</div>
+            <div class="intake-input">Salgssjef</div>
+          </div>
+          <div class="intake-grid" style="margin-top: 6px;">
+            <div class="intake-input">kari@bedrift.no</div>
+            <div class="intake-input placeholder">Telefon (valgfri)</div>
+          </div>
+          <div style="margin-top: 10px; display: flex; gap: 12px; font-size: 11px; color: var(--slate-muted);">
+            <span>☑ Inviter til Slack</span>
+            <span>☑ Book intro-møte</span>
+          </div>
+        </div>
+
+        <div style="background: rgba(44,167,133,0.05); border: 1px solid rgba(44,167,133,0.2); border-radius: 12px; padding: 14px; margin-bottom: 10px;">
+          <p style="font-family: 'JetBrains Mono'; font-size: 9px; color: var(--teal); letter-spacing: 0.18em; margin-bottom: 8px; text-transform: uppercase;">Person 2</p>
+          <div class="intake-grid">
+            <div class="intake-input">Per Olsen</div>
+            <div class="intake-input">Driftsleder</div>
+          </div>
+          <div class="intake-grid" style="margin-top: 6px;">
+            <div class="intake-input">per@bedrift.no</div>
+            <div class="intake-input placeholder">Telefon (valgfri)</div>
+          </div>
+        </div>
+
+        <div style="border: 2px dashed rgba(42,39,32,0.2); border-radius: 12px; padding: 12px; text-align: center; color: var(--slate-muted); font-size: 13px; margin-bottom: 18px;">
+          + Legg til person
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid rgba(42,39,32,0.08);">
+          <span style="font-size: 12px; color: var(--slate-muted);">← Tilbake</span>
+          <span class="intake-cta">Neste →</span>
+        </div>
+      </div>
+      <p style="margin-top: 18px; font-size: 13px; color: rgba(242,236,225,0.55); line-height: 1.5;">
+        9 steg, ~5–8 min. Hver person kunden legger til genererer auto en rad i Nøkkelpersoner + en oppgave «Book intro-møte med ...» i Onboarding-oppgaver.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Tidslinje</span>
+  <h2 class="sec-h">Fra ja til <em>kickoff</em> — minutt for minutt</h2>
+  <p class="sec-dek">De første timene er kritiske. Mens kundens engasjement er på topp må de føle at vi faktisk leverer.</p>
+
+  <div class="timeline">
+    <div class="tl-item copper">
+      <div class="tl-tag">T+0</div>
+      <div class="tl-title">Kunden sier «la oss kjøre»</div>
+      <div class="tl-desc">Møte avsluttet. Ivar/Ole åpner Slack og trigger init med bedrifts-info, daglig leder, pris og kommentar.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-tag">T+5 min</div>
+      <div class="tl-title">Notion-arbeidsrom opprettet automatisk</div>
+      <div class="tl-desc">Klient-side i «Klienter»-database. 5 initielle oppgaver i «Onboarding-oppgaver» (video, kontrakt, gave-prep, Slack-kanal, faktura-prep).</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-tag">T+10 min</div>
+      <div class="tl-title">Onboarding-mail lander hos kunden</div>
+      <div class="tl-desc">Personlig melding fra Ivar med link til intake-skjemaet. Slack-varsel til oss på #social: «Ny AI-Partner: [Bedrift]».</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-tag">T+1 — 24 timer</div>
+      <div class="tl-title">Kunden fyller ut intake-skjema</div>
+      <div class="tl-desc">9 steg, ~5–8 min. Pre-fylt med info vi allerede har. Kunden legger til nøkkelpersoner, systemer, gave-adresse, brand-info.</div>
+    </div>
+    <div class="tl-item copper">
+      <div class="tl-tag">T+24 timer</div>
+      <div class="tl-title">SUBMIT-workflow kjører — alt blir satt opp</div>
+      <div class="tl-desc">Notion-rad per nøkkelperson + intro-møte-task per person + 6 ekstra tasks (gave, kickoff, Slack-invitasjoner, Fiken, dashbord, brand). Klient-status: «Aktiv Sprint».</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-tag">T+1 — 3 dager</div>
+      <div class="tl-title">Velkomstgaven lander</div>
+      <div class="tl-desc">Norsk kaffe + branded kopp + håndskrevet kort fra Ivar+Ole. «Vi gleder oss til 90 dager sammen.»</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-tag">T+5 virkedager</div>
+      <div class="tl-title">Kickoff-møte (90 min)</div>
+      <div class="tl-desc">Bli kjent (15) → intake-svar (15) → demo dashbord/Slack (10) → AI-Revisjon starter (40) → neste-steg (10).</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-tag">T+30 dager</div>
+      <div class="tl-title">Første AI-løsning i drift</div>
+      <div class="tl-desc">Dashbord viser konkrete timer spart. Slack-aktivitet daglig. Månedlig strategimøte avholdes.</div>
+    </div>
+    <div class="tl-item copper">
+      <div class="tl-tag">T+90 dager</div>
+      <div class="tl-title">Sprint avsluttet, milepæl-feiring</div>
+      <div class="tl-desc">Verdigaranti dokumentert (2x årlig verdipotensial). Middag eller hjemme-lunsj med Ivar+Ole. Overgang til løpende AI-Partner-modus.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 WOW MOMENTS -->
+<section class="section section-dark">
+  <span class="rule"></span>
+  <span class="eyebrow" style="display: inline-block; margin-bottom: 16px;">Det som lager forskjell</span>
+  <h2 class="sec-h" style="color: var(--off-white);">7 <em>WOW</em>-momenter</h2>
+  <p class="sec-dek">Onboarding er ikke bare logistikk. Det er der vi planter setningen klienten forteller andre med.</p>
+
+  <div class="wow-grid">
+    <div class="wow-card">
+      <div class="wow-num">01</div>
+      <div class="wow-when">T+5 min</div>
+      <div class="wow-title">Personlig e-post raskere enn forventet</div>
+      <div class="wow-desc">B2B-leverandører tar ofte dager å svare. Vi svarer på minutter.</div>
+    </div>
+    <div class="wow-card">
+      <div class="wow-num">02</div>
+      <div class="wow-when">T+1 time</div>
+      <div class="wow-title">Eget dashbord på en URL de kan vise sjefen</div>
+      <div class="wow-desc">«Vi har allerede vår egen Agentik-side» — bygger eierskap fra dag 1.</div>
+    </div>
+    <div class="wow-card">
+      <div class="wow-num">03</div>
+      <div class="wow-when">T+24 t</div>
+      <div class="wow-title">Loom-video fra Ivar+Ole</div>
+      <div class="wow-desc">Ansikt + stemme = relasjon. Nesten ingen B2B-leverandører gjør dette.</div>
+    </div>
+    <div class="wow-card">
+      <div class="wow-num">04</div>
+      <div class="wow-when">T+1–3 dager</div>
+      <div class="wow-title">Fysisk gave med håndskrevet note</div>
+      <div class="wow-desc">Det digitale er forventet. Det fysiske er sjeldent — minneverdig.</div>
+    </div>
+    <div class="wow-card">
+      <div class="wow-num">05</div>
+      <div class="wow-when">T+5 dager</div>
+      <div class="wow-title">Kickoff åpner med «bli kjent»</div>
+      <div class="wow-desc">Vi er ikke konsulenter som starter med slides. Vi er partnere som starter med samtale.</div>
+    </div>
+    <div class="wow-card">
+      <div class="wow-num">06</div>
+      <div class="wow-when">T+30 dager</div>
+      <div class="wow-title">Dashbord viser konkrete timer spart</div>
+      <div class="wow-desc">Beviset på at det virker — i tall, levert akkurat når skepsisen er høyest.</div>
+    </div>
+    <div class="wow-card">
+      <div class="wow-num">07</div>
+      <div class="wow-when">T+90 dager</div>
+      <div class="wow-title">Milepæl-middag + LinkedIn-post</div>
+      <div class="wow-desc">Privat anerkjennelse + offentlig synlighet for sin AI-investering.</div>
+    </div>
+  </div>
+
+  <p class="kicker-line">«Onboarding er det første kunden husker — og som regel det de forteller andre om.»</p>
+</section>
+
+<!-- TOOLS -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Stack</span>
+  <h2 class="sec-h">Verktøy vi bruker (og hvorfor)</h2>
+  <p class="sec-dek">Få verktøy, hver brukt for det de er best til. Vi unngår tool-sprawl.</p>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-icon">N</div>
+      <div class="tool-info">
+        <div class="tool-name">Notion</div>
+        <div class="tool-role">Klient-hub + tasks</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon" style="background: var(--teal);">n8</div>
+      <div class="tool-info">
+        <div class="tool-name">n8n</div>
+        <div class="tool-role">Automasjon</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon" style="background: var(--copper);">S</div>
+      <div class="tool-info">
+        <div class="tool-name">Slack</div>
+        <div class="tool-role">Daglig kontakt</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon" style="background: #FF5722;">V</div>
+      <div class="tool-info">
+        <div class="tool-name">Vipps eSign</div>
+        <div class="tool-role">BankID-kontrakt</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon" style="background: #2D8FE8;">F</div>
+      <div class="tool-info">
+        <div class="tool-name">Fiken</div>
+        <div class="tool-role">Faktura</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon" style="background: #4527A0;">L</div>
+      <div class="tool-info">
+        <div class="tool-name">Loom</div>
+        <div class="tool-role">Velkomstvideo</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon" style="background: #2E7D32;">G</div>
+      <div class="tool-info">
+        <div class="tool-name">Gmail</div>
+        <div class="tool-role">Formell e-post</div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon" style="background: #3ECF8E;">Sb</div>
+      <div class="tool-info">
+        <div class="tool-name">Supabase</div>
+        <div class="tool-role">State-tracking</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="brand">Agentik</div>
+  <div class="meta">Partner-onboarding · v1 · Bygget april 2026</div>
+</footer>
+
+</body>
+</html>

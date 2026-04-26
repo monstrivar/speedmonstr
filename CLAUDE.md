@@ -9,28 +9,37 @@ Dette repoet inneholder **agentik.no** — landingssiden som selger studiet. Sel
 ## Repostruktur
 
 ```
-speedmonstr/                  ← repo-navnet er fortsatt fra tidligere (Monstr-arven). Ikke kritisk å endre.
+speedmonstr/
 ├── CLAUDE.md                 ← Du er her
-├── index.html                Landing page entry (Plus Jakarta Sans + JetBrains Mono)
+├── index.html                Landing page entry
 ├── src/
-│   ├── main.jsx              Router: /, /personvern, /vilkar
+│   ├── main.jsx              Router (9 ruter)
 │   ├── index.css             Tailwind + globale styles
 │   └── pages/
-│       ├── NySide.jsx        Hovedsiden (Agentik-landingen)
+│       ├── NySide.jsx        Original landing (kjører fortsatt)
+│       ├── Side2.jsx         Ny premium AI-Partner landing (skal erstatte NySide)
+│       ├── Takk.jsx          Pre-assessment etter /side2 form-submit
+│       ├── Preso.jsx         AI-generert HTML-preso per kunde (/preso/[id])
+│       ├── Onboarding.jsx    Partner-onboarding-skjema (/onboarding/[token])
+│       ├── AiPartner.jsx     /ai-partner — AI-Partner detail page
+│       ├── AiRevisjon.jsx    /ai-revisjon — AI-Revisjon (sprint fase 1)
 │       ├── Personvern.jsx
 │       └── Vilkar.jsx
 ├── api/
-│   └── agentik-contact.js    POST-endepunkt → N8N → Attio + Gmail + Slack
-├── public/                   Statiske assets (hero-video, logoer, team, klientlogoer)
-│   ├── aiarendal.html        AI Arendal event-landing
-│   ├── skills/               Claude-skill-kort (PDF/MD)
+│   ├── agentik-contact.js                  POST — kontaktskjema fra /side2 → n8n
+│   ├── agentik-assessment.js               POST — pre-assessment fra /takk → n8n
+│   ├── agentik-presentation/[id].js        GET — henter generert preso-HTML fra Supabase
+│   ├── agentik-onboarding-init.js          POST — Ivar/Ole trigger onboarding av ny partner
+│   └── agentik-onboarding/[token].js       GET/POST — kunde-fronted onboarding-form
+├── public/
+│   ├── aiarendal.html                Event-landing
+│   ├── onboarding-flow.html          Visualisering av onboarding-flyten (intern presentasjon)
+│   ├── strategi-3-klienter.html      60-dagers strategi-visualisering (intern presentasjon)
+│   ├── skills/                       Claude-skill-kort
 │   └── claude-verktoykassen.zip
 ├── presentation/             HTML keynote-deck for events
 ├── docs/                     Intern dokumentasjon (norsk)
-├── vercel.json
-├── package.json              name: "agentik"
-├── tailwind.config.js        Agentik-palette (cream, deep slate, petrol, signal, copper)
-└── vite.config.js
+├── vercel.json, package.json, tailwind.config.js, vite.config.js
 ```
 
 ## Tech-stack (landingsside)
@@ -69,20 +78,60 @@ npm run preview          # Forhåndsvisning av bygg
 npm run lint             # ESLint
 ```
 
-## Kontaktskjema-flyten
+## Hovedflyt: lead → AI-Partner
 
-1. Bruker fyller ut skjema på `/` (NySide.jsx)
-2. POST til `/api/agentik-contact` med `{ fornavn, bedrift, telefon, epost, maal }`
-3. API videresender til `N8N_WEBHOOK_URL` med `kilde: "agentik.no"`
-4. N8N-workflowen `AI Form Lead Handler` (id: `Zu6rLrT0bRlDeQb2`):
-   - Oppretter person + bedrift + notat ("Skjema-innsending fra agentik.no — {{dato}}") + Sales Pipeline-oppføring i Attio
-   - Genererer personlig auto-svar (gpt-5-mini + kunnskapsbase) og sender fra hei@agentik.no
-   - Varsler #social i Slack med lead-info og lenke til Attio
-   - Logger til `email_log`-tabell i Supabase
+End-to-end-flyt fra fremmed besøkende til onboardet AI-Partner:
 
-Når lead-en svarer på auto-svaret, fanges svaret av eksisterende `AI Email Auto-Reply with Knowledge Base`-workflow som kjører booking-flowen automatisk (kalender-sjekk + Slack-godkjenning + invitasjon).
+```
+1. /side2 (lead-skjema)
+   ↓ POST /api/agentik-contact → n8n «AI Form Lead Handler»
+   ↓ Oppretter Attio-person + bedrift + auto-svar med møte-tider
+   ↓ Redirect til /takk?n=&e=&b=
 
-Eneste miljøvariabel: `N8N_WEBHOOK_URL` (settes i Vercel, ingen fallback). Detaljer i `docs/PLATTFORM-OG-TEKNOLOGI.md`.
+2. /takk (pre-assessment, 12 spørsmål, typeform-stil)
+   ↓ POST /api/agentik-assessment → n8n «AI Assessment Handler»
+   ↓ Firecrawl scrape + Claude Opus genererer HTML-preso (10 slides)
+   ↓ Lagrer preso i Supabase + notater i Attio (person + bedrift)
+   ↓ Slack-varsel med URL: agentik.no/preso/[uuid]
+
+3. (Møte avholdt — kunde sier "ja")
+
+4. /api/agentik-onboarding-init triggert (av Ivar/Ole)
+   ↓ n8n «AI Partner Onboarding INIT»
+   ↓ Notion klient-side opprettet + 5 initielle tasks + onboarding-mail
+
+5. /onboarding/[token] (kunde fyller ut intake, 9 steg)
+   ↓ POST /api/agentik-onboarding/[token]
+   ↓ n8n «AI Partner Onboarding SUBMIT»
+   ↓ Notion-rad per nøkkelperson + intro-møter + setup-tasks
+   ↓ Bekreftelses-mail + Slack
+
+6. Ivar/Ole krysser av tasks i Notion → onboarded
+```
+
+Full onboarding-strategi: `docs/agentik/ONBOARDING.md` + visualisering på `public/onboarding-flow.html`.
+
+## n8n-workflows (alle aktive)
+
+| Workflow | ID | Status |
+|---|---|---|
+| AI Form Lead Handler | `Zu6rLrT0bRlDeQb2` | Live |
+| AI Email Auto-Reply | `dJL4Gk4dO5ZPqAH3` | Live |
+| AI Assessment Handler | `Pv1Aj3Vg38ogshQ8` | Live |
+| AI Partner Onboarding INIT | `SOSHZFRKHXrUU5H7` | Bygd, Notion-creds må linkes |
+| AI Partner Onboarding SUBMIT | `uoNd4dBO5ZdmTVCI` | Bygd, Notion-creds må linkes |
+
+## Vercel env-variabler (production)
+
+| Variabel | Status |
+|---|---|
+| `N8N_WEBHOOK_URL` | ✓ |
+| `N8N_ASSESSMENT_WEBHOOK_URL` | ✓ |
+| `N8N_ONBOARDING_INIT_WEBHOOK_URL` | Mangler — settes når INIT-workflowen er klar |
+| `N8N_ONBOARDING_SUBMIT_WEBHOOK_URL` | Mangler — settes når SUBMIT-workflowen er klar |
+| `ONBOARDING_INIT_SECRET` | Mangler — random string for å beskytte init-endepunkt |
+| `SUPABASE_URL` | ✓ |
+| `SUPABASE_KEY` | ✓ |
 
 ## Konvensjoner
 
@@ -129,7 +178,10 @@ Lokasjon: Skien og Arendal.
 | `docs/agentik/INNHOLDSSTRATEGI.md` | Innholds- og markedsføringsstrategi |
 | `docs/MERKEVARE-OG-DESIGN.md` | Merkevareidentitet, farger, typografi, designsystem |
 | `docs/PLATTFORM-OG-TEKNOLOGI.md` | Systemarkitektur, API, miljøvariabler, deployment |
-| `docs/automasjoner/README.md` | Live N8N-workflows: ID-er, credentials, felles infrastruktur (Attio/Supabase/Slack/OpenAI) |
+| `docs/automasjoner/README.md` | Live N8N-workflows: ID-er, credentials, felles infrastruktur |
+| `docs/automasjoner/ai-partner-onboarding.md` | Onboarding-workflows (INIT + SUBMIT): blueprint + Notion-DB-IDer |
+| `docs/automasjoner/ai-assessment-handler.md` | Pre-assessment workflow med preso-generering |
+| `docs/forretning/2MND-STRATEGI-3-KLIENTER.md` | 60-dagers plan for 3 Founding-partnere — ukentlig roadmap, kanaler, KPI-er |
 | `docs/TECH-DECISIONS.md` | Tech-stack og agent-referansearkitektur |
 | `docs/CONVENTIONS.md` | Kodestandard, filstruktur, git-praksis |
 | `docs/juridisk/DATABEHANDLERAVTALE.md` | Databehandleravtale-mal |
