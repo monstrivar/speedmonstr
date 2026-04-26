@@ -758,12 +758,10 @@ const Outcomes = () => {
       <div className="max-w-4xl mx-auto">
         <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
         <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-4">
-          Etter 30 dager sitter du igjen med dette
+          Etter 90 dager har dere AI i drift
         </h2>
         <p className="reveal text-[#E8E4DC]/45 text-base md:text-lg max-w-2xl mb-16 leading-relaxed">
-          Vi kaller det en{' '}
-          <span className="text-[#1A6B6D] font-medium">AI Opportunity Audit</span>.
-          {' '}Du kaller det klarhet.
+          Som <span className="text-[#1A6B6D] font-medium">AI-Partner</span> kartlegger vi, prioriterer og bygger sammen — slik at AI faktisk havner i daglig drift, ikke bare i strategi-dokumenter.
         </p>
 
         <div className="grid md:grid-cols-2 gap-10">
