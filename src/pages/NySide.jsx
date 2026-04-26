@@ -1291,15 +1291,15 @@ export const NySide = () => {
   return (
     <>
       <Helmet>
-        <title>Agentik | AI-rådgivning som gir konkrete resultater</title>
+        <title>Agentik | AI-Partner for norske bedrifter</title>
         <meta
           name="description"
-          content="Vi hjelper norske selskaper med å identifisere og implementere AI-løsninger. Konkrete resultater på 30 dager."
+          content="Vi blir deres faste AI-rådgiver og dev-team. 90-dagers verdigaranti: minst 2x investeringen i årlig verdipotensial — eller jobber vi videre uten månedlig honorar."
         />
-        <meta property="og:title" content="Agentik | AI-rådgivning som gir konkrete resultater" />
+        <meta property="og:title" content="Agentik | AI-Partner for norske bedrifter" />
         <meta
           property="og:description"
-          content="Vi hjelper norske selskaper med å identifisere og implementere AI-løsninger. Konkrete resultater på 30 dager."
+          content="Vi blir deres faste AI-rådgiver og dev-team. 90-dagers verdigaranti: minst 2x investeringen i årlig verdipotensial."
         />
         <meta property="og:locale" content="nb_NO" />
         <meta property="og:url" content="https://agentik.no/" />
