@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -192,13 +191,13 @@ const Hero = () => {
         <h1 className="s2-hero-el font-agentik font-bold tracking-[-0.025em] leading-[0.98] mb-8">
           <span
             className="block text-[#E8E4DC]"
-            style={{ fontSize: 'clamp(2.6rem, 7.5vw, 6.4rem)' }}
+            style={{ fontSize: 'clamp(2.2rem, 7.2vw, 6.4rem)' }}
           >
             Din eksterne
           </span>
           <span
             className="block text-[#C4854C]"
-            style={{ fontSize: 'clamp(2.6rem, 7.5vw, 6.4rem)' }}
+            style={{ fontSize: 'clamp(2.2rem, 7.2vw, 6.4rem)' }}
           >
             AI-avdeling.
           </span>
@@ -1649,9 +1648,8 @@ const ContactForm = () => {
         <p className="reveal text-center font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0] mb-5">
           10 — La oss snakke
         </p>
-        <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4.5vw,3.2rem)] text-[#E8E4DC] tracking-tight leading-[1.05] mb-4 text-center">
-          Vil du finne hvor AI kan skape verdi
-          <br /> i deres bedrift?
+        <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4.5vw,3.2rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-4 text-center">
+          Vil du finne hvor AI<br className="hidden sm:inline" /> kan skape verdi i deres bedrift?
         </h2>
         <p className="reveal text-[#E8E4DC]/45 text-base text-center mb-10 max-w-md mx-auto leading-relaxed">
           Fyll ut skjemaet, så tar vi en uforpliktende mulighetssamtale. Vi tar inn 3 founding-partnere de neste 60 dagene.
@@ -1956,10 +1954,10 @@ const StickyCTA = () => {
   return (
     <div
       aria-hidden={!visible}
-      className={`fixed bottom-5 left-1/2 z-40 transition-all duration-500 ${
+      className={`fixed bottom-4 md:bottom-5 left-1/2 z-40 transition-all duration-500 px-4 ${
         visible
-          ? 'opacity-100 translate-y-0 pointer-events-auto'
-          : 'opacity-0 translate-y-6 pointer-events-none'
+          ? 'opacity-100 pointer-events-auto'
+          : 'opacity-0 pointer-events-none'
       }`}
       style={{ transform: `translate3d(-50%, ${visible ? '0' : '24px'}, 0)` }}
     >
