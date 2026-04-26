@@ -206,8 +206,8 @@ const Hero = () => {
         </h1>
 
         {/* Subheadline */}
-        <p className="s2-hero-el font-agentik text-[#E8E4DC]/65 text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-[1.45] mb-12 tracking-tight">
-          Vi hjelper ambisiøse bedrifter å identifisere, implementere, vedlikeholde og forbedre AI-systemer som skaper målbar verdi i support, salg, drift og interne arbeidsflyter.
+        <p className="s2-hero-el font-agentik text-[#E8E4DC]/70 text-xl md:text-2xl lg:text-3xl max-w-3xl mx-auto leading-[1.35] mb-12 tracking-tight">
+          Vi finner, bygger og drifter AI som skaper målbar verdi — ikke nye demoer.
         </p>
 
         {/* CTAs */}
@@ -225,7 +225,7 @@ const Hero = () => {
             onClick={() => scrollTo('sprint')}
             className="group inline-flex items-center gap-2 px-6 py-4 text-sm text-[#E8E4DC]/75 hover:text-[#E8E4DC] font-heading font-medium tracking-tight transition-colors"
           >
-            Slik fungerer 90-dagers sprinten
+            Slik jobber vi
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
           </button>
         </div>
@@ -258,11 +258,9 @@ const Hero = () => {
 const Problem = () => {
   const fails = [
     'starter med verktøy i stedet for forretningsproblemer',
-    'tester AI tilfeldig, uten en roadmap',
     'vet ikke hvilke arbeidsflyter som skal prioriteres',
-    'mangler internt eierskap',
-    'har ikke teknisk kapasitet til å implementere',
-    'løsninger blir ikke vedlikeholdt eller forbedret',
+    'mangler internt eierskap og teknisk kapasitet',
+    'løsninger blir aldri vedlikeholdt eller forbedret',
     'AI blir aldri en del av daglig drift',
   ];
 
@@ -325,12 +323,10 @@ const Problem = () => {
 // ─────────────────────────────────────────────────────────────
 const NewApproach = () => {
   const pillars = [
-    { label: 'Kartlegging', desc: 'Vi forstår business, prosesser og systemer før vi rører ett verktøy.' },
-    { label: 'Prioritering', desc: 'Høyest verdi først, ikke det som er kulest å bygge.' },
-    { label: 'Implementering', desc: 'Vi bygger inn i faktiske arbeidsflyter — ikke ved siden av.' },
-    { label: 'Vedlikehold', desc: 'AI-systemer trenger eier som passer på dem måned etter måned.' },
-    { label: 'Forbedring', desc: 'Vi måler, justerer og bygger videre — kontinuerlig.' },
-    { label: 'Verdimåling', desc: 'Hver leveranse knyttes til timer spart, kapasitet frigjort eller kroner.' },
+    { label: 'Kartlegg', desc: 'Vi forstår prosesser, systemer og bottlenecks før vi rører ett verktøy. Høyest verdi først.' },
+    { label: 'Bygg', desc: 'Vi implementerer inn i faktiske arbeidsflyter — ikke som demoer ved siden av.' },
+    { label: 'Vedlikehold', desc: 'AI-systemer trenger en eier som passer på dem måned etter måned. Det er oss.' },
+    { label: 'Mål', desc: 'Hver leveranse knyttes til timer spart, kapasitet frigjort eller kroner.' },
   ];
 
   return (
@@ -360,7 +356,7 @@ const NewApproach = () => {
         </div>
 
         {/* Pillars grid */}
-        <div className="grid md:grid-cols-3 gap-px bg-[#E8E4DC]/8 border border-[#E8E4DC]/8 rounded-2xl overflow-hidden">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[#E8E4DC]/8 border border-[#E8E4DC]/8 rounded-2xl overflow-hidden">
           {pillars.map((p, i) => (
             <div
               key={i}
@@ -382,8 +378,8 @@ const NewApproach = () => {
         </div>
 
         {/* Manifesto line */}
-        <p className="reveal mt-16 font-agentik italic text-[#E8E4DC]/70 text-xl md:text-2xl tracking-tight max-w-3xl leading-relaxed">
-          “AI skaper kun verdi når den er koblet til reelle arbeidsflyter, implementert ordentlig, målt, vedlikeholdt og forbedret over tid.”
+        <p className="reveal mt-16 font-agentik italic text-[#E8E4DC]/75 text-2xl md:text-3xl tracking-tight max-w-3xl leading-[1.3]">
+          Ingen AI uten eier. Ingen eier uten ansvar.<br className="hidden md:block" /> <span className="text-[#4FC3B0]">Ingen ansvar uten resultat.</span>
         </p>
       </div>
     </section>
@@ -531,14 +527,14 @@ const SprintPhases = () => {
 const UseCaseModules = () => {
   const modules = [
     {
-      name: 'Support Copilot',
+      name: 'Support-assistent',
       desc: 'Klassifiserer henvendelser, foreslår svar, finner dokumentasjon og eskalerer komplekse saker.',
       value: 'Raskere support, mindre press på senior ansatte.',
       Icon: Headphones,
       featured: true,
     },
     {
-      name: 'Sales Copilot',
+      name: 'Salgs-assistent',
       desc: 'Forbereder møter, oppsummerer kundehistorikk, oppdaterer CRM, foreslår neste steg og lager tilbudsutkast.',
       value: 'Mer tid på salg, ren CRM-data.',
       Icon: TrendingUp,
@@ -569,7 +565,7 @@ const UseCaseModules = () => {
       Icon: Calendar,
     },
     {
-      name: 'Tilbudsassistent',
+      name: 'Tilbuds-assistent',
       desc: 'Lager tilbudsutkast, prosjektbeskrivelser, prising og oppfølgings-e-poster.',
       value: 'Raskere tilbudsproduksjon, høyere kvalitet.',
       Icon: FileCheck,
@@ -613,10 +609,10 @@ const UseCaseModules = () => {
 
         <div className="max-w-3xl mb-16">
           <h2 className="reveal font-agentik font-bold text-[clamp(2.2rem,5vw,4rem)] text-[#E8E4DC] tracking-[-0.025em] leading-[1.02] mb-6">
-            Åtte moduler. Ett rammeverk. Bygd for å gjenbrukes.
+            Områdene hvor AI faktisk skaper verdi.
           </h2>
           <p className="reveal font-agentik text-[#E8E4DC]/60 text-lg md:text-xl leading-relaxed">
-            Hver levering produserer gjenbrukbar IP. Det betyr at hver kunde får raskere implementering — og at vi kan stå inne for kvaliteten.
+            Vi har sett det samme mønsteret igjen og igjen. Dette er arbeidsflytene der vi konsekvent ser raskest implementering, klarest verdi og lavest risiko.
           </p>
         </div>
 
@@ -668,12 +664,6 @@ const UseCaseModules = () => {
           })}
         </div>
 
-        {/* Module philosophy */}
-        <div className="reveal mt-16 max-w-3xl">
-          <p className="font-agentik italic text-[#E8E4DC]/55 text-base md:text-lg tracking-tight">
-            “Hvis vi bygger det to ganger, blir det en modul. Hver kunde-leveranse skal produsere gjenbrukbar IP — slik at neste implementering går raskere og blir bedre.”
-          </p>
-        </div>
       </div>
     </section>
   );
@@ -693,11 +683,10 @@ const ValueGuarantee = () => {
         start: 'top 70%',
         once: true,
         onEnter: () => {
-          // Animate 0 → 234
           const obj = { v: 0 };
           gsap.to(obj, {
-            v: 234,
-            duration: 2,
+            v: 234000,
+            duration: 2.2,
             ease: 'power2.out',
             onUpdate: () => setAnimatedNum(Math.round(obj.v)),
           });
@@ -777,8 +766,8 @@ const ValueGuarantee = () => {
                 <p className="font-data text-[10px] uppercase tracking-[0.2em] text-[#4FC3B0] mb-3">
                   Årlig verdipotensial
                 </p>
-                <p className="font-agentik font-bold text-[#4FC3B0] text-3xl md:text-4xl tracking-tight">
-                  {animatedNum.toLocaleString('nb-NO')} 000
+                <p className="font-agentik font-bold text-[#4FC3B0] text-3xl md:text-4xl tracking-tight tabular-nums">
+                  {animatedNum.toLocaleString('nb-NO')}
                   <span className="text-[#4FC3B0]/50 text-lg ml-1">kr</span>
                 </p>
               </div>
