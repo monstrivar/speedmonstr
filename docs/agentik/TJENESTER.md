@@ -1,69 +1,83 @@
 # Agentik — Tjenestebeskrivelser
 
-*Sist oppdatert: 2026-04-17*
+*Sist oppdatert: 2026-04-26*
 
 ---
 
-## 1. AI Opportunity Audit
+## 1. AI-Partner — hovedprodukt
 
 ### Hva det er
 
-En 30-dagers prosess der vi kartlegger bedriftens prosesser, identifiserer hvor AI gir størst verdi, og leverer en prioritert handlingsplan med konkrete neste steg.
+En månedlig partneravtale der Agentik blir bedriftens dedikerte AI-rådgiver og dev-team. Vi kartlegger, bygger og forbedrer AI-løsninger måned for måned — uten at bedriften må ansette internt.
 
 ### Hvem det er for
 
-Bedrifter med 5-500 ansatte som:
+Bedrifter med 5–500 ansatte som:
+- Allerede har manuelle prosesser, repeterende oppgaver og nok volum til at små forbedringer gir stor årlig verdi
 - Vet at AI er viktig, men ikke vet hvor de skal starte
-- Har prøvd ChatGPT men ikke sett målbare resultater
-- Ønsker en ekstern vurdering før de investerer i AI
-- Trenger å rettferdiggjøre AI-investering overfor styre eller ledergruppe
-
-### Prosessen
-
-**Uke 1 — Kartlegging**
-- Innledende samtale med ledelsen (1-2 timer)
-- Intervjuer med nøkkelpersoner i 3-5 avdelinger (30 min per person)
-- Gjennomgang av eksisterende systemer, verktøy og arbeidsprosesser
-- Identifisering av repetitive, tidkrevende eller feilutsatte prosesser
-
-**Uke 2-3 — Analyse og prioritering**
-- Vurdering av hver mulighet mot kriterier: tidsbesparelse, kostnadsreduksjon, inntektsøkning, implementeringskompleksitet
-- ROI-estimat per mulighet
-- Teknisk vurdering: hvilke verktøy og plattformer som passer
-- Risiko- og avhengighetsanalyse
-
-**Uke 4 — Leveranse**
-- Presentasjon for ledelsen (1-2 timer)
-- Skriftlig rapport med:
-  - Oppsummering av funn
-  - Prioritert liste over 5-10 muligheter
-  - Detaljert handlingsplan for topp 3
-  - Kostnadsestimat og tidsplan for implementering
-  - Anbefalte verktøy og leverandører
-- Implementeringsstøtte på første tiltak (opptil 8 timer inkludert)
-
-### Leveranser
-
-| Leveranse | Format |
-|-----------|--------|
-| AI Opportunity Report | PDF, 15-25 sider |
-| Prioriteringsmatrise | Interaktivt regneark |
-| Handlingsplan (topp 3) | PDF + prosjektplan |
-| Implementeringsstøtte | 8 timer inkludert |
-| Oppfølgingsmøte (60 dager) | Videomøte, 1 time |
+- Har prøvd ChatGPT eller andre AI-verktøy uten å få det inn i fast drift
+- Vil bruke AI strategisk, men ikke vil ansette en intern AI-spesialist
+- Har en ledelse som kan ta beslutninger og prioritere internt
 
 ### Pris
 
-50 000 – 150 000 kr avhengig av bedriftsstørrelse og kompleksitet.
+| Periode | Pris/mnd | Notat |
+|---------|----------|-------|
+| **Founding** (første 3 partnere) | 39 000 kr | Låst pris for alltid |
+| **Etter Founding** (kunde 4+) | 49 000 kr | Samme tilbud, oppjustert pris |
 
-- 5-20 ansatte: 50 000 kr
-- 20-100 ansatte: 75 000 – 100 000 kr
-- 100-500 ansatte: 100 000 – 150 000 kr
+Alle priser eks. mva. Software- og API-kostnader (OpenAI, Slack, Supabase, etc.) kommer i tillegg og betales direkte av kunden.
 
-### Eksempler på funn (typiske)
+**Binding:** 90-dagers Sprint som oppstart. Deretter månedlig oppsigelse fra begge parter.
+
+### Faseinndeling — 90-dagers Sprint
+
+**Uke 1–2: AI-Revisjon (kartlegging)**
+- Kickoff med ledelsen
+- Intervjuer med 4–6 nøkkelpersoner
+- Prosess- og systemkartlegging
+- ROI-prioritering
+- Skriftlig revisjonsrapport + 90-dagers roadmap
+
+**Uke 3–6: Første implementering**
+- Den høyest prioriterte AI-løsningen settes i drift
+- Testing med ansatte
+- Opplæring av teamet i bruk
+- ROI-dashbord settes opp
+
+**Uke 7–12: Optimalisering + roadmap låst**
+- Forbedring basert på faktisk bruk
+- 90-dagers roadmap låses og kommer i drift
+- Verdimåling — verdipotensial dokumenteres
+
+**Måned 4+: Løpende partnerskap**
+- Måned-til-måned, ingen lang binding
+- Kontinuerlig prioritering, bygging og forbedring
+- Månedlig strategimøte og ROI-rapport
+
+### Inkludert hver måned
+
+1. **Komplett AI-Revisjon** (første fase) — strukturert kartlegging av hvor AI gir høyest ROI
+2. **Eget ROI-dashbord** — live oversikt over leveranser og målbar effekt
+3. **Månedlig strategimøte** og prioritering
+4. **Bygging, vedlikehold og videreutvikling** av AI-løsninger
+5. **Direkte Slack-tilgang** — svar samme virkedag
+6. **Opplæring av teamet** i nye løsninger
+
+### 90-dagers verdigaranti
+
+> **Garantien er gulvet. Business caset er målet.**
+
+Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI- og automasjonstiltak med dokumentert årlig verdipotensial tilsvarende **minst 2x investeringen i perioden**.
+
+Hvis vi ikke klarer det, jobber vi videre uten månedlig honorar i opptil 90 ekstra dager. Dersom verdien fortsatt ikke er dokumentert, refunderes siste fakturerte måned.
+
+**Verdien måles i:** spart tid, frigjort kapasitet, raskere oppfølging, færre manuelle steg, færre feil eller bedre utnyttelse av eksisterende ressurser.
+
+### Eksempler på løsninger vi bygger
 
 | Bransje | Mulighet | Estimert besparelse |
-|---------|----------|-------------------|
+|---------|----------|---------------------|
 | Rørlegger (15 ansatte) | Automatisk tilbudsberegning fra bilder | 12 timer/uke |
 | Regnskapsbyrå (30 ansatte) | AI-assistert bokføring og kategorisering | 20 timer/uke |
 | Eiendomsmegler (8 ansatte) | Automatisk boligbeskrivelse fra bilder + data | 6 timer/uke |
@@ -72,17 +86,16 @@ Bedrifter med 5-500 ansatte som:
 
 ---
 
-## 2. Kurs og workshops
+## 2. AI-Workshop — sidetilbud
 
 ### Format
 
 | Type | Varighet | Deltakere | Pris |
 |------|----------|-----------|------|
-| Halvdagsworkshop | 3-4 timer | 5-20 | 15 000 – 25 000 kr |
-| Heldagsworkshop | 6-7 timer | 5-20 | 25 000 – 45 000 kr |
-| Kveldskurs (åpent) | 2-3 timer | 10-40 | 1 500 – 2 500 kr/person |
+| Halvdagsworkshop | 3–4 timer | 5–20 | fra 25 000 kr |
+| Heldagsworkshop | 6–7 timer | 5–20 | 35 000 – 50 000 kr |
 
-### Tilgjengelige kurs
+### Tilgjengelige workshops
 
 **"AI i praksis" — introduksjonskurs**
 - For: Ledere og ansatte uten AI-erfaring
@@ -106,40 +119,20 @@ Bedrifter med 5-500 ansatte som:
 
 ### Skreddersøm
 
-Alle kurs tilpasses kundens bransje, verktøy og utfordringer. Standard-innhold er utgangspunktet, men øvelser og eksempler er alltid relevante for deltakerne.
+Alle workshops tilpasses kundens bransje, verktøy og utfordringer. Standard-innhold er utgangspunktet, men øvelser og eksempler er alltid relevante for deltakerne.
+
+### Når passer Workshop bedre enn AI-Partner?
+
+Workshop er en god inngangsport hvis:
+- Bedriften ikke er klar for et AI-Partnerskap (mangler intern eier)
+- Vi ikke ser realistisk 2x årlig verdipotensial — da anbefaler vi heller workshop først
+- Bedriften vil bygge intern kompetanse før de vurderer en partneravtale
 
 ---
 
-## 3. Løpende rådgivning
+## 3. Enkeltprosjekter
 
-### Hva det er
-
-Kontinuerlig sparring og støtte for bedrifter som ønsker en AI-rådgiver "på retainer". Typisk for kunder som har gjennomført en audit og er i implementeringsfasen.
-
-### Format
-
-| Modell | Innhold | Pris |
-|--------|---------|------|
-| Timebasert | Ad hoc-møter, e-post-support, review | 2 500 kr/time |
-| Retainer (liten) | 4 timer/mnd, fast kontaktperson | 8 000 kr/mnd |
-| Retainer (medium) | 10 timer/mnd, prioritert tilgang | 20 000 kr/mnd |
-| Retainer (stor) | 20 timer/mnd, dedikert rådgiver | 35 000 kr/mnd |
-
-### Hva det inkluderer
-
-- Strategisk sparring om AI-muligheter
-- Vurdering av nye verktøy og tjenester
-- Støtte ved implementering
-- Opplæring av nye ansatte
-- Kvartalsvis statusmøte med oppdatert AI-veikart
-
----
-
-## 4. Implementeringsprosjekter
-
-### Hva det er
-
-Hands-on implementering av spesifikke AI-løsninger identifisert i audit eller rådgivning. Agentik bygger eller konfigurerer løsningen sammen med kunden.
+For kunder som ikke skal bli AI-Partner, kan vi gjennomføre spesifikke AI-løsninger som enkeltprosjekter mot fast pris.
 
 ### Eksempler
 
@@ -149,36 +142,32 @@ Hands-on implementering av spesifikke AI-løsninger identifisert i audit eller r
 | Kundeservice-bot | AI-drevet chat/e-post-respons med bedriftens tone | 30 000 – 80 000 kr |
 | Dokumentautomatisering | Automatisk generering av rapporter, kontrakter, tilbud | 40 000 – 90 000 kr |
 | Intern kunnskapsbase | AI som svarer på spørsmål basert på bedriftens dokumenter | 50 000 – 120 000 kr |
-| Speed-to-lead (Monstr) | Automatisk SMS-respons på henvendelser | Fra 2 999 kr/mnd |
+| Lead-håndtering | Automatisk respons og kvalifisering | 30 000 – 70 000 kr |
 
 ### Prosess
 
-1. Scope og estimat (gratis om det følger en audit)
+1. Scope og estimat (gratis kort samtale)
 2. Avtale med fast pris og milepæler
-3. Bygg/konfigurasjon (2-6 uker)
+3. Bygg/konfigurasjon (2–6 uker)
 4. Testing med kunden
 5. Go-live + 30 dagers support
 6. Overlevering med dokumentasjon
+
+### Vi anbefaler ofte AI-Partner i stedet
+
+Enkeltprosjekter løser én problem isolert. AI-Partner bygger en plan for alt, leverer det første raskt, og fortsetter å forbedre. For de fleste kunder gir partnerskap mer verdi for pengene over tid — derfor er det vårt hovedprodukt.
 
 ---
 
 ## Tjenestepakker
 
-For kunder som ønsker en helhetlig tilnærming:
-
-### "Kickstart" — for den som vil starte smart
-- AI Opportunity Audit
-- Halvdags workshop for teamet
-- Implementering av #1-prioritet
-- **Pris: 80 000 – 120 000 kr**
-
-### "Full fart" — for den som vil transformere
-- AI Opportunity Audit
-- Heldags workshop for teamet
-- Implementering av topp 3 prioriteter
-- 3 måneder retainer (liten)
-- **Pris: 150 000 – 250 000 kr**
+| Pakke | Innhold | Pris |
+|-------|---------|------|
+| **AI-Partner Founding** | Full partneravtale med 90-dagers verdigaranti | 39 000 kr/mnd |
+| **AI-Workshop alene** | Halvdag eller heldag, hos dere eller hos oss | 25 000 – 50 000 kr |
+| **Workshop + AI-Partner** | Workshop først for å bygge intern kompetanse, deretter partner | Workshop pris + AI-Partner pris |
+| **Enkeltprosjekt** | Spesifikk AI-løsning som engangsleveranse | 30 000 – 120 000 kr |
 
 ---
 
-*Priser er veiledende og kan justeres basert på kompleksitet og omfang. Alle priser eks. mva.*
+*Alle priser eks. mva. Software- og API-kostnader betales direkte av kunden. Ved AI-Partner: månedsprisen dekker ~20 timer/mnd i steady-state — større prosjekter prises separat.*
