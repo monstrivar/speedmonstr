@@ -82,12 +82,62 @@ const PHASES = [
 ];
 
 const INCLUDED = [
-  { icon: BarChart3, title: 'Eget ROI-dashbord', desc: 'Live oversikt over leveranser, status og målbar effekt. Settes opp automatisk ved oppstart.' },
-  { icon: Calendar, title: 'Månedlig strategimøte', desc: 'Vi går gjennom hva som har blitt levert, hva som virker, og hva som prioriteres neste måned.' },
-  { icon: Wrench, title: 'Bygging og vedlikehold', desc: 'Vi bygger nye AI-løsninger og holder eksisterende i drift. Inkludert i månedsprisen.' },
-  { icon: MessageCircle, title: 'Direkte Slack-tilgang', desc: 'Spørsmål, idéer, problemer — svar samme virkedag fra rådgiveren.' },
-  { icon: GraduationCap, title: 'Opplæring av teamet', desc: 'Når vi bygger en ny løsning, sørger vi for at teamet vet hvordan å bruke den.' },
-  { icon: ShieldCheck, title: 'Komplett AI-Revisjon', desc: 'Inkludert som første fase. Strukturert kartlegging av hvor AI gir mest verdi.' },
+  {
+    icon: BarChart3,
+    title: 'Eget ROI-dashbord',
+    desc: 'Du logger inn når som helst og ser hva som er bygget, hva det har spart bedriften, og hva som kommer neste måned. Slutt på "hva har de egentlig levert?"',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Komplett AI-Revisjon',
+    desc: 'Fase 1 av partnerskapet — vi finner hvor AI gir høyest ROI før vi bygger. Verdi-baseline med kronebeløp, ikke synsing.',
+  },
+  {
+    icon: Wrench,
+    title: 'Bygging og vedlikehold',
+    desc: 'Vi bygger nye løsninger og holder eksisterende i drift. Ingen "vi tar betalt for å vedlikeholde det vi bygde". Det er én pris.',
+  },
+  {
+    icon: Calendar,
+    title: 'Månedlig strategimøte',
+    desc: 'Hva ble levert, hva virker, hva prioriteres neste. 60 minutter som flytter dere fra reaktiv til proaktiv.',
+  },
+  {
+    icon: MessageCircle,
+    title: 'Direkte Slack-tilgang',
+    desc: 'Ikke ticket-system. Ikke "send en e-post og vent". Du sender melding, du får svar samme virkedag.',
+  },
+  {
+    icon: GraduationCap,
+    title: 'Opplæring av teamet',
+    desc: 'Når vi bygger noe nytt, lærer vi opp dem som skal bruke det. AI som ingen tar i bruk er null verdt — vi sørger for det motsatte.',
+  },
+];
+
+const ROLES_FIT = [
+  {
+    title: 'Daglig leder',
+    desc: 'Du har nok å gjøre. Du trenger AI-strategien outsourcet, men levert av folk som faktisk bygger.',
+  },
+  {
+    title: 'Driftsleder / COO',
+    desc: 'Du ser teamet bruke timer på det samme hver uke. Du vil ha det bort — uten å bli prosjekt-eier selv.',
+  },
+  {
+    title: 'Økonomi / CFO',
+    desc: 'Du trenger forutsigbar månedlig kostnad og målbar effekt. Vi gir deg ROI-tall og en garanti.',
+  },
+  {
+    title: 'Avdelingsleder',
+    desc: 'Du har volumet og vet hvor flaskehalsen er. Du trenger noen som kan bygge det og lære opp teamet.',
+  },
+];
+
+const ROLES_NOT_FIT = [
+  'Dere har ikke nok volum til at automasjon flytter nålen',
+  'Ingen internt vil eie samarbeidet eller ta beslutninger',
+  'Dere vil bare ha en rapport, ikke noe i drift',
+  'Beslutninger må gjennom 5 ledd før noe kan testes',
 ];
 
 const Accordion = ({ q, a, isOpen, onToggle, index }) => (
@@ -340,32 +390,32 @@ const AiPartner = () => {
         </div>
       </section>
 
-      {/* HVA ER INKLUDERT — 6 cards */}
+      {/* HVA ER INKLUDERT — 6 cards, value-focused */}
       <section className="px-6 py-20 md:py-28 bg-white border-y border-[#1A1F25]/8">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <div className="reveal inline-block w-12 h-0.5 bg-[#1A6B6D] mb-5" />
             <h2 className="reveal font-agentik font-bold text-3xl md:text-5xl text-[#1A1F25] tracking-tight leading-tight mb-3">
-              Hva som er inkludert
+              Det dere får hver måned
             </h2>
             <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg max-w-xl mx-auto">
-              Alt under er inkludert i månedsprisen. Software- og API-kostnader fra tredjeparter kommer i tillegg.
+              Alt er inkludert i månedsprisen. Software- og API-kostnader fra tredjeparter kommer i tillegg.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid md:grid-cols-2 gap-5">
             {INCLUDED.map((item, i) => (
               <div
                 key={i}
-                className="reveal group relative bg-[#F5F2EC] border border-[#1A1F25]/8 rounded-2xl p-6 hover:border-[#1A6B6D]/40 hover:-translate-y-1 transition-all duration-300"
+                className="reveal group relative bg-[#F5F2EC] border border-[#1A1F25]/8 rounded-2xl p-6 md:p-7 hover:border-[#1A6B6D]/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="w-11 h-11 rounded-xl bg-[#1A6B6D]/10 flex items-center justify-center mb-4 group-hover:bg-[#1A6B6D]/15 transition-colors">
                   <item.icon size={20} className="text-[#1A6B6D]" aria-hidden="true" />
                 </div>
-                <h3 className="font-heading font-bold text-base text-[#1A1F25] tracking-tight mb-2">
+                <h3 className="font-heading font-bold text-lg md:text-xl text-[#1A1F25] tracking-tight mb-2">
                   {item.title}
                 </h3>
-                <p className="font-sans text-[#1A1F25]/60 text-sm leading-relaxed">
+                <p className="font-sans text-[#1A1F25]/65 text-[14px] md:text-[15px] leading-relaxed">
                   {item.desc}
                 </p>
               </div>
@@ -515,46 +565,50 @@ const AiPartner = () => {
         </div>
       </section>
 
-      {/* FOR HVEM + NÅR PASSER IKKE — 2-col split */}
+      {/* HVEM ER DETTE FOR — role cards */}
       <section className="px-6 py-20 md:py-28">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
-          <div className="reveal bg-white border border-[#1A1F25]/8 rounded-2xl p-7 md:p-9">
-            <div className="font-data text-[10px] text-[#1A6B6D] uppercase tracking-[0.18em] font-semibold mb-3">
-              For dere som
-            </div>
-            <h2 className="font-agentik font-bold text-2xl md:text-3xl text-[#1A1F25] tracking-tight mb-5 leading-tight">
-              Passer perfekt
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="reveal inline-block w-12 h-0.5 bg-[#1A6B6D] mb-5" />
+            <h2 className="reveal font-agentik font-bold text-3xl md:text-5xl text-[#1A1F25] tracking-tight leading-tight mb-3">
+              Hvem er dette for?
             </h2>
-            <ul className="space-y-3 text-[#1A1F25]/75 text-base leading-relaxed">
-              {[
-                'Bruker mye tid på manuelle steg',
-                'Får inn nok henvendelser, leads eller bestillinger',
-                'Vil bruke AI strategisk uten å ansette',
-                'Har en ledelse som kan ta beslutninger',
-              ].map((item, i) => (
-                <li key={i} className="flex gap-3 items-start">
-                  <CheckCircle size={18} className="text-[#1A6B6D] flex-shrink-0 mt-1" aria-hidden="true" />
+            <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg max-w-xl mx-auto">
+              Hvis du kjenner deg igjen i en av disse, er en samtale verdt 30 minutter.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {ROLES_FIT.map((r, i) => (
+              <div
+                key={i}
+                className="reveal bg-white border border-[#1A1F25]/8 rounded-2xl p-6 md:p-7 hover:border-[#1A6B6D]/40 hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="font-data text-[10px] text-[#1A6B6D] uppercase tracking-[0.18em] font-semibold mb-3">
+                  Rolle {String(i + 1).padStart(2, '0')}
+                </div>
+                <h3 className="font-agentik font-bold text-xl md:text-2xl text-[#1A1F25] mb-3 tracking-tight">{r.title}</h3>
+                <p className="font-sans text-[#1A1F25]/65 text-[15px] md:text-base leading-relaxed">{r.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Når det ikke passer */}
+          <div className="reveal mt-8 bg-[#1A1F25]/3 border-l-4 border-[#1A6B6D] rounded-r-xl p-6 md:p-8">
+            <div className="font-data text-[10px] text-[#1A1F25]/50 uppercase tracking-[0.18em] font-semibold mb-3">
+              Når det ikke passer
+            </div>
+            <p className="font-sans text-[#1A1F25]/75 text-base md:text-lg leading-relaxed mb-4">
+              Hvis vi ikke ser realistisk 2x årlig verdi, sier vi det rett ut. Disse signalene tyder på at dere er bedre tjent med Workshop eller et mindre forprosjekt:
+            </p>
+            <ul className="grid md:grid-cols-2 gap-2 text-[#1A1F25]/70 text-[15px] leading-relaxed mb-5">
+              {ROLES_NOT_FIT.map((item, i) => (
+                <li key={i} className="flex gap-2">
+                  <span aria-hidden="true" className="text-[#1A1F25]/40">—</span>
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="reveal bg-[#1A1F25]/3 border border-[#1A1F25]/12 rounded-2xl p-7 md:p-9 border-l-4 border-l-[#1A6B6D]">
-            <div className="font-data text-[10px] text-[#1A1F25]/50 uppercase tracking-[0.18em] font-semibold mb-3">
-              Når det ikke passer
-            </div>
-            <h2 className="font-agentik font-bold text-2xl md:text-3xl text-[#1A1F25] tracking-tight mb-5 leading-tight">
-              Vi sier det rett ut
-            </h2>
-            <p className="font-sans text-[#1A1F25]/75 text-base leading-relaxed mb-4">
-              Hvis vi ikke ser realistisk potensial for minst 2x årlig verdi, anbefaler vi heller:
-            </p>
-            <ul className="space-y-2 text-[#1A1F25]/75 text-base leading-relaxed mb-5">
-              <li>— En <strong>AI Workshop</strong> (fra 25 000 kr)</li>
-              <li>— Et <strong>mindre forprosjekt</strong> for å teste én løsning</li>
-            </ul>
-            <p className="font-agentik italic text-[#1A1F25]/55 text-sm">
+            <p className="font-agentik italic text-[#1A1F25]/55 text-sm md:text-base">
               Bedre å være ærlig før enn etter.
             </p>
           </div>

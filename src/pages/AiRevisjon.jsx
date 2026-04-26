@@ -37,18 +37,45 @@ const STEPS = [
 ];
 
 const DELIVERABLES = [
-  'Skriftlig revisjonsrapport med funn, anbefalinger og prioriteringer',
-  'Prosesskart over de viktigste arbeidsflytene deres',
-  '90-dagers roadmap med konkrete tiltak og forventet effekt',
-  'ROI-estimater per tiltak (verdipotensial og innsats)',
-  'Anbefalt rekkefølge basert på verdi og gjennomførbarhet',
+  {
+    title: 'Den komplette diagnosen',
+    desc: 'Alt dere trenger for å forsvare AI-investeringen i styremøtet — funn, anbefalinger og prioriteringer på ett sted.',
+  },
+  {
+    title: 'Et prosesskart som viser hvor tiden lekker',
+    desc: 'Visualisering av de viktigste arbeidsflytene — slik at dere ser nøyaktig hvor minutter blir til timer, og timer blir til måneder.',
+  },
+  {
+    title: 'Konkrete kronebeløp per tiltak',
+    desc: 'ROI-estimater i kroner — ikke prosent, ikke "betydelig forbedring". Verdipotensial og innsats, så prioriteringen er enkel.',
+  },
+  {
+    title: 'En 90-dagers leveranseplan',
+    desc: 'Eksekverbar fra første uke. Hvilke løsninger først, hvordan måles effekten, hva som er neste steg etter 90 dager.',
+  },
+  {
+    title: 'Vår ærlige anbefaling',
+    desc: 'Hva som er verdt å bygge — og like viktig, hva som ikke er det. Ingen "alt er en mulighet"-tåkeprat.',
+  },
 ];
 
-const USE_CASES = [
-  { title: 'Kundeservice og support', desc: 'Mange repetitive henvendelser som kan auto-besvares eller rutes smartere.' },
-  { title: 'Salg og lead-håndtering', desc: 'Inbound leads som ikke følges opp raskt nok, kvalifisering som kan automatiseres.' },
-  { title: 'Intern admin og rapportering', desc: 'Manuell datasammenstilling, rapporter som tar timer per uke.' },
-  { title: 'Fakturering og bestillingsflyt', desc: 'Manuell håndtering av fakturaer, ordrebekreftelser eller avvik.' },
+const ROLES = [
+  {
+    title: 'Daglig leder',
+    desc: 'Du har sett alle gjøre AI-piloter, men ingenting har endret driften. Du vil ha en plan basert på data, ikke trender.',
+  },
+  {
+    title: 'Driftsleder / COO',
+    desc: 'Du ser teamet drukne i manuelle steg. Du vet at potensialet er stort, men har ikke tid til å kartlegge selv.',
+  },
+  {
+    title: 'Økonomi / CFO',
+    desc: 'Før neste budsjettmøte trenger du tall: hvor mye kan AI faktisk spare oss? Vi gir deg konkrete kronebeløp å forsvare.',
+  },
+  {
+    title: 'Avdelingsleder',
+    desc: 'Du har volumet. Du vet hvor flaskehalsene er. Du trenger noen som kan sette det i system — uten at du må eie hele prosessen.',
+  },
 ];
 
 const AiRevisjon = () => {
@@ -134,7 +161,7 @@ const AiRevisjon = () => {
             <div>
               <div className="font-data text-[10px] text-[#1A1F25]/50 uppercase tracking-[0.15em] mb-2">Varighet</div>
               <div className="flex items-baseline gap-2">
-                <span className="font-data text-5xl md:text-6xl font-bold text-[#1A1F25] tracking-tight">2 uker</span>
+                <span className="font-data text-5xl md:text-6xl font-bold text-[#1A1F25] tracking-tight">4 uker</span>
               </div>
             </div>
             <div className="hidden sm:block w-px h-16 bg-[#1A1F25]/15" aria-hidden="true" />
@@ -167,7 +194,7 @@ const AiRevisjon = () => {
               De fleste bedrifter starter med å bygge AI-løsninger uten å vite hvor verdien faktisk ligger. Resultatet er ofte en teknologi som imponerer i demoer, men ikke endrer hverdagen.
             </p>
             <p className="reveal">
-              En AI-Revisjon snur dette: vi bruker 2 uker på å kartlegge driften deres, intervjuer nøkkelpersoner, og identifiserer hvor AI gir mest verdi i forhold til innsats.
+              En AI-Revisjon snur dette: vi bruker 4 uker på å kartlegge driften deres, intervjuer nøkkelpersoner, og identifiserer hvor AI gir mest verdi i forhold til innsats.
             </p>
             <p className="reveal font-agentik italic text-[#1A6B6D] text-xl md:text-2xl pt-4">
               Resultatet er en prioritert liste over hva som faktisk er verdt å bygge — og en 90-dagers roadmap.
@@ -210,46 +237,64 @@ const AiRevisjon = () => {
         </div>
       </section>
 
-      {/* HVA DERE FÅR — checklist */}
-      <section className="px-6 py-20 md:py-24 bg-white border-y border-[#1A1F25]/8">
-        <div className="max-w-3xl mx-auto">
-          <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
-          <h2 className="reveal font-agentik font-bold text-3xl md:text-4xl text-[#1A1F25] tracking-tight mb-8">
-            Hva dere får
-          </h2>
-          <div className="grid gap-3">
+      {/* HVA DERE FÅR — value-focused cards */}
+      <section className="px-6 py-20 md:py-28 bg-white border-y border-[#1A1F25]/8">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="reveal inline-block w-12 h-0.5 bg-[#1A6B6D] mb-5" />
+            <h2 className="reveal font-agentik font-bold text-3xl md:text-5xl text-[#1A1F25] tracking-tight leading-tight mb-3">
+              Hva dere får
+            </h2>
+            <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg max-w-xl mx-auto">
+              Ikke en rapport. Ammunisjon for å ta beslutninger.
+            </p>
+          </div>
+          <div className="space-y-3">
             {DELIVERABLES.map((item, i) => (
-              <div key={i} className="reveal flex gap-4 items-start bg-[#F5F2EC] rounded-xl px-5 py-4 hover:bg-[#1A6B6D]/8 transition-colors">
-                <div className="font-data text-[11px] font-bold text-[#1A6B6D] pt-1.5 w-6 flex-shrink-0">
+              <div
+                key={i}
+                className="reveal group flex gap-5 items-start bg-[#F5F2EC] rounded-xl p-5 md:p-6 hover:bg-white hover:border-[#1A6B6D]/30 border border-transparent transition-all"
+              >
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#1A6B6D]/10 flex items-center justify-center font-data text-[11px] font-bold text-[#1A6B6D] group-hover:bg-[#1A6B6D] group-hover:text-[#F5F2EC] transition-colors">
                   {String(i + 1).padStart(2, '0')}
                 </div>
-                <CheckCircle size={20} className="text-[#1A6B6D] flex-shrink-0 mt-0.5" aria-hidden="true" />
-                <span className="font-sans text-[#1A1F25] text-base md:text-lg leading-relaxed">
-                  {item}
-                </span>
+                <div className="flex-1">
+                  <h3 className="font-heading font-bold text-lg md:text-xl text-[#1A1F25] tracking-tight mb-1.5">
+                    {item.title}
+                  </h3>
+                  <p className="font-sans text-[#1A1F25]/65 text-[15px] md:text-base leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FOR HVEM */}
+      {/* FOR HVEM — roles, not use cases */}
       <section className="px-6 py-20 md:py-28">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <div className="reveal inline-block w-12 h-0.5 bg-[#1A6B6D] mb-5" />
-            <h2 className="reveal font-agentik font-bold text-3xl md:text-5xl text-[#1A1F25] tracking-tight leading-tight">
-              For hvem passer dette?
+            <h2 className="reveal font-agentik font-bold text-3xl md:text-5xl text-[#1A1F25] tracking-tight leading-tight mb-3">
+              Hvem er dette for?
             </h2>
+            <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg max-w-xl mx-auto">
+              Hvis du kjenner deg igjen i en av disse, er en samtale verdt 30 minutter.
+            </p>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
-            {USE_CASES.map((c, i) => (
+            {ROLES.map((r, i) => (
               <div
                 key={i}
                 className="reveal bg-white border border-[#1A1F25]/8 rounded-2xl p-6 md:p-7 hover:border-[#1A6B6D]/40 hover:-translate-y-1 transition-all duration-300"
               >
-                <h3 className="font-heading font-bold text-lg md:text-xl text-[#1A1F25] mb-2 tracking-tight">{c.title}</h3>
-                <p className="font-sans text-[#1A1F25]/60 text-[15px] leading-relaxed">{c.desc}</p>
+                <div className="font-data text-[10px] text-[#1A6B6D] uppercase tracking-[0.18em] font-semibold mb-3">
+                  Rolle {String(i + 1).padStart(2, '0')}
+                </div>
+                <h3 className="font-agentik font-bold text-xl md:text-2xl text-[#1A1F25] mb-3 tracking-tight">{r.title}</h3>
+                <p className="font-sans text-[#1A1F25]/65 text-[15px] md:text-base leading-relaxed">{r.desc}</p>
               </div>
             ))}
           </div>
