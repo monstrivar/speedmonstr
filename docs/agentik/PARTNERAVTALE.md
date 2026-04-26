@@ -1,226 +1,166 @@
-# Agentik Partneravtale
+# Agentik AI-Partner — avtale-struktur
 
 > Alle priser er **eks. mva.** B2B-standard. Faktureres månedlig forskuddsvis. Forfall 14 dager.
 
-## Hva Partneravtalen er
+## Hva AI-Partner er
 
-En månedlig retainer som gir norske bedrifter en dedikert AI-rådgiver fra Agentik — uten å måtte ansette internt. Vi kombinerer **løpende rådgivning** med **konkret bygging av automasjoner**, slik at AI faktisk havner i drift, ikke bare i strategi-dokumenter.
+En månedlig retainer som gir norske bedrifter en dedikert AI-rådgiver og dev-team fra Agentik — uten å måtte ansette internt. Vi kombinerer **løpende rådgivning** med **konkret bygging av automasjoner**, slik at AI faktisk havner i drift, ikke bare i strategi-dokumenter.
 
-Partneravtalen er base-laget i Agentiks forretningsmodell. Audits, større implementeringer og workshops kommer i tillegg ved behov.
-
----
-
-## Tre tiers
-
-| Tier | Pris/mnd | Hovedinnhold | For hvem |
-|------|---------|--------------|----------|
-| **Sparringspartner** | 10 000 kr | Rådgivning + 1 quick-fix automasjon per kvartal | Bedrifter som vil tenke AI, men ikke bygge ennå |
-| **Partner** ⭐ | 25 000 kr | 1 standard automasjon/mnd + løpende rådgivning | Hovedproduktet — for de fleste |
-| **Operatør** | 50 000 kr | 2–3 automasjoner/mnd + dedikert rådgiver + prioritert support | Bedrifter som har funnet ROI og vil gasse |
-
-Alle tiers: **6 måneders binding**, deretter løpende med 1 måneds oppsigelse.
+AI-Partner er Agentiks hovedprodukt. Workshop er det eneste sidetilbudet. Tidligere standalone audit og enkeltautomasjoner er innfaset i AI-Partner-modellen.
 
 ---
 
-## Sparringspartner — 10 000 kr/mnd
+## Pris og struktur
 
-**For:** Bedrifter som er tidlig i AI-reisen og trenger noen i hjørnet, men som ikke er klare for tunge implementeringer.
+| Periode | Pris/mnd | Notat |
+|---------|----------|-------|
+| **Founding** (første 3 partnere) | 39 000 kr | Låst for alltid. 90-dagers Sprint som oppstart, deretter månedlig oppsigelse. |
+| **Etter Founding** (kunde 4+) | 49 000 kr | Samme tilbud, oppjustert pris. |
 
-**Inkludert:**
-- 1 strategisk månedsmøte (60 min)
-- Slack-tilgang til AI-rådgiveren — svar innen 1 virkedag
-- 1 quick-fix automasjon per kvartal (≤ 8 timer arbeid)
-- Tilgang til Agentiks automasjons-katalog til medlemspris (20 % rabatt på standardiserte løsninger)
-- AI-nyhetsbrev og månedlig kvarter-oppdatering
+**Binding:** 90 dager (Sprint), deretter månedlig oppsigelse fra begge parter.
 
-**Estimert kapasitet hos oss:** ~2 timer/mnd per kunde.
+**Software- og API-kostnader** (OpenAI, Slack, Supabase, etc.) kommer i tillegg og betales direkte av kunden.
 
----
-
-## Partner — 25 000 kr/mnd ⭐
-
-**For:** Bedrifter som har identifisert hvor AI gir verdi og vil bygge løpende. Hovedproduktet.
-
-**Inkludert:**
-- 1 strategisk månedsmøte (60 min)
-- Slack-tilgang til AI-rådgiveren — svar innen 1 virkedag
-- **1 standard automasjon per måned** (se scope-konvolutt under)
-- Drift, overvåking og vedlikehold av eksisterende automasjoner
-- Tilgang til Agentiks automasjons-katalog til medlemspris (20 % rabatt)
-- Kvartalsvis ROI-rapport — målt tid spart, kostnader redusert
-- Onboarding-workshop første måneden (4 timer, kartlegging av muligheter)
-
-**Estimert kapasitet hos oss:** ~8 timer/mnd per kunde.
+**Større prosjekter** utover månedlig kapasitet (~20 timer/mnd) prises separat.
 
 ---
 
-## Operatør — 50 000 kr/mnd
+## Hva som er inkludert i AI-Partner
 
-**For:** Bedrifter som har bevist ROI og vil bygge raskt. Operatør-tier er for de som tenker på AI som infrastruktur, ikke eksperiment.
+1. **Komplett AI-Revisjon** — strukturert kartlegging av hvor AI gir høyest ROI. Skjer i de første 1–2 ukene. Egen detaljert dokumentasjon på `/ai-revisjon`.
 
-**Inkludert:**
-- 2 strategiske møter/mnd (60 min hver) — ett operativt, ett strategisk
-- Slack-tilgang med **prioritert respons (4 timer på arbeidsdager)**
-- **2–3 automasjoner per måned** (avhengig av kompleksitet)
-- Drift, overvåking og vedlikehold av eksisterende automasjoner
-- Inntil 5 timer ad-hoc rådgivning og småfikser/mnd
-- Tilgang til Agentiks automasjons-katalog til medlemspris (30 % rabatt)
-- Månedlig ROI-rapport
-- Hovedrådgiver navngitt i avtalen — én fast person, ikke roterende
+2. **Eget ROI-dashbord** — live oversikt over hva som er bygget, status og målbar effekt. Settes opp automatisk ved oppstart.
 
-**Estimert kapasitet hos oss:** ~20 timer/mnd per kunde.
+3. **Månedlig strategimøte** — gjennomgang av forrige måneds leveranser, prioritering av neste måneds tiltak.
+
+4. **Bygging, vedlikehold og videreutvikling** av AI-løsninger innenfor månedlig kapasitet.
+
+5. **Direkte Slack-tilgang** for løpende rådgivning og spørsmål — svar samme virkedag.
+
+6. **Opplæring av teamet** når nye løsninger settes i drift.
 
 ---
 
-## Standard automasjon — scope-konvolutt
+## 90-dagers verdigaranti
 
-For at «1 automasjon/mnd»-løftet skal være forutsigbart for begge parter, definerer vi hva en **standard automasjon** er:
+> **Garantien er gulvet. Business caset er målet.**
 
-| Dimensjon | Innenfor scope | Utenfor scope |
-|-----------|----------------|---------------|
-| Antall integrasjoner | Inntil 3 systemer | 4+ systemer |
-| AI-komponent | LLM-kall, klassifisering, ekstraksjon | Trent egen modell, fine-tuning |
-| Kompleksitet | Lineær flyt med inntil 2 forgreninger | Multi-agent orkestrering |
-| Estimert byggetid | Inntil 8 timer arbeid | Mer enn 8 timer |
-| Eksempler | Auto-svar på epost, lead-kvalifisering, fakturaekstrakt, møtebooker, dokument-summering | Stemme-resepsjonist, kompleks AI-CRM-integrasjon, multi-step agent med menneskelig godkjenning |
+Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI- og automasjonstiltak med dokumentert årlig verdipotensial tilsvarende **minst 2x investeringen i perioden**.
 
-**Større automasjoner** håndteres som separate implementeringsprosjekter (50 000–300 000 kr engangs, utenfor retainer). Partnere får audit-pris og 20 % rabatt på timer.
+Hvis vi ikke klarer det, jobber vi videre uten månedlig honorar i opptil 90 ekstra dager. Dersom verdien fortsatt ikke er dokumentert, refunderes siste fakturerte måned.
 
-Hvis kunden ikke trenger en automasjon en gitt måned, **kan timene spares opp i inntil 3 måneder** for en større leveranse senere. De forfaller etter det.
+**Verdien måles i:** spart tid, frigjort kapasitet, raskere oppfølging, færre manuelle steg, færre feil eller bedre utnyttelse av eksisterende ressurser.
 
----
+### Kundens forpliktelser for at garantien gjelder
 
-## Hva som ALLTID er kundens ansvar
+Garantien forutsetter at kunden:
+- gir nødvendige systemtilganger innen avtalt tid
+- stiller med én intern kontaktperson
+- deltar på avtalte møter og workshops
+- gir tilbakemelding innen avtalt frist
+- tar i bruk løsningene som er avtalt
+- har tilstrekkelig volum eller repetitive prosesser til at verdipotensialet er realistisk
 
-Vi inkluderer aldri tredjeparts-tjenester med variabel kostnad i den faste prisen. Kunden oppretter og eier disse kontoene:
-
-| Tjeneste | Hvorfor på kundens konto |
-|----------|--------------------------|
-| OpenAI / Anthropic API (produksjon) | Variabel kost basert på bruk; kunden bør eie nøklene |
-| Twilio / LinkMobility (SMS) | 0,40–1 kr per SMS, kan eskalere raskt |
-| Vapi / Retell / ElevenLabs (telefoni, stemme) | Per-minutt-fakturering |
-| Vipps, Stripe, Klarna | Egne avtaler og compliance |
-| CRM (HubSpot, Pipedrive, Attio osv.) | Kunden eier dataen |
-
-**Vi konfigurerer, kunden betaler.** Skrives tydelig inn i avtalen for å unngå konflikter.
-
-**Mindre OpenAI-bruk** for chat-bots og rådgivnings-automasjoner: Inkludert opp til 500 kr/mnd som goodwill. Overforbruk faktureres månedlig på faktisk kost.
-
-**N8N, Supabase, vektor-databaser:** Kjøres på Agentiks infrastruktur som del av Partner-pakken. Kunden trenger ikke ha egne kontoer for dette.
+Definisjon av "dokumentert verdipotensial" og målbare kriterier skrives inn i oppdragsavtalen ved oppstart.
 
 ---
 
-## Audit-koblingen
+## Faseinndeling — 90-dagers Sprint
 
-AI Opportunity Audit (50 000 kr) er et separat produkt — men har en egen rabattmekanikk knyttet til Partner-binding:
+### Fase 1 (Uke 1–2): AI-Revisjon
 
-| Scenario | Audit-pris |
-|----------|------------|
-| Stand-alone audit, ingen Partner-binding | 50 000 kr — trekkes fra første implementering hvis de blir kunde innen 12 mnd |
-| Audit + 6 mnd Partner-binding signert i samme runde | **25 000 kr** — trekkes også fra første implementering |
-| Eksisterende Partner ber om audit etter 6 mnd | 25 000 kr |
+- Kickoff med ledelsen
+- Intervjuer med 4–6 nøkkelpersoner
+- Prosess- og systemkartlegging
+- ROI-prioritering av tiltak
+- 90-dagers roadmap med 3–5 valgte tiltak
 
-**Logikk:** Vi gir audit-rabatt mot *commitment*, ikke mot medlemskap alene. Dette holder audit-en attraktiv som stand-alone produkt og gjør Partner-bindingen mer verdifull.
+**Leveranse:** revisjonsrapport, prosesskart, prioritert roadmap.
 
----
+### Fase 2 (Uke 3–6): Første implementering
 
-## Binding, oppsigelse og fornyelse
+- Bygging av høyest prioriterte AI-løsning
+- Testing med ansatte
+- Opplæring av teamet i bruk
+- ROI-dashbord settes opp
 
-- **Bindingsperiode:** 6 måneder fra avtaledato
-- **Etter binding:** Løper måned-for-måned med **1 måneds skriftlig oppsigelse**
-- **Tier-endring:** Kan oppgraderes når som helst, virkning fra påfølgende måned. Nedgradering først etter binding er fullført.
-- **Pause:** Inntil 1 måned pause per år ved særlige forhold (sommerferie, omstrukturering). Forhåndsavtales.
-- **Prisjustering:** Maks 1 gang per år, varsles 60 dager før, justeres typisk med KPI eller maks 5 %
+**Leveranse:** første AI-løsning i drift, dashbord aktivt.
 
----
+### Fase 3 (Uke 7–12): Optimalisering + roadmap låst
 
-## Hva skjer med automasjonene ved oppsigelse
+- Forbedring av første løsning basert på faktisk bruk
+- 90-dagers roadmap låses og kommer i drift
+- Verdimåling — verdipotensial dokumenteres
 
-Dette må være krystallklart for å bygge tillit:
+**Leveranse:** låst roadmap, dokumentert verdipotensial ≥ 2x investering.
 
-- **Kunden eier all forretningslogikk og data** i automasjonene
-- Ved oppsigelse leveres alt over: workflow-konfigurasjoner (N8N, Make), prompts, koblinger, dokumentasjon
-- Kunden får 30 dager overlapp hvor automasjonene fortsetter å kjøre på Agentiks infrastruktur mens de migrerer til egen
-- **Agentik beholder rett til å gjenbruke generiske komponenter** og mønstre som er bygd opp gjennom årene — ikke kundespesifikk logikk
-- Standardiserte automasjoner fra Agentiks katalog leveres som lisens; kunden får fortsette å bruke det de har på oppsigelsestidspunktet
+### Fase 4 (Måned 4+): Løpende partnerskap
 
----
-
-## Onboarding (måned 1)
-
-Den første måneden er viktigst — det er her vi bygger tillit og finner quick wins. Standard onboarding for **Partner**-tier:
-
-| Uke | Hva skjer |
-|-----|-----------|
-| 1 | Kick-off-workshop (4 timer) — kartlegge prosesser, identifisere 5–10 mulige automasjoner |
-| 2 | Prioriteringsmøte — velge måned 1-automasjon basert på ROI og lavest risiko |
-| 3 | Bygging av første automasjon |
-| 4 | Lansering, opplæring av brukere, måling av baseline |
-
-**Operatør** får en utvidet onboarding (8 timer workshop, kartlegging på tvers av flere avdelinger).
+- Måned-til-måned oppsigelse fra begge parter
+- Vi prioriterer, bygger og forbedrer kontinuerlig
+- Månedlig strategimøte + ROI-rapport
+- Nye løsninger og videreutvikling av eksisterende
 
 ---
 
-## Slack-tilgang — hvordan det fungerer
+## Kvalifisering — for hvem passer AI-Partner?
 
-- **Dedikert privat kanal** per kunde i Agentiks Slack — kunden inviteres som single-channel guest
-- **Responstid:** Sparringspartner & Partner — innen 1 virkedag. Operatør — innen 4 timer på arbeidsdager.
-- **Hva som hører hjemme i Slack:** Korte spørsmål, status-oppdateringer, idé-sparring, raskt feilmelding-hjelp
-- **Hva som IKKE hører hjemme:** Større oppgaver — de tas i månedsmøtet eller som bestilling
-- **Arbeidstid:** Mandag–fredag 08–17. Vi svarer ikke kvelder/helg/ferier på rådgivning.
+AI-Partner passer for bedrifter som allerede har manuelle prosesser, repeterende oppgaver og nok volum til at små forbedringer kan gi stor årlig verdi.
 
----
+**Konkret:** dere som
+- bruker mye tid på manuelle steg som kan systematiseres
+- får inn nok henvendelser, leads eller bestillinger til at automasjon flytter nålen
+- vil bruke AI strategisk, men ikke vil ansette en intern AI-spesialist
+- har en ledelse som kan ta beslutninger og prioritere internt
 
-## Kapasitetsplanlegging (intern)
-
-For at modellen skal være bærekraftig må vi vite hvor mange kunder hver av oss kan håndtere:
-
-| Tier | Timer/mnd per kunde | Maks per senior |
-|------|---------------------|-----------------|
-| Sparringspartner | ~2 | 20+ |
-| Partner | ~8 | 8–10 |
-| Operatør | ~20 | 4–5 |
-
-**Realistisk full miks per senior:**
-- 5 Sparringspartner + 5 Partner + 1 Operatør = 70 timer/mnd retainer
-- Etterlater ~70–80 timer/mnd til implementeringsprosjekter, audits, salg, læring
-
-**Team-kapasitet ved 2–5 personer:**
-| Teamstørrelse | Estimert maks Partnere | Total retainer-MRR |
-|---------------|------------------------|---------------------|
-| 2 (Ivar + Ole) | 16–20 | 400–500 k |
-| 3 | 24–30 | 600–750 k |
-| 5 | 40–50 | 1.0–1.25 M |
-
-På 5 personer er retainer alene ~12–15 MNOK ARR. Pluss prosjekter, audits og workshops blir totalen 20–30 MNOK ARR. Det er målet for «kvalitets-firma 2–5 personer»-modellen.
+**Når det ikke passer:** Hvis vi etter en samtale ikke ser realistisk potensial for minst 2x årlig verdi, anbefaler vi heller AI-Workshop (fra 25 000 kr) eller et mindre forprosjekt.
 
 ---
 
-## Hvordan tilbudet presenteres for leads
+## Andre tjenester
 
-Når en lead spør om Partner:
-
-1. **Start med Partner (25k)** — det er hovedproduktet. Ikke åpne med tier-valget.
-2. **Kvalifiser ned eller opp** basert på modenhet:
-   - Lite AI-erfaring, vil tenke først → Sparringspartner
-   - Har gjort audit, ROI bevist, vil bygge raskt → Operatør
-3. **Audit-rabatt mot binding er close-verktøy** — bruk det aktivt: "Hvis dere signerer 6 mnd Partner samtidig, får dere audit-en til halv pris."
-4. **Aldri rabatt på selve retainer-prisen.** Hvis de presser, gå ned i tier — ikke ned i pris.
+| Tjeneste | Pris | Format |
+|----------|------|--------|
+| AI-Workshop (halvdag) | fra 25 000 kr | 3 timer, ledere eller team |
+| AI-Workshop (heldag) | 35 000 – 50 000 kr | Hel dag, dypere dypdykk |
+| Enkeltprosjekter | Etter omfang | For kunder som ikke skal bli AI-Partner |
 
 ---
 
-## Standard kontraktbestemmelser (kort)
+## Kapasitetsplanlegging
 
-- **Mva:** Kommer i tillegg på alle priser
-- **Fakturering:** Månedlig forskuddsvis, forfall 14 dager
-- **Konfidensialitet:** Gjensidig NDA inkludert i avtalen
-- **Databehandleravtale:** Egen DPA (mal i `docs/juridisk/DATABEHANDLERAVTALE.md`)
-- **Force majeure:** Standardklausul
-- **Verneting:** Norske domstoler, lov i Norge
-- **Ansvarsbegrensning:** Maks 6 måneders avtaleverdi
+**Mål for full-time-trigger:** 100 000 kr/mnd MRR (begge gründere full-time).
+
+- 3 Founding-partnere × 39 000 kr = 117 000 kr/mnd → trigger nådd
+- 1 Founding + 2 post-Founding × 49 000 kr = 137 000 kr/mnd → trigger nådd med færre kunder etter prishopp
+
+**Realistisk timeforbruk:** ~20 timer/mnd per partner i steady-state (måned 4+). I Sprint-fasen (uke 1–6) kan det være 25–30 timer/mnd. Plan for at de første 3 månedene per kunde er heavy.
+
+**Kapasitetstak:** 4 aktive AI-Partnere som steady-state gitt to gründere. Utover dette kreves enten ekstern dev-kapasitet eller pause på nye salgsavtaler.
 
 ---
 
-## Versjonshistorikk
+## Hva avtalen bør inneholde
 
-- **2026-04-25:** Første versjon av Partneravtalen. Etablert tre-tiers struktur og prising.
+AI-Partner-avtalen bør ha tydelige rammer:
+
+- 90-dagers Sprint som binding, deretter månedlig oppsigelse fra begge parter
+- Månedlig kapasitet (~20 timer steady-state, mer i Sprint)
+- Software/API-kostnader betales av kunden
+- Definert responstid (samme virkedag på Slack)
+- Hva som er inkludert i månedsprisen
+- Hva som prises separat (større prosjekter, eksterne integrasjoner)
+- Kunden gir nødvendige tilganger og stiller med kontaktperson
+- 90-dagers verdigaranti — definisjon av "dokumentert verdipotensial" på Dag 1
+- Vi eier templates, metoder og rammeverk; kunden eier egne data og ferdige løsninger
+- Kunden får full bruksrett til kildekoden vi bygger spesifikt for dem
+
+---
+
+## Intern regel
+
+For å holde marginene gode:
+
+> **Hver måned skal kunden ha én tydelig prioriteringsliste. Alt kan ikke gjøres samtidig. Vi bestemmer sammen hva som gir høyest verdi først.**
+
+Dette er ekstremt viktig. Ellers kan 39 000 kr/mnd bli altfor lite hvis scope sklir.
