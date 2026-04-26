@@ -98,12 +98,15 @@ Detaljer: `docs/CONVENTIONS.md`.
 
 | Tjeneste | Pris | Modell |
 |----------|------|--------|
-| AI Opportunity Audit | 50 000 kr | Fast pris, 30 dager |
-| Agent-implementering | 50 000 – 300 000 kr | Prosjekt per agent |
-| Workshop (halvdag/heldag) | 15 000 – 45 000 kr | Engangshendelse |
-| Løpende rådgivning | 2 500 kr/t | Retainer eller time |
+| **AI-Partner** (hovedtilbud) | 39 000 kr/mnd | Månedlig, ingen binding etter 90 dager. Founding-pris låst for første 3 partnere. Etter Founding: 49 000 kr/mnd |
+| AI Workshop (halvdag/heldag) | 25 000 – 50 000 kr | Engangshendelse |
+| Enkeltprosjekter | Etter omfang | Prises separat for kunder uten partneravtale |
 
-Audit-investeringen (50 000 kr) trekkes fra første implementering. Se `docs/agentik/HVA-ER-AGENTIK.md` for full produktbeskrivelse.
+**AI-Partner inkluderer**: Komplett AI-Revisjon (kartlegging), månedlig strategimøte, bygging og vedlikehold, Slack-tilgang, opplæring, eget ROI-dashbord.
+
+**90-dagers verdigaranti**: Innen 90 dager dokumentert årlig verdipotensial ≥ 2x investeringen — eller jobber vi videre uten månedlig honorar til verdien er dokumentert. Kontraktsmessig cap: 90 ekstra dager fritt arbeid før refund av siste faktura.
+
+Se `docs/agentik/HVA-ER-AGENTIK.md` og `docs/agentik/TJENESTER.md` for full produktbeskrivelse. Landing pages: `/ai-partner` og `/ai-revisjon`.
 
 ## Team
 
