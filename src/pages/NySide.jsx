@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Check, Phone, Mail, Zap, FileText, Mic, BarChart3, ChevronDown } from 'lucide-react';
@@ -1036,12 +1037,20 @@ const RiskReversal = () => (
     <div className="max-w-3xl mx-auto text-center">
       <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mx-auto mb-8" />
       <h2 className="reveal font-agentik text-[clamp(1.6rem,3.5vw,2.5rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-6">
-        Lav risiko — høy oppside
+        90-dagers verdigaranti
       </h2>
-      <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
-        Investeringen i en AI Audit trekkes fra dersom dere velger å gå videre
-        med implementering sammen med oss.
+      <p className="reveal font-sans text-[#1A1F25]/65 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-5">
+        Vi dokumenterer og implementerer AI-tiltak med <strong className="text-[#1A1F25]">minst 2x investeringen i årlig verdipotensial</strong> — eller jobber videre uten månedlig honorar til vi gjør det.
       </p>
+      <p className="reveal font-agentik italic text-[#1A6B6D] text-sm md:text-base mb-8">
+        Garantien er gulvet. Business caset er målet.
+      </p>
+      <Link
+        to="/ai-partner"
+        className="reveal inline-flex items-center gap-2 font-heading font-semibold text-[14px] text-[#1A6B6D] hover:text-[#1A1F25] transition-colors"
+      >
+        Les hele garantien <ArrowRight size={14} />
+      </Link>
     </div>
   </section>
 );
