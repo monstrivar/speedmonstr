@@ -8,7 +8,6 @@ import {
   Headphones, TrendingUp, UserPlus, BookOpen,
   BarChart3, Calendar, FileCheck, FileSearch,
 } from 'lucide-react';
-import { PricingSection } from '../components/PricingSection.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1504,7 +1503,15 @@ const Team = () => (
 // CONTACT
 // ─────────────────────────────────────────────────────────────
 const ContactForm = () => {
-  const [form, setForm] = useState({ fornavn: '', bedrift: '', telefon: '', epost: '', maal: '' });
+  const [form, setForm] = useState({
+    fornavn: '',
+    bedrift: '',
+    telefon: '',
+    epost: '',
+    ansatte: '',
+    manuelleTimer: '',
+    maal: '',
+  });
   const [status, setStatus] = useState('idle');
 
   const handleSubmit = async (e) => {
@@ -1512,15 +1519,28 @@ const ContactForm = () => {
     setStatus('sending');
 
     try {
+      // Combine qualification + maal into one field for N8N webhook compatibility
+      const payload = {
+        fornavn: form.fornavn,
+        bedrift: form.bedrift,
+        telefon: form.telefon,
+        epost: form.epost,
+        maal: [
+          form.ansatte ? `Antall ansatte: ${form.ansatte}` : null,
+          form.manuelleTimer ? `Estimerte manuelle timer/uke: ${form.manuelleTimer}` : null,
+          form.maal ? `Mål: ${form.maal}` : null,
+        ].filter(Boolean).join(' · '),
+      };
+
       const res = await fetch('/api/agentik-contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
         setStatus('sent');
-        setForm({ fornavn: '', bedrift: '', telefon: '', epost: '', maal: '' });
+        setForm({ fornavn: '', bedrift: '', telefon: '', epost: '', ansatte: '', manuelleTimer: '', maal: '' });
       } else {
         setStatus('error');
       }
@@ -1531,19 +1551,54 @@ const ContactForm = () => {
 
   const inputClass =
     'w-full bg-[#252A31] border border-[#E8E4DC]/10 rounded-lg px-4 py-3.5 text-[#E8E4DC] text-sm placeholder:text-[#E8E4DC]/35 focus:outline-none focus:border-[#C4854C]/50 focus:ring-1 focus:ring-[#C4854C]/30 transition-colors';
+  const selectClass = `${inputClass} appearance-none bg-no-repeat bg-[length:14px] bg-[position:right_1rem_center] cursor-pointer`;
+  const selectStyle = {
+    backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23E8E4DC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>")`,
+  };
 
   if (status === 'sent') {
     return (
-      <section id="contact" className="reveal-section py-28 md:py-36 px-6" style={{ background: '#1A1F25' }}>
-        <div className="max-w-md mx-auto text-center">
-          <div className="w-14 h-14 rounded-full bg-[#1A6B6D]/20 flex items-center justify-center mx-auto mb-6">
-            <Check size={24} className="text-[#1A6B6D]" />
+      <section id="contact" className="reveal-section relative py-28 md:py-36 px-6 overflow-hidden" style={{ background: '#1A1F25' }}>
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-25 blur-[140px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle, #1A6B6D 0%, transparent 70%)' }}
+        />
+        <div className="relative max-w-xl mx-auto text-center">
+          <div className="w-16 h-16 rounded-full bg-[#4FC3B0]/15 border border-[#4FC3B0]/40 flex items-center justify-center mx-auto mb-7">
+            <Check size={26} className="text-[#4FC3B0]" strokeWidth={2.5} />
           </div>
-          <h2 className="font-agentik font-bold text-2xl text-[#E8E4DC] tracking-tight mb-3">
+          <h2 className="font-agentik font-bold text-3xl md:text-4xl text-[#E8E4DC] tracking-tight mb-4">
             Takk for henvendelsen
           </h2>
-          <p className="text-[#E8E4DC]/50 text-base">
-            Vi tar kontakt innen kort tid.
+          <p className="text-[#E8E4DC]/55 text-base md:text-lg leading-relaxed mb-12 max-w-md mx-auto">
+            Vi har mottatt skjemaet og lest gjennom det. Slik ser veien videre ut:
+          </p>
+
+          {/* Next steps timeline */}
+          <ol className="text-left max-w-md mx-auto space-y-5">
+            {[
+              { tag: 'Innen 24 timer', title: 'Personlig svar på e-post', desc: 'Vi bekrefter mottak og foreslår 2–3 tider for samtalen.' },
+              { tag: '15–20 minutter', title: 'Mulighetssamtale', desc: 'Vi går gjennom info dere oppga og diskuterer hvor AI kan gi verdi.' },
+              { tag: 'Etter samtalen', title: 'Konkret anbefaling', desc: 'Hvis det er fit: 90-dagers Sprint-tilbud. Hvis ikke: ærlig anbefaling om alternativ.' },
+            ].map((step, i) => (
+              <li key={i} className="flex gap-4">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#1A6B6D]/15 border border-[#1A6B6D]/35 flex items-center justify-center mt-0.5">
+                  <span className="font-data text-[11px] text-[#4FC3B0] font-semibold">{i + 1}</span>
+                </div>
+                <div className="flex-1">
+                  <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#4FC3B0]/80 mb-1">{step.tag}</p>
+                  <p className="font-agentik font-semibold text-[#E8E4DC] text-base tracking-tight mb-1">{step.title}</p>
+                  <p className="font-agentik text-[#E8E4DC]/55 text-sm leading-relaxed">{step.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <p className="mt-12 text-[#E8E4DC]/40 text-sm">
+            Spørsmål i mellomtiden?{' '}
+            <a href="mailto:hei@agentik.no" className="text-[#E8E4DC]/70 underline decoration-[#C4854C]/50 underline-offset-4 hover:decoration-[#C4854C] transition-colors">
+              hei@agentik.no
+            </a>
           </p>
         </div>
       </section>
@@ -1567,7 +1622,7 @@ const ContactForm = () => {
           <br /> i deres bedrift?
         </h2>
         <p className="reveal text-[#E8E4DC]/45 text-base text-center mb-10 max-w-md mx-auto leading-relaxed">
-          Fyll ut skjemaet, så tar vi en uforpliktende mulighetssamtale. Kun et begrenset antall selskaper tas inn hver måned.
+          Fyll ut skjemaet, så tar vi en uforpliktende mulighetssamtale. Vi tar inn 3 founding-partnere de neste 60 dagene.
         </p>
 
         <form onSubmit={handleSubmit} className="reveal space-y-4">
@@ -1599,6 +1654,39 @@ const ContactForm = () => {
               className={inputClass}
             />
           </div>
+
+          {/* Qualification fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <select
+              required
+              value={form.ansatte}
+              onChange={(e) => setForm({ ...form, ansatte: e.target.value })}
+              className={selectClass}
+              style={selectStyle}
+            >
+              <option value="" disabled>Antall ansatte</option>
+              <option value="1-19">1–19</option>
+              <option value="20-49">20–49</option>
+              <option value="50-99">50–99</option>
+              <option value="100-299">100–299</option>
+              <option value="300+">300+</option>
+            </select>
+            <select
+              required
+              value={form.manuelleTimer}
+              onChange={(e) => setForm({ ...form, manuelleTimer: e.target.value })}
+              className={selectClass}
+              style={selectStyle}
+            >
+              <option value="" disabled>Estimerte manuelle timer/uke</option>
+              <option value="0-10">0–10 timer</option>
+              <option value="10-30">10–30 timer</option>
+              <option value="30-60">30–60 timer</option>
+              <option value="60+">60+ timer</option>
+              <option value="vet ikke">Vet ikke</option>
+            </select>
+          </div>
+
           <textarea
             placeholder="Hva ønsker dere å oppnå med AI? (valgfritt)"
             rows={3}
@@ -1624,6 +1712,10 @@ const ContactForm = () => {
               Noe gikk galt. Prøv igjen eller send en e-post direkte.
             </p>
           )}
+
+          <p className="text-center text-[11px] text-[#E8E4DC]/30 pt-2 leading-relaxed">
+            Vi svarer personlig innen 24 timer. Ingen automatiske drip-sekvenser.
+          </p>
         </form>
 
         <p className="reveal mt-8 text-center text-sm text-[#F5F2EC]/60">
@@ -1634,6 +1726,165 @@ const ContactForm = () => {
           >
             hei@agentik.no
           </a>
+        </p>
+      </div>
+    </section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
+// SIDE2 PRICING — inline variant that keeps user in /side2 flow
+// ─────────────────────────────────────────────────────────────
+const Side2Pricing = () => {
+  const includes = [
+    { title: 'Komplett AI-Revisjon', desc: 'Strukturert kartlegging av hvor AI gir høyest ROI. Skjer i de første 1–2 ukene.' },
+    { title: 'Eget ROI-dashbord', desc: 'Live oversikt over hva som er bygget og målbar effekt. Settes opp automatisk ved oppstart.', featured: true },
+    { title: 'Månedlig strategimøte', desc: 'Gjennomgang av forrige måneds leveranser, prioritering av neste.' },
+    { title: 'Bygging og vedlikehold', desc: 'AI-løsninger bygges, drives og forbedres innenfor månedlig kapasitet.' },
+    { title: 'Direkte Slack-tilgang', desc: 'Løpende rådgivning og spørsmål — svar samme virkedag.' },
+    { title: 'Opplæring av teamet', desc: 'Når nye løsninger settes i drift, sørger vi for at folkene bruker dem.' },
+  ];
+
+  return (
+    <section id="tilbud" className="reveal-section relative py-28 md:py-36 px-6 overflow-hidden" style={{ background: '#F5F2EC' }}>
+      <div className="relative max-w-5xl mx-auto">
+        <div className="reveal flex items-center gap-3 mb-8 justify-center">
+          <span className="block w-8 h-px bg-[#1A6B6D]" />
+          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#1A6B6D]">
+            Tilbud
+          </span>
+          <span className="block w-8 h-px bg-[#1A6B6D]" />
+        </div>
+
+        <div className="text-center mb-14">
+          <h2 className="reveal font-agentik font-bold text-[clamp(2rem,4.5vw,3.5rem)] text-[#1A1F25] tracking-[-0.025em] leading-[1.05] mb-4">
+            Slik jobber vi sammen
+          </h2>
+          <p className="reveal font-agentik text-[#1A1F25]/60 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+            Vi tar inn 3 founding-partnere de neste 60 dagene. Etter det går prisen opp.
+          </p>
+        </div>
+
+        {/* Hero pricing card */}
+        <div className="reveal relative bg-white border border-[#1A1F25]/10 rounded-3xl p-8 md:p-12 mb-5 shadow-[0_4px_30px_rgba(26,31,37,0.06)] overflow-hidden">
+          {/* Subtle gradient accent */}
+          <div
+            className="absolute -top-20 -right-20 w-[400px] h-[400px] rounded-full opacity-10 blur-[80px] pointer-events-none"
+            style={{ background: 'radial-gradient(circle, #1A6B6D 0%, transparent 70%)' }}
+          />
+
+          <div className="relative grid md:grid-cols-12 gap-8 md:gap-10 items-start">
+            {/* Left — name, price, framing */}
+            <div className="md:col-span-5">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="font-data text-[10px] text-[#1A6B6D] uppercase tracking-[0.18em] font-semibold">
+                  Hovedtilbud
+                </span>
+                <span className="bg-[#C4854C]/12 text-[#C4854C] font-data text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-[0.12em]">
+                  2 av 3 spots igjen
+                </span>
+              </div>
+
+              <h3 className="font-agentik font-bold text-[#1A1F25] text-4xl md:text-5xl tracking-[-0.025em] leading-[1.05] mb-5">
+                AI-Partner
+              </h3>
+
+              <p className="font-agentik text-[#1A1F25]/65 text-base md:text-lg leading-relaxed mb-7">
+                Din eksterne AI-avdeling. Fast månedlig rådgiver og bygger som tar AI fra idé til drift.
+              </p>
+
+              <div className="flex items-baseline gap-2 mb-2">
+                <span className="font-agentik font-bold text-[#1A1F25] text-5xl md:text-6xl tracking-[-0.03em] tabular-nums">
+                  39 000
+                </span>
+                <span className="font-agentik text-[#1A1F25]/50 text-base">kr/mnd</span>
+              </div>
+              <p className="font-agentik text-[#1A1F25]/45 text-sm mb-2">
+                Founding-pris · låst for alltid
+              </p>
+              <p className="font-data text-[10px] text-[#1A1F25]/40 uppercase tracking-[0.15em]">
+                Etter 3 partnere: 49 000 kr/mnd
+              </p>
+
+              <div className="mt-8 pt-6 border-t border-[#1A1F25]/8">
+                <p className="font-agentik text-[#1A1F25]/65 text-sm leading-relaxed mb-5">
+                  90 dagers Sprint som oppstart, deretter månedlig oppsigelse fra begge parter.
+                </p>
+                <button
+                  onClick={() => scrollTo('contact')}
+                  className="btn-magnetic inline-flex rounded-full px-6 py-3.5 text-sm bg-[#C4854C] text-[#F5F2EC] font-heading font-medium tracking-tight"
+                >
+                  <span className="btn-layer bg-[#1A1F25]"></span>
+                  <span className="btn-text flex items-center gap-2">
+                    Book mulighetssamtale <ArrowRight size={14} />
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Right — what's included */}
+            <div className="md:col-span-7">
+              <p className="font-data text-[10px] text-[#1A6B6D] uppercase tracking-[0.18em] mb-5">
+                Inkludert hver måned
+              </p>
+              <ul className="space-y-3.5">
+                {includes.map((item, i) => (
+                  <li
+                    key={i}
+                    className={`flex items-start gap-3.5 p-4 rounded-xl ${
+                      item.featured
+                        ? 'bg-gradient-to-br from-[#1A6B6D]/8 to-[#4FC3B0]/4 border border-[#1A6B6D]/15'
+                        : ''
+                    }`}
+                  >
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1A6B6D]/12 flex items-center justify-center mt-0.5">
+                      <Check size={13} className="text-[#1A6B6D]" strokeWidth={2.5} />
+                    </span>
+                    <div className="flex-1">
+                      <p className="font-agentik font-semibold text-[#1A1F25] text-[14px] tracking-tight mb-0.5">
+                        {item.title}
+                      </p>
+                      <p className="font-agentik text-[#1A1F25]/55 text-[13px] leading-snug">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Workshop — secondary */}
+        <div className="reveal bg-white border border-[#1A1F25]/8 rounded-2xl p-6 md:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+          <div className="flex-1">
+            <div className="font-data text-[10px] text-[#1A6B6D] uppercase tracking-[0.18em] mb-2">
+              Sidetilbud
+            </div>
+            <h3 className="font-agentik font-bold text-[20px] md:text-[22px] text-[#1A1F25] tracking-tight leading-tight mb-1.5">
+              AI Workshop
+            </h3>
+            <p className="font-agentik text-[13px] md:text-[14px] text-[#1A1F25]/60 leading-relaxed mb-2 max-w-md">
+              Praktisk opplæring i AI for ledere eller team. Halvdag eller heldag, hos dere eller hos oss.
+            </p>
+            <div className="font-data text-[12px] text-[#1A1F25]/70">
+              Fra 25 000 kr
+            </div>
+          </div>
+
+          <button
+            onClick={() => scrollTo('contact')}
+            className="btn-magnetic inline-flex rounded-full px-5 py-2.5 text-[12px] bg-transparent text-[#1A1F25] border border-[#1A1F25]/20 font-heading font-medium tracking-tight self-start md:self-center whitespace-nowrap"
+          >
+            <span className="btn-layer bg-[#1A1F25]"></span>
+            <span className="btn-text flex items-center gap-2">
+              Snakk med oss <ArrowRight size={13} />
+            </span>
+          </button>
+        </div>
+
+        <p className="reveal text-center mt-6 text-[11px] text-[#1A1F25]/40 italic font-agentik">
+          Software- og API-kostnader (OpenAI, Slack, etc.) kommer i tillegg og betales direkte av kunden.
         </p>
       </div>
     </section>
@@ -1812,7 +2063,7 @@ export default function Side2() {
           <CaseStudy />
           <ValueGuarantee />
           <Comparison />
-          <PricingSection />
+          <Side2Pricing />
           <WhoItIsFor />
           <FAQ />
           <Proof />
