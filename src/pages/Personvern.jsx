@@ -22,7 +22,7 @@ const Personvern = () => {
 
       <article className="max-w-3xl mx-auto px-6 pt-28 pb-24">
         <h1 className="font-heading font-bold text-3xl md:text-5xl text-dark tracking-tight leading-tight mb-8">Personvernerklæring</h1>
-        <p className="font-sans text-dark/50 text-sm mb-12">Sist oppdatert: 24. april 2026</p>
+        <p className="font-sans text-dark/50 text-sm mb-12">Sist oppdatert: 26. april 2026</p>
 
         <div className="font-sans text-dark/80 text-lg leading-relaxed space-y-6">
 
@@ -45,13 +45,13 @@ const Personvern = () => {
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Vurdere om et samarbeid er relevant</strong> — basert på informasjonen du oppgir om bedriften og AI-målene dine. Rettslig grunnlag: berettiget interesse (GDPR art. 6(1)(f)).</li>
             <li><strong>Kontakte deg for å avtale en samtale</strong> — via telefon eller e-post. Rettslig grunnlag: berettiget interesse basert på din aktive forespørsel.</li>
-            <li><strong>Oppfølging under en eventuell audit- eller implementeringsprosess</strong> — rettslig grunnlag: avtale og berettiget interesse.</li>
+            <li><strong>Oppfølging under et eventuelt AI-Partner-samarbeid eller annet prosjekt</strong> — rettslig grunnlag: avtale og berettiget interesse.</li>
           </ul>
 
           <h2 className="font-heading font-bold text-2xl text-dark mt-10">4. Hvem deler vi opplysningene med?</h2>
           <p>Vi bruker følgende tredjepartsleverandører for å levere tjenesten:</p>
           <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Make.com (EU)</strong> — automatisering og ruting av innkommende henvendelser til CRM. Servere i EU.</li>
+            <li><strong>N8N (EU)</strong> — automatisering og ruting av innkommende henvendelser til CRM. Servere i EU.</li>
             <li><strong>Attio (USA)</strong> — CRM-system for oppfølging av leads og kunder. Overføring til USA er dekket av Attios Data Privacy Framework-sertifisering.</li>
             <li><strong>Vercel (USA)</strong> — hosting av nettsiden og serverløse funksjoner. Overføring til USA er dekket av Vercels Data Privacy Framework-sertifisering.</li>
           </ul>
