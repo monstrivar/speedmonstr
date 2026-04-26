@@ -7,12 +7,14 @@ import Vilkar from './pages/Vilkar.jsx'
 import AiRevisjon from './pages/AiRevisjon.jsx'
 import AiPartner from './pages/AiPartner.jsx'
 import { NySide } from './pages/NySide.jsx'
+import { ScrollToTop } from './components/ScrollToTop.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<NySide />} />
           <Route path="/personvern" element={<Personvern />} />
