@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Check, Phone, Mail, Zap, FileText, Mic, BarChart3, ChevronDown } from 'lucide-react';
+import { PricingSection } from '../components/PricingSection.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1333,6 +1334,7 @@ export const NySide = () => {
         <Urgency />
         <Outcomes />
         <Proof />
+        <PricingSection />
         <Workshops />
         <Process />
         <Team />
