@@ -1049,6 +1049,138 @@ const ValueGuarantee = () => {
 };
 
 // ─────────────────────────────────────────────────────────────
+// COMPARISON — vs alternatives
+// ─────────────────────────────────────────────────────────────
+const Comparison = () => {
+  const rows = [
+    {
+      label: 'Tid til første AI i drift',
+      hire: '6–12 måneder',
+      consult: '2–4 måneder',
+      diy: 'Ofte aldri',
+      us: '3–6 uker',
+    },
+    {
+      label: 'Strategisk eierskap',
+      hire: 'Internt',
+      consult: 'Rapport, så ut',
+      diy: 'Uklart',
+      us: 'Vi eier roadmap-en',
+    },
+    {
+      label: 'Vedlikehold og forbedring',
+      hire: 'Avhengig av ressurs',
+      consult: 'Tilleggspris',
+      diy: 'Glipper raskt',
+      us: 'Inkludert månedlig',
+    },
+    {
+      label: 'Verdimåling og dokumentasjon',
+      hire: 'Sjelden formalisert',
+      consult: 'Sluttrapport',
+      diy: 'Nei',
+      us: 'Live ROI-dashbord',
+    },
+    {
+      label: 'Kostnad år 1',
+      hire: '900k+ (lønn + lader)',
+      consult: '500k–1.5M',
+      diy: 'Skjult i intern tid',
+      us: '468k (39k × 12)',
+    },
+    {
+      label: 'Risiko ved feil retning',
+      hire: 'Høy — fast kostnad',
+      consult: 'Medium — kontrakt',
+      diy: 'Lav i kr, høy i tid',
+      us: 'Lav — månedlig oppsigelse',
+    },
+  ];
+
+  return (
+    <section
+      className="reveal-section relative py-28 md:py-36 px-6 overflow-hidden"
+      style={{ background: '#1A1F25' }}
+    >
+      <div className="relative max-w-6xl mx-auto">
+        <div className="reveal flex items-center gap-3 mb-8">
+          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">
+            07 — Sammenligning
+          </span>
+          <span className="block flex-1 h-px bg-[#E8E4DC]/10" />
+        </div>
+
+        <div className="max-w-3xl mb-12">
+          <h2 className="reveal font-agentik font-bold text-[clamp(2.2rem,5vw,4rem)] text-[#E8E4DC] tracking-[-0.025em] leading-[1.02] mb-6">
+            Hvorfor ikke bare ansette internt?
+          </h2>
+          <p className="reveal font-agentik text-[#E8E4DC]/60 text-lg md:text-xl leading-relaxed">
+            Greit spørsmål. Her er hva vi konsekvent ser hos selskaper som har vurdert alternativene.
+          </p>
+        </div>
+
+        {/* Desktop table */}
+        <div className="reveal hidden md:block overflow-hidden rounded-2xl border border-[#E8E4DC]/10">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="bg-[#0E1114] border-b border-[#E8E4DC]/10">
+                <th className="font-data text-[10px] uppercase tracking-[0.18em] text-[#E8E4DC]/45 px-5 py-4 font-medium" />
+                <th className="font-data text-[10px] uppercase tracking-[0.18em] text-[#E8E4DC]/55 px-5 py-4 font-medium">Ansette internt</th>
+                <th className="font-data text-[10px] uppercase tracking-[0.18em] text-[#E8E4DC]/55 px-5 py-4 font-medium">Generisk konsulent</th>
+                <th className="font-data text-[10px] uppercase tracking-[0.18em] text-[#E8E4DC]/55 px-5 py-4 font-medium">Gjøre det selv</th>
+                <th className="font-data text-[10px] uppercase tracking-[0.18em] text-[#4FC3B0] px-5 py-4 font-medium bg-[#4FC3B0]/5 border-l border-[#4FC3B0]/20">
+                  Agentik AI-Partner
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, i) => (
+                <tr key={i} className="border-b border-[#E8E4DC]/8 last:border-b-0">
+                  <td className="px-5 py-5 font-agentik text-[#E8E4DC] text-[14px] tracking-tight font-medium">
+                    {row.label}
+                  </td>
+                  <td className="px-5 py-5 font-agentik text-[#E8E4DC]/55 text-[14px]">{row.hire}</td>
+                  <td className="px-5 py-5 font-agentik text-[#E8E4DC]/55 text-[14px]">{row.consult}</td>
+                  <td className="px-5 py-5 font-agentik text-[#E8E4DC]/55 text-[14px]">{row.diy}</td>
+                  <td className="px-5 py-5 font-agentik text-[#E8E4DC] text-[14px] font-medium bg-[#4FC3B0]/5 border-l border-[#4FC3B0]/20">
+                    {row.us}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile cards */}
+        <div className="reveal md:hidden space-y-4">
+          {rows.map((row, i) => (
+            <div key={i} className="bg-[#161A1F] border border-[#E8E4DC]/10 rounded-xl p-5">
+              <p className="font-agentik font-semibold text-[#E8E4DC] text-base tracking-tight mb-4 pb-3 border-b border-[#E8E4DC]/8">
+                {row.label}
+              </p>
+              <dl className="grid grid-cols-2 gap-y-3 gap-x-4 text-[13px]">
+                <dt className="font-data uppercase tracking-[0.12em] text-[#E8E4DC]/40 text-[10px]">Ansette</dt>
+                <dd className="text-[#E8E4DC]/70 font-agentik">{row.hire}</dd>
+                <dt className="font-data uppercase tracking-[0.12em] text-[#E8E4DC]/40 text-[10px]">Konsulent</dt>
+                <dd className="text-[#E8E4DC]/70 font-agentik">{row.consult}</dd>
+                <dt className="font-data uppercase tracking-[0.12em] text-[#E8E4DC]/40 text-[10px]">DIY</dt>
+                <dd className="text-[#E8E4DC]/70 font-agentik">{row.diy}</dd>
+                <dt className="font-data uppercase tracking-[0.12em] text-[#4FC3B0] text-[10px]">Agentik</dt>
+                <dd className="text-[#E8E4DC] font-agentik font-medium">{row.us}</dd>
+              </dl>
+            </div>
+          ))}
+        </div>
+
+        <p className="reveal mt-10 text-center font-agentik italic text-[#E8E4DC]/50 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+          Den beste løsningen kommer an på dere. Hvis dere har internt eierskap og teknisk kapasitet, er ansettelse riktig. Hvis ikke — er det det vi løser.
+        </p>
+      </div>
+    </section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
 // WHO IT IS FOR — fit / no-fit contrast
 // ─────────────────────────────────────────────────────────────
 const WhoItIsFor = () => {
@@ -1077,7 +1209,7 @@ const WhoItIsFor = () => {
     >
       <div className="relative max-w-6xl mx-auto">
         <div className="reveal flex items-center gap-3 mb-8">
-          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">07 — Hvem det passer for</span>
+          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">08 — Hvem det passer for</span>
           <span className="block flex-1 h-px bg-[#E8E4DC]/10" />
         </div>
 
@@ -1131,6 +1263,125 @@ const WhoItIsFor = () => {
             </ul>
           </div>
         </div>
+      </div>
+    </section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
+// FAQ — objection handling from spec §11
+// ─────────────────────────────────────────────────────────────
+const FAQ_ITEMS = [
+  {
+    q: 'Er dette dyrt?',
+    a: 'Det avhenger av mengden manuelt arbeid og operasjonell verdi i bedriften. Hvis vi ikke ser realistisk potensial for et sterkt business case, anbefaler vi ikke sprinten. Målet er at de første 90 dagene skaper dokumentert verdipotensial som klart rettferdiggjør investeringen.',
+  },
+  {
+    q: 'Kan vi ikke bare gjøre dette selv?',
+    a: 'Hvis dere har intern kapasitet, teknisk kompetanse og en eier som passer på implementering — ja. Utfordringen vi ser oftest er at AI blir værende som isolerte tester som aldri inngår i daglige arbeidsflyter. Vår rolle er å prioritere det som gir høyest verdi, implementere ordentlig, og vedlikeholde over tid.',
+  },
+  {
+    q: 'Er ikke dette bare automasjon?',
+    a: 'Automasjon er én del. Den større verdien er eierskap. Vi hjelper dere bestemme hva som skal automatiseres, hva som skal bruke AI, hva som skal forbli manuelt, hvordan det skal kobles mot deres systemer, og hvordan det skal vedlikeholdes og forbedres.',
+  },
+  {
+    q: 'Sier dere altså at vi sparer 234 000 kr på 90 dager?',
+    a: 'Ikke nødvendigvis realisert kontantbesparelse på 90 dager. Det vi garanterer er at vi innen 90 dager har implementert AI- eller automasjonstiltak med dokumentert årlig verdipotensial på minst 2× investeringen. Det kan komme fra spart tid, frigjort kapasitet, raskere oppfølging, færre manuelle steg eller færre feil.',
+  },
+  {
+    q: 'Hvordan beregner dere verdi?',
+    a: 'Vi lager en verdi-baseline i starten. Vi ser på hvor mye tid som brukes på spesifikke arbeidsflyter i dag, hvem som gjør jobben, hvor ofte det skjer, intern timekost, og hva som realistisk kan forbedres. Eksempel: Hvis vi frigjør 6 timer/uke til 800 kr/time intern kost = 249 600 kr i årlig verdipotensial.',
+  },
+  {
+    q: 'Hva skjer hvis dere ikke når garantien?',
+    a: 'Vi jobber videre uten månedlig honorar i opptil 90 ekstra dager til verdien er dokumentert. Dette er ikke en money-back-garanti. Det er en leverings- og verdigaranti.',
+  },
+  {
+    q: 'Hva er bindingen?',
+    a: '90 dager (selve sprinten). Etter det er det månedlig oppsigelse fra begge parter. Founding-prisen på 39 000 kr/mnd er låst for alltid for de første tre partnerne.',
+  },
+  {
+    q: 'Hvem eier det vi bygger?',
+    a: 'Dere eier dataene og de ferdige løsningene som er bygget spesifikt for dere — inkludert full bruksrett til kildekoden. Vi eier våre templates, metoder og rammeverk som vi bruker på tvers av kunder.',
+  },
+];
+
+const FAQItem = ({ q, a, isOpen, onToggle }) => (
+  <div className="border-b border-[#1A1F25]/10 last:border-b-0">
+    <button
+      onClick={onToggle}
+      className="w-full flex items-start justify-between gap-6 py-6 md:py-7 text-left group"
+      aria-expanded={isOpen}
+    >
+      <span className="font-agentik font-semibold text-[#1A1F25] text-base md:text-lg tracking-tight leading-snug pr-4">
+        {q}
+      </span>
+      <span
+        className={`flex-shrink-0 w-8 h-8 rounded-full border border-[#1A6B6D]/30 flex items-center justify-center transition-all duration-300 ${
+          isOpen ? 'bg-[#1A6B6D] border-[#1A6B6D] rotate-180' : 'bg-transparent group-hover:bg-[#1A6B6D]/10'
+        }`}
+      >
+        <ChevronDown
+          size={15}
+          className={`transition-colors ${isOpen ? 'text-white' : 'text-[#1A6B6D]'}`}
+        />
+      </span>
+    </button>
+    <div
+      className="overflow-hidden transition-all duration-400 ease-out"
+      style={{
+        maxHeight: isOpen ? '500px' : '0',
+        opacity: isOpen ? 1 : 0,
+      }}
+    >
+      <p className="font-agentik text-[#1A1F25]/65 text-base md:text-lg leading-relaxed pb-7 max-w-3xl">
+        {a}
+      </p>
+    </div>
+  </div>
+);
+
+const FAQ = () => {
+  const [openIdx, setOpenIdx] = useState(0);
+
+  return (
+    <section
+      className="reveal-section relative py-28 md:py-36 px-6 overflow-hidden"
+      style={{ background: '#F5F2EC' }}
+    >
+      <div className="relative max-w-4xl mx-auto">
+        <div className="reveal flex items-center gap-3 mb-8">
+          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#1A6B6D]">
+            09 — Vanlige spørsmål
+          </span>
+          <span className="block flex-1 h-px bg-[#1A1F25]/10" />
+        </div>
+
+        <h2 className="reveal font-agentik font-bold text-[clamp(2rem,4.5vw,3.5rem)] text-[#1A1F25] tracking-[-0.025em] leading-[1.05] mb-12">
+          Det vi pleier å få spørsmål om.
+        </h2>
+
+        <div className="reveal bg-white border border-[#1A1F25]/8 rounded-2xl px-6 md:px-10 shadow-[0_2px_20px_rgba(26,31,37,0.04)]">
+          {FAQ_ITEMS.map((item, i) => (
+            <FAQItem
+              key={i}
+              q={item.q}
+              a={item.a}
+              isOpen={openIdx === i}
+              onToggle={() => setOpenIdx(openIdx === i ? -1 : i)}
+            />
+          ))}
+        </div>
+
+        <p className="reveal mt-10 text-center font-agentik text-[#1A1F25]/55 text-base">
+          Andre spørsmål? Send en e-post til{' '}
+          <a
+            href="mailto:hei@agentik.no"
+            className="text-[#1A6B6D] underline decoration-[#1A6B6D]/40 underline-offset-4 hover:decoration-[#1A6B6D] transition-colors"
+          >
+            hei@agentik.no
+          </a>
+        </p>
       </div>
     </section>
   );
@@ -1309,7 +1560,7 @@ const ContactForm = () => {
 
       <div className="relative max-w-lg mx-auto">
         <p className="reveal text-center font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0] mb-5">
-          08 — La oss snakke
+          10 — La oss snakke
         </p>
         <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4.5vw,3.2rem)] text-[#E8E4DC] tracking-tight leading-[1.05] mb-4 text-center">
           Vil du finne hvor AI kan skape verdi
@@ -1386,6 +1637,65 @@ const ContactForm = () => {
         </p>
       </div>
     </section>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────
+// STICKY CTA — appears after hero is out of viewport
+// ─────────────────────────────────────────────────────────────
+const StickyCTA = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        // Show after first viewport height (hero is fully past)
+        const shouldShow = window.scrollY > window.innerHeight * 0.85;
+        // Hide near the contact form so we don't double up
+        const contactEl = document.getElementById('contact');
+        let nearContact = false;
+        if (contactEl) {
+          const rect = contactEl.getBoundingClientRect();
+          nearContact = rect.top < window.innerHeight * 0.6;
+        }
+        setVisible(shouldShow && !nearContact);
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <div
+      aria-hidden={!visible}
+      className={`fixed bottom-5 left-1/2 z-40 transition-all duration-500 ${
+        visible
+          ? 'opacity-100 translate-y-0 pointer-events-auto'
+          : 'opacity-0 translate-y-6 pointer-events-none'
+      }`}
+      style={{ transform: `translate3d(-50%, ${visible ? '0' : '24px'}, 0)` }}
+    >
+      <div className="flex items-center gap-3 md:gap-5 px-4 md:px-5 py-2.5 md:py-3 rounded-full bg-[#1A1F25]/95 backdrop-blur-md border border-[#E8E4DC]/15 shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
+        <span className="hidden md:inline-flex items-center gap-2 text-[#E8E4DC]/65 text-sm font-agentik tracking-tight pl-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#4FC3B0] shadow-[0_0_8px_#4FC3B0]" />
+          2 av 3 founding-spots igjen
+        </span>
+        <button
+          onClick={() => scrollTo('contact')}
+          className="btn-magnetic rounded-full px-5 md:px-6 py-2.5 text-[13px] md:text-sm bg-[#C4854C] text-[#F5F2EC] font-heading font-medium tracking-tight"
+        >
+          <span className="btn-layer bg-[#1A1F25]"></span>
+          <span className="btn-text flex items-center gap-2">
+            Book samtale <ArrowRight size={14} />
+          </span>
+        </button>
+      </div>
+    </div>
   );
 };
 
@@ -1501,13 +1811,16 @@ export default function Side2() {
           <UseCaseModules />
           <CaseStudy />
           <ValueGuarantee />
+          <Comparison />
           <PricingSection />
           <WhoItIsFor />
+          <FAQ />
           <Proof />
           <Team />
           <ContactForm />
         </main>
         <Footer />
+        <StickyCTA />
       </div>
     </>
   );
