@@ -926,21 +926,21 @@ const Process = () => {
   const steps = [
     {
       num: '01',
-      title: 'Introduksjonssamtale',
-      tag: 'Gratis',
-      desc: 'Vi forstår deres behov og avklarer om dette er riktig for dere.',
+      title: 'Kartlegg',
+      tag: 'Uke 1–2',
+      desc: 'AI-Revisjon: vi finner hvor AI gir høyest ROI hos dere — prosesser, systemer, prioriteringer.',
     },
     {
       num: '02',
-      title: 'AI Audit',
-      tag: null,
-      desc: 'Vi analyserer prosesser og finner de største mulighetene for AI.',
+      title: 'Bygg',
+      tag: 'Uke 3–12',
+      desc: 'Vi setter første AI-løsning i drift og bygger en konkret 90-dagers roadmap sammen.',
     },
     {
       num: '03',
-      title: 'Implementering',
-      tag: 'Valgfritt',
-      desc: 'Vi hjelper dere å faktisk gjennomføre løsningene — fra pilot til produksjon.',
+      title: 'Forbedre',
+      tag: 'Måned 4+',
+      desc: 'Løpende drift, optimalisering og nye løsninger — måned for måned, uten lang binding.',
     },
   ];
 
