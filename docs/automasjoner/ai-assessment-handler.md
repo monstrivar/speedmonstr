@@ -11,18 +11,24 @@
 
 ## Aktivering — det du må gjøre én gang
 
-1. **Link Attio-credentials manuelt** i n8n UI på begge HTTP-nodene:
-   - `Finn person i Attio`
-   - `Legg til assessment-notat`
+1. **Link credentials manuelt** i n8n UI på følgende noder (bruk samme bearer-token som `AI Form Lead Handler`):
+   - `Finn person i Attio` — HTTP Bearer Auth (Attio API Token)
+   - `Legg til assessment-notat` — HTTP Bearer Auth (Attio API Token)
+   - `Firecrawl scrape` — HTTP Bearer Auth (`FIRECRAWL_API` fra .env)
+   - `Generer presentasjon` — HTTP Header Auth (header `x-api-key`, value: `ANTHROPIC_API_KEY`)
+   - `Lagre presentasjon` — Supabase API (auto-linket vanligvis)
+   - `Finn bedrift i Attio` — HTTP Bearer Auth (Attio API Token)
+   - `Preso-notat på bedrift` — HTTP Bearer Auth (Attio API Token)
+   - `Varsle Slack` — Slack OAuth2 (Slack Bot)
 
-   Bruk samme bearer-token som ligger på `AI Form Lead Handler`-workflowen (HTTP Bearer Auth — Attio API Token).
-
-2. **Sett env-variabel på Vercel:**
+2. **Sett env-variabler på Vercel (Production):**
    ```
    N8N_ASSESSMENT_WEBHOOK_URL=https://agentiknorway.app.n8n.cloud/webhook/agentik-assessment
+   SUPABASE_URL=https://yqpccmztmapgyefrqynp.supabase.co
+   SUPABASE_KEY=<anon-key>
    ```
 
-3. **Aktiver workflow** i UI.
+3. **Aktiver og publiser workflow** i UI (begge: toggle aktiv + "publish" hvis det finnes ulagret-versjon).
 
 4. **Test:**
    ```bash
@@ -56,15 +62,21 @@
 
 ---
 
-## Flyt
+## Flyt (12 noder)
 
 ```
 Webhook (POST /agentik-assessment)
-  → Normaliser felter (Set)
-  → Format assessment (Code — bygger markdown + business case-estimat)
-  → Finn person i Attio (HTTP PUT — upsert via e-post, returnerer record_id)
-  → Legg til assessment-notat (HTTP POST /v2/notes)
-  → Varsle Slack (#social)
+  → Normaliser felter (Set)            — utleder domene fra e-post
+  → Format assessment (Code)           — markdown + business case + UUID
+  → Finn person i Attio (HTTP PUT)     — upsert via e-post
+  → Legg til assessment-notat (POST)   — full assessment som notat på person
+  → Firecrawl scrape (HTTP POST)       — henter kundens nettside (continueOnFail)
+  → Bygg Claude-prompt (Code)          — system + user-prompt med design-system
+  → Generer presentasjon (HTTP POST)   — claude-opus-4-7, 16k tokens, 180s timeout
+  → Lagre presentasjon (Supabase)      — rad i public.presentations
+  → Finn bedrift i Attio (HTTP PUT)    — upsert via domene
+  → Preso-notat på bedrift (POST)      — preso-URL + sammendrag på bedrift
+  → Varsle Slack (#social)             — sammendrag + lenker til person/bedrift
 ```
 
 ---
