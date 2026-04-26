@@ -858,7 +858,7 @@ const Proof = () => (
 );
 
 // ─────────────────────────────────────────────────
-// WORKSHOPS (trust-builder → funnels back to audit)
+// WORKSHOPS (trust-builder → funnels to AI-Partner pricing section)
 // ─────────────────────────────────────────────────
 const Workshops = () => {
   const workshops = [
@@ -898,19 +898,19 @@ const Workshops = () => {
           Droptech, SalesUp og flere.
         </p>
 
-        {/* Bridge line → funnels to audit */}
+        {/* Bridge line → funnels to AI-Partner */}
         <div className="reveal border-t border-[#1A1F25]/8 pt-10">
           <p className="font-agentik italic text-lg md:text-xl text-[#1A1F25]/75 tracking-tight mb-8 max-w-lg">
-            For selskaper som ønsker mer enn bare opplæring, starter de fleste
-            med en AI Audit.
+            For selskaper som vil gå fra opplæring til faktisk drift, starter de fleste
+            som AI-Partner.
           </p>
           <button
-            onClick={() => scrollTo('contact')}
+            onClick={() => scrollTo('tilbud')}
             className="btn-magnetic rounded-full px-7 py-3.5 text-sm bg-[#C4854C] text-[#F5F2EC] font-heading font-medium tracking-tight"
           >
             <span className="btn-layer bg-[#1A1F25]"></span>
             <span className="btn-text flex items-center gap-2">
-              Book en gratis samtale <ArrowRight size={16} />
+              Se AI-Partner <ArrowRight size={16} />
             </span>
           </button>
         </div>
