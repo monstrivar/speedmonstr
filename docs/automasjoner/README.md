@@ -9,6 +9,8 @@ Oversikt over alle live N8N-workflows som driver Agentik-driften. Hver workflow 
 | [AI Form Lead Handler](./ai-form-lead-handler.md) | `Zu6rLrT0bRlDeQb2` | Webhook (POST `/agentik-form-lead`) | Skjema-leads fra agentik.no → Attio + auto-svar + Slack |
 | [AI Email Auto-Reply with Knowledge Base](./ai-email-auto-reply.md) | `dJL4Gk4dO5ZPqAH3` | Gmail (innkommende til hei@agentik.no) | Klassifiserer og svarer på innkommende e-post, håndterer booking-flyt og kjøpsintensjon |
 | [AI Assessment Handler](./ai-assessment-handler.md) | `Pv1Aj3Vg38ogshQ8` | Webhook (POST `/agentik-assessment`) | Pre-assessment fra `/takk` → finner Attio-person, legger til strukturert notat, Slack-varsel + business case-estimat |
+| [AI Partner Onboarding INIT](./ai-partner-onboarding.md) (skal bygges) | — | Webhook (POST `/agentik-onboarding-init`) | Onboarding-trigger → opprett Notion klient-side + 5 initielle tasks + send onboarding-mail |
+| [AI Partner Onboarding SUBMIT](./ai-partner-onboarding.md) (skal bygges) | — | Webhook (POST `/agentik-onboarding-submit`) | Kunde-skjema submit → oppdater klient-side + opprett Nøkkelpersoner-rader + opprett intro-møter + øvrige tasks |
 
 ## Felles infrastruktur
 
