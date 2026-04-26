@@ -1,6 +1,15 @@
 {
   "rewrites": [
     { "source": "/aiarendal", "destination": "/aiarendal.html" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/personvern", "destination": "/index.html" },
+    { "source": "/vilkar", "destination": "/index.html" },
+    { "source": "/ai-revisjon", "destination": "/index.html" },
+    { "source": "/ai-partner", "destination": "/index.html" },
+    { "source": "/side2", "destination": "/index.html" },
+    { "source": "/gammel", "destination": "/index.html" },
+    { "source": "/takk", "destination": "/index.html" },
+    { "source": "/preso/:id", "destination": "/index.html" },
+    { "source": "/onboarding/:token", "destination": "/index.html" },
+    { "source": "/partner/:slug", "destination": "/index.html" }
   ]
 }
