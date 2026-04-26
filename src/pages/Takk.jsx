@@ -488,48 +488,66 @@ export default function Takk() {
 
   // ── DONE step ───────────────────────────────────────────
   if (step.type === 'done') {
+    const calendlyUrl = import.meta.env.VITE_CALENDLY_URL || 'https://calendly.com/agentik/mulighetssamtale';
     return (
       <>
         <PageHelmet />
+        <CalendlyEmbedScript />
         <div className="agentik-page min-h-screen flex flex-col" style={{ background: '#1A1F25' }}>
           <ProgressBar current={TOTAL_PROGRESS_STEPS} />
-          <main className="flex-1 flex items-center justify-center px-6 py-20">
-            <div className="max-w-xl w-full text-center">
-              <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-[#4FC3B0]/15 border-2 border-[#4FC3B0]/45 flex items-center justify-center">
-                <Check size={32} className="text-[#4FC3B0]" strokeWidth={2.5} />
+          <main className="flex-1 flex items-start justify-center px-6 py-16">
+            <div className="max-w-3xl w-full">
+              <div className="text-center mb-12">
+                <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-[#4FC3B0]/15 border-2 border-[#4FC3B0]/45 flex items-center justify-center">
+                  <Check size={32} className="text-[#4FC3B0]" strokeWidth={2.5} />
+                </div>
+                <h1 className="font-agentik font-bold text-[clamp(2rem,5vw,3.5rem)] text-[#E8E4DC] tracking-[-0.025em] leading-[1.05] mb-5">
+                  Vi har alt vi trenger.
+                </h1>
+                <p className="font-agentik text-[#E8E4DC]/65 text-lg md:text-xl leading-relaxed max-w-xl mx-auto">
+                  Velg en tid som passer for mulighetssamtalen — vi forbereder konkrete hypoteser basert på svarene dine.
+                </p>
               </div>
-              <h1 className="font-agentik font-bold text-[clamp(2rem,5vw,3.5rem)] text-[#E8E4DC] tracking-[-0.025em] leading-[1.05] mb-5">
-                Vi har alt vi trenger.
-              </h1>
-              <p className="font-agentik text-[#E8E4DC]/65 text-lg md:text-xl leading-relaxed mb-10 max-w-md mx-auto">
-                Vi går gjennom svarene dine og forbereder konkrete hypoteser før samtalen. Sjekk innboksen din for forslag til møtetid innen 24 timer.
-              </p>
 
-              <ol className="text-left max-w-md mx-auto space-y-5 mb-12">
-                {[
-                  { tag: 'Innen 24 timer', title: 'Personlig svar på e-post', desc: 'Vi foreslår 2–3 møtetider basert på svarene dine.' },
-                  { tag: '15–20 min', title: 'Mulighetssamtale', desc: 'Vi diskuterer 2–3 konkrete hypoteser fra svarene dine.' },
-                  { tag: 'Etter samtalen', title: 'Konkret anbefaling', desc: 'Hvis det er fit: 90-dagers Sprint. Hvis ikke: ærlig alternativ.' },
-                ].map((s, i) => (
-                  <li key={i} className="flex gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#1A6B6D]/15 border border-[#1A6B6D]/35 flex items-center justify-center mt-0.5">
-                      <span className="font-data text-[11px] text-[#4FC3B0] font-semibold">{i + 1}</span>
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#4FC3B0]/80 mb-1">{s.tag}</p>
-                      <p className="font-agentik font-semibold text-[#E8E4DC] text-base tracking-tight mb-1">{s.title}</p>
-                      <p className="font-agentik text-[#E8E4DC]/55 text-sm leading-relaxed">{s.desc}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              {/* Calendly inline-widget */}
+              <div className="bg-white rounded-2xl overflow-hidden mb-12 shadow-[0_8px_40px_rgba(0,0,0,0.3)]">
+                <div
+                  className="calendly-inline-widget"
+                  data-url={`${calendlyUrl}?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=c4854c`}
+                  style={{ minWidth: '320px', height: '700px' }}
+                />
+              </div>
 
-              <p className="text-[#E8E4DC]/40 text-sm">
-                Spørsmål?{' '}
-                <a href="mailto:hei@agentik.no" className="text-[#E8E4DC]/75 underline decoration-[#C4854C]/50 underline-offset-4 hover:decoration-[#C4854C] transition-colors">
-                  hei@agentik.no
-                </a>
-              </p>
+              <div className="max-w-2xl mx-auto">
+                <p className="font-data text-[10px] uppercase tracking-[0.22em] text-[#4FC3B0]/70 text-center mb-6">
+                  Hva som skjer
+                </p>
+                <ol className="space-y-5 mb-12">
+                  {[
+                    { tag: 'I dag', title: 'Du booker tid over', desc: 'Velg slot som passer. Vi får en Slack-varsel umiddelbart.' },
+                    { tag: '15–20 min', title: 'Mulighetssamtale', desc: 'Vi diskuterer 2–3 konkrete hypoteser basert på svarene dine.' },
+                    { tag: 'Etter samtalen', title: 'Konkret anbefaling', desc: 'Hvis det er fit: 90-dagers Sprint. Hvis ikke: ærlig alternativ.' },
+                  ].map((s, i) => (
+                    <li key={i} className="flex gap-4">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#1A6B6D]/15 border border-[#1A6B6D]/35 flex items-center justify-center mt-0.5">
+                        <span className="font-data text-[11px] text-[#4FC3B0] font-semibold">{i + 1}</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#4FC3B0]/80 mb-1">{s.tag}</p>
+                        <p className="font-agentik font-semibold text-[#E8E4DC] text-base tracking-tight mb-1">{s.title}</p>
+                        <p className="font-agentik text-[#E8E4DC]/55 text-sm leading-relaxed">{s.desc}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+
+                <p className="text-[#E8E4DC]/40 text-sm text-center">
+                  Foretrekker du en annen kanal?{' '}
+                  <a href="mailto:hei@agentik.no" className="text-[#E8E4DC]/75 underline decoration-[#C4854C]/50 underline-offset-4 hover:decoration-[#C4854C] transition-colors">
+                    hei@agentik.no
+                  </a>
+                </p>
+              </div>
             </div>
           </main>
         </div>
@@ -642,6 +660,27 @@ export default function Takk() {
     </>
   );
 }
+
+// ─────────────────────────────────────────────────────────────
+// Calendly embed script — laster inn én gang
+// ─────────────────────────────────────────────────────────────
+const CalendlyEmbedScript = () => {
+  useEffect(() => {
+    if (document.querySelector('script[data-calendly]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://assets.calendly.com/assets/external/widget.css';
+    link.setAttribute('data-calendly', 'css');
+    document.head.appendChild(link);
+
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    script.setAttribute('data-calendly', 'js');
+    document.body.appendChild(script);
+  }, []);
+  return null;
+};
 
 // ─────────────────────────────────────────────────────────────
 // Shared Helmet (also injects font + global styles)

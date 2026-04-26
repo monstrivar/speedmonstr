@@ -20,12 +20,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<NySide />} />
+          {/* Side2 er den nye landingsiden — erstatter NySide */}
+          <Route path="/" element={<Side2 />} />
+          <Route path="/side2" element={<Side2 />} />
+          {/* NySide arkivert — tilgjengelig for sammenligning */}
+          <Route path="/gammel" element={<NySide />} />
           <Route path="/personvern" element={<Personvern />} />
           <Route path="/vilkar" element={<Vilkar />} />
           <Route path="/ai-revisjon" element={<AiRevisjon />} />
           <Route path="/ai-partner" element={<AiPartner />} />
-          <Route path="/side2" element={<Side2 />} />
           <Route path="/takk" element={<Takk />} />
           <Route path="/preso/:id" element={<Preso />} />
           <Route path="/onboarding/:token" element={<Onboarding />} />

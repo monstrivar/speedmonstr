@@ -1962,7 +1962,6 @@ export default function Side2() {
     <>
       <Helmet>
         <title>Agentik | Din eksterne AI-avdeling</title>
-        <meta name="robots" content="noindex, nofollow" />
         <meta
           name="description"
           content="Vi blir deres eksterne AI-avdeling. Vi identifiserer, implementerer, vedlikeholder og forbedrer AI-systemer som skaper målbar verdi i support, salg, drift og interne arbeidsflyter."
