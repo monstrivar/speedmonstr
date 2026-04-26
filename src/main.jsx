@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import Personvern from './pages/Personvern.jsx'
 import Vilkar from './pages/Vilkar.jsx'
 import AiRevisjon from './pages/AiRevisjon.jsx'
+import AiPartner from './pages/AiPartner.jsx'
 import { NySide } from './pages/NySide.jsx'
 import './index.css'
 
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/personvern" element={<Personvern />} />
           <Route path="/vilkar" element={<Vilkar />} />
           <Route path="/ai-revisjon" element={<AiRevisjon />} />
+          <Route path="/ai-partner" element={<AiPartner />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
