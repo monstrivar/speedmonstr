@@ -13,6 +13,30 @@ const AiPartner = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://agentik.no/ai-partner" />
         <link rel="canonical" href="https://agentik.no/ai-partner" />
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'AI-Partner',
+          provider: {
+            '@type': 'Organization',
+            name: 'Agentik',
+            url: 'https://agentik.no',
+          },
+          serviceType: 'AI Consulting Retainer',
+          description: 'Fast månedlig avtale med AI-rådgiver og dev-team. Kartlegging, bygging og forbedring av AI-løsninger. 90-dagers verdigaranti — minst 2x investeringen i årlig verdipotensial.',
+          areaServed: { '@type': 'Country', name: 'Norway' },
+          offers: {
+            '@type': 'Offer',
+            price: '39000',
+            priceCurrency: 'NOK',
+            priceSpecification: {
+              '@type': 'UnitPriceSpecification',
+              price: '39000',
+              priceCurrency: 'NOK',
+              unitText: 'MONTH',
+            },
+          },
+        })}</script>
       </Helmet>
 
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F5F2EC]/80 backdrop-blur-md border-b border-[#1A1F25]/10">

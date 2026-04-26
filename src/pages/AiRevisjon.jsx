@@ -13,6 +13,19 @@ const AiRevisjon = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://agentik.no/ai-revisjon" />
         <link rel="canonical" href="https://agentik.no/ai-revisjon" />
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'AI-Revisjon',
+          provider: {
+            '@type': 'Organization',
+            name: 'Agentik',
+            url: 'https://agentik.no',
+          },
+          serviceType: 'AI Consulting',
+          description: 'Strukturert kartlegging av hvor AI og automasjon gir høyest ROI i bedriften. Inkludert i AI-Partner-avtalen.',
+          areaServed: { '@type': 'Country', name: 'Norway' },
+        })}</script>
       </Helmet>
 
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F5F2EC]/80 backdrop-blur-md border-b border-[#1A1F25]/10">
