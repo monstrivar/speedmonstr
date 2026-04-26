@@ -121,6 +121,7 @@ export const PricingSection = () => {
             href="#contact"
             className="btn-magnetic inline-flex rounded-full px-5 py-2.5 text-[12px] bg-transparent text-[#1A1F25] border border-[#1A1F25]/20 font-heading font-semibold tracking-tight no-underline self-start md:self-center whitespace-nowrap"
           >
+            <span className="btn-layer bg-[#1A1F25]"></span>
             <span className="btn-text flex items-center gap-2">
               Snakk med oss <ArrowRight size={13} />
             </span>
