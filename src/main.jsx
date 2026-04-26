@@ -9,6 +9,7 @@ import AiPartner from './pages/AiPartner.jsx'
 import Side2 from './pages/Side2.jsx'
 import Takk from './pages/Takk.jsx'
 import Preso from './pages/Preso.jsx'
+import Onboarding from './pages/Onboarding.jsx'
 import { NySide } from './pages/NySide.jsx'
 import { ScrollToTop } from './components/ScrollToTop.jsx'
 import './index.css'
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/side2" element={<Side2 />} />
           <Route path="/takk" element={<Takk />} />
           <Route path="/preso/:id" element={<Preso />} />
+          <Route path="/onboarding/:token" element={<Onboarding />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
