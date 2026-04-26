@@ -124,6 +124,7 @@ Lokasjon: Skien og Arendal.
 | `docs/agentik/HVA-ER-AGENTIK.md` | Full produktbeskrivelse, forretningsmodell, posisjon |
 | `docs/agentik/TJENESTER.md` | Detaljert tjenestebeskrivelse |
 | `docs/agentik/PARTNERAVTALE.md` | Partneravtale-struktur: tre tiers, priser, scope, kapasitetsplanlegging |
+| `docs/agentik/ONBOARDING.md` | Partner-onboarding fra «ja» til AI i drift: timeline, WOW-momenter, V1 vs V2-tooling |
 | `docs/agentik/MALGRUPPE.md` | Målgruppedefinisjon |
 | `docs/agentik/INNHOLDSSTRATEGI.md` | Innholds- og markedsføringsstrategi |
 | `docs/MERKEVARE-OG-DESIGN.md` | Merkevareidentitet, farger, typografi, designsystem |
