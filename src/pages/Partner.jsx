@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Loader2, Calendar, CheckCircle2, Circle, Clock,
   ArrowRight, Briefcase, TrendingUp, Sparkles,
+  Lightbulb, MessageCircle, Flag, Package, Activity, Zap,
 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -54,6 +55,36 @@ const fmtDate = (iso) => {
   if (!iso) return '—';
   const d = new Date(iso);
   return d.toLocaleDateString('nb-NO', { day: 'numeric', month: 'short', year: 'numeric' });
+};
+
+const fmtRelativeTime = (iso) => {
+  if (!iso) return '—';
+  const now = new Date();
+  const then = new Date(iso);
+  const diffMs = now - then;
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHr = Math.floor(diffMs / 3600000);
+  const diffDay = Math.floor(diffMs / 86400000);
+  const diffWeek = Math.floor(diffDay / 7);
+
+  if (diffMin < 2) return 'akkurat nå';
+  if (diffMin < 60) return `for ${diffMin} min siden`;
+  if (diffHr < 24) return `for ${diffHr} ${diffHr === 1 ? 'time' : 'timer'} siden`;
+  if (diffDay === 1) return 'i går';
+  if (diffDay < 7) return `for ${diffDay} dager siden`;
+  if (diffWeek === 1) return 'forrige uke';
+  if (diffDay < 30) return `for ${diffWeek} uker siden`;
+  return fmtDate(iso);
+};
+
+const ACTIVITY_META = {
+  update:    { icon: Activity,     color: '#9aa4b2', label: 'Oppdatering' },
+  meeting:   { icon: Calendar,     color: '#4FC3B0', label: 'Møte' },
+  milestone: { icon: Flag,         color: '#C4854C', label: 'Milepæl' },
+  task:      { icon: Zap,          color: '#1A6B6D', label: 'Leveranse' },
+  comment:   { icon: MessageCircle, color: '#9aa4b2', label: 'Svar' },
+  delivery:  { icon: Package,      color: '#C4854C', label: 'Leveranse' },
+  discovery: { icon: Lightbulb,    color: '#4FC3B0', label: 'Innsikt' },
 };
 
 const fmtNumber = (n) => {
@@ -149,7 +180,7 @@ export default function Partner() {
 // DASHBOARD
 // ─────────────────────────────────────────────────────────────
 const DashboardContent = ({ data }) => {
-  const { partner, tasks, people, meetings, projects, roi } = data;
+  const { partner, tasks, people, meetings, projects, roi, activity = [] } = data;
   const heroRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -237,17 +268,29 @@ const DashboardContent = ({ data }) => {
           </div>
         </header>
 
-        {/* HERO */}
-        <section ref={heroRef} className="px-6 md:px-10 py-16 md:py-24 max-w-6xl mx-auto">
-          <p className="partner-hero-el font-data text-[10px] uppercase tracking-[0.28em] text-[#4FC3B0] mb-5">
-            Sprint · Uke {phase.week} av 13
-          </p>
-          <h1 className="partner-hero-el font-agentik font-bold text-[clamp(2.4rem,6vw,5.4rem)] text-[#f2ece1] tracking-[-0.025em] leading-[1.02] mb-4">
-            AI-mulighet for<br /><span style={{ color: '#C4854C' }}>{partner.bedrift}</span>
-          </h1>
-          <p className="partner-hero-el font-agentik text-[#9aa4b2] text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
-            Vårt felles arbeidsrom. Her ser dere alt vi gjør sammen — i sanntid. Status, leveranser, møter og dokumentert verdi.
-          </p>
+        {/* HERO — kompakt dashboard-greeting */}
+        <section ref={heroRef} className="px-6 md:px-10 pt-10 pb-6 max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-7">
+            <div>
+              <p className="partner-hero-el font-data text-[10px] uppercase tracking-[0.28em] text-[#4FC3B0] mb-3">
+                Arbeidsrom · Sprint dag {phase.elapsedDays || 0}
+              </p>
+              <h1 className="partner-hero-el font-agentik font-bold text-[clamp(1.8rem,4vw,3.4rem)] text-[#f2ece1] tracking-[-0.025em] leading-[1.05]">
+                {partner.daglig_leder ? (
+                  <>God dag, <span style={{ color: '#C4854C' }}>{partner.daglig_leder.split(' ')[0]}</span>.</>
+                ) : (
+                  <>{partner.bedrift}</>
+                )}
+              </h1>
+            </div>
+            <p className="partner-hero-el font-agentik text-[#9aa4b2] text-sm md:text-base max-w-md md:text-right">
+              {activity[0] ? (
+                <>Sist oppdatert <span className="text-[#4FC3B0]">{fmtRelativeTime(activity[0].happened_at)}</span></>
+              ) : (
+                'Vårt felles arbeidsrom — alt som skjer i Sprint-en lever her.'
+              )}
+            </p>
+          </div>
 
           {/* Sprint progress bar */}
           <div className="partner-hero-el bg-[#131a24] border border-white/8 rounded-2xl p-6 md:p-7">
@@ -305,6 +348,37 @@ const DashboardContent = ({ data }) => {
           </div>
         </section>
 
+        {/* ACTIVITY FEED — det viktigste på siden */}
+        <section className="partner-reveal px-6 md:px-10 py-12 max-w-6xl mx-auto">
+          <div className="reveal-item flex items-center gap-3 mb-6">
+            <span className="inline-flex items-center gap-2 font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">
+              <span className="relative flex w-2 h-2">
+                <span className="absolute inset-0 rounded-full bg-[#4FC3B0] animate-ping opacity-75" />
+                <span className="relative w-2 h-2 rounded-full bg-[#4FC3B0]" />
+              </span>
+              Live · Siste aktivitet
+            </span>
+            <span className="block flex-1 h-px bg-white/10" />
+            {activity[0] && (
+              <span className="font-data text-[10px] tracking-wider text-[#9aa4b2]/70">
+                Sist oppdatert {fmtRelativeTime(activity[0].happened_at)}
+              </span>
+            )}
+          </div>
+
+          {activity.length === 0 ? (
+            <div className="reveal-item bg-[#131a24] border border-white/8 rounded-2xl p-10 text-center">
+              <p className="text-[#9aa4b2] font-agentik">Ingen aktivitet registrert ennå. Det første dukker opp her snart.</p>
+            </div>
+          ) : (
+            <div className="reveal-item bg-[#131a24] border border-white/8 rounded-2xl overflow-hidden">
+              <ul>
+                {activity.map((item, i) => <ActivityItem key={item.id} item={item} highlight={i === 0} />)}
+              </ul>
+            </div>
+          )}
+        </section>
+
         {/* ROI METRICS */}
         <section className="partner-reveal px-6 md:px-10 py-16 max-w-6xl mx-auto">
           <div className="reveal-item flex items-center gap-3 mb-8">
@@ -348,9 +422,9 @@ const DashboardContent = ({ data }) => {
             <span className="block flex-1 h-px bg-white/10" />
           </div>
 
-          <h2 className="reveal-item font-agentik font-bold text-[clamp(1.8rem,4vw,2.8rem)] text-[#f2ece1] tracking-[-0.02em] mb-8">
+          <h2 className="reveal-item font-agentik font-bold text-[clamp(1.4rem,2.8vw,2rem)] text-[#f2ece1] tracking-[-0.02em] mb-6">
             {liveProjects.length > 0
-              ? `${liveProjects.length} løsning${liveProjects.length > 1 ? 'er' : ''} i drift`
+              ? `${liveProjects.length} i drift, ${buildingProjects.length} på vei`
               : `${buildingProjects.length} løsning${buildingProjects.length !== 1 ? 'er' : ''} bygges`}
           </h2>
 
@@ -576,6 +650,11 @@ const ProjectCard = ({ project }) => {
           {project.verdi_estimat_arlig ? fmtNumber(project.verdi_estimat_arlig) + ' kr/år' : '—'}
         </p>
       </div>
+      {project.updated_at && (
+        <p className="font-data text-[9px] tracking-[0.05em] text-[#9aa4b2]/40 mt-2">
+          Oppdatert {fmtRelativeTime(project.updated_at)}
+        </p>
+      )}
     </div>
   );
 };
@@ -595,6 +674,48 @@ const TaskItem = ({ task, done }) => {
             AI-Revisjon
           </p>
         )}
+      </div>
+    </li>
+  );
+};
+
+const ActivityItem = ({ item, highlight }) => {
+  const meta = ACTIVITY_META[item.type] || ACTIVITY_META.update;
+  const IconComponent = meta.icon;
+  return (
+    <li
+      className={`flex gap-4 px-6 md:px-7 py-5 border-b border-white/6 last:border-b-0 transition-colors hover:bg-white/2 ${
+        highlight ? 'bg-[#4FC3B0]/4' : ''
+      }`}
+    >
+      <div
+        className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
+        style={{ background: `${meta.color}1a`, border: `1px solid ${meta.color}40` }}
+      >
+        <IconComponent size={16} style={{ color: meta.color }} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1">
+          <p className="font-agentik font-semibold text-[#f2ece1] text-base tracking-tight">
+            {item.tittel}
+          </p>
+          <span
+            className="font-data text-[9px] uppercase tracking-[0.18em] px-2 py-0.5 rounded-full"
+            style={{ background: `${meta.color}18`, color: meta.color }}
+          >
+            {meta.label}
+          </span>
+        </div>
+        {item.beskrivelse && (
+          <p className="font-agentik text-[#9aa4b2] text-sm leading-relaxed mb-2">
+            {item.beskrivelse}
+          </p>
+        )}
+        <div className="flex items-center gap-3 font-data text-[10px] tracking-[0.05em] text-[#9aa4b2]/55">
+          <span>{fmtRelativeTime(item.happened_at)}</span>
+          <span className="opacity-40">·</span>
+          <span>{item.forfatter || 'Agentik'}</span>
+        </div>
       </div>
     </li>
   );

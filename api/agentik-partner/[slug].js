@@ -36,12 +36,13 @@ export default async function handler(req, res) {
 
     const partnerId = partner.id;
 
-    const [tasksRes, peopleRes, meetingsRes, projectsRes, roiRes] = await Promise.all([
-      supabase.from('partner_tasks').select('*').eq('partner_id', partnerId).order('created_at', { ascending: false }),
+    const [tasksRes, peopleRes, meetingsRes, projectsRes, roiRes, activityRes] = await Promise.all([
+      supabase.from('partner_tasks').select('*').eq('partner_id', partnerId).order('updated_at', { ascending: false }),
       supabase.from('partner_people').select('*').eq('partner_id', partnerId).order('created_at', { ascending: true }),
       supabase.from('partner_meetings').select('*').eq('partner_id', partnerId).order('dato', { ascending: false }),
-      supabase.from('partner_projects').select('*').eq('partner_id', partnerId).order('created_at', { ascending: false }),
+      supabase.from('partner_projects').select('*').eq('partner_id', partnerId).order('updated_at', { ascending: false }),
       supabase.from('partner_roi').select('*').eq('partner_id', partnerId).order('metric_dato', { ascending: false }),
+      supabase.from('partner_activity').select('*').eq('partner_id', partnerId).order('happened_at', { ascending: false }).limit(20),
     ]);
 
     return res.status(200).json({
@@ -51,6 +52,7 @@ export default async function handler(req, res) {
       meetings: meetingsRes.data || [],
       projects: projectsRes.data || [],
       roi: roiRes.data || [],
+      activity: activityRes.data || [],
     });
   } catch (err) {
     console.error('Partner fetch error:', err);
