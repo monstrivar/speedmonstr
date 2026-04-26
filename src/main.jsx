@@ -7,6 +7,7 @@ import Vilkar from './pages/Vilkar.jsx'
 import AiRevisjon from './pages/AiRevisjon.jsx'
 import AiPartner from './pages/AiPartner.jsx'
 import Side2 from './pages/Side2.jsx'
+import Takk from './pages/Takk.jsx'
 import { NySide } from './pages/NySide.jsx'
 import { ScrollToTop } from './components/ScrollToTop.jsx'
 import './index.css'
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/ai-revisjon" element={<AiRevisjon />} />
           <Route path="/ai-partner" element={<AiPartner />} />
           <Route path="/side2" element={<Side2 />} />
+          <Route path="/takk" element={<Takk />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

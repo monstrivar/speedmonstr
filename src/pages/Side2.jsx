@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -1544,13 +1545,13 @@ const ContactForm = () => {
     maal: '',
   });
   const [status, setStatus] = useState('idle');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
 
     try {
-      // Combine qualification + maal into one field for N8N webhook compatibility
       const payload = {
         fornavn: form.fornavn,
         bedrift: form.bedrift,
@@ -1570,8 +1571,13 @@ const ContactForm = () => {
       });
 
       if (res.ok) {
-        setStatus('sent');
-        setForm({ fornavn: '', bedrift: '', telefon: '', epost: '', ansatte: '', manuelleTimer: '', maal: '' });
+        // Redirect to /takk with prefilled context for the assessment
+        const params = new URLSearchParams({
+          n: form.fornavn,
+          e: form.epost,
+          b: form.bedrift,
+        });
+        navigate(`/takk?${params.toString()}`);
       } else {
         setStatus('error');
       }
@@ -1586,55 +1592,6 @@ const ContactForm = () => {
   const selectStyle = {
     backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23E8E4DC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>")`,
   };
-
-  if (status === 'sent') {
-    return (
-      <section id="contact" className="reveal-section relative py-28 md:py-36 px-6 overflow-hidden" style={{ background: '#1A1F25' }}>
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-25 blur-[140px] pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #1A6B6D 0%, transparent 70%)' }}
-        />
-        <div className="relative max-w-xl mx-auto text-center">
-          <div className="w-16 h-16 rounded-full bg-[#4FC3B0]/15 border border-[#4FC3B0]/40 flex items-center justify-center mx-auto mb-7">
-            <Check size={26} className="text-[#4FC3B0]" strokeWidth={2.5} />
-          </div>
-          <h2 className="font-agentik font-bold text-3xl md:text-4xl text-[#E8E4DC] tracking-tight mb-4">
-            Takk for henvendelsen
-          </h2>
-          <p className="text-[#E8E4DC]/55 text-base md:text-lg leading-relaxed mb-12 max-w-md mx-auto">
-            Vi har mottatt skjemaet og lest gjennom det. Slik ser veien videre ut:
-          </p>
-
-          {/* Next steps timeline */}
-          <ol className="text-left max-w-md mx-auto space-y-5">
-            {[
-              { tag: 'Innen 24 timer', title: 'Personlig svar på e-post', desc: 'Vi bekrefter mottak og foreslår 2–3 tider for samtalen.' },
-              { tag: '15–20 minutter', title: 'Mulighetssamtale', desc: 'Vi går gjennom info dere oppga og diskuterer hvor AI kan gi verdi.' },
-              { tag: 'Etter samtalen', title: 'Konkret anbefaling', desc: 'Hvis det er fit: 90-dagers Sprint-tilbud. Hvis ikke: ærlig anbefaling om alternativ.' },
-            ].map((step, i) => (
-              <li key={i} className="flex gap-4">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#1A6B6D]/15 border border-[#1A6B6D]/35 flex items-center justify-center mt-0.5">
-                  <span className="font-data text-[11px] text-[#4FC3B0] font-semibold">{i + 1}</span>
-                </div>
-                <div className="flex-1">
-                  <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#4FC3B0]/80 mb-1">{step.tag}</p>
-                  <p className="font-agentik font-semibold text-[#E8E4DC] text-base tracking-tight mb-1">{step.title}</p>
-                  <p className="font-agentik text-[#E8E4DC]/55 text-sm leading-relaxed">{step.desc}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-
-          <p className="mt-12 text-[#E8E4DC]/40 text-sm">
-            Spørsmål i mellomtiden?{' '}
-            <a href="mailto:hei@agentik.no" className="text-[#E8E4DC]/70 underline decoration-[#C4854C]/50 underline-offset-4 hover:decoration-[#C4854C] transition-colors">
-              hei@agentik.no
-            </a>
-          </p>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="contact" className="reveal-section relative py-28 md:py-36 px-6 overflow-hidden" style={{ background: '#1A1F25' }}>
