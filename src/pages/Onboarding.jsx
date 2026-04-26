@@ -119,13 +119,21 @@ const STEPS = [
   {
     type: 'group',
     title: 'Merkevare',
-    sub: 'Vi bruker dette til å lage presentasjoner og kommunikasjon i deres stil.',
+    sub: 'Vi setter opp arbeidsrommet med deres logo og farger fra dag 1, så det føles som DERES — ikke vårt.',
     progress: 6,
     questions: [
       {
+        id: 'logoUrl',
+        type: 'text',
+        question: 'Direkte URL til logo (PNG eller SVG)',
+        sub: 'Helst en transparent PNG. Vi bruker den som icon på arbeidsrommet og i presentasjoner.',
+        placeholder: 'F.eks. https://bedrift.no/logo.png',
+        required: false,
+      },
+      {
         id: 'brandUrl',
         type: 'text',
-        question: 'Lenke til logo, brand-guide eller mediabank (valgfritt)',
+        question: 'Lenke til brand-guide eller mediabank (valgfritt)',
         placeholder: 'F.eks. Drive-link, Brandfolder-URL eller nettside',
         required: false,
       },

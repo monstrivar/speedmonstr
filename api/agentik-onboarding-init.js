@@ -35,6 +35,7 @@ export default async function handler(req, res) {
     org_nr,
     pris_per_mnd,
     intern_kommentar,
+    loom_video_url,
     created_by,
   } = req.body || {};
 
@@ -56,10 +57,11 @@ export default async function handler(req, res) {
         org_nr: org_nr || null,
         pris_per_mnd: pris_per_mnd ?? 39000,
         intern_kommentar: intern_kommentar || null,
+        loom_video_url: loom_video_url || null,
         created_by: created_by || null,
         status: 'initiated',
       })
-      .select('id, token, bedrift, daglig_leder, daglig_leder_epost, pris_per_mnd, created_at')
+      .select('id, token, bedrift, daglig_leder, daglig_leder_epost, pris_per_mnd, loom_video_url, created_at')
       .single();
 
     if (error || !data) {
@@ -82,6 +84,7 @@ export default async function handler(req, res) {
             org_nr: org_nr || null,
             daglig_leder_telefon: daglig_leder_telefon || null,
             intern_kommentar: intern_kommentar || null,
+            loom_video_url: loom_video_url || null,
             created_by: created_by || null,
           }),
         });

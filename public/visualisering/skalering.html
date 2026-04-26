@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<title>Agentik · Skaleringsstrategi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f151d; --ink-2: #131a24; --ink-3: #1a2330;
+  --bone: #f4ede0; --bone-2: #fbf7f0;
+  --off-white: #f2ece1;
+  --slate: #2a2720; --slate-muted: #4a4539;
+  --copper: #c47a4a; --copper-light: #d18d5e;
+  --teal: #2ca785; --teal-light: #3cbf93;
+  --border-dark: rgba(255,255,255,0.08);
+  --border-light: rgba(42,39,32,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Manrope', sans-serif; font-size: 16px; line-height: 1.5; color: var(--slate); background: var(--bone); -webkit-font-smoothing: antialiased; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+.serif-italic { font-family: 'Fraunces', serif; font-style: italic; }
+.eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; }
+.rule { display: block; width: 40px; height: 2px; background: var(--teal); margin: 0 0 24px; }
+.section { padding: 80px 6vw; max-width: 1400px; margin: 0 auto; }
+.section-dark { background: var(--ink); color: var(--off-white); }
+.section-dark .rule { background: var(--copper); }
+.section-dark .eyebrow { color: rgba(242,236,225,0.55); }
+
+.hero { background: var(--ink); color: var(--off-white); padding: 100px 6vw 120px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(196,122,74,0.25), transparent 70%); filter: blur(40px); }
+.hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.hero .eyebrow { color: var(--teal); margin-bottom: 24px; display: inline-block; }
+.hero h1 { font-size: clamp(40px, 5.5vw, 76px); font-weight: 600; line-height: 1.04; letter-spacing: -0.025em; margin-bottom: 24px; max-width: 1000px; }
+.hero h1 em { color: var(--copper); font-style: normal; font-weight: 600; }
+.hero .lede { font-size: clamp(16px, 1.4vw, 20px); color: rgba(242,236,225,0.65); max-width: 720px; line-height: 1.55; }
+.hero-meta { display: flex; gap: 32px; margin-top: 56px; flex-wrap: wrap; }
+.hero-meta-item { border-left: 2px solid var(--teal); padding-left: 18px; }
+.hero-meta-item .v { font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 500; color: var(--off-white); display: block; margin-bottom: 4px; }
+.hero-meta-item .l { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(242,236,225,0.5); }
+
+.sec-h { font-size: clamp(28px, 3vw, 44px); font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 12px; }
+.sec-h em { color: var(--teal); font-style: normal; }
+.section-dark .sec-h em { color: var(--copper); }
+.sec-dek { font-size: 17px; color: var(--slate-muted); max-width: 700px; margin-bottom: 56px; line-height: 1.55; }
+.section-dark .sec-dek { color: rgba(242,236,225,0.6); }
+
+/* CAPACITY-MATRISE */
+.capacity {
+  background: var(--bone-2);
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+}
+.cap-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-light);
+  align-items: center;
+}
+.cap-row:last-child { border-bottom: 0; }
+.cap-row.header { background: var(--ink); color: var(--off-white); font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+.cap-row.highlight { background: linear-gradient(90deg, rgba(44,167,133,0.08) 0%, transparent 100%); border-left: 3px solid var(--teal); }
+.cap-name { font-weight: 600; color: var(--slate); font-size: 15px; }
+.cap-row .v { font-family: 'JetBrains Mono'; font-weight: 500; color: var(--slate); }
+.cap-max { color: var(--copper); font-size: 18px; font-weight: 600; }
+
+/* MODULES */
+.modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.module-card {
+  background: var(--ink-2);
+  border: 1px solid var(--border-dark);
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+}
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--teal);
+  border-radius: 12px 0 0 12px;
+}
+.module-num { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--teal); margin-bottom: 6px; }
+.module-name { font-weight: 600; color: var(--off-white); font-size: 16px; margin-bottom: 6px; }
+.module-purpose { font-size: 13px; color: rgba(242,236,225,0.55); line-height: 1.5; margin-bottom: 12px; }
+.module-time {
+  display: inline-block;
+  background: rgba(196,122,74,0.15);
+  color: var(--copper);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono';
+  letter-spacing: 0.05em;
+}
+
+/* PRODUCT PACKAGE diagram */
+.pkg {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 18px;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 32px;
+}
+@media (max-width: 800px) { .pkg { grid-template-columns: 1fr; } }
+.pkg-circle {
+  width: 200px; height: 200px;
+  background: linear-gradient(135deg, var(--teal), var(--copper));
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 8px 32px -8px rgba(44,167,133,0.4);
+}
+.pkg-circle .v { font-family: 'JetBrains Mono'; font-size: 36px; font-weight: 600; line-height: 1; }
+.pkg-circle .l { font-size: 12px; opacity: 0.85; margin-top: 6px; letter-spacing: 0.1em; text-transform: uppercase; }
+.pkg-list { display: flex; flex-direction: column; gap: 10px; }
+.pkg-item {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border-light);
+}
+.pkg-item:last-child { border-bottom: 0; }
+.pkg-icon {
+  width: 32px; height: 32px;
+  background: var(--ink);
+  color: var(--off-white);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+.pkg-item-title { font-weight: 600; color: var(--slate); font-size: 14px; margin-bottom: 2px; }
+.pkg-item-desc { font-size: 12px; color: var(--slate-muted); line-height: 1.4; }
+
+/* HIRING ROADMAP */
+.hiring {
+  position: relative;
+  padding-left: 60px;
+}
+.hiring::before {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--teal) 0%, var(--copper) 100%);
+}
+.hire-item { position: relative; padding-bottom: 28px; }
+.hire-item::before {
+  content: '';
+  position: absolute;
+  left: -45px; top: 6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--teal);
+  border: 3px solid var(--bone);
+  box-shadow: 0 0 0 3px var(--teal);
+}
+.hire-mrr {
+  font-family: 'JetBrains Mono';
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--copper);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.hire-title { font-size: 18px; font-weight: 600; color: var(--slate); margin-bottom: 6px; }
+.hire-desc { font-size: 14px; color: var(--slate-muted); line-height: 1.5; max-width: 700px; }
+.hire-cost {
+  display: inline-block;
+  margin-top: 8px;
+  background: var(--bone);
+  border: 1px solid var(--border-light);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono';
+  font-size: 11px;
+  color: var(--slate-muted);
+}
+
+/* CADENCE */
+.cadence {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.cad-card {
+  background: var(--bone-2);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+}
+.cad-card.sticky { background: var(--copper); color: white; }
+.cad-when { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 0.18em; color: var(--teal); margin-bottom: 8px; text-transform: uppercase; }
+.cad-card.sticky .cad-when { color: rgba(255,255,255,0.85); }
+.cad-title { font-weight: 600; color: var(--slate); font-size: 17px; margin-bottom: 8px; }
+.cad-card.sticky .cad-title { color: white; }
+.cad-list { font-size: 13px; color: var(--slate-muted); line-height: 1.5; list-style: none; }
+.cad-card.sticky .cad-list { color: rgba(255,255,255,0.85); }
+.cad-list li { padding-left: 14px; position: relative; margin-bottom: 4px; }
+.cad-list li::before { content: '·'; position: absolute; left: 0; font-weight: 700; }
+
+/* STRESS-SIGNALS */
+.signals {
+  background: var(--ink-2);
+  border-radius: 14px;
+  border: 1px solid var(--border-dark);
+  padding: 28px;
+}
+.signal { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border-dark); font-size: 14px; color: rgba(242,236,225,0.75); }
+.signal:last-child { border-bottom: 0; }
+.signal-box { width: 18px; height: 18px; border: 2px solid var(--copper); border-radius: 4px; flex-shrink: 0; }
+
+/* AUTOMATION TABLE */
+.auto-table {
+  background: var(--bone-2);
+  border-radius: 14px;
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+}
+.auto-row {
+  display: grid;
+  grid-template-columns: 2fr 100px 1fr;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--border-light);
+  align-items: center;
+  font-size: 13px;
+}
+.auto-row.header { background: var(--ink); color: var(--off-white); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; }
+.auto-row:last-child { border-bottom: 0; }
+.auto-name { font-weight: 600; color: var(--slate); }
+.auto-status { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--teal); text-align: center; }
+.auto-status.pending { color: var(--copper); }
+.auto-savings { color: var(--slate-muted); font-size: 13px; }
+
+.kicker-line { font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(18px, 1.8vw, 26px); color: var(--slate-muted); max-width: 800px; line-height: 1.45; margin-top: 56px; }
+.section-dark .kicker-line { color: rgba(242,236,225,0.7); }
+
+.outcome { background: linear-gradient(135deg, var(--ink) 0%, var(--ink-3) 100%); border-radius: 20px; padding: 56px; color: var(--off-white); position: relative; overflow: hidden; }
+.outcome::before { content: ''; position: absolute; top: -200px; right: -200px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(44,167,133,0.3), transparent 70%); filter: blur(60px); }
+.outcome-inner { position: relative; z-index: 1; }
+.outcome h3 { font-size: clamp(24px, 2.5vw, 36px); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 32px; max-width: 800px; }
+.outcome h3 em { color: var(--teal); font-style: normal; }
+.outcome-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 32px; margin-top: 32px; }
+.outcome-stat .v { font-family: 'JetBrains Mono'; font-size: 32px; font-weight: 600; color: var(--teal); display: block; margin-bottom: 4px; }
+.outcome-stat .l { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(242,236,225,0.55); }
+
+.footer { background: var(--ink); color: rgba(242,236,225,0.55); padding: 60px 6vw; text-align: center; }
+.footer .brand { font-weight: 600; font-size: 18px; color: var(--off-white); margin-bottom: 6px; }
+.footer .meta { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Skaleringsstrategi · 2 gründere → 12 partnere</span>
+    <h1>Leverage ligger i <em>modulene,</em> ikke i timene.</h1>
+    <p class="lede">
+      Hvordan ta på 8–12 aktive AI-Partnere uten 80-timers-uker. Ved kunde nr. 8 leverer vi 80% av nye implementeringer fra pre-bygde ProductPackages — på 4–8 timer i stedet for 40–80.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="v">9–12</span><span class="l">Maks aktive klienter</span></div>
+      <div class="hero-meta-item"><span class="v">8</span><span class="l">ProductPackages</span></div>
+      <div class="hero-meta-item"><span class="v">320</span><span class="l">Timer/mnd tilgjengelig</span></div>
+      <div class="hero-meta-item"><span class="v">35–40</span><span class="l">Timer/uke per gründer</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- KAPASITET -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Kapasitet-matematikk</span>
+  <h2 class="sec-h">Realistisk <em>maks-kapasitet</em></h2>
+  <p class="sec-dek">2 gründere har 320 timer/mnd totalt. Av det er ~70% leveranse = 225 timer/mnd. Maks-kapasitet avhenger av om klienter er i Sprint-fase eller Drift-fase.</p>
+
+  <div class="capacity">
+    <div class="cap-row header">
+      <span class="cap-name">Klient-mix</span>
+      <span class="v">Timer/klient</span>
+      <span class="v" style="text-align: right;">Maks aktive</span>
+    </div>
+    <div class="cap-row">
+      <span class="cap-name">Alle i Sprint-fase (mnd 1–3)</span>
+      <span class="v">30 t/mnd</span>
+      <span class="cap-max" style="text-align: right;">7 klienter</span>
+    </div>
+    <div class="cap-row highlight">
+      <span class="cap-name">50/50 Sprint og Drift (steady-state)</span>
+      <span class="v">24 t/mnd</span>
+      <span class="cap-max" style="text-align: right;">9 klienter</span>
+    </div>
+    <div class="cap-row">
+      <span class="cap-name">Alle i Drift-fase (mnd 9+)</span>
+      <span class="v">18 t/mnd</span>
+      <span class="cap-max" style="text-align: right;">12 klienter</span>
+    </div>
+  </div>
+
+  <p class="kicker-line" style="margin-top: 40px;">«Med null produktisering: 4–6 klienter. Med full produktisering: 9–12. Det er forskjellen.»</p>
+</section>
+
+<!-- PRODUCTPACKAGE -->
+<section class="section section-dark">
+  <span class="rule"></span>
+  <span class="eyebrow" style="display: inline-block; margin-bottom: 16px;">ProductPackage-modellen</span>
+  <h2 class="sec-h" style="color: var(--off-white);">Hver leveranse = 6 <em>artefakter</em></h2>
+  <p class="sec-dek">Når vi bygger noe verdifullt for klient A, dokumenteres det slik at klient B får det på en dag i stedet for en uke.</p>
+
+  <div class="pkg">
+    <div class="pkg-circle">
+      <span class="v">6</span>
+      <span class="l">Artefakter per modul</span>
+    </div>
+    <div class="pkg-list">
+      <div class="pkg-item">
+        <div class="pkg-icon">1</div>
+        <div>
+          <div class="pkg-item-title">Hva den løser</div>
+          <div class="pkg-item-desc">1-setnings problem-statement</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-icon">2</div>
+        <div>
+          <div class="pkg-item-title">n8n-template</div>
+          <div class="pkg-item-desc">Eksportert workflow JSON, klar for import + tilpasning</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-icon">3</div>
+        <div>
+          <div class="pkg-item-title">SOP (deployment-sjekkliste)</div>
+          <div class="pkg-item-desc">Steg-for-steg: hva kreves, hva må tilpasses, fallgruver</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-icon">4</div>
+        <div>
+          <div class="pkg-item-title">Klient-dokumentasjon</div>
+          <div class="pkg-item-desc">Notion-side de kan se: hvordan løsningen fungerer</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-icon">5</div>
+        <div>
+          <div class="pkg-item-title">Verdi-baseline-mal</div>
+          <div class="pkg-item-desc">Hvordan måle ROI før og etter implementering</div>
+        </div>
+      </div>
+      <div class="pkg-item">
+        <div class="pkg-icon">6</div>
+        <div>
+          <div class="pkg-item-title">Pris-anchor</div>
+          <div class="pkg-item-desc">Hva er den verdt for kunden, både inkludert i AI-Partner og som standalone</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 MODULES -->
+<section class="section section-dark">
+  <span class="rule"></span>
+  <span class="eyebrow" style="display: inline-block; margin-bottom: 16px;">8 ProductPackages</span>
+  <h2 class="sec-h" style="color: var(--off-white);">Modul-biblioteket vi <em>bygger</em></h2>
+  <p class="sec-dek">Etter hver er bygget v1: tilpasningstid for klient B er bare 4–10 timer i stedet for 40–80. Bygg-rekkefølge anbefalt: 1 → 8.</p>
+
+  <div class="modules-grid">
+    <div class="module-card">
+      <div class="module-num">01</div>
+      <div class="module-name">Onboarding-automasjon</div>
+      <div class="module-purpose">Onboarder nye kunder/ansatte med færre manuelle steg.</div>
+      <span class="module-time">6 t tilpasning</span>
+    </div>
+    <div class="module-card">
+      <div class="module-num">02</div>
+      <div class="module-name">Møte-til-CRM</div>
+      <div class="module-purpose">Møter → notater → CRM → action items, automatisk.</div>
+      <span class="module-time">5 t tilpasning</span>
+    </div>
+    <div class="module-card">
+      <div class="module-num">03</div>
+      <div class="module-name">Rapport-automasjon</div>
+      <div class="module-purpose">Ukentlige/månedlige ledelsesrapporter generert.</div>
+      <span class="module-time">4–6 t tilpasning</span>
+    </div>
+    <div class="module-card">
+      <div class="module-num">04</div>
+      <div class="module-name">Support-assistent</div>
+      <div class="module-purpose">Klassifiserer + foreslår svar på supporthenvendelser.</div>
+      <span class="module-time">6–8 t tilpasning</span>
+    </div>
+    <div class="module-card">
+      <div class="module-num">05</div>
+      <div class="module-name">Salgs-assistent</div>
+      <div class="module-purpose">Møte-forberedelse, oppsummering, CRM-oppdatering.</div>
+      <span class="module-time">8–10 t tilpasning</span>
+    </div>
+    <div class="module-card">
+      <div class="module-num">06</div>
+      <div class="module-name">Intern kunnskaps-assistent</div>
+      <div class="module-purpose">Svar fra intern dokumentasjon og SOP-er.</div>
+      <span class="module-time">8 t tilpasning</span>
+    </div>
+    <div class="module-card">
+      <div class="module-num">07</div>
+      <div class="module-name">Tilbuds-assistent</div>
+      <div class="module-purpose">Tilbudsutkast og prosjektbeskrivelser fra mal.</div>
+      <span class="module-time">6 t tilpasning</span>
+    </div>
+    <div class="module-card">
+      <div class="module-num">08</div>
+      <div class="module-name">Dokumentbehandling</div>
+      <div class="module-purpose">Ekstrahering/oppsummering fra PDF-er, kontrakter, søknader.</div>
+      <span class="module-time">8 t tilpasning</span>
+    </div>
+  </div>
+</section>
+
+<!-- AUTOMATION SURFACE -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Automasjons-flate</span>
+  <h2 class="sec-h">Hva som <em>allerede</em> kjører — og hva som er neste</h2>
+  <p class="sec-dek">Hver automasjon = timer Ivar/Ole ikke trenger bruke på admin. Det er kapasitet til en ekstra klient.</p>
+
+  <div class="auto-table">
+    <div class="auto-row header">
+      <span>Hva</span>
+      <span>Status</span>
+      <span>Tids-besparelse</span>
+    </div>
+    <div class="auto-row">
+      <span class="auto-name">Lead-skjema → Attio + auto-svar</span>
+      <span class="auto-status">✓ LIVE</span>
+      <span class="auto-savings">15 min/lead</span>
+    </div>
+    <div class="auto-row">
+      <span class="auto-name">Pre-assessment → Attio + AI-preso</span>
+      <span class="auto-status">✓ LIVE</span>
+      <span class="auto-savings">~2 t/preso</span>
+    </div>
+    <div class="auto-row">
+      <span class="auto-name">Partner-onboarding INIT</span>
+      <span class="auto-status pending">CREDS</span>
+      <span class="auto-savings">45 min/onboarding</span>
+    </div>
+    <div class="auto-row">
+      <span class="auto-name">Partner-onboarding SUBMIT</span>
+      <span class="auto-status pending">CREDS</span>
+      <span class="auto-savings">60 min/onboarding</span>
+    </div>
+    <div class="auto-row" style="background: rgba(196,122,74,0.08);">
+      <span class="auto-name" style="color: var(--copper); font-weight: 600;">→ Månedlig ROI-rapport per klient</span>
+      <span class="auto-status pending">NESTE</span>
+      <span class="auto-savings">20 t/mnd ved 5 klienter</span>
+    </div>
+    <div class="auto-row" style="background: rgba(196,122,74,0.08);">
+      <span class="auto-name" style="color: var(--copper); font-weight: 600;">→ Faktura-generering Fiken</span>
+      <span class="auto-status pending">NESTE</span>
+      <span class="auto-savings">2.5 t/mnd ved 5 klienter</span>
+    </div>
+    <div class="auto-row" style="background: rgba(196,122,74,0.08);">
+      <span class="auto-name" style="color: var(--copper); font-weight: 600;">→ Risiko-varsler (klient stille i 7 dager)</span>
+      <span class="auto-status pending">NESTE</span>
+      <span class="auto-savings">Forhindrer frafall</span>
+    </div>
+    <div class="auto-row" style="background: rgba(196,122,74,0.08);">
+      <span class="auto-name" style="color: var(--copper); font-weight: 600;">→ Kontraktsfornyelse-varsler</span>
+      <span class="auto-status pending">NESTE</span>
+      <span class="auto-savings">Ingen tap pga glemt</span>
+    </div>
+  </div>
+</section>
+
+<!-- CADENCE -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Daglig / ukentlig / månedlig rytme</span>
+  <h2 class="sec-h"><em>Cadence</em> som hindrer kaos</h2>
+  <p class="sec-dek">Hver tidsramme har én tydelig hensikt. Hvis vi følger rytmen, oppdager vi problemer før de blir kriser.</p>
+
+  <div class="cadence">
+    <div class="cad-card sticky">
+      <div class="cad-when">Daglig — 15 min</div>
+      <div class="cad-title">Standup</div>
+      <ul class="cad-list">
+        <li>Hva gjorde du i går?</li>
+        <li>Hva gjør du i dag?</li>
+        <li>Blokkere?</li>
+      </ul>
+    </div>
+    <div class="cad-card">
+      <div class="cad-when">Mandag — 90 min</div>
+      <div class="cad-title">Strategimøte</div>
+      <ul class="cad-list">
+        <li>Status alle aktive klienter</li>
+        <li>Ukens prioritet per klient</li>
+        <li>Bottleneck-identifikasjon</li>
+      </ul>
+    </div>
+    <div class="cad-card">
+      <div class="cad-when">Fredag — 30 min</div>
+      <div class="cad-title">Reflective close</div>
+      <ul class="cad-list">
+        <li>Hva ble bygget?</li>
+        <li>Hva ble lært?</li>
+        <li>Hva trenger ekstra fokus neste uke?</li>
+      </ul>
+    </div>
+    <div class="cad-card">
+      <div class="cad-when">Månedlig — 4 t</div>
+      <div class="cad-title">Klient-strategi</div>
+      <ul class="cad-list">
+        <li>ROI-dashbord per klient</li>
+        <li>Strategimøte med hver klient</li>
+        <li>Faktura sendes ut</li>
+      </ul>
+    </div>
+    <div class="cad-card">
+      <div class="cad-when">Kvartalsvis — 1 dag</div>
+      <div class="cad-title">Forretnings-audit</div>
+      <ul class="cad-list">
+        <li>Pris-audit (skal vi heve?)</li>
+        <li>Kapasitet-review</li>
+        <li>Modul-bibliotek-audit</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HIRING -->
+<section class="section section-dark">
+  <span class="rule"></span>
+  <span class="eyebrow" style="display: inline-block; margin-bottom: 16px;">Hiring-roadmap</span>
+  <h2 class="sec-h" style="color: var(--off-white);">Trigger-basert <em>ansettelse</em></h2>
+  <p class="sec-dek">Hver milepæl utløses av MRR + stress-signaler, ikke datoer. Vi skal aldri vente til vi er utbrent.</p>
+
+  <div class="hiring">
+    <div class="hire-item">
+      <div class="hire-mrr">100–150K MRR</div>
+      <div class="hire-title">Første kontraktør</div>
+      <div class="hire-desc">Implementeringskontraktør (deltid, frilans). Pakker ut ProductPackage-templates til nye klienter etter SOP.</div>
+      <span class="hire-cost">~4 500 kr/mnd · 30 timer</span>
+    </div>
+    <div class="hire-item">
+      <div class="hire-mrr">150–300K MRR</div>
+      <div class="hire-title">Fast deltids-spesialist</div>
+      <div class="hire-desc">Tar ansvar for 3–5 klienters drift-oppgaver alene. Vedlikeholder og forbedrer eksisterende løsninger.</div>
+      <span class="hire-cost">~25 000 kr/mnd · 50% stilling</span>
+    </div>
+    <div class="hire-item">
+      <div class="hire-mrr">300–500K MRR</div>
+      <div class="hire-title">Full-time implementer</div>
+      <div class="hire-desc">Frigjør Ivar og Ole til rene salgs- og strategi-roller. Dette er momentet vi går fra «konsulent-praksis» til «selskap».</div>
+      <span class="hire-cost">~50 000 kr/mnd</span>
+    </div>
+    <div class="hire-item">
+      <div class="hire-mrr">500–700K MRR</div>
+      <div class="hire-title">Project / Delivery Manager</div>
+      <div class="hire-desc">Tar ansvar for klientkommunikasjon og prosjekt-koordinering. Lar implementatorene fokusere på bygging.</div>
+      <span class="hire-cost">~55 000 kr/mnd</span>
+    </div>
+    <div class="hire-item">
+      <div class="hire-mrr">800K+ MRR</div>
+      <div class="hire-title">Customer Success</div>
+      <div class="hire-desc">Retention og expansion. Månedlige verdi-reviews. Upsell-deteksjon.</div>
+      <span class="hire-cost">~50 000 kr/mnd</span>
+    </div>
+  </div>
+</section>
+
+<!-- STRESS SIGNALS -->
+<section class="section section-dark">
+  <span class="rule"></span>
+  <span class="eyebrow" style="display: inline-block; margin-bottom: 16px;">Stress-deteksjon</span>
+  <h2 class="sec-h" style="color: var(--off-white);">Når vi er <em>over kapasitet</em></h2>
+  <p class="sec-dek">Hvis 2 eller flere av disse er sanne, er det tid for en kontraktør (eller pause på sales).</p>
+
+  <div class="signals">
+    <div class="signal">
+      <div class="signal-box"></div>
+      <span>En eller flere klienter har «Backlog»-tasks som er > 14 dager gamle</span>
+    </div>
+    <div class="signal">
+      <div class="signal-box"></div>
+      <span>Vi svarer på Slack > 4 timer i snitt (mål: ≤ 2 timer)</span>
+    </div>
+    <div class="signal">
+      <div class="signal-box"></div>
+      <span>Vi avlyser eller flytter strategimøter > 1 gang per måned</span>
+    </div>
+    <div class="signal">
+      <div class="signal-box"></div>
+      <span>Vi bruker > 4 t/uke på admin (regnskap, faktura, mailrydding)</span>
+    </div>
+    <div class="signal">
+      <div class="signal-box"></div>
+      <span>En av gründerne jobber > 45 t/uke i 2 uker rad</span>
+    </div>
+  </div>
+
+  <p class="kicker-line">«Aldri la skaleringen påvirke individets opplevelse. Hver kunde skal føle at de er den eneste.»</p>
+</section>
+
+<!-- KORT-VERSJON 5 GREP -->
+<section class="section">
+  <span class="rule"></span>
+  <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Sammendrag</span>
+  <h2 class="sec-h">5 <em>hovedgrep</em> for å skalere</h2>
+
+  <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+    <div style="background: var(--bone-2); border-radius: 14px; padding: 22px; border-left: 3px solid var(--teal);">
+      <div style="font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 600; color: var(--teal); margin-bottom: 8px;">01</div>
+      <div style="font-weight: 600; font-size: 16px; color: var(--slate); margin-bottom: 6px;">Bygg modul-biblioteket fra dag 1</div>
+      <div style="font-size: 13px; color: var(--slate-muted); line-height: 1.5;">Hver leveranse → SOP + n8n-template + klient-dokumentasjon</div>
+    </div>
+    <div style="background: var(--bone-2); border-radius: 14px; padding: 22px; border-left: 3px solid var(--teal);">
+      <div style="font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 600; color: var(--teal); margin-bottom: 8px;">02</div>
+      <div style="font-weight: 600; font-size: 16px; color: var(--slate); margin-bottom: 6px;">Time-budsjetter på mandag</div>
+      <div style="font-size: 13px; color: var(--slate-muted); line-height: 1.5;">Aldri start uka uten å vite hver klients prioritet</div>
+    </div>
+    <div style="background: var(--bone-2); border-radius: 14px; padding: 22px; border-left: 3px solid var(--teal);">
+      <div style="font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 600; color: var(--teal); margin-bottom: 8px;">03</div>
+      <div style="font-weight: 600; font-size: 16px; color: var(--slate); margin-bottom: 6px;">Hire kontraktør ved 100–150k MRR</div>
+      <div style="font-size: 13px; color: var(--slate-muted); line-height: 1.5;">Ikke vent til dere er utbrent</div>
+    </div>
+    <div style="background: var(--bone-2); border-radius: 14px; padding: 22px; border-left: 3px solid var(--teal);">
+      <div style="font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 600; color: var(--teal); margin-bottom: 8px;">04</div>
+      <div style="font-weight: 600; font-size: 16px; color: var(--slate); margin-bottom: 6px;">Daglig 15-min standup</div>
+      <div style="font-size: 13px; color: var(--slate-muted); line-height: 1.5;">Holder dere ærlige om kapasitet og bottleneck</div>
+    </div>
+    <div style="background: var(--copper); border-radius: 14px; padding: 22px; color: white;">
+      <div style="font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 600; margin-bottom: 8px;">05</div>
+      <div style="font-weight: 600; font-size: 16px; margin-bottom: 6px;">«Kunden er den eneste»</div>
+      <div style="font-size: 13px; line-height: 1.5; opacity: 0.9;">Aldri la skaleringen merke individet</div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section class="section">
+  <div class="outcome">
+    <div class="outcome-inner">
+      <span class="eyebrow" style="color: var(--teal); display: inline-block; margin-bottom: 16px;">Slutten av år 1</span>
+      <h3>8 aktive AI-Partnere. <em>350–400k MRR.</em> 1 deltids-spesialist + 1 kontraktør. Begge gründere på 35–40 t/uke — ikke 60+.</h3>
+      <div class="outcome-stats">
+        <div class="outcome-stat"><span class="v">8</span><span class="l">Partnere</span></div>
+        <div class="outcome-stat"><span class="v">375k</span><span class="l">MRR</span></div>
+        <div class="outcome-stat"><span class="v">8</span><span class="l">ProductPackages</span></div>
+        <div class="outcome-stat"><span class="v">2</span><span class="l">Ansatte</span></div>
+        <div class="outcome-stat"><span class="v">37 t</span><span class="l">/uke per gründer</span></div>
+      </div>
+      <p style="margin-top: 32px; font-size: 16px; color: rgba(242,236,225,0.7); line-height: 1.55; max-width: 640px;">
+        År 2-mål: 1M+ MRR med 3 fast ansatte. Fra konsulent-praksis til skalerbart selskap.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="brand">Agentik</div>
+  <div class="meta">Skaleringsstrategi · 18-måneders plan</div>
+</footer>
+
+</body>
+</html>
