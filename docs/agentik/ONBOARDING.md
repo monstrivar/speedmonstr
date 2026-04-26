@@ -442,7 +442,7 @@ Resultat: V2 onboarding tar ~15 minutter aktiv tid for Ivar/Ole. Resten skjer i 
 - Hver av de 14 trinene i workflow-en utløper grønt
 - Ingen manuelle hopp i kjeden (V2-mål)
 - Kickoff-møte avholdes innen 5 virkedager
-- AI-Revisjon ferdig innen 14 dager etter signert kontrakt
+- AI-Revisjon ferdig innen 21 dager etter signert kontrakt (minst 2 uker, opp til 3)
 - Første verdi-tall i dashbord innen 30 dager
 
 ---

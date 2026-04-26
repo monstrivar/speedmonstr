@@ -32,20 +32,20 @@ Alle priser eks. mva. Software- og API-kostnader (OpenAI, Slack, Supabase, etc.)
 
 ### Faseinndeling — 90-dagers Sprint
 
-**Uke 1–2: AI-Revisjon (kartlegging)**
+**Uke 1–3: AI-Revisjon (kartlegging — minst 2 uker)**
 - Kickoff med ledelsen
 - Intervjuer med 4–6 nøkkelpersoner
 - Prosess- og systemkartlegging
 - ROI-prioritering
 - Skriftlig revisjonsrapport + 90-dagers roadmap
 
-**Uke 3–6: Første implementering**
+**Uke 3–7: Første implementering**
 - Den høyest prioriterte AI-løsningen settes i drift
 - Testing med ansatte
 - Opplæring av teamet i bruk
 - ROI-dashbord settes opp
 
-**Uke 7–12: Optimalisering + roadmap låst**
+**Uke 7–13: Optimalisering + roadmap låst**
 - Forbedring basert på faktisk bruk
 - 90-dagers roadmap låses og kommer i drift
 - Verdimåling — verdipotensial dokumenteres

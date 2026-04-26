@@ -37,9 +37,9 @@ En månedlig partneravtale som gir bedriften en dedikert AI-rådgiver og dev-tea
 
 **Hva kunden får:**
 
-1. **Komplett AI-Revisjon** (uke 1–2) — kartlegging av hvor AI gir høyest ROI hos dem, prosesskart, prioritert roadmap.
-2. **Bygging av første løsning** (uke 3–6) — den høyest prioriterte AI-løsningen settes i drift.
-3. **Optimalisering + roadmap låst** (uke 7–12) — første løsning forbedres, 90-dagers plan kommer i drift.
+1. **Komplett AI-Revisjon** (uke 1–3, minst 2 uker) — kartlegging av hvor AI gir høyest ROI hos dem, prosesskart, prioritert roadmap.
+2. **Bygging av første løsning** (uke 3–7) — den høyest prioriterte AI-løsningen settes i drift.
+3. **Optimalisering + roadmap låst** (uke 7–13) — første løsning forbedres, 90-dagers plan kommer i drift.
 4. **Løpende partnerskap** (måned 4+) — vi prioriterer, bygger og forbedrer kontinuerlig.
 
 **Inkludert hver måned:**

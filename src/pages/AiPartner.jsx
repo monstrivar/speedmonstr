@@ -56,9 +56,9 @@ const FAQ_ITEMS = [
 const PHASES = [
   {
     step: '01',
-    phase: 'Uke 1–2',
+    phase: 'Uke 1–3',
     title: 'AI-Revisjon',
-    desc: 'Vi kartlegger hvor AI gir høyest ROI hos dere. Intervjuer ledelse og nøkkelpersoner, prosesskartlegging, ROI-prioritering.',
+    desc: 'Vi kartlegger hvor AI gir høyest ROI hos dere. Tar minst 2 uker — vi gjør den ordentlig, ikke raskt. Intervjuer ledelse og nøkkelpersoner, prosesskartlegging, ROI-prioritering.',
     cta: { text: 'Les mer om AI-Revisjon', to: '/ai-revisjon' },
   },
   {
@@ -69,7 +69,7 @@ const PHASES = [
   },
   {
     step: '03',
-    phase: 'Uke 7–12',
+    phase: 'Uke 6–12',
     title: 'Optimalisering + roadmap låst',
     desc: 'Første løsning forbedres basert på faktisk bruk. 90-dagers roadmap låst, og dere bestemmer om vi fortsetter.',
   },

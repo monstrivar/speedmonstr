@@ -27,7 +27,7 @@ AI-Partner er Agentiks hovedprodukt. Workshop er det eneste sidetilbudet. Tidlig
 
 ## Hva som er inkludert i AI-Partner
 
-1. **Komplett AI-Revisjon** — strukturert kartlegging av hvor AI gir høyest ROI. Skjer i de første 1–2 ukene. Egen detaljert dokumentasjon på `/ai-revisjon`.
+1. **Komplett AI-Revisjon** — strukturert kartlegging av hvor AI gir høyest ROI. Tar minst 2 uker — vi gjør den ordentlig, ikke raskt. Egen detaljert dokumentasjon på `/ai-revisjon`.
 
 2. **Eget ROI-dashbord** — live oversikt over hva som er bygget, status og målbar effekt. Settes opp automatisk ved oppstart.
 
@@ -67,7 +67,7 @@ Definisjon av "dokumentert verdipotensial" og målbare kriterier skrives inn i o
 
 ## Faseinndeling — 90-dagers Sprint
 
-### Fase 1 (Uke 1–2): AI-Revisjon
+### Fase 1 (Uke 1–3, minst 2 uker): AI-Revisjon
 
 - Kickoff med ledelsen
 - Intervjuer med 4–6 nøkkelpersoner
@@ -77,7 +77,7 @@ Definisjon av "dokumentert verdipotensial" og målbare kriterier skrives inn i o
 
 **Leveranse:** revisjonsrapport, prosesskart, prioritert roadmap.
 
-### Fase 2 (Uke 3–6): Første implementering
+### Fase 2 (Uke 3–7): Første implementering
 
 - Bygging av høyest prioriterte AI-løsning
 - Testing med ansatte
@@ -86,7 +86,7 @@ Definisjon av "dokumentert verdipotensial" og målbare kriterier skrives inn i o
 
 **Leveranse:** første AI-løsning i drift, dashbord aktivt.
 
-### Fase 3 (Uke 7–12): Optimalisering + roadmap låst
+### Fase 3 (Uke 7–13): Optimalisering + roadmap låst
 
 - Forbedring av første løsning basert på faktisk bruk
 - 90-dagers roadmap låses og kommer i drift

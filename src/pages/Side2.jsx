@@ -529,7 +529,7 @@ const SprintPhases = () => {
     {
       n: '01',
       tag: 'Kartlegg',
-      window: 'Uke 1–2',
+      window: 'Uke 1–3',
       headline: 'Vi forstår bedriften før vi bygger.',
       bullets: [
         'Intervjuer med 4–6 nøkkelpersoner',
@@ -540,7 +540,7 @@ const SprintPhases = () => {
     {
       n: '02',
       tag: 'Prioriter',
-      window: 'Uke 2–3',
+      window: 'Uke 3–4',
       headline: 'Vi finner hvor AI gir høyest verdi.',
       bullets: [
         'ROI-prioritering av tiltak',
@@ -551,7 +551,7 @@ const SprintPhases = () => {
     {
       n: '03',
       tag: 'Bygg',
-      window: 'Uke 3–9',
+      window: 'Uke 4–10',
       headline: 'Vi setter AI i drift, ikke i demo.',
       bullets: [
         'Implementering av prioriterte løsninger',
@@ -562,7 +562,7 @@ const SprintPhases = () => {
     {
       n: '04',
       tag: 'Forbedre',
-      window: 'Uke 9–13',
+      window: 'Uke 10–13',
       headline: 'Vi måler, justerer og dokumenterer verdien.',
       bullets: [
         'Optimalisering basert på faktisk bruk',
@@ -1673,7 +1673,7 @@ const ContactForm = () => {
 // ─────────────────────────────────────────────────────────────
 const Side2Pricing = () => {
   const includes = [
-    { title: 'Komplett AI-Revisjon', desc: 'Strukturert kartlegging av hvor AI gir høyest ROI. Skjer i de første 1–2 ukene.' },
+    { title: 'Komplett AI-Revisjon', desc: 'Strukturert kartlegging av hvor AI gir høyest ROI. Tar minst 2 uker — vi gjør den ordentlig, ikke raskt.' },
     { title: 'Eget ROI-dashbord', desc: 'Live oversikt over hva som er bygget og målbar effekt. Settes opp automatisk ved oppstart.', featured: true },
     { title: 'Månedlig strategimøte', desc: 'Gjennomgang av forrige måneds leveranser, prioritering av neste.' },
     { title: 'Bygging og vedlikehold', desc: 'AI-løsninger bygges, drives og forbedres innenfor månedlig kapasitet.' },
