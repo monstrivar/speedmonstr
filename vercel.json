@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/aiarendal", "destination": "/aiarendal.html" },
+    { "source": "/system", "destination": "/system.html" },
     { "source": "/personvern", "destination": "/index.html" },
     { "source": "/vilkar", "destination": "/index.html" },
     { "source": "/ai-revisjon", "destination": "/index.html" },
@@ -10,6 +11,38 @@
     { "source": "/takk", "destination": "/index.html" },
     { "source": "/preso/:id", "destination": "/index.html" },
     { "source": "/onboarding/:token", "destination": "/index.html" },
-    { "source": "/partner/:slug", "destination": "/index.html" }
+    { "source": "/partner/:slug", "destination": "/index.html" },
+    { "source": "/login", "destination": "/index.html" },
+    { "source": "/post-login", "destination": "/index.html" },
+    { "source": "/sett-passord", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/admin/partner/:slug", "destination": "/index.html" },
+    { "source": "/admin/ny-partner", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=()" }
+      ]
+    },
+    {
+      "source": "/(partner|admin|sett-passord|post-login)(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "private, no-store, no-cache, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Cache-Control", "value": "private, no-store, no-cache, must-revalidate" }
+      ]
+    }
   ]
 }

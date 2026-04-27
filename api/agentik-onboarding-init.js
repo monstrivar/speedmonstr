@@ -3,10 +3,8 @@
 // AI-Partner has said yes. Creates a Supabase onboarding record + forwards
 // to N8N which provisions Notion klient-side and sends onboarding-email.
 
-import { createClient } from '@supabase/supabase-js';
+import { getSupabase } from './_lib/auth.js';
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const N8N_ONBOARDING_INIT_WEBHOOK_URL = process.env.N8N_ONBOARDING_INIT_WEBHOOK_URL;
 const ONBOARDING_INIT_SECRET = process.env.ONBOARDING_INIT_SECRET;
 
@@ -21,8 +19,10 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.error('Supabase env vars missing');
+  let supabase;
+  try {
+    supabase = getSupabase();
+  } catch {
     return res.status(500).json({ error: 'Server misconfigured.' });
   }
 
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    // supabase already initialized above
 
     const { data, error } = await supabase
       .from('onboardings')

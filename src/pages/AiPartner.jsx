@@ -12,12 +12,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 const FAQ_ITEMS = [
   {
-    q: 'Skal dere spare oss 240 000 kr på 90 dager?',
-    a: 'Ikke nødvendigvis realisert cash på 90 dager. Det vi garanterer er at vi innen 90 dager skal ha implementert tiltak med dokumentert årlig verdipotensial tilsvarende minst 2x investeringen. Det kan være spart tid, frigjort kapasitet, raskere oppfølging, færre manuelle steg eller færre feil. Målet er at AI-arbeidet skal gi økonomisk mening — ikke bare bli en kul demo.',
+    q: 'Skal dere spare oss 234 000 kr på 90 dager?',
+    a: 'Ikke nødvendigvis realisert cash på 90 dager. Det vi garanterer er at vi innen 90 dager skal ha implementert tiltak med dokumentert årlig verdipotensial tilsvarende minst 2× investeringen. Det kan være spart tid, frigjort kapasitet, raskere oppfølging, færre manuelle steg eller færre feil. Målet er at AI-arbeidet skal gi økonomisk mening — ikke bare bli en kul demo.',
   },
   {
     q: 'Hvordan beregner dere verdien?',
-    a: 'Vi lager en value baseline i starten. Da ser vi på hvor mye tid som brukes på konkrete prosesser i dag, hvem som gjør jobben, hvor ofte det skjer, intern timekost og hva som kan forbedres. Eksempel: Hvis vi frigjør 6 timer i uka hos ansatte med intern kost på 800 kr/time, er det 6 × 800 × 52 = 249 600 kr i årlig verdipotensial.',
+    a: 'Vi lager en verdi-baseline i starten. Da ser vi på hvor mye tid som brukes på konkrete prosesser i dag, hvem som gjør jobben, hvor ofte det skjer, intern timekost og hva som kan forbedres. Eksempel: Hvis vi frigjør 6 timer i uka hos ansatte med intern kost på 750 kr/time, er det 6 × 750 × 52 = 234 000 kr i årlig verdipotensial.',
   },
   {
     q: 'Hva skjer hvis dere ikke klarer garantien?',
@@ -49,7 +49,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Hva om vi vil oppskalere?',
-    a: 'Da snakker vi om en større pakke (f.eks. flere parallelle prosjekter, dedikerte ressurser). Founding-prisen kan økes med agreement, eller dere går over til en bedriftspakke.',
+    a: 'Da snakker vi om en større pakke (f.eks. flere parallelle prosjekter, dedikerte ressurser). Founding-prisen kan justeres etter avtale, eller dere går over til en bedriftspakke.',
   },
 ];
 
@@ -222,9 +222,9 @@ const AiPartner = () => {
     <div ref={rootRef} className="min-h-screen bg-[#F5F2EC]">
       <Helmet>
         <title>AI-Partner — fast AI-rådgiver for norske bedrifter | Agentik</title>
-        <meta name="description" content="AI-Partner: fast månedlig avtale med AI-rådgiver og dev-team. 39 000 kr/mnd, ingen binding etter 90 dager. 90-dagers verdigaranti — minst 2x investeringen i årlig verdipotensial." />
+        <meta name="description" content="AI-Partner: fast månedlig avtale med AI-rådgiver og dev-team. 39 000 kr/mnd, ingen binding etter 90 dager. 90-dagers verdigaranti — minst 2× investeringen i årlig verdipotensial." />
         <meta property="og:title" content="AI-Partner | Agentik" />
-        <meta property="og:description" content="Fra AI-nysgjerrighet til AI i drift. 90-dagers verdigaranti — minst 2x investeringen i årlig verdipotensial." />
+        <meta property="og:description" content="Fra AI-nysgjerrighet til AI i drift. 90-dagers verdigaranti — minst 2× investeringen i årlig verdipotensial." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://agentik.no/ai-partner" />
         <link rel="canonical" href="https://agentik.no/ai-partner" />
@@ -234,7 +234,7 @@ const AiPartner = () => {
           name: 'AI-Partner',
           provider: { '@type': 'Organization', name: 'Agentik', url: 'https://agentik.no' },
           serviceType: 'AI Consulting Retainer',
-          description: 'Fast månedlig avtale med AI-rådgiver og dev-team. Kartlegging, bygging og forbedring av AI-løsninger. 90-dagers verdigaranti — minst 2x investeringen i årlig verdipotensial.',
+          description: 'Fast månedlig avtale med AI-rådgiver og dev-team. Kartlegging, bygging og forbedring av AI-løsninger. 90-dagers verdigaranti — minst 2× investeringen i årlig verdipotensial.',
           areaServed: { '@type': 'Country', name: 'Norway' },
           offers: {
             '@type': 'Offer',
@@ -300,7 +300,7 @@ const AiPartner = () => {
             <div>
               <div className="font-data text-[10px] text-[#1A1F25]/50 uppercase tracking-[0.15em] mb-2">Garanti</div>
               <div className="font-heading font-semibold text-[#1A1F25] text-lg">
-                2x verdipotensial på 90 dager
+                2× verdipotensial på 90 dager
               </div>
             </div>
           </div>
@@ -456,7 +456,7 @@ const AiPartner = () => {
 
               <div className="space-y-4 text-[#F5F2EC]/85 text-lg leading-relaxed mb-8 max-w-2xl">
                 <p>
-                  Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI- og automasjonstiltak med dokumentert årlig verdipotensial tilsvarende minst 2x investeringen deres i perioden.
+                  Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI- og automasjonstiltak med dokumentert årlig verdipotensial tilsvarende minst 2× investeringen deres i perioden.
                 </p>
                 <p>
                   Hvis vi ikke klarer det, jobber vi videre uten månedlig honorar til verdien er dokumentert.
@@ -598,7 +598,7 @@ const AiPartner = () => {
               Når det ikke passer
             </div>
             <p className="font-sans text-[#1A1F25]/75 text-base md:text-lg leading-relaxed mb-4">
-              Hvis vi ikke ser realistisk 2x årlig verdi, sier vi det rett ut. Disse signalene tyder på at dere er bedre tjent med Workshop eller et mindre forprosjekt:
+              Hvis vi ikke ser realistisk 2× årlig verdi, sier vi det rett ut. Disse signalene tyder på at dere er bedre tjent med Workshop eller et mindre forprosjekt:
             </p>
             <ul className="grid md:grid-cols-2 gap-2 text-[#1A1F25]/70 text-[15px] leading-relaxed mb-5">
               {ROLES_NOT_FIT.map((item, i) => (
@@ -648,7 +648,7 @@ const AiPartner = () => {
             Ta en uforpliktende samtale.
           </h2>
           <p className="reveal font-sans text-[#1A1F25]/60 text-lg md:text-xl leading-relaxed mb-10 max-w-xl mx-auto">
-            Vi bruker første samtale på å se om det finnes 2x verdipotensial hos dere. Hvis ikke, sier vi det rett ut og foreslår et bedre alternativ.
+            Vi bruker første samtale på å se om det finnes 2× verdipotensial hos dere. Hvis ikke, sier vi det rett ut og foreslår et bedre alternativ.
           </p>
           <Link
             to="/#contact"

@@ -130,8 +130,15 @@ Full onboarding-strategi: `docs/agentik/ONBOARDING.md` + visualisering på `publ
 | `N8N_ONBOARDING_INIT_WEBHOOK_URL` | Mangler — settes når INIT-workflowen er klar |
 | `N8N_ONBOARDING_SUBMIT_WEBHOOK_URL` | Mangler — settes når SUBMIT-workflowen er klar |
 | `ONBOARDING_INIT_SECRET` | Mangler — random string for å beskytte init-endepunkt |
-| `SUPABASE_URL` | ✓ |
-| `SUPABASE_KEY` | ✓ |
+| `SUPABASE_URL` | ✓ (server-side) |
+| `SUPABASE_KEY` | ✓ (anon-key, server-side med RLS bypass via samme key som klient) |
+| `VITE_SUPABASE_URL` | ✓ (klient) |
+| `VITE_SUPABASE_ANON_KEY` | ✓ (anon, klient) |
+| `VITE_ADMIN_EMAILS` | Valgfri — for admin-UI på klient (samme verdi som `ADMIN_EMAILS`) |
+| `ADMIN_EMAILS` | ✓ — kommaseparert, default `ivar@agentik.no,ole@agentik.no` |
+| `ATTIO_API_KEY` | ✓ (for `/api/agentik-admin/attio-lookup`) |
+| `OPENAI_API_KEY` | ✓ (Slack `/partner` polish, assessment generering) |
+| `SLACK_SIGNING_SECRET` | Mangler — settes når Slack-app for `/partner`-kommandoen er registrert |
 
 ## Konvensjoner
 

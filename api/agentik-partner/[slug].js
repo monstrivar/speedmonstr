@@ -1,19 +1,15 @@
 // GET /api/agentik-partner/[slug]
 // Returns full partner data for the customer-facing dashboard.
-// Aggregates: partner record + tasks + people + meetings + projects + ROI.
+// Requires Supabase JWT in Authorization header. Authorization rules:
+//  - Admin emails (env ADMIN_EMAILS) → access to any partner
+//  - Otherwise: user.email must exist in partner_people for this partner
+// Uses _lib/auth.js as the single source of truth for ADMIN_EMAILS.
 
-import { createClient } from '@supabase/supabase-js';
-
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_KEY;
+import { verifyAuth, getSupabase } from '../_lib/auth.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    return res.status(500).json({ error: 'Server misconfigured' });
   }
 
   const { slug } = req.query;
@@ -21,9 +17,18 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'slug required' });
   }
 
+  let user;
   try {
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    user = await verifyAuth(req);
+  } catch (err) {
+    return res.status(err.status || 500).json({ error: err.message });
+  }
+  const { email, isAdmin } = user;
 
+  try {
+    const supabase = getSupabase();
+
+    // 2. Fetch partner record
     const { data: partner, error: pErr } = await supabase
       .from('partners')
       .select('*')
@@ -34,8 +39,24 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'Partner not found' });
     }
 
-    const partnerId = partner.id;
+    // 3. Authorization check — exact email match (NEVER use ilike: wildcards in stored emails bypass).
+    if (!isAdmin) {
+      // Pull candidate rows; final exact comparison happens in JS after lowercasing.
+      const escapedEmail = email.replace(/[%_]/g, '\\$&');
+      const { data: aclRows, error: aclErr } = await supabase
+        .from('partner_people')
+        .select('epost')
+        .eq('partner_id', partner.id)
+        .ilike('epost', escapedEmail);
+      if (aclErr) throw aclErr;
+      const matched = (aclRows || []).some((r) => (r.epost || '').toLowerCase() === email);
+      if (!matched) {
+        return res.status(403).json({ error: 'Du har ikke tilgang til dette arbeidsrommet' });
+      }
+    }
 
+    // 4. Aggregate
+    const partnerId = partner.id;
     const [tasksRes, peopleRes, meetingsRes, projectsRes, roiRes, activityRes] = await Promise.all([
       supabase.from('partner_tasks').select('*').eq('partner_id', partnerId).order('updated_at', { ascending: false }),
       supabase.from('partner_people').select('*').eq('partner_id', partnerId).order('created_at', { ascending: true }),
@@ -44,6 +65,22 @@ export default async function handler(req, res) {
       supabase.from('partner_roi').select('*').eq('partner_id', partnerId).order('metric_dato', { ascending: false }),
       supabase.from('partner_activity').select('*').eq('partner_id', partnerId).order('happened_at', { ascending: false }).limit(20),
     ]);
+
+    // Track that this user just opened the dashboard.
+    // Skip for admins so the count reflects only customer engagement, not us spot-checking.
+    if (!isAdmin) {
+      try {
+        await supabase
+          .from('partners')
+          .update({
+            last_seen_at: new Date().toISOString(),
+            last_seen_email: email,
+          })
+          .eq('id', partner.id);
+      } catch (e) {
+        console.warn('last_seen update failed (non-fatal):', e.message);
+      }
+    }
 
     return res.status(200).json({
       partner,

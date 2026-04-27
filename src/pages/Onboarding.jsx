@@ -494,9 +494,38 @@ export default function Onboarding() {
   const [answers, setAnswers] = useState({ nokkelpersoner: [{ navn: '', rolle: '', epost: '', telefon: '', omrade: '', inviterSlack: true, bookIntro: true }] });
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [savedFlash, setSavedFlash] = useState(false);
   const stepRef = useRef(null);
 
   const step = STEPS[stepIdx];
+
+  // Auto-save answers to localStorage so user can resume if they close the tab
+  const storageKey = `agentik:onboarding:${token}`;
+  useEffect(() => {
+    if (loading) return;
+    try {
+      const cached = window.localStorage.getItem(storageKey);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed?.answers) setAnswers((prev) => ({ ...prev, ...parsed.answers }));
+        if (typeof parsed?.stepIdx === 'number' && parsed.stepIdx > 0 && parsed.stepIdx < STEPS.length - 1) {
+          setStepIdx(parsed.stepIdx);
+        }
+      }
+    } catch { /* ignore */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
+
+  useEffect(() => {
+    if (loading || stepIdx === 0 || stepIdx >= STEPS.length - 1) return;
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify({ answers, stepIdx, savedAt: new Date().toISOString() }));
+      setSavedFlash(true);
+      const t = setTimeout(() => setSavedFlash(false), 1200);
+      return () => clearTimeout(t);
+    } catch { /* quota exceeded, ignore */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answers, stepIdx]);
 
   // Load onboarding info
   useEffect(() => {
@@ -583,6 +612,7 @@ export default function Onboarding() {
           const errBody = await res.json().catch(() => ({}));
           throw new Error(errBody.error || 'Submit failed');
         }
+        try { window.localStorage.removeItem(storageKey); } catch { /* ignore */ }
         setStepIdx(stepIdx + 1);
       } catch (err) {
         setSubmitError(err.message);
@@ -646,6 +676,20 @@ export default function Onboarding() {
 
               <p className="font-agentik text-[#1A1F25]/65 text-base md:text-lg leading-relaxed mb-8 max-w-xl">{step.sub}</p>
 
+              {meta?.loom_video_url && (
+                <div className="mb-10 rounded-2xl overflow-hidden bg-[#1A1F25]/5 ring-1 ring-[#1A1F25]/10 aspect-video max-w-2xl">
+                  <iframe
+                    src={meta.loom_video_url.includes('/embed/')
+                      ? meta.loom_video_url
+                      : meta.loom_video_url.replace('/share/', '/embed/')}
+                    className="w-full h-full"
+                    title="Velkomst-video fra Agentik"
+                    frameBorder="0"
+                    allowFullScreen
+                  />
+                </div>
+              )}
+
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => setStepIdx(1)}
@@ -656,6 +700,10 @@ export default function Onboarding() {
                 </button>
                 <span className="font-data text-[11px] uppercase tracking-[0.18em] text-[#1A1F25]/40">Tar {step.duration}</span>
               </div>
+
+              <p className="font-agentik text-[12px] text-[#1A1F25]/35 mt-10 max-w-md">
+                Vi lagrer svarene dine automatisk underveis — du kan lukke fanen og fortsette senere fra samme lenke.
+              </p>
             </div>
           </main>
         </div>
@@ -717,9 +765,17 @@ export default function Onboarding() {
 
           <header className="px-6 pt-8 flex items-center justify-between">
             <a href="/" className="font-agentik font-semibold text-[#1A1F25] text-lg tracking-tight">Agentik</a>
-            <span className="font-data text-[10px] uppercase tracking-[0.22em] text-[#1A1F25]/40">
-              Steg {step.progress} av {TOTAL_PROGRESS_STEPS}
-            </span>
+            <div className="flex items-center gap-3">
+              <span
+                className={`font-agentik text-[11px] text-[#1A6B6D] transition-opacity duration-300 ${savedFlash ? 'opacity-100' : 'opacity-0'}`}
+                aria-live="polite"
+              >
+                ✓ Lagret
+              </span>
+              <span className="font-data text-[10px] uppercase tracking-[0.22em] text-[#1A1F25]/40">
+                Steg {step.progress} av {TOTAL_PROGRESS_STEPS}
+              </span>
+            </div>
           </header>
 
           <main className="flex-1 flex items-start justify-center px-6 py-12 md:py-16">

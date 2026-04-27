@@ -1,0 +1,1105 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Slik fungerer Agentik-plattformen</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0f151d;
+    --ink-2: #131a24;
+    --ink-3: #161e29;
+    --bone: #f2ece1;
+    --muted: #9aa4b2;
+    --teal: #4FC3B0;
+    --teal-deep: #1A6B6D;
+    --copper: #C4854C;
+    --copper-deep: #A66B36;
+    --green: #3cbf93;
+    --hairline: rgba(255, 255, 255, 0.04);
+    --hairline-2: rgba(255, 255, 255, 0.08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--bone);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { color: var(--bone); }
+  h1, h2, h3, h4 { letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+  p { margin: 0; color: var(--muted); }
+  .container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 760px; }
+  .eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--copper);
+    font-weight: 600;
+  }
+  .eyebrow.teal { color: var(--teal); }
+  .accent { color: var(--copper); }
+  .accent-teal { color: var(--teal); }
+  .accent-green { color: var(--green); }
+
+  /* Hero */
+  .hero {
+    padding: 96px 0 80px;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(800px 400px at 70% 0%, rgba(196, 133, 76, 0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 800;
+    color: var(--bone);
+    margin: 18px 0 24px;
+    max-width: 760px;
+  }
+  .hero .lede {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    max-width: 640px;
+    color: var(--muted);
+  }
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .hero-meta strong { color: var(--bone); font-weight: 600; }
+
+  /* Section */
+  section.bk { padding: 80px 0; border-bottom: 1px solid var(--hairline); }
+  section.bk h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--bone);
+    margin: 16px 0 20px;
+    max-width: 720px;
+  }
+  section.bk .section-lede {
+    max-width: 680px;
+    margin-bottom: 56px;
+  }
+
+  /* Step block (used in journey) */
+  .step {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 32px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  @media (min-width: 880px) {
+    .step { grid-template-columns: 220px 1fr; gap: 40px; }
+  }
+  .step .step-marker {
+    color: var(--copper);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .step h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--bone);
+    margin-bottom: 8px;
+  }
+  .step .step-body { max-width: 640px; }
+  .step .step-body p { margin-bottom: 14px; }
+  .step .step-meta { font-size: 12px; color: rgba(154, 164, 178, 0.6); margin-top: 16px; }
+
+  /* Mockup frames */
+  .mockup {
+    margin-top: 22px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--ink);
+    box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--hairline-2);
+  }
+  .mock-bar {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 8px 12px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .mock-bar i {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    display: inline-block;
+  }
+  .mock-bar .url {
+    margin-left: 14px;
+    font-size: 11px;
+    color: rgba(154, 164, 178, 0.65);
+    font-family: ui-monospace, monospace;
+  }
+
+  /* Generic UI primitives */
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .pill.teal { background: rgba(79,195,176,0.1); color: var(--teal); }
+  .pill.copper { background: rgba(196,133,76,0.1); color: var(--copper); }
+  .pill.green { background: rgba(60,191,147,0.1); color: var(--green); }
+  .pill.muted { background: rgba(154,164,178,0.1); color: var(--muted); }
+  .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  .card {
+    background: var(--ink-2);
+    border-radius: 14px;
+    padding: 18px;
+  }
+
+  /* Annotations */
+  .ann {
+    display: grid; grid-template-columns: 16px 1fr; gap: 10px;
+    font-size: 13px; color: var(--muted); padding: 10px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .ann::before {
+    content: '→'; color: var(--copper); font-weight: bold;
+  }
+  .ann strong { color: var(--bone); font-weight: 600; }
+
+  /* Architecture diagram */
+  .arch {
+    background: var(--ink-2);
+    border-radius: 16px;
+    padding: 30px;
+    overflow-x: auto;
+  }
+  .arch svg { width: 100%; height: auto; min-width: 720px; }
+
+  /* Status grid */
+  .status-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .status-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .status-card {
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid var(--hairline-2);
+  }
+  .status-card.done { background: rgba(60,191,147,0.06); border-color: rgba(60,191,147,0.2); }
+  .status-card.pending { background: rgba(196,133,76,0.06); border-color: rgba(196,133,76,0.2); }
+  .status-card .label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .status-card.done .label { color: var(--green); }
+  .status-card.pending .label { color: var(--copper); }
+  .status-card h4 { font-size: 15px; color: var(--bone); margin-bottom: 4px; }
+  .status-card p { font-size: 13px; }
+
+  /* Nav */
+  nav.toc {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(15, 21, 29, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  nav.toc .row {
+    display: flex;
+    gap: 4px;
+    padding: 10px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  nav.toc a {
+    color: var(--muted);
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  nav.toc a:hover { color: var(--bone); background: var(--hairline-2); }
+
+  /* Sub-mockups inside step */
+  .mini-dash {
+    background: var(--ink-2);
+    padding: 22px;
+  }
+  .mini-tab-bar {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+  }
+  .mini-tab {
+    padding: 6px 10px;
+    font-size: 11px;
+    color: var(--muted);
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  .mini-tab.active { color: var(--teal); background: rgba(79,195,176,0.1); }
+
+  .row-2 { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .row-2 { grid-template-columns: 1fr 1fr; } }
+
+  /* Kanban miniature */
+  .kanban-mini {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .kanban-col {
+    background: rgba(255,255,255,0.02);
+    border-radius: 8px;
+    padding: 8px;
+    min-height: 80px;
+  }
+  .kanban-col-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .kanban-col-label .d { width: 5px; height: 5px; border-radius: 50%; }
+  .kanban-card {
+    background: var(--ink-3);
+    border-radius: 5px;
+    padding: 5px 7px;
+    margin-bottom: 4px;
+    font-size: 10px;
+    color: var(--bone);
+  }
+  .kanban-card .v {
+    font-size: 9px;
+    color: var(--teal);
+    margin-top: 2px;
+  }
+
+  /* Activity bubble */
+  .activity-item {
+    display: flex; gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+    margin-bottom: 6px;
+  }
+  .activity-icon {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+  }
+  .activity-icon.teal { background: rgba(79,195,176,0.15); color: var(--teal); }
+  .activity-icon.copper { background: rgba(196,133,76,0.15); color: var(--copper); }
+  .activity-text {
+    font-size: 12px;
+    color: var(--bone);
+  }
+  .activity-time {
+    font-size: 10px;
+    color: rgba(154,164,178,0.6);
+    margin-top: 2px;
+  }
+
+  /* Inline code */
+  code {
+    font-family: ui-monospace, 'SFMono-Regular', monospace;
+    font-size: 0.88em;
+    color: var(--teal);
+    background: rgba(79,195,176,0.08);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 60px 0 80px;
+    text-align: center;
+    color: rgba(154,164,178,0.45);
+    font-size: 12px;
+  }
+  footer .who { color: var(--muted); margin-bottom: 8px; }
+
+  /* Auth flow steps */
+  .flow {
+    display: grid; grid-template-columns: 1fr; gap: 12px;
+  }
+  @media (min-width: 760px) { .flow { grid-template-columns: repeat(4, 1fr); } }
+  .flow-step {
+    background: var(--ink-2);
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid var(--hairline);
+  }
+  .flow-step .num {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--copper);
+    margin-bottom: 6px;
+  }
+  .flow-step h5 { font-size: 13px; color: var(--bone); margin: 0 0 4px; font-weight: 600; }
+  .flow-step p { font-size: 12px; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<nav class="toc">
+  <div class="container">
+    <div class="row">
+      <a href="#vision">Visjon</a>
+      <a href="#journey">Kunde-reise</a>
+      <a href="#admin">Admin-panel</a>
+      <a href="#dashboard">Kunde-dashboard</a>
+      <a href="#slack">Slack</a>
+      <a href="#arch">Arkitektur</a>
+      <a href="#security">Sikkerhet</a>
+      <a href="#status">Status</a>
+      <a href="#next">Hva som kommer</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <p class="eyebrow">Internt notat · Ivar &amp; Ole · {{dato}}</p>
+    <h1>Slik fungerer Agentik-plattformen.</h1>
+    <p class="lede">
+      Fra første samtale til kontinuerlig partnerskap, samlet i ett verktøy som gjør at vi gjør jobben — ikke administrasjonen.
+      Dette dokumentet viser deg hvordan hele systemet henger sammen, hva som er bygd, og hvordan vi opererer det daglig.
+    </p>
+    <div class="hero-meta">
+      <div><strong>Bruk:</strong> Lese top-to-bottom · 10–12 minutter</div>
+      <div><strong>Målgruppe:</strong> Oss to + nye team-medlemmer</div>
+      <div><strong>Live:</strong> agentik.no/admin</div>
+    </div>
+  </div>
+</header>
+
+<!-- ─────────────────────────────────────────────────────────── VISJON ─── -->
+<section class="bk" id="vision">
+  <div class="container narrow">
+    <p class="eyebrow teal">I én setning</p>
+    <h2>Vi selger AI-kompetanse som en månedlig partner — og plattformen gir kunden en levende dashbord-følelse av at det skjer noe hver eneste uke.</h2>
+    <p>
+      Plattformen har to brukere: oss (admin-panelet) og kunden (deres eget arbeidsrom). Alt hva vi gjør for kunden — bygger AI-løsninger, måler ROI,
+      booker møter, krysser av oppgaver — vises automatisk i deres dashbord. Det føles for kunden som om de er på innsiden av et eget AI-team.
+      Det er det vi selger.
+    </p>
+    <div style="margin-top: 32px; display: grid; gap: 14px; grid-template-columns: 1fr;" class="row-2">
+      <div class="card">
+        <p class="eyebrow" style="margin-bottom: 8px;">Vårt verktøy</p>
+        <h4 style="color: var(--bone); font-size: 17px; margin-bottom: 6px;">/admin</h4>
+        <p style="font-size: 13px;">Onboarder nye, oppdaterer status, logger leveranser, ser hvem som er aktive. Erstatter Notion + SQL-spørringer.</p>
+      </div>
+      <div class="card">
+        <p class="eyebrow teal" style="margin-bottom: 8px;">Kundens opplevelse</p>
+        <h4 style="color: var(--bone); font-size: 17px; margin-bottom: 6px;">/partner/[deres-slug]</h4>
+        <p style="font-size: 13px;">Sprint-progresjon, AI-løsninger i pipeline, dokumentert ROI, kontakt til oss på Slack. Premium B2B-følelse.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── KUNDE-REISE ─── -->
+<section class="bk" id="journey">
+  <div class="container">
+    <p class="eyebrow">Slik flyter det</p>
+    <h2>Fra første "hei" til levende dashbord — kunde-reisen i seks steg.</h2>
+    <p class="section-lede">Hvert steg er bygd. Vi velger selv hvor automatisk hver overgang skal være; alt nedenfor fungerer i dag, eller venter på en énkelt-konfigurasjons-handling fra oss.</p>
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-marker">01 · Lead</div>
+      <div class="step-body">
+        <h3>Lead på agentik.no</h3>
+        <p>Bedrift ser /side2 eller /ai-partner, fyller ut kontaktskjemaet. Backend forwarder til n8n, som lager Attio-person, sender autosvar-mail, varsler oss i Slack.</p>
+        <p class="step-meta">Endpoint: <code>/api/agentik-contact</code> · n8n: <code>AI Form Lead Handler</code> · Live</p>
+        <div class="mockup">
+          <div class="mock-bar"><i></i><i></i><i></i><span class="url">agentik.no/side2</span></div>
+          <div style="padding: 24px; background: #f4ede0; color: #1A1F25;">
+            <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #C4854C; margin: 0 0 6px;">Få en strategi-sesjon</p>
+            <h4 style="font-size: 19px; color: #1A1F25; margin: 0 0 10px;">Hva slags AI-rådgiver leter dere etter?</h4>
+            <div style="background: white; border-radius: 8px; padding: 10px; margin-bottom: 8px; border: 1px solid rgba(0,0,0,0.06); font-size: 12px;">Fornavn · Anne</div>
+            <div style="background: white; border-radius: 8px; padding: 10px; margin-bottom: 8px; border: 1px solid rgba(0,0,0,0.06); font-size: 12px;">Bedrift · Demo Bedrift AS</div>
+            <div style="background: white; border-radius: 8px; padding: 10px; margin-bottom: 12px; border: 1px solid rgba(0,0,0,0.06); font-size: 12px;">E-post · anne@demo.no</div>
+            <div style="display: inline-block; padding: 8px 18px; background: #C4854C; color: white; border-radius: 999px; font-size: 12px; font-weight: 600;">Send →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-marker">02 · Pre-assessment</div>
+      <div class="step-body">
+        <h3>Pre-assessment + AI-generert presentasjon</h3>
+        <p>Etter form-submit redirectes lead-en til /takk, fyller ut 12 spørsmål om bedriften. Backend forwarder til n8n som scraper nettsiden via Firecrawl og bruker Claude Opus til å generere en skreddersydd 10-slide HTML-presentasjon på <code>/preso/[uuid]</code>. Vi får Slack-varsel med lenke.</p>
+        <p class="step-meta">Endpoint: <code>/api/agentik-assessment</code> · Live</p>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-marker">03 · Salgsmøte → "ja"</div>
+      <div class="step-body">
+        <h3>Vi onboarder via /admin/ny-partner</h3>
+        <p>Etter "ja" går vi til admin-panelet, limer inn daglig leders e-post. Backend slår opp i Attio og fyller inn det vi har. Du bekrefter, klikker "Opprett onboarding", og får en lenke å sende kunden — knappen åpner mailen forhåndsutfylt.</p>
+        <div class="mockup">
+          <div class="mock-bar"><i></i><i></i><i></i><span class="url">agentik.no/admin/ny-partner</span></div>
+          <div style="padding: 26px;">
+            <p class="eyebrow" style="margin-bottom: 6px;">Admin</p>
+            <h4 style="color: var(--bone); font-size: 24px; margin-bottom: 22px;">Onboard ny partner</h4>
+            <p style="font-size: 13px; margin-bottom: 18px;">Lim inn e-postadressen til daglig leder. Vi slår opp i Attio og fyller inn det vi har.</p>
+            <div style="display: flex; gap: 8px; align-items: center; background: var(--ink-2); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px;">
+              <span style="color: var(--muted);">🔍</span>
+              <span style="font-size: 14px; color: var(--bone);">anne@demo.no</span>
+            </div>
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+              <span style="font-size: 12px; color: var(--muted); padding: 8px 14px;">Hopp over oppslag</span>
+              <span style="background: linear-gradient(135deg, var(--copper), var(--copper-deep)); color: white; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;">Slå opp i Attio →</span>
+            </div>
+          </div>
+        </div>
+        <p class="step-meta">Endpoint: <code>/api/agentik-admin/onboarding</code> + <code>/api/agentik-admin/attio-lookup</code> · Live</p>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-marker">04 · Intake</div>
+      <div class="step-body">
+        <h3>Kunden fyller ut intake</h3>
+        <p>Klikker lenken vi sendte, lander på /onboarding/[token]. 9 steg, ~6 minutter. Auto-lagrer i localStorage så de kan lukke fanen og fortsette senere. Når de klikker "Fullfør" skjer flere ting samtidig:</p>
+        <ul style="list-style: none; padding: 0; margin: 16px 0;">
+          <li class="ann"><span><strong>Supabase:</strong> partner-rad opprettes med alt fra intake — slug auto-generert fra bedriftsnavn (Norwegian-aware: <code>Bø Kommune</code> → <code>bo-kommune</code>)</span></li>
+          <li class="ann"><span><strong>Nøkkelpersoner:</strong> hver person blir en <code>partner_people</code>-rad. Daglig leder legges automatisk til hvis ikke allerede der (så de kan logge inn)</span></li>
+          <li class="ann"><span><strong>Initielle oppgaver:</strong> 9–10 setup-tasks opprettes — gave, kickoff, Slack-invitasjon, Fiken-faktura, AI-Revisjon-stegene</span></li>
+          <li class="ann"><span><strong>Første aktivitet:</strong> "Onboarding-skjema fullført — Sprint starter" pinnes som første milepæl i kundens feed</span></li>
+          <li class="ann"><span><strong>n8n parallelt:</strong> Notion klient-side oppdateres med logo/farger, bekreftelses-mail sendes, Slack varsles</span></li>
+        </ul>
+        <p class="step-meta">Endpoint: <code>POST /api/agentik-onboarding/[token]</code> · Live</p>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step">
+      <div class="step-marker">05 · Innlogging</div>
+      <div class="step-body">
+        <h3>Kunde logger inn første gang</h3>
+        <p>Vi sender dem URL-en til <code>/partner/[slug]</code>. De prøver å logge inn med passord, men har ikke satt et — fallback-knapp "Bruk innloggingslenke i stedet" sender en magic-link. Klikker, lander på dashboardet, prompt om å sette passord. Ferdig.</p>
+        <div class="flow" style="margin-top: 16px;">
+          <div class="flow-step"><div class="num">1</div><h5>/login</h5><p>Skriv e-post, klikk "Bruk innloggingslenke".</p></div>
+          <div class="flow-step"><div class="num">2</div><h5>E-post</h5><p>Magic-link kommer på sekunder. Klikk.</p></div>
+          <div class="flow-step"><div class="num">3</div><h5>/sett-passord</h5><p>Sett passord (8+ tegn). Eller hopp over.</p></div>
+          <div class="flow-step"><div class="num">4</div><h5>/partner/[slug]</h5><p>Inne i arbeidsrommet. Neste gang: bare e-post + passord.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="step">
+      <div class="step-marker">06 · Sprint kjører</div>
+      <div class="step-body">
+        <h3>Vi logger leveranser, kunden ser det skje</h3>
+        <p>Hver gang vi gjør noe i admin — markerer en oppgave ferdig, flytter en AI-løsning til "live", logger ROI — vises det i kundens feed. Aktive milepæler auto-logges; vanlige oppdateringer logges manuelt fra admin eller fra Slack via <code>/partner [slug] [melding]</code>.</p>
+        <p class="step-meta">Sprint = 13 uker, fire faser (Kartlegg → Prioriter → Bygg → Forbedre). Detaljer i sidebar i kundens dashbord.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── ADMIN ─── -->
+<section class="bk" id="admin">
+  <div class="container">
+    <p class="eyebrow">Verktøyet vi bruker daglig</p>
+    <h2>/admin — alt vi trenger på ett sted, så vi slipper å hoppe mellom Notion, SQL og e-post.</h2>
+    <p class="section-lede">Bygd som en CRM, ikke en presentasjon. Du redigerer på stedet, ser tall i sanntid, og hver endring oppdaterer kundens dashbord automatisk.</p>
+
+    <!-- Admin landing mockup -->
+    <div class="mockup">
+      <div class="mock-bar"><i></i><i></i><i></i><span class="url">agentik.no/admin</span></div>
+      <div style="padding: 26px;">
+        <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 22px;">
+          <div>
+            <p class="eyebrow" style="margin-bottom: 6px;">Agentik · Admin</p>
+            <h4 style="color: var(--bone); font-size: 22px;">Partner-arbeidsrom</h4>
+          </div>
+          <span style="font-size: 12px; color: var(--muted);">ivar@monstr.no</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 18px;">
+          <div class="card" style="padding: 12px;"><p class="eyebrow muted" style="font-size: 10px; color: rgba(154,164,178,0.7); margin-bottom: 4px;">Totalt</p><p style="font-size: 20px; font-weight: 700; color: var(--bone);">3</p></div>
+          <div class="card" style="padding: 12px;"><p class="eyebrow" style="font-size: 10px; margin-bottom: 4px;">Onboarding</p><p style="font-size: 20px; font-weight: 700; color: var(--copper);">1</p></div>
+          <div class="card" style="padding: 12px;"><p class="eyebrow teal" style="font-size: 10px; margin-bottom: 4px;">Sprint</p><p style="font-size: 20px; font-weight: 700; color: var(--teal);">1</p></div>
+          <div class="card" style="padding: 12px;"><p style="font-size: 10px; color: var(--green); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 4px;">Drift</p><p style="font-size: 20px; font-weight: 700; color: var(--green);">1</p></div>
+          <div class="card" style="padding: 12px;"><p class="eyebrow muted" style="font-size: 10px; color: rgba(154,164,178,0.7); margin-bottom: 4px;">Pause</p><p style="font-size: 20px; font-weight: 700; color: var(--muted);">0</p></div>
+        </div>
+        <div style="display: flex; gap: 10px; margin-bottom: 14px;">
+          <input style="flex: 1; background: var(--ink-2); border: 0; padding: 8px 12px; border-radius: 8px; color: var(--bone); font-size: 13px;" placeholder="Søk bedrift, slug eller person…" />
+          <span style="background: linear-gradient(135deg, var(--copper), var(--copper-deep)); color: white; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;">+ Onboard ny partner</span>
+        </div>
+        <!-- table -->
+        <div style="background: rgba(19,26,36,0.4); border-radius: 12px;">
+          <div style="display: grid; grid-template-columns: 4fr 2fr 1fr 2fr 2fr 1fr; gap: 16px; padding: 10px 18px; border-bottom: 1px solid var(--hairline); font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(154,164,178,0.6);">
+            <div>Bedrift</div><div>Status</div><div style="text-align: center;">Sprint</div><div style="text-align: right;">ROI/år</div><div style="text-align: right;">Sist innom</div><div style="text-align: right;">Tasks</div>
+          </div>
+          <div style="display: grid; grid-template-columns: 4fr 2fr 1fr 2fr 2fr 1fr; gap: 16px; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.03); align-items: center;">
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <div style="width: 32px; height: 32px; background: var(--teal-deep); border-radius: 7px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px;">D</div>
+              <div><div style="color: var(--bone); font-weight: 600; font-size: 13px;">Demo Bedrift AS</div><div style="color: rgba(154,164,178,0.6); font-size: 10px;">/demo · Anne Hansen</div></div>
+            </div>
+            <div><span class="pill teal"><span class="dot"></span>Sprint</span></div>
+            <div style="text-align: center; color: var(--muted); font-size: 11px;">23/91</div>
+            <div style="text-align: right; color: var(--teal); font-size: 12px; font-weight: 600;">468 000 kr</div>
+            <div style="text-align: right; color: var(--muted); font-size: 11px;">4t siden</div>
+            <div style="text-align: right; color: var(--muted); font-size: 11px;">7<span style="color: rgba(154,164,178,0.4);">/3</span></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 4fr 2fr 1fr 2fr 2fr 1fr; gap: 16px; padding: 14px 18px; align-items: center;">
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <div style="width: 32px; height: 32px; background: #1f3a4a; border-radius: 7px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px;">T</div>
+              <div><div style="color: var(--bone); font-weight: 600; font-size: 13px;">Test AS</div><div style="color: rgba(154,164,178,0.6); font-size: 10px;">/test · Per Hansen</div></div>
+            </div>
+            <div><span class="pill copper"><span class="dot"></span>Onboarding</span></div>
+            <div style="text-align: center; color: var(--muted); font-size: 11px;">3/91</div>
+            <div style="text-align: right; color: rgba(154,164,178,0.4); font-size: 12px;">—</div>
+            <div style="text-align: right; color: rgba(154,164,178,0.4); font-size: 11px;">Aldri</div>
+            <div style="text-align: right; color: var(--muted); font-size: 11px;">9<span style="color: rgba(154,164,178,0.4);">/0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul style="list-style: none; padding: 0; margin: 28px 0 0;">
+      <li class="ann"><span><strong>Klikk på en rad</strong> → /admin/partner/[slug] med 7 tabs: Oversikt, Pipeline, Oppgaver, Team, Møter, Aktivitet, Verdi</span></li>
+      <li class="ann"><span><strong>"Sist innom"</strong> viser når kunden sist åpnet sitt dashbord — admin-besøk teller ikke, så tallet reflekterer ekte engasjement</span></li>
+      <li class="ann"><span><strong>"+ Onboard ny partner"</strong> går til /admin/ny-partner-flowen vi så over</span></li>
+      <li class="ann"><span><strong>Søk</strong> filtrerer bedrift, slug eller daglig leder-navn</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── ADMIN PARTNER DETAIL ─── -->
+<section class="bk">
+  <div class="container">
+    <p class="eyebrow">Inne i en partner</p>
+    <h2>Hver tab er en arbeidsmodus.</h2>
+    <p class="section-lede">Du redigerer alt fra denne ene siden. Ingen SQL, ingen Notion. Endring her = oppdatert kunde-dashbord på sekunder.</p>
+
+    <div class="mockup">
+      <div class="mock-bar"><i></i><i></i><i></i><span class="url">agentik.no/admin/partner/demo</span></div>
+      <div style="padding: 22px 26px 0;">
+        <p style="font-size: 11px; color: var(--muted); margin-bottom: 6px;">← Alle partnere</p>
+        <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px;">
+          <div style="width: 44px; height: 44px; background: var(--teal-deep); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px;">D</div>
+          <div>
+            <p class="eyebrow" style="margin-bottom: 4px;">Admin</p>
+            <h4 style="color: var(--bone); font-size: 22px;">Demo Bedrift AS</h4>
+            <p style="color: rgba(154,164,178,0.7); font-size: 11px; margin-top: 3px;">/demo · Sprint</p>
+          </div>
+        </div>
+        <div class="mini-tab-bar" style="margin-bottom: 0;">
+          <span class="mini-tab">Oversikt</span>
+          <span class="mini-tab active">Pipeline</span>
+          <span class="mini-tab">Oppgaver</span>
+          <span class="mini-tab">Team</span>
+          <span class="mini-tab">Møter</span>
+          <span class="mini-tab">Aktivitet</span>
+          <span class="mini-tab">Verdi</span>
+        </div>
+      </div>
+      <div style="padding: 22px 26px 26px;">
+        <div style="background: linear-gradient(135deg, rgba(196,133,76,0.16), rgba(166,107,54,0.16)); color: white; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;">+ Ny AI-løsning</div>
+        <div style="display: grid; gap: 10px;">
+          <div style="background: var(--ink-3); border-radius: 10px; padding: 14px;">
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 6px;">
+              <span style="color: var(--bone); font-weight: 600; font-size: 14px;">AI-tilbudsberegning fra bilder</span>
+              <span style="font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal);">bygges</span>
+              <span style="font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper);">høy</span>
+            </div>
+            <p style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">Estimere timer + materialkost fra bilder kunden sender via SMS.</p>
+            <div style="display: flex; gap: 12px; font-size: 11px; color: rgba(154,164,178,0.7);">
+              <span style="color: var(--teal);">180 000 kr/år</span>
+              <span>· Ivar</span>
+              <span>· frist 14. mai</span>
+            </div>
+          </div>
+          <div style="background: var(--ink-3); border-radius: 10px; padding: 14px;">
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 6px;">
+              <span style="color: var(--bone); font-weight: 600; font-size: 14px;">CRM-integrasjon med fakturasystem</span>
+              <span style="font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper);">planlagt</span>
+            </div>
+            <p style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">Auto-trigge faktura når avtale er signert.</p>
+            <div style="display: flex; gap: 12px; font-size: 11px; color: rgba(154,164,178,0.7);">
+              <span style="color: var(--teal);">80 000 kr/år</span>
+              <span>· Ivar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul style="list-style: none; padding: 0; margin: 26px 0 0;">
+      <li class="ann"><span><strong>Hover på en rad</strong> → blyant + søppelbøtte vises. Klikk blyant → raden blir til redigerbart skjema</span></li>
+      <li class="ann"><span><strong>Endrer status til "Bygges"</strong> → auto-logger "Bygging startet: AI-tilbudsberegning" som milepæl-aktivitet i kundens feed</span></li>
+      <li class="ann"><span><strong>Endrer status til "Live"</strong> → auto-logger "AI-tilbudsberegning er live · Forventet årlig verdi: 180 000 kr"</span></li>
+      <li class="ann"><span><strong>"Vis kunde-side"</strong>-knapp i toppen åpner deres dashbord i ny fane så du ser eksakt det de ser</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── KUNDE-DASHBORD ─── -->
+<section class="bk" id="dashboard">
+  <div class="container">
+    <p class="eyebrow">Det kunden ser</p>
+    <h2>Kundens egen Agentik-side. Et premium-arbeidsrom som føles levende.</h2>
+    <p class="section-lede">Sidebar med 5 tabs på desktop, bunn-nav på mobil. Time-aware greeting. Aktivitet-feed med "siden-sist-besøk"-badge. Sprint-progress synlig hele tiden. Kort sagt: ikke en rapport — et verktøy de besøker.</p>
+
+    <!-- Customer dashboard mockup -->
+    <div class="mockup">
+      <div class="mock-bar"><i></i><i></i><i></i><span class="url">agentik.no/partner/demo</span></div>
+      <div style="display: grid; grid-template-columns: 220px 1fr;">
+        <!-- Sidebar -->
+        <aside style="background: #0a1018; padding: 22px 16px;">
+          <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 22px;">
+            <div style="width: 36px; height: 36px; background: var(--teal-deep); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">D</div>
+            <div><p style="font-size: 9px; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase;">Klient-arbeidsrom</p><p style="font-size: 13px; color: var(--bone); font-weight: 600;">Demo Bedrift</p></div>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 10px; margin-bottom: 18px;">
+            <p style="font-size: 9px; color: rgba(154,164,178,0.7); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 6px;">90-dagers Sprint</p>
+            <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; margin-bottom: 8px;">
+              <div style="height: 100%; width: 25%; background: linear-gradient(90deg, var(--teal), var(--copper)); border-radius: 4px;"></div>
+            </div>
+            <p style="font-size: 10px; color: var(--muted);">Fase: <span style="color: var(--copper); font-weight: 600;">Bygg</span> · Dag 23/91</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; font-size: 12px;">
+            <span style="padding: 7px 10px; border-radius: 6px; color: var(--muted);">📋 Pipeline</span>
+            <span style="padding: 7px 10px; border-radius: 6px; background: rgba(79,195,176,0.1); color: var(--teal); display: flex; align-items: center; justify-content: space-between;">⚡ Aktivitet <span style="background: var(--copper); color: white; font-size: 9px; padding: 2px 6px; border-radius: 999px; font-weight: 700;">3</span></span>
+            <span style="padding: 7px 10px; border-radius: 6px; color: var(--muted);">📅 Møter</span>
+            <span style="padding: 7px 10px; border-radius: 6px; color: var(--muted);">📈 Verdi</span>
+            <span style="padding: 7px 10px; border-radius: 6px; color: var(--muted);">👥 Team</span>
+          </div>
+        </aside>
+
+        <!-- Main -->
+        <main style="padding: 24px;">
+          <p class="eyebrow teal" style="margin-bottom: 4px;">Aktivitet</p>
+          <h4 style="color: var(--bone); font-size: 22px; margin-bottom: 4px;">God ettermiddag, <span class="accent">Anne</span></h4>
+          <p style="font-size: 12px; color: var(--muted); margin-bottom: 22px;"><span style="color: var(--copper); font-weight: 600;">3</span> oppdateringer siden sist du var her</p>
+
+          <!-- Pinned -->
+          <div style="background: linear-gradient(135deg, rgba(196,133,76,0.12), transparent); border: 1px solid rgba(196,133,76,0.25); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; display: flex; gap: 12px;">
+            <div class="activity-icon copper">🚩</div>
+            <div style="flex: 1;">
+              <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px; flex-wrap: wrap;">
+                <span style="font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--copper);">📌 Festet</span>
+                <span style="color: var(--bone); font-size: 13px; font-weight: 600;">Onboarding-skjema fullført — Sprint starter</span>
+              </div>
+              <p style="font-size: 11px; color: var(--muted);">8 nøkkelpersoner registrert. Vi setter opp Slack, kickoff og første intervjuer.</p>
+              <p style="font-size: 10px; color: rgba(154,164,178,0.6); margin-top: 4px;">23 dager siden · Agentik</p>
+            </div>
+          </div>
+
+          <!-- Recent -->
+          <div style="background: rgba(22,30,41,0.8); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; display: flex; gap: 12px;">
+            <div class="activity-icon copper">📦</div>
+            <div style="flex: 1;">
+              <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 2px;">
+                <span style="color: var(--bone); font-size: 13px; font-weight: 600;">AI-tilbudsberegning er live</span>
+              </div>
+              <p style="font-size: 11px; color: var(--muted);">Forventet årlig verdi: 180 000 kr.</p>
+              <p style="font-size: 10px; color: rgba(154,164,178,0.6); margin-top: 4px;">4 timer siden · Agentik</p>
+            </div>
+          </div>
+
+          <div style="background: rgba(19,26,36,0.6); border-radius: 14px; padding: 14px 16px; display: flex; gap: 12px;">
+            <div class="activity-icon teal">📅</div>
+            <div style="flex: 1;">
+              <span style="color: var(--bone); font-size: 13px; font-weight: 600;">Møte planlagt: Strategimøte mai</span>
+              <p style="font-size: 10px; color: rgba(154,164,178,0.6); margin-top: 4px;">i går · Ivar Knutsen</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <ul style="list-style: none; padding: 0; margin: 26px 0 36px;">
+      <li class="ann"><span><strong>Eldste aktivitet pinnes</strong> — den blir typisk "Onboarding fullført" eller "Kontrakt signert" — alltid synlig som forankring</span></li>
+      <li class="ann"><span><strong>"3 oppdateringer siden sist"</strong> — sammenligner mot localStorage-baseline, ny-besøkere ser ingen badge</span></li>
+      <li class="ann"><span><strong>Time-aware greeting</strong> — God morgen / dag / kveld / natt basert på lokal tid</span></li>
+      <li class="ann"><span><strong>Mobil:</strong> sidebar erstattes av bunn-nav, hovedinnholdet bruker hele skjermen</span></li>
+    </ul>
+
+    <!-- Verdi tab -->
+    <h3 style="font-size: 1.5rem; color: var(--bone); margin: 40px 0 12px;">Verdi-tab — fordi CEO-en vil verifisere, ikke bare stole</h3>
+    <p style="margin-bottom: 16px;">Her er det vi tar betalt for, vist transparent: hvor mye er investert, hvor mye er dokumentert, og hvordan vi regnet det ut.</p>
+
+    <div class="mockup">
+      <div class="mock-bar"><i></i><i></i><i></i><span class="url">agentik.no/partner/demo?tab=verdi</span></div>
+      <div style="padding: 24px;">
+        <!-- Guarantee banner -->
+        <div style="background: linear-gradient(135deg, rgba(60,191,147,0.15), rgba(26,107,109,0.08)); border: 1px solid rgba(60,191,147,0.25); border-radius: 14px; padding: 22px; margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <p style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green); font-weight: 600; margin-bottom: 6px;">90-dagers verdigaranti</p>
+              <h4 style="color: var(--bone); font-size: 22px;">På sporet for garantien</h4>
+            </div>
+            <div style="text-align: right;">
+              <p style="color: var(--green); font-size: 30px; font-weight: 800;">2.4x</p>
+              <p style="font-size: 10px; color: var(--muted);">av 2x mål</p>
+            </div>
+          </div>
+          <div style="height: 8px; background: rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; margin-bottom: 10px;">
+            <div style="height: 100%; width: 100%; background: linear-gradient(90deg, var(--teal), var(--green)); border-radius: 8px;"></div>
+          </div>
+          <p style="font-size: 12px; color: var(--muted);">Vi lover dokumentert årlig verdi tilsvarende minst 2x investeringen din innen 90 dager. Hvis ikke, jobber vi videre uten honorar til verdien er dokumentert.</p>
+        </div>
+
+        <!-- ROI cards -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px;">
+          <div class="card"><p class="eyebrow muted" style="font-size: 9px; color: rgba(154,164,178,0.7); margin-bottom: 8px;">Investert til nå</p><p style="font-size: 24px; font-weight: 800; color: var(--bone);">195 000<span style="font-size: 12px; color: rgba(154,164,178,0.6); margin-left: 4px;">kr</span></p><p style="font-size: 10px; color: rgba(154,164,178,0.6); margin-top: 4px;">5 mnd × 39 000 kr</p></div>
+          <div class="card" style="background: linear-gradient(135deg, rgba(196,133,76,0.12), transparent);"><p class="eyebrow" style="font-size: 9px; margin-bottom: 8px;">Dokumentert årlig verdi</p><p style="font-size: 24px; font-weight: 800; color: var(--copper);">468 000<span style="font-size: 12px; color: rgba(154,164,178,0.6); margin-left: 4px;">kr/år</span></p><p style="font-size: 10px; color: rgba(154,164,178,0.6); margin-top: 4px;">Sist målt 12. mai</p></div>
+          <div class="card" style="background: linear-gradient(135deg, rgba(60,191,147,0.15), transparent);"><p class="eyebrow" style="font-size: 9px; color: var(--green); margin-bottom: 8px;">ROI-ratio</p><p style="font-size: 24px; font-weight: 800; color: var(--green);">2.4x</p><p style="font-size: 10px; color: rgba(154,164,178,0.6); margin-top: 4px;">468k delt på 195k</p></div>
+        </div>
+
+        <!-- Math -->
+        <div class="card">
+          <p class="eyebrow teal" style="font-size: 9px; margin-bottom: 14px;">Slik regner vi</p>
+          <div style="display: grid; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; font-size: 12px;"><span style="color: var(--muted);">Spart timer/uke (sum av løsninger i drift)</span><span style="color: var(--bone); font-weight: 500;">16.6 t/uke</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px;"><span style="color: var(--muted);">Snitt timepris</span><span style="color: var(--bone); font-weight: 500;">600 kr/t</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px;"><span style="color: var(--muted);">Arbeidsuker per år</span><span style="color: var(--bone); font-weight: 500;">47 uker</span></div>
+            <div style="height: 1px; background: var(--hairline);"></div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: var(--bone); font-weight: 600;">Beregnet årlig verdi</span><span style="color: var(--teal); font-weight: 700;">468 000 kr/år</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── SLACK ─── -->
+<section class="bk" id="slack">
+  <div class="container narrow">
+    <p class="eyebrow">Når noe skjer mens du er i Slack</p>
+    <h2>/partner-kommandoen — én linje fra deg, polert melding hos kunden.</h2>
+    <p class="section-lede">Du logger oppdateringer der du allerede er. OpenAI gjør om uformell tekst til konsist norsk før det vises i kundens feed.</p>
+
+    <div style="background: #1a1d21; border-radius: 14px; padding: 20px; border: 1px solid rgba(255,255,255,0.05); margin-top: 24px;">
+      <div style="display: flex; gap: 10px; align-items: start;">
+        <div style="width: 30px; height: 30px; background: var(--copper); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px; flex-shrink: 0;">I</div>
+        <div style="flex: 1;">
+          <p style="font-size: 12px; color: var(--bone); font-weight: 600;">Ivar <span style="color: rgba(255,255,255,0.4); font-size: 10px; font-weight: 400;">14:32</span></p>
+          <p style="font-family: ui-monospace, monospace; font-size: 13px; color: var(--bone); background: rgba(255,255,255,0.04); padding: 6px 10px; border-radius: 6px; display: inline-block; margin-top: 4px;">/partner demo Workshop med ledergruppen i dag — fant 3 prosesser å automatisere før Q3</p>
+        </div>
+      </div>
+      <div style="height: 1px; background: rgba(255,255,255,0.06); margin: 14px 0;"></div>
+      <div style="display: flex; gap: 10px; align-items: start;">
+        <div style="width: 30px; height: 30px; background: linear-gradient(135deg, var(--teal-deep), var(--teal)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 11px; flex-shrink: 0;">A</div>
+        <div style="flex: 1;">
+          <p style="font-size: 12px; color: var(--bone); font-weight: 600;">Agentik App <span style="color: rgba(255,255,255,0.4); font-size: 10px; font-weight: 400;">14:32</span></p>
+          <p style="font-size: 13px; color: var(--bone); margin-top: 4px;">✨ <strong>Demo Bedrift</strong> — lagt til i feeden</p>
+          <div style="border-left: 3px solid var(--teal); padding: 8px 12px; margin-top: 6px; background: rgba(255,255,255,0.02); border-radius: 0 6px 6px 0;">
+            <p style="font-size: 12px; color: var(--bone); font-weight: 600;">Workshop med ledergruppen avdekket tre automatiseringskandidater</p>
+            <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Tre prosesser ble identifisert som klare for AI-automatisering før Q3.</p>
+            <p style="font-size: 10px; color: rgba(154,164,178,0.5); margin-top: 6px;">agentik.no/partner/demo · av Ivar</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: 24px; font-size: 13px; color: var(--muted);">
+      Endepunktet HMAC-verifiserer Slack-signaturen, polerer via OpenAI med 2.2s timeout (Slack retrier etter 3s),
+      og inserter inn som <code>partner_activity</code>-rad. Krever <code>SLACK_SIGNING_SECRET</code> env-variabel og en Slack-app-konfigurasjon
+      som du gjør én gang.
+    </p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── ARCH ─── -->
+<section class="bk" id="arch">
+  <div class="container">
+    <p class="eyebrow">Bak kulissene</p>
+    <h2>Arkitekturen er enkel med vilje. Få bevegelige deler, ingen mystiske mellommenn.</h2>
+
+    <div class="arch" style="margin-top: 32px;">
+      <svg viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 Z" fill="#9aa4b2" />
+          </marker>
+          <linearGradient id="copperGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#C4854C" />
+            <stop offset="100%" stop-color="#A66B36" />
+          </linearGradient>
+          <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#4FC3B0" />
+            <stop offset="100%" stop-color="#1A6B6D" />
+          </linearGradient>
+        </defs>
+
+        <!-- Customer Browser -->
+        <rect x="20" y="20" width="160" height="60" rx="10" fill="#131a24" stroke="rgba(255,255,255,0.1)" />
+        <text x="100" y="42" text-anchor="middle" fill="#9aa4b2" font-size="10" font-weight="600" letter-spacing="2" font-family="Plus Jakarta Sans">KUNDE</text>
+        <text x="100" y="62" text-anchor="middle" fill="#f2ece1" font-size="13" font-weight="600" font-family="Plus Jakarta Sans">/partner/[slug]</text>
+
+        <!-- Admin Browser -->
+        <rect x="20" y="100" width="160" height="60" rx="10" fill="#131a24" stroke="rgba(255,255,255,0.1)" />
+        <text x="100" y="122" text-anchor="middle" fill="#C4854C" font-size="10" font-weight="600" letter-spacing="2" font-family="Plus Jakarta Sans">ADMIN</text>
+        <text x="100" y="142" text-anchor="middle" fill="#f2ece1" font-size="13" font-weight="600" font-family="Plus Jakarta Sans">/admin</text>
+
+        <!-- Slack -->
+        <rect x="20" y="180" width="160" height="60" rx="10" fill="#131a24" stroke="rgba(255,255,255,0.1)" />
+        <text x="100" y="202" text-anchor="middle" fill="#9aa4b2" font-size="10" font-weight="600" letter-spacing="2" font-family="Plus Jakarta Sans">SLACK</text>
+        <text x="100" y="222" text-anchor="middle" fill="#f2ece1" font-size="13" font-weight="600" font-family="Plus Jakarta Sans">/partner-kommando</text>
+
+        <!-- Magic-link email -->
+        <rect x="20" y="260" width="160" height="60" rx="10" fill="#131a24" stroke="rgba(255,255,255,0.1)" />
+        <text x="100" y="282" text-anchor="middle" fill="#9aa4b2" font-size="10" font-weight="600" letter-spacing="2" font-family="Plus Jakarta Sans">E-POST</text>
+        <text x="100" y="302" text-anchor="middle" fill="#f2ece1" font-size="13" font-weight="600" font-family="Plus Jakarta Sans">Magic links</text>
+
+        <!-- Vercel functions hub -->
+        <rect x="280" y="100" width="200" height="200" rx="14" fill="#0c1219" stroke="url(#tealGrad)" stroke-width="2" />
+        <text x="380" y="130" text-anchor="middle" fill="#4FC3B0" font-size="11" font-weight="700" letter-spacing="2" font-family="Plus Jakarta Sans">VERCEL FUNCTIONS</text>
+        <text x="380" y="156" text-anchor="middle" fill="#9aa4b2" font-size="10" font-family="Plus Jakarta Sans">JWT-verify · admin-gate</text>
+        <text x="380" y="170" text-anchor="middle" fill="#9aa4b2" font-size="10" font-family="Plus Jakarta Sans">input validation</text>
+        <line x1="300" y1="186" x2="460" y2="186" stroke="rgba(255,255,255,0.06)" />
+        <text x="380" y="208" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">/api/agentik-partner</text>
+        <text x="380" y="226" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">/api/agentik-admin/*</text>
+        <text x="380" y="244" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">/api/agentik-auth/me</text>
+        <text x="380" y="262" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">/api/agentik-onboarding</text>
+        <text x="380" y="280" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">/api/agentik-slack</text>
+
+        <!-- Supabase -->
+        <rect x="580" y="20" width="160" height="100" rx="10" fill="#131a24" stroke="url(#tealGrad)" stroke-width="1.5" />
+        <text x="660" y="42" text-anchor="middle" fill="#4FC3B0" font-size="10" font-weight="700" letter-spacing="2" font-family="Plus Jakarta Sans">SUPABASE</text>
+        <text x="660" y="60" text-anchor="middle" fill="#9aa4b2" font-size="10" font-family="Plus Jakarta Sans">Postgres + Auth</text>
+        <text x="660" y="84" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">partners, partner_*</text>
+        <text x="660" y="100" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">onboardings, presentations</text>
+
+        <!-- Attio -->
+        <rect x="580" y="140" width="160" height="60" rx="10" fill="#131a24" stroke="rgba(255,255,255,0.1)" />
+        <text x="660" y="162" text-anchor="middle" fill="#9aa4b2" font-size="10" font-weight="700" letter-spacing="2" font-family="Plus Jakarta Sans">ATTIO (CRM)</text>
+        <text x="660" y="182" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">person + company</text>
+
+        <!-- n8n -->
+        <rect x="580" y="220" width="160" height="60" rx="10" fill="#131a24" stroke="rgba(255,255,255,0.1)" />
+        <text x="660" y="242" text-anchor="middle" fill="#9aa4b2" font-size="10" font-weight="700" letter-spacing="2" font-family="Plus Jakarta Sans">N8N</text>
+        <text x="660" y="262" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">Notion + autosvar</text>
+
+        <!-- OpenAI -->
+        <rect x="580" y="300" width="160" height="60" rx="10" fill="#131a24" stroke="rgba(255,255,255,0.1)" />
+        <text x="660" y="322" text-anchor="middle" fill="#9aa4b2" font-size="10" font-weight="700" letter-spacing="2" font-family="Plus Jakarta Sans">OPENAI</text>
+        <text x="660" y="342" text-anchor="middle" fill="#f2ece1" font-size="11" font-family="Plus Jakarta Sans">Slack-polish</text>
+
+        <!-- Arrows from clients to Vercel -->
+        <line x1="180" y1="50" x2="280" y2="170" stroke="#9aa4b2" stroke-width="1.5" marker-end="url(#arrow)" />
+        <line x1="180" y1="130" x2="280" y2="190" stroke="#9aa4b2" stroke-width="1.5" marker-end="url(#arrow)" />
+        <line x1="180" y1="210" x2="280" y2="220" stroke="#9aa4b2" stroke-width="1.5" marker-end="url(#arrow)" />
+        <line x1="180" y1="290" x2="280" y2="240" stroke="#9aa4b2" stroke-width="1.5" marker-end="url(#arrow)" />
+
+        <!-- Arrows from Vercel to backends -->
+        <line x1="480" y1="160" x2="580" y2="80" stroke="#4FC3B0" stroke-width="1.5" marker-end="url(#arrow)" />
+        <line x1="480" y1="200" x2="580" y2="170" stroke="#9aa4b2" stroke-width="1.5" marker-end="url(#arrow)" />
+        <line x1="480" y1="240" x2="580" y2="250" stroke="#9aa4b2" stroke-width="1.5" marker-end="url(#arrow)" />
+        <line x1="480" y1="280" x2="580" y2="330" stroke="#9aa4b2" stroke-width="1.5" marker-end="url(#arrow)" />
+
+        <!-- Bottom row label -->
+        <text x="380" y="360" text-anchor="middle" fill="#9aa4b2" font-size="11" font-family="Plus Jakarta Sans">All trafikk fra klient til DB går via Vercel-funksjoner.</text>
+        <text x="380" y="378" text-anchor="middle" fill="#9aa4b2" font-size="11" font-family="Plus Jakarta Sans">JWT-verifiseres ved porten. Service-role tilgang til Supabase låser ut alt annet.</text>
+      </svg>
+    </div>
+
+    <ul style="list-style: none; padding: 0; margin: 32px 0 0;">
+      <li class="ann"><span><strong>Supabase</strong> er sannhetskilden for partner-data. Alt vi viser i dashbord-er kommer derfra.</span></li>
+      <li class="ann"><span><strong>Attio</strong> er sannhetskilden for kundeforhold (sales pipeline, notater fra møter). Onboarding-flowen henter derfra som forhåndsutfylling.</span></li>
+      <li class="ann"><span><strong>n8n</strong> håndterer Notion-integrasjon, autosvar-mailer og Slack-varsler. Vi kan flytte mer fra n8n til Vercel-funksjoner over tid hvis det blir tyngre.</span></li>
+      <li class="ann"><span><strong>OpenAI</strong> brukes kun til Slack-kommandoens polering og lead-assessment-presentasjoner. Ikke noe sensitivt sendes utover det vi velger.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── SECURITY ─── -->
+<section class="bk" id="security">
+  <div class="container">
+    <p class="eyebrow">Hvordan vi holder kunde-data trygt</p>
+    <h2>Sikkerhet — defense in depth, ikke "vi håper det går bra".</h2>
+    <p class="section-lede">Hver kunde-data-spørring må passere flere lag før noe leveres. Hvis ett lag svikter, fanger neste det opp.</p>
+
+    <div class="row-2" style="margin-top: 32px;">
+      <div class="card">
+        <p class="eyebrow teal" style="margin-bottom: 10px;">Autentisering</p>
+        <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 8px;">Magic-link → passord</h4>
+        <p style="font-size: 13px;">Første gang via e-post. Etter det: passord. Sesjon persisteres i localStorage, scopet per bruker-ID så delte enheter aldri lekker mellom kontoer.</p>
+      </div>
+      <div class="card">
+        <p class="eyebrow" style="margin-bottom: 10px;">Autorisasjon</p>
+        <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 8px;">JWT + email-match</h4>
+        <p style="font-size: 13px;">Hvert API-kall verifiserer JWT, lukker e-post i lowercase, sjekker eksakt match (aldri ilike-glob) mot partner_people for slug-en de ber om.</p>
+      </div>
+      <div class="card">
+        <p class="eyebrow teal" style="margin-bottom: 10px;">Database</p>
+        <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 8px;">RLS + service-role</h4>
+        <p style="font-size: 13px;">RLS aktivert på alle tabeller. Server bruker service-role som bypasser RLS, men siden klient-koden aldri kaller DB direkte (alltid via /api), kommer ingen anon-tilgang ut.</p>
+      </div>
+      <div class="card">
+        <p class="eyebrow" style="margin-bottom: 10px;">Headers</p>
+        <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 8px;">HSTS, X-Frame, noindex</h4>
+        <p style="font-size: 13px;">/partner/* + /admin/* + /api/* settes til <code>noindex, nofollow</code>, ingen caching, X-Frame-Options SAMEORIGIN. HSTS på alt for HTTPS-tvang.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size: 1.4rem; color: var(--bone); margin: 40px 0 14px;">Møte-transkripter (når Fireflies kommer)</h3>
+    <p style="font-size: 14px;">Møter er det mest sensitive vi noensinne kommer til å lagre. Allerede planlagt å gjøre rett:</p>
+    <ul style="list-style: none; padding: 0; margin: 16px 0;">
+      <li class="ann"><span><strong>Egen tabell</strong> <code>partner_meeting_transcripts</code> med kun service-role tilgang. Aldri inkludert i default partner-respons.</span></li>
+      <li class="ann"><span><strong>Lazy-load</strong> kun når noen klikker på et spesifikt møte — egen endpoint som re-verifiserer JWT + ACL.</span></li>
+      <li class="ann"><span><strong>Audit-logging:</strong> hver gang noen leser full transkripsjon, opprettes en partner_activity-rad ("Ivar leste transkriptet for X-møtet").</span></li>
+      <li class="ann"><span><strong>Sammendrag fra Fireflies brukes</strong> — vi lagrer ikke selve lyden eller hele transkriptet med mindre vi har eksplisitt grunn.</span></li>
+    </ul>
+    <p style="font-size: 13px; color: rgba(154,164,178,0.7); margin-top: 14px;">Detaljert plan: <code>docs/security/FIREFLIES-FUTURE.md</code></p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── STATUS ─── -->
+<section class="bk" id="status">
+  <div class="container">
+    <p class="eyebrow">Hvor vi er nå</p>
+    <h2>Status — hva er bygd, hva mangler, hva venter.</h2>
+
+    <h3 style="font-size: 1.2rem; color: var(--bone); margin: 32px 0 16px;">Bygd og testet</h3>
+    <div class="status-grid">
+      <div class="status-card done"><p class="label">✓ Live</p><h4>Lead-flyt</h4><p>/side2 → /api/agentik-contact → Attio + autosvar + Slack-varsel.</p></div>
+      <div class="status-card done"><p class="label">✓ Live</p><h4>Pre-assessment</h4><p>/takk → AI-generert /preso/[uuid] med Firecrawl-scrape + Claude Opus.</p></div>
+      <div class="status-card done"><p class="label">✓ Live</p><h4>Onboarding-flyt</h4><p>/admin/ny-partner med Attio-oppslag → /onboarding/[token] → auto-provisjonert partner.</p></div>
+      <div class="status-card done"><p class="label">✓ Live</p><h4>Kunde-dashbord</h4><p>5 tabs, sprint-tracking, ROI-beregning med matte vist, last-seen tracking.</p></div>
+      <div class="status-card done"><p class="label">✓ Live</p><h4>Admin-panel</h4><p>Partner-liste med stats, full CRUD på pipeline / oppgaver / team / møter, ROI-snapshot, aktivitet-logging.</p></div>
+      <div class="status-card done"><p class="label">✓ Live</p><h4>Auth</h4><p>Magic-link + passord, scopet localStorage cache, AMR-deteksjon for prompt-til-å-sette-passord.</p></div>
+      <div class="status-card done"><p class="label">✓ Live</p><h4>Slack /partner-endepunkt</h4><p>Bygd og signaturverifisert. Slack-app må konfigureres for å bli aktiv.</p></div>
+      <div class="status-card done"><p class="label">✓ Live</p><h4>Auto-aktivitet</h4><p>Pipeline-overganger, status-endringer, onboarding-fullført — alle logges automatisk.</p></div>
+      <div class="status-card done"><p class="label">✓ Live</p><h4>Sikkerhetsheaders</h4><p>HSTS, noindex, X-Frame, Permissions-Policy alt på plass via vercel.json.</p></div>
+    </div>
+
+    <h3 style="font-size: 1.2rem; color: var(--bone); margin: 40px 0 16px;">Trenger din action først</h3>
+    <div class="status-grid">
+      <div class="status-card pending"><p class="label">⚠ KRITISK</p><h4>RLS-lockdown på partner-tabeller</h4><p>Pr nå kan anon-keyen lese alle kunde-data direkte. Trenger SUPABASE_SERVICE_ROLE_KEY env-var, deretter SQL-migrasjon. Se <code>docs/security/RLS-LOCKDOWN.md</code>.</p></div>
+      <div class="status-card pending"><p class="label">→ Klar til config</p><h4>Slack-app for /partner</h4><p>Endpoint er bygd og hardenet. Trenger Slack-app-registrering og SLACK_SIGNING_SECRET.</p></div>
+      <div class="status-card pending"><p class="label">→ Velg leverandør</p><h4>Kontraktssignering</h4><p>PandaDoc (rask) eller Signere.no (BankID, mer norsk-premium). Begge har API for variable-fylling og webhook-on-signed.</p></div>
+      <div class="status-card pending"><p class="label">→ Når første kunde</p><h4>Fiken API for fakturering</h4><p>Når første betalende partner — sett opp Fiken-konto, legg inn API-token, så kobles fakturering automatisk på kontrakt-signert.</p></div>
+    </div>
+
+    <h3 style="font-size: 1.2rem; color: var(--bone); margin: 40px 0 16px;">Backlog (senere)</h3>
+    <ul style="list-style: none; padding: 0; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.9;">
+      <li>↳ <strong style="color: var(--bone);">Fireflies-integrasjon</strong> — møtetranskripter under hvert møte. Sikkerhetsmodellen er allerede tegnet.</li>
+      <li>↳ <strong style="color: var(--bone);">Partner-onboarding-init via Slack-shortcut</strong> — <code>/onboard email@bedrift.no</code> som wrapper rundt admin-flowen.</li>
+      <li>↳ <strong style="color: var(--bone);">Notion ↔ Supabase to-veis sync</strong> hvis dere fortsatt vil bruke Notion for noe.</li>
+      <li>↳ <strong style="color: var(--bone);">Backup-job</strong> — månedlig eksport av partner-data til Vercel Blob.</li>
+      <li>↳ <strong style="color: var(--bone);">Audit-log-tabell</strong> for sensitive admin-handlinger.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────── NEXT ─── -->
+<section class="bk" id="next">
+  <div class="container narrow">
+    <p class="eyebrow">Neste 7 dager</p>
+    <h2>Konkrete steg du kan ta før første betalende kunde.</h2>
+
+    <ol style="margin: 32px 0; padding: 0; list-style: none; counter-reset: step;">
+      <li style="counter-increment: step; padding: 18px 0; border-top: 1px solid var(--hairline); display: grid; grid-template-columns: 50px 1fr; gap: 16px;">
+        <span style="color: var(--copper); font-size: 22px; font-weight: 800;">1.</span>
+        <div>
+          <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 6px;">Hent service-role key og lås ned RLS</h4>
+          <p style="font-size: 13px; color: var(--muted);">Supabase → Settings → API → kopier <code>service_role secret</code>. Legg til som <code>SUPABASE_SERVICE_ROLE_KEY</code> i Vercel + lokalt. Deploy. Kjør deretter <code>docs/security/rls-lockdown.sql</code>. ~10 minutter.</p>
+        </div>
+      </li>
+      <li style="counter-increment: step; padding: 18px 0; border-top: 1px solid var(--hairline); display: grid; grid-template-columns: 50px 1fr; gap: 16px;">
+        <span style="color: var(--copper); font-size: 22px; font-weight: 800;">2.</span>
+        <div>
+          <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 6px;">Aktiver leaked-password-protection i Supabase</h4>
+          <p style="font-size: 13px; color: var(--muted);">Authentication → Policies → toggle Leaked Password Protection. Sjekk mot HaveIBeenPwned ved hvert passord-set. Tar 30 sekunder.</p>
+        </div>
+      </li>
+      <li style="counter-increment: step; padding: 18px 0; border-top: 1px solid var(--hairline); display: grid; grid-template-columns: 50px 1fr; gap: 16px;">
+        <span style="color: var(--copper); font-size: 22px; font-weight: 800;">3.</span>
+        <div>
+          <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 6px;">Velg PandaDoc eller Signere.no</h4>
+          <p style="font-size: 13px; color: var(--muted);">PandaDoc raskere å sette opp. Signere.no = BankID-signering = mer premium for norske CEOs. Når valgt: jeg bygger integrasjonen — Attio-data flyter inn, kontrakt sendes, webhook utløser onboarding.</p>
+        </div>
+      </li>
+      <li style="counter-increment: step; padding: 18px 0; border-top: 1px solid var(--hairline); display: grid; grid-template-columns: 50px 1fr; gap: 16px;">
+        <span style="color: var(--copper); font-size: 22px; font-weight: 800;">4.</span>
+        <div>
+          <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 6px;">Konfigurer Slack-appen</h4>
+          <p style="font-size: 13px; color: var(--muted);">api.slack.com/apps → ny app → slash command "/partner" → URL <code>https://agentik.no/api/agentik-slack/partner</code>. Kopier signing secret til Vercel env. ~5 minutter.</p>
+        </div>
+      </li>
+      <li style="counter-increment: step; padding: 18px 0; border-top: 1px solid var(--hairline); display: grid; grid-template-columns: 50px 1fr; gap: 16px;">
+        <span style="color: var(--copper); font-size: 22px; font-weight: 800;">5.</span>
+        <div>
+          <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 6px;">Spill inn Loom-velkomstvideo (1–2 min)</h4>
+          <p style="font-size: 13px; color: var(--muted);">Kort video fra dere til kunder som starter intake. Lim inn embed-URL-en i <code>onboardings.loom_video_url</code> per partner. Vises automatisk på toppen av intake-skjemaet.</p>
+        </div>
+      </li>
+      <li style="counter-increment: step; padding: 18px 0; border-top: 1px solid var(--hairline); display: grid; grid-template-columns: 50px 1fr; gap: 16px;">
+        <span style="color: var(--copper); font-size: 22px; font-weight: 800;">6.</span>
+        <div>
+          <h4 style="color: var(--bone); font-size: 16px; margin-bottom: 6px;">Drop bilder av Ivar + Ole i /public/team/</h4>
+          <p style="font-size: 13px; color: var(--muted);">Filer: <code>ivar.jpg</code>, <code>ole.jpg</code>. Avatar-komponenten viser bildene automatisk hvis de finnes, fallback til initialer hvis ikke.</p>
+        </div>
+      </li>
+    </ol>
+
+    <p style="margin-top: 24px; padding: 16px 18px; background: rgba(60,191,147,0.08); border: 1px solid rgba(60,191,147,0.2); border-radius: 12px; font-size: 13px; color: var(--bone);">
+      Når du er gjennom 1–4 av disse, er plattformen klar for første betalende kunde. 5–6 er polish — kan gjøres i parallell med første kunde.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p class="who">Bygd for Ivar &amp; Ole · April 2026</p>
+    <p>Spørsmål eller forslag: ta det opp med Claude i samme repo.<br>Live: <a href="https://agentik.no">agentik.no</a> · <a href="https://agentik.no/admin">/admin</a> · <a href="https://agentik.no/partner/demo">/partner/demo</a></p>
+  </div>
+</footer>
+
+<script>
+  // Replace {{dato}} with formatted Norwegian date
+  document.body.innerHTML = document.body.innerHTML.replace(
+    '{{dato}}',
+    new Date().toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' })
+  );
+</script>
+
+</body>
+</html>

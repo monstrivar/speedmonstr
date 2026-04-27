@@ -1,19 +1,11 @@
 // GET /api/agentik-presentation/[id]
 // Returns the stored HTML presentation for a given UUID.
 
-import { createClient } from '@supabase/supabase-js';
-
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_KEY;
+import { getSupabase } from '../_lib/auth.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.error('Supabase env vars missing');
-    return res.status(500).json({ error: 'Server misconfigured.' });
   }
 
   const { id } = req.query;
@@ -27,7 +19,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    let supabase;
+    try { supabase = getSupabase(); }
+    catch { return res.status(500).json({ error: 'Server misconfigured.' }); }
     const { data, error } = await supabase
       .from('presentations')
       .select('html, client_name, client_company, created_at')

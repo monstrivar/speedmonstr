@@ -217,7 +217,7 @@ const Hero = () => {
           >
             <span className="btn-layer bg-[#1A1F25]"></span>
             <span className="btn-text flex items-center gap-3">
-              Book en AI-mulighetssamtale <ArrowRight size={18} />
+              Book en mulighetssamtale <ArrowRight size={18} />
             </span>
           </button>
           <button
@@ -231,7 +231,7 @@ const Hero = () => {
 
         {/* Trust line */}
         <p className="s2-hero-el text-[#E8E4DC]/30 text-xs tracking-[0.1em]">
-          Brukt av Droptech, Brainwaves, SalesUp og flere
+          Vi har jobbet med Droptech, Brainwaves, SalesUp og flere
         </p>
       </div>
 
@@ -673,14 +673,14 @@ const UseCaseModules = () => {
     {
       name: 'Salgs-assistent',
       desc: 'Forbereder møter, oppsummerer kundehistorikk, oppdaterer CRM, foreslår neste steg og lager tilbudsutkast.',
-      value: 'Mer tid på salg, ren CRM-data.',
+      value: 'Mer tid på salg, oppdatert CRM.',
       Icon: TrendingUp,
       featured: true,
     },
     {
       name: 'Onboarding-automasjon',
       desc: 'Sender onboarding-e-poster, samler info, oppretter prosjekter, minner om manglende data.',
-      value: 'Raskere oppstart, færre dropp-ball-øyeblikk.',
+      value: 'Raskere oppstart, færre løse tråder.',
       Icon: UserPlus,
     },
     {
@@ -807,6 +807,207 @@ const UseCaseModules = () => {
 };
 
 // ─────────────────────────────────────────────────────────────
+// DASHBOARD SHOWCASE — eget arbeidsrom for partneren
+// Visuell visning av kunde-dashbord (/partner/[slug]) — pipeline,
+// aktivitet-feed, ROI-måling med 90-dagers garanti.
+// ─────────────────────────────────────────────────────────────
+const DashboardShowcase = () => (
+  <section
+    className="reveal-section relative py-28 md:py-36 px-6 overflow-hidden"
+    style={{ background: '#0E1114' }}
+  >
+    {/* Subtle teal radial */}
+    <div
+      className="absolute top-0 right-0 w-[900px] h-[900px] rounded-full opacity-10 blur-[140px] pointer-events-none"
+      style={{ background: 'radial-gradient(circle, #4FC3B0 0%, transparent 65%)' }}
+    />
+
+    <div className="relative max-w-6xl mx-auto">
+      <div className="reveal flex items-center gap-3 mb-8">
+        <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">
+          05 — Eget arbeidsrom
+        </span>
+        <span className="block flex-1 h-px bg-[#E8E4DC]/10" />
+      </div>
+
+      <div className="max-w-3xl mb-14">
+        <h2 className="reveal font-agentik font-bold text-[clamp(2.2rem,5vw,4rem)] text-[#E8E4DC] tracking-[-0.025em] leading-[1.02] mb-6">
+          Dere ser <span className="text-[#4FC3B0] italic font-medium">hva som skjer</span>, hver dag.
+        </h2>
+        <p className="reveal font-agentik text-[#E8E4DC]/65 text-lg md:text-xl leading-relaxed">
+          Hver partner får sitt eget arbeidsrom hos oss. Live aktivitet-feed, AI-løsninger i pipeline, dokumentert ROI med fullstendig regnestykke. Ingen statusrapporter på e-post — alt oppdateres automatisk når vi leverer noe.
+        </p>
+      </div>
+
+      {/* MAIN MOCKUP — full dashboard preview */}
+      <div className="reveal rounded-2xl overflow-hidden bg-[#0f151d] border border-[#E8E4DC]/8 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)] mb-12">
+        {/* Browser bar */}
+        <div className="bg-black/30 px-3 py-2 flex items-center gap-1.5 border-b border-white/5">
+          <span className="w-2 h-2 rounded-full bg-white/15"></span>
+          <span className="w-2 h-2 rounded-full bg-white/15"></span>
+          <span className="w-2 h-2 rounded-full bg-white/15"></span>
+          <span className="ml-3 font-data text-[10px] text-white/40">agentik.no/partner/demo</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr]">
+          {/* Sidebar */}
+          <aside className="bg-[#0a1018] p-4 border-r border-white/5 hidden md:block">
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-8 h-8 rounded-md bg-[#1A6B6D] flex items-center justify-center text-white font-bold text-sm">D</div>
+              <div className="min-w-0">
+                <p className="font-data text-[8px] uppercase tracking-[0.18em] text-[#9aa4b2] truncate">Klient-arbeidsrom</p>
+                <p className="font-agentik font-semibold text-[#f2ece1] text-xs truncate">Demo Bedrift</p>
+              </div>
+            </div>
+            <div className="bg-white/[0.03] p-2.5 rounded-lg mb-4">
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="font-data text-[8px] uppercase tracking-[0.18em] text-[#9aa4b2]/70">90-dagers Sprint</p>
+                <p className="font-data text-[9px] text-[#4FC3B0] tabular-nums">25%</p>
+              </div>
+              <div className="h-1 bg-white/5 rounded-full overflow-hidden mb-1.5">
+                <div className="h-full w-1/4 rounded-full" style={{ background: 'linear-gradient(90deg, #4FC3B0, #C4854C)' }}></div>
+              </div>
+              <p className="font-agentik text-[10px] text-[#9aa4b2]">Fase: <span className="text-[#C4854C] font-semibold">Bygg</span> · Dag 23/91</p>
+            </div>
+            <div className="space-y-1 text-[11px]">
+              <div className="px-2.5 py-1.5 rounded text-[#9aa4b2] flex items-center gap-2">📋 Pipeline</div>
+              <div className="px-2.5 py-1.5 rounded bg-[#4FC3B0]/10 text-[#4FC3B0] flex items-center justify-between">
+                <span className="flex items-center gap-2">⚡ Aktivitet</span>
+                <span className="bg-[#C4854C] text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">3</span>
+              </div>
+              <div className="px-2.5 py-1.5 rounded text-[#9aa4b2] flex items-center gap-2">📅 Møter</div>
+              <div className="px-2.5 py-1.5 rounded text-[#9aa4b2] flex items-center gap-2">📈 Verdi</div>
+              <div className="px-2.5 py-1.5 rounded text-[#9aa4b2] flex items-center gap-2">👥 Team</div>
+            </div>
+          </aside>
+
+          {/* Main: Pipeline tab content */}
+          <main className="p-5 md:p-6">
+            <p className="font-data text-[9px] uppercase tracking-[0.25em] text-[#4FC3B0] mb-1">Pipeline</p>
+            <h3 className="font-agentik font-bold text-[#f2ece1] text-lg md:text-xl tracking-tight mb-1">God ettermiddag, <span style={{ color: '#C4854C' }}>Anne</span></h3>
+            <p className="font-agentik text-[#9aa4b2] text-[11px] mb-5"><span className="text-[#C4854C] font-semibold">3</span> oppdateringer siden sist du var her</p>
+
+            <div className="flex items-center gap-2 mb-3">
+              <span className="font-data text-[9px] uppercase tracking-[0.2em] text-[#4FC3B0]">AI-løsninger</span>
+              <span className="block flex-1 h-px bg-white/[0.06]"></span>
+              <span className="font-data text-[9px] text-[#9aa4b2]/60">1 i drift · 2 på vei</span>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
+              {/* Kanban columns */}
+              {[
+                { label: 'Backlog', color: '#9aa4b2', items: [{ t: 'Kundeservice-bot', v: '120k' }] },
+                { label: 'Planlagt', color: '#C4854C', items: [{ t: 'CRM ↔ faktura', v: '80k' }] },
+                { label: 'Bygges', color: '#4FC3B0', items: [{ t: 'Tilbudsberegning', v: '180k' }] },
+                { label: 'Ferdig', color: '#3cbf93', items: [{ t: 'Møte-til-CRM', v: '88k' }] },
+              ].map((col) => (
+                <div key={col.label} className="bg-[#0c1219]/70 rounded-lg p-2 min-h-[100px]">
+                  <div className="flex items-center justify-between mb-2 px-1">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1 h-1 rounded-full" style={{ background: col.color }}></span>
+                      <span className="font-data text-[8px] uppercase tracking-[0.18em]" style={{ color: col.color }}>{col.label}</span>
+                    </div>
+                    <span className="font-data text-[8px] tabular-nums text-[#9aa4b2]/60 bg-white/[0.04] px-1 rounded">{col.items.length}</span>
+                  </div>
+                  {col.items.map((item, i) => (
+                    <div key={i} className="bg-[#161e29] rounded-md p-1.5 mb-1 text-[10px] text-[#f2ece1] tracking-tight">
+                      <p className="font-medium">{item.t}</p>
+                      <p className="font-data text-[8px] text-[#4FC3B0]/85 mt-0.5">{item.v} kr/år</p>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </main>
+        </div>
+      </div>
+
+      {/* Three highlight cards */}
+      <div className="reveal grid md:grid-cols-3 gap-5">
+        {/* Aktivitet */}
+        <div className="bg-[#1A1F25] border border-[#E8E4DC]/8 rounded-2xl p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#4FC3B0] animate-pulse"></span>
+            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#4FC3B0]">Live aktivitet</p>
+          </div>
+          <h4 className="font-agentik font-bold text-[#E8E4DC] text-lg tracking-tight mb-3">Hvert leveranse, sett av kunden</h4>
+          <p className="font-agentik text-[#E8E4DC]/55 text-sm leading-relaxed mb-5">
+            Når vi flytter en løsning til "live" eller markerer en milepæl ferdig, dukker det opp i feeden samme sekund. Ingen rapport-sleng månedlig.
+          </p>
+          {/* Mini activity feed */}
+          <div className="space-y-2">
+            <div className="bg-[#0E1114] rounded-lg p-2.5 flex gap-2.5">
+              <span className="text-base flex-shrink-0">📦</span>
+              <div className="min-w-0">
+                <p className="font-agentik text-[#E8E4DC] text-xs font-semibold leading-snug">AI-tilbudsberegning er live</p>
+                <p className="font-agentik text-[#E8E4DC]/40 text-[10px] mt-0.5">4 timer siden</p>
+              </div>
+            </div>
+            <div className="bg-[#0E1114] rounded-lg p-2.5 flex gap-2.5">
+              <span className="text-base flex-shrink-0">📅</span>
+              <div className="min-w-0">
+                <p className="font-agentik text-[#E8E4DC] text-xs font-semibold leading-snug">Strategimøte planlagt</p>
+                <p className="font-agentik text-[#E8E4DC]/40 text-[10px] mt-0.5">i går</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Verdi */}
+        <div className="bg-gradient-to-br from-[#1A6B6D]/12 to-[#1A1F25] border border-[#4FC3B0]/15 rounded-2xl p-6">
+          <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#4FC3B0] mb-4">Dokumentert ROI</p>
+          <h4 className="font-agentik font-bold text-[#E8E4DC] text-lg tracking-tight mb-3">Tallene med regnestykket</h4>
+          <p className="font-agentik text-[#E8E4DC]/55 text-sm leading-relaxed mb-5">
+            Verdi-tab-en viser hva dere har investert, hva vi har dokumentert, og hvordan det er regnet ut. Ingen "stol på oss".
+          </p>
+          {/* Mini ROI card */}
+          <div className="bg-[#0E1114] rounded-lg p-3">
+            <div className="flex items-center justify-between mb-2">
+              <p className="font-data text-[9px] uppercase tracking-[0.18em] text-[#3cbf93]">På sporet</p>
+              <p className="font-agentik font-bold text-[#3cbf93] text-2xl tabular-nums">2.4×</p>
+            </div>
+            <div className="h-1 bg-white/5 rounded-full overflow-hidden mb-2">
+              <div className="h-full w-full rounded-full" style={{ background: 'linear-gradient(90deg, #4FC3B0, #3cbf93)' }}></div>
+            </div>
+            <p className="font-agentik text-[10px] text-[#E8E4DC]/55">av 2× målet · 90-dagers garanti</p>
+          </div>
+        </div>
+
+        {/* Pipeline */}
+        <div className="bg-[#1A1F25] border border-[#E8E4DC]/8 rounded-2xl p-6">
+          <p className="font-data text-[10px] uppercase tracking-[0.18em] text-[#C4854C] mb-4">Pipeline</p>
+          <h4 className="font-agentik font-bold text-[#E8E4DC] text-lg tracking-tight mb-3">Hver løsning, fra idé til drift</h4>
+          <p className="font-agentik text-[#E8E4DC]/55 text-sm leading-relaxed mb-5">
+            Backlog → Planlagt → Bygges → Ferdigbygget. Klikk en kort for hele konteksten: hvorfor, ansvarlig, estimert verdi, status.
+          </p>
+          {/* Mini kanban */}
+          <div className="grid grid-cols-4 gap-1">
+            {[
+              { c: '#9aa4b2', n: 1 },
+              { c: '#C4854C', n: 1 },
+              { c: '#4FC3B0', n: 2 },
+              { c: '#3cbf93', n: 1 },
+            ].map((col, i) => (
+              <div key={i} className="bg-[#0E1114] rounded p-2 min-h-[60px]">
+                <div className="w-1 h-1 rounded-full mb-2" style={{ background: col.c }}></div>
+                {Array.from({ length: col.n }).map((_, j) => (
+                  <div key={j} className="bg-white/[0.04] rounded h-2 mb-1" style={{ width: `${70 + j * 10}%` }}></div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Caption beneath */}
+      <p className="reveal text-center font-agentik text-[#E8E4DC]/40 text-sm mt-10 max-w-2xl mx-auto leading-relaxed">
+        Lever på desktop og mobil. Magic-link-innlogging første gang, deretter passord. Sikret per kunde — ingen ser noe annet enn sitt eget arbeidsrom.
+      </p>
+    </div>
+  </section>
+);
+
+// ─────────────────────────────────────────────────────────────
 // CASE STUDY — anonymized before/after with concrete numbers
 // NOTE: Tall er realistiske placeholdere fra spec §11. Bytt med
 // faktisk anonymisert kunde-case når første sprint er ferdig.
@@ -831,7 +1032,7 @@ const CaseStudy = () => {
       <div className="relative max-w-6xl mx-auto">
         <div className="reveal flex items-center gap-3 mb-8">
           <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#1A6B6D]">
-            05 — Case
+            06 — Case
           </span>
           <span className="block flex-1 h-px bg-[#1A1F25]/10" />
         </div>
@@ -976,7 +1177,7 @@ const ValueGuarantee = () => {
         <div className="reveal flex items-center gap-3 mb-8 justify-center">
           <span className="block w-6 h-px bg-[#C4854C]" />
           <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#C4854C]">
-            06 — 90-dagers verdigaranti
+            07 — 90-dagers verdigaranti
           </span>
           <span className="block w-6 h-px bg-[#C4854C]" />
         </div>
@@ -987,7 +1188,7 @@ const ValueGuarantee = () => {
         </h2>
 
         <p className="reveal text-center font-agentik text-[#E8E4DC]/65 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-16">
-          Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI-tiltak med dokumentert årlig verdipotensial på minst <strong className="text-[#E8E4DC]">2x investeringen</strong>. Hvis ikke, jobber vi videre uten månedlig honorar til verdien er dokumentert.
+          Innen 90 dager skal vi ha kartlagt, prioritert og implementert AI-tiltak med dokumentert årlig verdipotensial på minst <strong className="text-[#E8E4DC]">2× investeringen</strong>. Hvis ikke, jobber vi videre uten månedlig honorar til verdien er dokumentert.
         </p>
 
         {/* The math card */}
@@ -1046,7 +1247,7 @@ const ValueGuarantee = () => {
                 Eksempel
               </p>
               <p className="text-center font-agentik text-[#E8E4DC]/70 text-sm md:text-base leading-relaxed max-w-xl mx-auto">
-                Hvis vi frigjør <span className="text-[#E8E4DC] font-medium">6 timer/uke</span> til en intern kost på <span className="text-[#E8E4DC] font-medium">800 kr/time</span> = <span className="text-[#4FC3B0] font-medium">249 600 kr</span> i årlig verdipotensial.
+                Hvis vi frigjør <span className="text-[#E8E4DC] font-medium">6 timer/uke</span> til en intern kost på <span className="text-[#E8E4DC] font-medium">750 kr/time</span> = <span className="text-[#4FC3B0] font-medium">234 000 kr</span> i årlig verdipotensial.
               </p>
             </div>
           </div>
@@ -1114,7 +1315,7 @@ const Comparison = () => {
     },
     {
       label: 'Kostnad år 1',
-      hire: '900k+ (lønn + lader)',
+      hire: '900k+ (lønn + sosiale kostnader)',
       consult: '500k–1.5M',
       diy: 'Skjult i intern tid',
       us: '468k (39k × 12)',
@@ -1136,7 +1337,7 @@ const Comparison = () => {
       <div className="relative max-w-6xl mx-auto">
         <div className="reveal flex items-center gap-3 mb-8">
           <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">
-            07 — Sammenligning
+            08 — Sammenligning
           </span>
           <span className="block flex-1 h-px bg-[#E8E4DC]/10" />
         </div>
@@ -1220,14 +1421,14 @@ const WhoItIsFor = () => {
     'support-, salgs- eller driftsteam med volum',
     'manuelle prosesser som kan systematiseres',
     'ledelse som tør å beslutte og prioritere',
-    'én intern eier som kan ta tilganger og tilbakemeldinger',
+    'én intern eier som kan håndtere tilganger og gi tilbakemeldinger',
     'nok repetisjon til at små forbedringer flytter mye',
   ];
 
   const noFit = [
-    'små selskap uten reell prosess-volum',
+    'små selskaper uten reelt prosess-volum',
     'bedrifter uten klar operasjonell smerte',
-    'selskap som bare er "nysgjerrige på AI"',
+    'selskaper som bare er "nysgjerrige på AI"',
     'team som ikke vil endre arbeidsflyt',
     'ingen intern kontaktperson',
     'forventer ubegrenset utvikling for fast pris',
@@ -1240,7 +1441,7 @@ const WhoItIsFor = () => {
     >
       <div className="relative max-w-6xl mx-auto">
         <div className="reveal flex items-center gap-3 mb-8">
-          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">08 — Hvem det passer for</span>
+          <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#4FC3B0]">09 — Hvem det passer for</span>
           <span className="block flex-1 h-px bg-[#E8E4DC]/10" />
         </div>
 
@@ -1249,7 +1450,7 @@ const WhoItIsFor = () => {
             Vi sier <span className="text-[#4FC3B0]">ja</span> til noen — og <span className="text-[#C4854C]">nei</span> til mange.
           </h2>
           <p className="reveal font-agentik text-[#E8E4DC]/60 text-lg md:text-xl leading-relaxed">
-            Hvis vi ikke ser realistisk potensial for minst 2x årlig verdi, anbefaler vi heller en workshop. Det er bedre for dere — og bedre for oss.
+            Hvis vi ikke ser realistisk potensial for minst 2× årlig verdi, anbefaler vi heller en workshop. Det er bedre for dere — og bedre for oss.
           </p>
         </div>
 
@@ -1281,7 +1482,7 @@ const WhoItIsFor = () => {
                 <X size={18} className="text-[#C4854C]" strokeWidth={2.5} />
               </div>
               <h3 className="font-agentik font-bold text-[#E8E4DC] text-xl md:text-2xl tracking-tight">
-                Ikke et fit hvis
+                Passer ikke hvis
               </h3>
             </div>
             <ul className="space-y-3">
@@ -1383,7 +1584,7 @@ const FAQ = () => {
       <div className="relative max-w-4xl mx-auto">
         <div className="reveal flex items-center gap-3 mb-8">
           <span className="font-data text-[10px] uppercase tracking-[0.25em] text-[#1A6B6D]">
-            09 — Vanlige spørsmål
+            10 — Vanlige spørsmål
           </span>
           <span className="block flex-1 h-px bg-[#1A1F25]/10" />
         </div>
@@ -1455,22 +1656,11 @@ const Proof = () => (
     <div className="max-w-5xl mx-auto">
       <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8 mx-auto" />
       <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-4 text-center">
-        Brukt av selskaper over hele Norge
+        Hva ledere sier om å jobbe med oss
       </h2>
       <p className="reveal text-[#1A1F25]/50 text-sm text-center mb-14">
-        Noen av selskapene vi har hjulpet med AI-strategi og implementering
+        Et knippe av lederne vi har hjulpet med AI-strategi og implementering
       </p>
-
-      <div className="reveal flex flex-wrap justify-center items-center gap-8 md:gap-12 mb-20 px-4">
-        {CLIENT_LOGOS.map((logo) => (
-          <img
-            key={logo.alt}
-            src={logo.src}
-            alt={logo.alt}
-            className="h-8 md:h-10 w-auto object-contain brightness-0 opacity-50 hover:opacity-100 transition-opacity duration-500"
-          />
-        ))}
-      </div>
 
       <div className="grid md:grid-cols-3 gap-6">
         {TESTIMONIALS.map((t) => (
@@ -1494,7 +1684,7 @@ const Proof = () => (
 // ─────────────────────────────────────────────────────────────
 const TEAM = [
   { name: 'Ivar André Knutsen', role: 'CEO & Co-founder', image: '/team/ivar.jpg' },
-  { name: 'Ole Kristian', role: 'COO & Co-founder', image: '/team/ole.jpg' },
+  { name: 'Ole Kristian Haug', role: 'COO & Co-founder', image: '/team/ole.jpg' },
 ];
 
 const Team = () => (
@@ -1590,7 +1780,7 @@ const ContactForm = () => {
           Vil du finne hvor AI<br className="hidden sm:inline" /> kan skape verdi i deres bedrift?
         </h2>
         <p className="reveal text-[#E8E4DC]/45 text-base text-center mb-10 max-w-md mx-auto leading-relaxed">
-          Fyll ut skjemaet, så tar vi en uforpliktende mulighetssamtale. Vi tar inn 3 founding-partnere de neste 60 dagene.
+          Fyll ut skjemaet, så tar vi en uforpliktende mulighetssamtale. Vi tar inn 3 Founding-partnere de neste 60 dagene.
         </p>
 
         <form onSubmit={handleSubmit} className="reveal space-y-4">
@@ -1697,7 +1887,7 @@ const Side2Pricing = () => {
             Slik jobber vi sammen
           </h2>
           <p className="reveal font-agentik text-[#1A1F25]/60 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            Vi tar inn 3 founding-partnere de neste 60 dagene. Etter det går prisen opp.
+            Vi tar inn 3 Founding-partnere de neste 60 dagene. Etter det går prisen opp.
           </p>
         </div>
 
@@ -1870,7 +2060,7 @@ const StickyCTA = () => {
       <div className="flex items-center gap-3 md:gap-5 px-4 md:px-5 py-2.5 md:py-3 rounded-full bg-[#1A1F25]/95 backdrop-blur-md border border-[#E8E4DC]/15 shadow-[0_8px_40px_rgba(0,0,0,0.35)]">
         <span className="hidden md:inline-flex items-center gap-2 text-[#E8E4DC]/65 text-sm font-agentik tracking-tight pl-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#4FC3B0] shadow-[0_0_8px_#4FC3B0]" />
-          2 av 3 founding-spots igjen
+          2 av 3 Founding-plasser igjen
         </span>
         <button
           onClick={() => scrollTo('contact')}
@@ -1969,7 +2159,7 @@ export default function Side2() {
         <meta property="og:title" content="Agentik | Din eksterne AI-avdeling" />
         <meta
           property="og:description"
-          content="Fra AI-nysgjerrighet til AI i daglig drift. 90-dagers verdigaranti: minst 2x investeringen i årlig verdipotensial."
+          content="Fra AI-nysgjerrighet til AI i daglig drift. 90-dagers verdigaranti: minst 2× investeringen i årlig verdipotensial."
         />
         <meta property="og:locale" content="nb_NO" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -2003,6 +2193,7 @@ export default function Side2() {
           <MetricsStrip />
           <SprintPhases />
           <UseCaseModules />
+          <DashboardShowcase />
           <CaseStudy />
           <ValueGuarantee />
           <Comparison />
