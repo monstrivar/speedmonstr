@@ -3,12 +3,13 @@ import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
-import Side2 from './pages/Side2.jsx'
+import { NySide } from './pages/NySide.jsx'
 import { ScrollToTop } from './components/ScrollToTop.jsx'
 import { AuthProvider } from './lib/auth.jsx'
 import './index.css'
 
 // Lazy-load everything except the landing page so the homepage bundle stays small.
+const Side2 = lazy(() => import('./pages/Side2.jsx'))
 const Personvern = lazy(() => import('./pages/Personvern.jsx'))
 const Vilkar = lazy(() => import('./pages/Vilkar.jsx'))
 const AiRevisjon = lazy(() => import('./pages/AiRevisjon.jsx'))
@@ -23,7 +24,6 @@ const SetPassword = lazy(() => import('./pages/SetPassword.jsx'))
 const Admin = lazy(() => import('./pages/Admin.jsx'))
 const AdminPartner = lazy(() => import('./pages/AdminPartner.jsx'))
 const AdminNyPartner = lazy(() => import('./pages/AdminNyPartner.jsx'))
-const NySide = lazy(() => import('./pages/NySide.jsx').then((m) => ({ default: m.NySide })))
 const Nes = lazy(() => import('./pages/Nes.jsx'))
 
 const RouteFallback = () => (
@@ -58,10 +58,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <ScrollToTop />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
-              {/* Side2 er den nye landingsiden — erstatter NySide */}
-              <Route path="/" element={<Side2 />} />
+              {/* NySide er fortsatt forsiden — Side2 er ny landing under utvikling */}
+              <Route path="/" element={<NySide />} />
               <Route path="/side2" element={<Side2 />} />
-              {/* NySide arkivert — tilgjengelig for sammenligning */}
+              {/* NySide arkivert-alias for sammenligning */}
               <Route path="/gammel" element={<NySide />} />
               <Route path="/personvern" element={<Personvern />} />
               <Route path="/vilkar" element={<Vilkar />} />

@@ -1,10 +1,8 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight, Check, Phone, Mail, Zap, FileText, Mic, BarChart3, ChevronDown } from 'lucide-react';
-import { PricingSection } from '../components/PricingSection.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,14 +73,11 @@ const Navbar = () => {
         <button onClick={() => scrollTo('agents')} className="link-hover cursor-pointer bg-transparent border-none">
           Agenter
         </button>
-        <button onClick={() => scrollTo('proof')} className="link-hover cursor-pointer bg-transparent border-none">
-          Resultater
-        </button>
-        <button onClick={() => scrollTo('tilbud')} className="link-hover cursor-pointer bg-transparent border-none">
-          Tilbud
-        </button>
         <button onClick={() => scrollTo('process')} className="link-hover cursor-pointer bg-transparent border-none">
           Prosess
+        </button>
+        <button onClick={() => scrollTo('proof')} className="link-hover cursor-pointer bg-transparent border-none">
+          Resultater
         </button>
       </div>
 
@@ -762,10 +757,12 @@ const Outcomes = () => {
       <div className="max-w-4xl mx-auto">
         <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mb-8" />
         <h2 className="reveal font-agentik font-bold text-[clamp(1.8rem,4vw,3rem)] text-[#E8E4DC] tracking-tight leading-[1.1] mb-4">
-          Etter 90 dager har dere AI i drift
+          Etter 30 dager sitter du igjen med dette
         </h2>
         <p className="reveal text-[#E8E4DC]/45 text-base md:text-lg max-w-2xl mb-16 leading-relaxed">
-          Som <span className="text-[#1A6B6D] font-medium">AI-Partner</span> kartlegger vi, prioriterer og bygger sammen — slik at AI faktisk havner i daglig drift, ikke bare i strategi-dokumenter.
+          Vi kaller det en{' '}
+          <span className="text-[#1A6B6D] font-medium">AI Opportunity Audit</span>.
+          {' '}Du kaller det klarhet.
         </p>
 
         <div className="grid md:grid-cols-2 gap-10">
@@ -862,7 +859,7 @@ const Proof = () => (
 );
 
 // ─────────────────────────────────────────────────
-// WORKSHOPS (trust-builder → funnels to AI-Partner pricing section)
+// WORKSHOPS (trust-builder → funnels back to audit)
 // ─────────────────────────────────────────────────
 const Workshops = () => {
   const workshops = [
@@ -902,19 +899,19 @@ const Workshops = () => {
           Droptech, SalesUp og flere.
         </p>
 
-        {/* Bridge line → funnels to AI-Partner */}
+        {/* Bridge line → funnels to audit */}
         <div className="reveal border-t border-[#1A1F25]/8 pt-10">
           <p className="font-agentik italic text-lg md:text-xl text-[#1A1F25]/75 tracking-tight mb-8 max-w-lg">
-            For selskaper som vil gå fra opplæring til faktisk drift, starter de fleste
-            som AI-Partner.
+            For selskaper som ønsker mer enn bare opplæring, starter de fleste
+            med en AI Audit.
           </p>
           <button
-            onClick={() => scrollTo('tilbud')}
+            onClick={() => scrollTo('contact')}
             className="btn-magnetic rounded-full px-7 py-3.5 text-sm bg-[#C4854C] text-[#F5F2EC] font-heading font-medium tracking-tight"
           >
             <span className="btn-layer bg-[#1A1F25]"></span>
             <span className="btn-text flex items-center gap-2">
-              Se AI-Partner <ArrowRight size={16} />
+              Book en gratis samtale <ArrowRight size={16} />
             </span>
           </button>
         </div>
@@ -930,21 +927,21 @@ const Process = () => {
   const steps = [
     {
       num: '01',
-      title: 'Kartlegg',
-      tag: 'Uke 1–2',
-      desc: 'AI-Revisjon: vi finner hvor AI gir høyest ROI hos dere — prosesser, systemer, prioriteringer.',
+      title: 'Introduksjonssamtale',
+      tag: 'Gratis',
+      desc: 'Vi forstår deres behov og avklarer om dette er riktig for dere.',
     },
     {
       num: '02',
-      title: 'Bygg',
-      tag: 'Uke 3–12',
-      desc: 'Vi setter første AI-løsning i drift og bygger en konkret 90-dagers roadmap sammen.',
+      title: 'AI Audit',
+      tag: null,
+      desc: 'Vi analyserer prosesser og finner de største mulighetene for AI.',
     },
     {
       num: '03',
-      title: 'Forbedre',
-      tag: 'Måned 4+',
-      desc: 'Løpende drift, optimalisering og nye løsninger — måned for måned, uten lang binding.',
+      title: 'Implementering',
+      tag: 'Valgfritt',
+      desc: 'Vi hjelper dere å faktisk gjennomføre løsningene — fra pilot til produksjon.',
     },
   ];
 
@@ -1040,20 +1037,12 @@ const RiskReversal = () => (
     <div className="max-w-3xl mx-auto text-center">
       <div className="reveal w-12 h-0.5 bg-[#1A6B6D] mx-auto mb-8" />
       <h2 className="reveal font-agentik text-[clamp(1.6rem,3.5vw,2.5rem)] text-[#1A1F25] tracking-tight leading-[1.1] mb-6">
-        90-dagers verdigaranti
+        Lav risiko — høy oppside
       </h2>
-      <p className="reveal font-sans text-[#1A1F25]/65 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-5">
-        Vi dokumenterer og implementerer AI-tiltak med <strong className="text-[#1A1F25]">minst 2x investeringen i årlig verdipotensial</strong> — eller jobber videre uten månedlig honorar til vi gjør det.
+      <p className="reveal font-sans text-[#1A1F25]/55 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
+        Investeringen i en AI Audit trekkes fra dersom dere velger å gå videre
+        med implementering sammen med oss.
       </p>
-      <p className="reveal font-agentik italic text-[#1A6B6D] text-sm md:text-base mb-8">
-        Garantien er gulvet. Business caset er målet.
-      </p>
-      <Link
-        to="/ai-partner"
-        className="reveal inline-flex items-center gap-2 font-heading font-semibold text-[14px] text-[#1A6B6D] hover:text-[#1A1F25] transition-colors"
-      >
-        Les hele garantien <ArrowRight size={14} />
-      </Link>
     </div>
   </section>
 );
@@ -1294,15 +1283,15 @@ export const NySide = () => {
   return (
     <>
       <Helmet>
-        <title>Agentik | AI-Partner for norske bedrifter</title>
+        <title>Agentik | AI-rådgivning som gir konkrete resultater</title>
         <meta
           name="description"
-          content="Vi blir deres faste AI-rådgiver og dev-team. 90-dagers verdigaranti: minst 2x investeringen i årlig verdipotensial — eller jobber vi videre uten månedlig honorar."
+          content="Vi hjelper norske selskaper med å identifisere og implementere AI-løsninger. Konkrete resultater på 30 dager."
         />
-        <meta property="og:title" content="Agentik | AI-Partner for norske bedrifter" />
+        <meta property="og:title" content="Agentik | AI-rådgivning som gir konkrete resultater" />
         <meta
           property="og:description"
-          content="Vi blir deres faste AI-rådgiver og dev-team. 90-dagers verdigaranti: minst 2x investeringen i årlig verdipotensial."
+          content="Vi hjelper norske selskaper med å identifisere og implementere AI-løsninger. Konkrete resultater på 30 dager."
         />
         <meta property="og:locale" content="nb_NO" />
         <meta property="og:url" content="https://agentik.no/" />
@@ -1344,7 +1333,6 @@ export const NySide = () => {
         <Urgency />
         <Outcomes />
         <Proof />
-        <PricingSection />
         <Workshops />
         <Process />
         <Team />
