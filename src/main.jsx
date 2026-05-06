@@ -24,6 +24,7 @@ const Admin = lazy(() => import('./pages/Admin.jsx'))
 const AdminPartner = lazy(() => import('./pages/AdminPartner.jsx'))
 const AdminNyPartner = lazy(() => import('./pages/AdminNyPartner.jsx'))
 const NySide = lazy(() => import('./pages/NySide.jsx').then((m) => ({ default: m.NySide })))
+const Nes = lazy(() => import('./pages/Nes.jsx'))
 
 const RouteFallback = () => (
   <div
@@ -66,6 +67,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="/vilkar" element={<Vilkar />} />
               <Route path="/ai-revisjon" element={<AiRevisjon />} />
               <Route path="/ai-partner" element={<AiPartner />} />
+              <Route path="/nes" element={<Nes />} />
               <Route path="/takk" element={<Takk />} />
               <Route path="/preso/:id" element={<Preso />} />
               <Route path="/onboarding/:token" element={<Onboarding />} />
