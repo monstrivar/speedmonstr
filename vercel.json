@@ -7,6 +7,7 @@
     { "source": "/ai-revisjon", "destination": "/index.html" },
     { "source": "/ai-partner", "destination": "/index.html" },
     { "source": "/side2", "destination": "/index.html" },
+    { "source": "/nes", "destination": "/index.html" },
     { "source": "/gammel", "destination": "/index.html" },
     { "source": "/takk", "destination": "/index.html" },
     { "source": "/preso/:id", "destination": "/index.html" },
