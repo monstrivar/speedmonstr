@@ -24,16 +24,12 @@ export default function Nes() {
     setFeilmelding('');
 
     try {
-      const res = await fetch('/api/agentik-contact', {
+      const res = await fetch('/api/nes-signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fornavn: 'Nes-deltager',
-          bedrift: 'Nes-event',
           epost,
-          maal: konsultasjon
-            ? 'Ønsker gratis konsultasjon (fra /nes)'
-            : 'Vil ha materialet (fra /nes)',
+          gratis_konsultasjon: konsultasjon,
         }),
       });
 
